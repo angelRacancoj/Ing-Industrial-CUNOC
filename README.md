@@ -6,6 +6,7 @@ El Funcionamiento esta destinado a Proveer un sistema de Inventario, y almacenar
 Este proyecto cuenta con la siguiente documentacion sobre el desarrollo del proyecto:
 
 Casos de Uso de Alto Nivel:
+
 https://drive.google.com/open?id=1yHvMOL2CDPCzC-gjCDu8i8SLZjAhfZXQk0AnFQ6hid8
 
 Casos de Uso Extendido:
