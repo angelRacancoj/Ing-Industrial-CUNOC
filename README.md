@@ -9,11 +9,14 @@ Casos de Uso de Alto Nivel:
 https://drive.google.com/open?id=1yHvMOL2CDPCzC-gjCDu8i8SLZjAhfZXQk0AnFQ6hid8
 
 Casos de Uso Extendido:
+
 https://drive.google.com/open?id=1M_l2Xg4OJmFJOnrMiF0MZTknuVqZ5TiE_ZE_iQxjO1Y
 
 Diagramas de Caso de Uso:
+
 https://drive.google.com/file/d/1jjlmbakxaFveNRmwOOFK-xWRyr4_9jMf/view?usp=sharing
 
 Mokups:
+
 https://app.moqups.com/RQJEmo5Zjb/view  (Inventario, Materiales <--> Lotes, Precio <--> Unidades)
 https://app.moqups.com/3fCSmbPutu/view  (Produccion)
