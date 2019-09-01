@@ -21,4 +21,5 @@ Mokups:
 
 https://app.moqups.com/RQJEmo5Zjb/view  (Inventario, Materiales <--> Lotes, Precio <--> Unidades)
 https://app.moqups.com/3fCSmbPutu/view  (Produccion)
+
 https://app.moqups.com/OXd6X7S2nv/view  (Usuarios) 
