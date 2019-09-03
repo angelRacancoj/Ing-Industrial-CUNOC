@@ -20,6 +20,7 @@ https://drive.google.com/file/d/1jjlmbakxaFveNRmwOOFK-xWRyr4_9jMf/view?usp=shari
 Mokups:
 
 https://app.moqups.com/RQJEmo5Zjb/view  (Inventario, Materiales <--> Lotes, Precio <--> Unidades)
+
 https://app.moqups.com/3fCSmbPutu/view  (Produccion)
 
 https://app.moqups.com/OXd6X7S2nv/view  (Usuarios) 
