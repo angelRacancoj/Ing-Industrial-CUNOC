@@ -1,0 +1,15 @@
+Notas
+    conexion entre usuario y linea de produccion
+    crear grupos, agregar y eliminar usuarios (indicar usuarios y la fecha de creacion)
+    pantalla de historial de modificaciones
+    FIFO insumos, para su consumo
+    aviso de insumos en su cantidad minima (el administrador indica el minimo)
+    dar un orden en administracion de etapas
+    cambiar interfaza del pre-proceso
+    en la gestion de cantidades debe estar ordenado por fecha de caducidad
+    una interfaz para modificar los datos tentativos que se colocaron durante la produccion
+    cambiar de eliminar en desactivar productos
+    crear una llave foranea que haga referencia a anterior y siguiente en las etapas, pueden ser nulo
+    
+    
+    no son genericas las etapas (proceso o pre-proceso)
