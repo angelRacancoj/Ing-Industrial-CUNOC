@@ -13,3 +13,15 @@ Notas
     
     
     no son genericas las etapas (proceso o pre-proceso)
+
+    El atributo "Nota" de la modificación de un insumo no aparece en MOQUPS
+    Fecha de Creación del Producto
+    Insumos Necesarios Deberia estar ligado a un paso en lugar de a la producción
+    A que se refieren con el Tipo del Producto y en donde esta en la base de datos
+    Falta Fecha de Creación de una Producción en la BD
+    La relación entre produccion y etapas es de Muchos a Muchos y no de Uno a Muchos ?
+    Que es el "Tiempo" de una etapas
+    Costos Extra no estan considerados en el modelo de base de datos
+    Agregar tabla de gastos extras ?
+    Agregar pantalla eliminar por vencimiento
+    eliminar de usuarios de un Grupos
