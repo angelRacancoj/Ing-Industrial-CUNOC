@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 @Table(
         name = "INSUMO"
 )
-public class Supplie {
+public class Supply {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "codigo")
@@ -34,6 +34,9 @@ public class Supplie {
     private boolean availability;
     @Column(name = "descripcion", insertable = true, updatable = true)
     private String description;
+
+    public Supply() {
+    }
 
     public Integer getCode() {
         return code;

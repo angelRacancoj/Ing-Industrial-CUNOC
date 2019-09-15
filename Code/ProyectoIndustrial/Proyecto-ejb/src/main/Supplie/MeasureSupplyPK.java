@@ -3,14 +3,17 @@ import java.util.Objects;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Measure_SuppliePK {
-    private Integer codeSupplie;
+public class MeasureSupplyPK {
+    private Integer codeSupply;
     private Integer idMeasure;
+
+    public MeasureSupplyPK() {
+    }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.codeSupplie);
+        hash = 59 * hash + Objects.hashCode(this.codeSupply);
         hash = 59 * hash + Objects.hashCode(this.idMeasure);
         return hash;
     }
@@ -26,22 +29,22 @@ public class Measure_SuppliePK {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Measure_SuppliePK other = (Measure_SuppliePK) obj;
+        final MeasureSupplyPK other = (MeasureSupplyPK) obj;
         if (!Objects.equals(this.idMeasure, other.idMeasure)) {
             return false;
         }
-        if (!Objects.equals(this.codeSupplie, other.codeSupplie)) {
+        if (!Objects.equals(this.codeSupply, other.codeSupply)) {
             return false;
         }
         return true;
     }
 
-    public Integer getCodeSupplie() {
-        return codeSupplie;
+    public Integer getCodeSupply() {
+        return codeSupply;
     }
 
-    public void setCodeSupplie(Integer codeSupplie) {
-        this.codeSupplie = codeSupplie;
+    public void setCodeSupply(Integer codeSupply) {
+        this.codeSupply = codeSupply;
     }
 
     public Integer getIdMeasure() {

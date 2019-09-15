@@ -7,16 +7,16 @@ import javax.persistence.Table;
 @Table(
         name = "MEDIDA_INSUMO"
 )
-public class Measure_Supplie {
+public class MeasureSupply {
     
 @EmbeddedId
-private Measure_SuppliePK id;
+private MeasureSupplyPK id;
 
-    public Measure_SuppliePK getId() {
+    public MeasureSupplyPK getId() {
         return id;
     }
 
-    public void setId(Measure_SuppliePK id) {
+    public void setId(MeasureSupplyPK id) {
         this.id = id;
     }
     
