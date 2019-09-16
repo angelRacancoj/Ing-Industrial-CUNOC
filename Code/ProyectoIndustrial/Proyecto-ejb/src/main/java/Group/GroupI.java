@@ -1,3 +1,4 @@
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class GroupI {
     private Integer idGroup;
     @Column(name = "informacion", insertable = true, updatable = true)
     private String infomation;
-    @Column(name = "seccion", insertable = true, updatable = true)
+    @Column(name = "seccion", insertable = true, nullable = false, lenght = 2)
     private String section;
 
     public GroupI() {

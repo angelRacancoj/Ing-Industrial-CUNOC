@@ -18,11 +18,11 @@ public class GroupUser {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_grupo_usuario")
     private Integer id_group_user;
-    @ManytoOne
+    @ManytoOne(optional = false)
     private User user;
-    @ManytoOne
+    @ManytoOne(optional = false)
     private GroupI group;
-    @Column(name = "fecha_ingreso", insertable = true, updatable = true)
+    @Column(name = "fecha_ingreso", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date admissionDate;
 
