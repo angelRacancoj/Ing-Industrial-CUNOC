@@ -1,6 +1,6 @@
 package Produce;
 
-import Group.GroupI;
+import Group.Group;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+/**
+ *
+ * @author angelrg
+ */
 
 @Entity
 @Table(
@@ -21,22 +26,22 @@ public class History {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "historial_id")
     private Integer history_id;
-    @Column(name = "fecha_inicio", insertable = true, updatable = false)
+    @Column(name = "fecha_inicio")
     @Temporal(TemporalType.DATE)
     private Date startDate;
-    @Column(name = "fecha_fin", nullable = false)
+    @Column(name = "fecha_fin")
     @Temporal(TemporalType.DATE)
     private Date endDate;
-    @Column(name = "costo_total",scale = 2, insertable = true, updatable = true)
+    @Column(name = "costo_total",scale = 2)
     private double totalCost;
-    @Column(name = "lotes_producidos", nullable = false)
+    @Column(name = "lotes_producidos")
     private Integer batchesProducedInteger;
-    @Column(name = "esta_activo", insertable = true, updatable = true, nullable = false)
+    @Column(name = "esta_activo")
     private boolean isActive;
     @ManytoOne(optional = false)
     private Produce produce;
     @ManytoOne(optional = false)
-    private GroupI group;
+    private Group group;
 
     public History() {
     }
@@ -97,11 +102,11 @@ public class History {
         this.produce = produce;
     }
 
-    public GroupI getGroup() {
+    public Group getGroup() {
         return group;
     }
 
-    public void setGroup(GroupI group) {
+    public void setGroup(Group group) {
         this.group = group;
     }
     

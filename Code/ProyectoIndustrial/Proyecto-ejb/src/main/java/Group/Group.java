@@ -16,17 +16,17 @@ import javax.persistence.Table;
 @Table(
         name = "GRUPO"
 )
-public class GroupI {
+public class Group {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_grupo")
     private Integer idGroup;
-    @Column(name = "informacion", insertable = true, updatable = true)
+    @Column(name = "informacion")
     private String infomation;
-    @Column(name = "seccion", insertable = true, nullable = false, lenght = 2)
+    @Column(name = "seccion", lenght = 2)
     private String section;
 
-    public GroupI() {
+    public Group() {
     }
 
     public Integer getIdGroup() {

@@ -10,33 +10,39 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ *
+ * @author angelrg
+ */
+
 @Entity
 @Table(
         name = "GRUPO_USUARIO"
 )
 
 public class GroupUser {
+
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_grupo_usuario")
-    private Integer id_group_user;
+    private Integer idGroupUser;
     @ManytoOne(optional = false)
     private User user;
     @ManytoOne(optional = false)
-    private GroupI group;
-    @Column(name = "fecha_ingreso", nullable = false)
+    private Group group;
+    @Column(name = "fecha_ingreso")
     @Temporal(TemporalType.DATE)
     private Date admissionDate;
 
     public GroupUser() {
     }
 
-    public Integer getId_group_user() {
-        return id_group_user;
+    public Integer getidGroupUser() {
+        return idGroupUser;
     }
 
-    public void setId_group_user(Integer id_group_user) {
-        this.id_group_user = id_group_user;
+    public void setidGroupUser(Integer id_group_user) {
+        this.idGroupUser = id_group_user;
     }
 
     public User getUser() {
@@ -47,11 +53,11 @@ public class GroupUser {
         this.user = user;
     }
 
-    public GroupI getGroup() {
+    public Group getGroup() {
         return group;
     }
 
-    public void setGroup(GroupI group) {
+    public void setGroup(Group group) {
         this.group = group;
     }
 
@@ -61,6 +67,6 @@ public class GroupUser {
 
     public void setAdmissionDate(Date admissionDate) {
         this.admissionDate = admissionDate;
-    }    
-    
+    }
+
 }
