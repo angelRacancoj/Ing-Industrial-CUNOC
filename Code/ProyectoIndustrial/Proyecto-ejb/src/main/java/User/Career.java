@@ -1,3 +1,5 @@
+package User;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +16,7 @@ public class Career {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_carrera")
     private Integer idCareer;
-    @Column(name = "nombre_carrera", insertable = true, updatable = true)
+    @Column(name = "nombre_carrera")
     private String name;
 
     public Career(Integer idCareer, String name) {

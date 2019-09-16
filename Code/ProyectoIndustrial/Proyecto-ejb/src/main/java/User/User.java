@@ -1,3 +1,5 @@
+package User;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,15 +16,15 @@ public class User {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "carnet")
     private Integer carnet;
-    @Column(name = "nombre", insertable = true, updatable = true)
+    @Column(name = "nombre")
     private String name;
-    @Column(name = "correo_electronico", insertable = true, updatable = true)
+    @Column(name = "correo_electronico")
     private String email;
-    @Column(name = "telefono", insertable = true, updatable = true)
+    @Column(name = "telefono")
     private Integer phone;
-    @Column(name = "contrasenia", insertable = true, updatable = true)
+    @Column(name = "contrasenia")
     private String password;
-    @Column(name = "estado", insertable = true, updatable = true)
+    @Column(name = "estado")
     private Integer state;
     @ManytoOne
     private RolUser rolUser;
@@ -40,13 +42,20 @@ public class User {
         this.career = career;
     }
 
-        
     public Integer getCarnet() {
         return carnet;
     }
 
-    public void setIdRol(Integer carnet) {
+    public void setCarnet(Integer carnet) {
         this.carnet = carnet;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -80,5 +89,23 @@ public class User {
     public void setState(Integer state) {
         this.state = state;
     }
+
+    public RolUser getRolUser() {
+        return rolUser;
+    }
+
+    public void setRolUser(RolUser rolUser) {
+        this.rolUser = rolUser;
+    }
+
+    public Career getCareer() {
+        return career;
+    }
+
+    public void setCareer(Career career) {
+        this.career = career;
+    }
+
+    
     
 }

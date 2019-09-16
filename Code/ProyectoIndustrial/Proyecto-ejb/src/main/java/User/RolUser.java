@@ -1,3 +1,5 @@
+package User;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,10 +16,8 @@ public class RolUser {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol")
     private Integer idRol;
-    @Column(name = "nombre", insertable = true, updatable = true)
+    @Column(name = "nombre")
     private String name;
-    @OneToOne(mappedBy="rolUser")
-    private User user;
     
     public RolUser(Integer idRol,String name){
         this.idRol=idRol;
