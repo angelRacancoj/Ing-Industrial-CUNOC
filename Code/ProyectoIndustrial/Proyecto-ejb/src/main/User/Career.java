@@ -17,6 +17,11 @@ public class Career {
     @Column(name = "nombre_carrera", insertable = true, updatable = true)
     private String name;
 
+    public Career(Integer idCareer, String name) {
+        this.idCareer = idCareer;
+        this.name = name;
+    }
+    
     public Integer getIdCareer() {
         return idCareer;
     }
