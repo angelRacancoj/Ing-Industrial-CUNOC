@@ -1,5 +1,6 @@
 package Modify;
 
+import Supplie.Supply;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ public class modifySupplie {
     @ManyToOne(optional = false)
     private User user:
     @ManyToOne(optional = false)
-    private Supply supply:
+    private Supply supply;
     @Column(columnDefinition = "ENUM('POR_FALTANTE','POR_ROBO','ATRIBUTOS')", nullable = false)
     @Enumerated(EnumType.STRING)
     private modifyType status;

@@ -1,3 +1,4 @@
+package Supplie;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
