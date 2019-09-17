@@ -149,7 +149,7 @@ public class Produccion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.pruebahibernate.Produccion[ idLineaProduccion=" + idLineaProduccion + " ]";
+        return "com.mycompany.Produccion.Produccion[ idLineaProduccion=" + idLineaProduccion + " ]";
     }
     
 }
