@@ -10,7 +10,7 @@ package Modify;
  *
  * @author angelrg
  */
-public enum modifyType {
+public enum ModificationType {
     POR_FALTANTE,
     POR_ROBO,
     ATRIBUTOS;

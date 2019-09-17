@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 @Table(
         name = "MODIFICACION_INSUMO"
 )
-public class modifySupplie {
+public class ModifySupply {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_modificacion_insumo")
@@ -31,7 +31,7 @@ public class modifySupplie {
     private Supply supply;
     @Column(columnDefinition = "ENUM('POR_FALTANTE','POR_ROBO','ATRIBUTOS')")
     @Enumerated(EnumType.STRING)
-    private modifyType status;
+    private ModificationType status;
     @Column(name = "cantidad")
     private Integer quantity;
     @Column(name = "fecha")
@@ -64,11 +64,11 @@ public class modifySupplie {
         this.supply = supply;
     }
 
-    public modifyType getStatus() {
+    public ModificationType getStatus() {
         return status;
     }
 
-    public void setStatus(modifyType status) {
+    public void setStatus(ModificationType status) {
         this.status = status;
     }
 
