@@ -126,7 +126,7 @@ public class Etapa implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.pruebahibernate.Etapa[ idEtapa=" + idEtapa + " ]";
+        return "com.mycompany.Industrial.Etapa[ idEtapa=" + idEtapa + " ]";
     }
     
 }
