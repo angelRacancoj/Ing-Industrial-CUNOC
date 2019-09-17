@@ -1,4 +1,4 @@
-package Supplie;
+package Supply;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
