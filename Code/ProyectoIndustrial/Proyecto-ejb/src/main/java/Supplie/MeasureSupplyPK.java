@@ -1,3 +1,5 @@
+package Supplie;
+
 
 import java.util.Objects;
 import javax.persistence.Embeddable;
