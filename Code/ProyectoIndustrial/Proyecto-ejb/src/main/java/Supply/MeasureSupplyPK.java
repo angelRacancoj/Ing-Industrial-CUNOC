@@ -1,5 +1,4 @@
-package Supplie;
-
+package Supply;
 
 import java.util.Objects;
 import javax.persistence.Embeddable;

@@ -1,4 +1,4 @@
-package Supplie;
+package Supply;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
