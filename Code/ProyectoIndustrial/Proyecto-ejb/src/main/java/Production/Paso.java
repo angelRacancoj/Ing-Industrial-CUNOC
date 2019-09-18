@@ -113,7 +113,7 @@ public class Paso implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.pruebahibernate.Paso[ idPaso=" + idPaso + " ]";
+        return "com.mycompany.Industrial.Paso[ idPaso=" + idPaso + " ]";
     }
     
 }
