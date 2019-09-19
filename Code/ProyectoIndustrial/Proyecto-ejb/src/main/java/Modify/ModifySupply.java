@@ -1,12 +1,16 @@
 package Modify;
 
-import Supplie.Supply;
+import Supply.Supply;
+import User.User;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,7 +30,7 @@ public class ModifySupply {
     @Column(name = "id_modificacion_insumo")
     private Integer idModifySupply;
     @ManyToOne(optional = false)
-    private User user:
+    private User user;
     @ManyToOne(optional = false)
     private Supply supply;
     @Column(columnDefinition = "ENUM('POR_FALTANTE','POR_ROBO','ATRIBUTOS')")

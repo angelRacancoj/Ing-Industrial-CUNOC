@@ -23,7 +23,7 @@ public class Group {
     private Integer idGroup;
     @Column(name = "informacion")
     private String infomation;
-    @Column(name = "seccion", lenght = 2)
+    @Column(name = "seccion", length = 2)
     private String section;
 
     public Group() {

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,9 +39,9 @@ public class History {
     private Integer batchesProducedInteger;
     @Column(name = "esta_activo")
     private boolean isActive;
-    @ManytoOne(optional = false)
-    private Produce produce;
-    @ManytoOne(optional = false)
+//    @ManyToOne(optional = false)
+//    private Produce produce;
+    @ManyToOne(optional = false)
     private Group group;
 
     public History() {
@@ -78,14 +79,6 @@ public class History {
         this.totalCost = totalCost;
     }
 
-    public Integer getBatchesProduced() {
-        return batchesProduced;
-    }
-
-    public void setBatchesProduced(Integer batchesProduced) {
-        this.batchesProduced = batchesProduced;
-    }
-
     public boolean isIsActive() {
         return isActive;
     }
@@ -94,13 +87,13 @@ public class History {
         this.isActive = isActive;
     }
 
-    public Produce getProduce() {
-        return produce;
-    }
-
-    public void setProduce(Produce produce) {
-        this.produce = produce;
-    }
+//    public Produce getProduce() {
+//        return produce;
+//    }
+//
+//    public void setProduce(Produce produce) {
+//        this.produce = produce;
+//    }
 
     public Group getGroup() {
         return group;
