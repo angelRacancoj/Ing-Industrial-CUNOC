@@ -1,9 +1,4 @@
 package Production;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 
 import java.io.Serializable;
@@ -37,7 +32,6 @@ public class Production implements Serializable {
     @Basic(optional = false)
     @Column(name = "unidades")
     private int unity;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "calificacion")
     private Double qualification;
     @Column(name = "precio_lote")
@@ -53,12 +47,12 @@ public class Production implements Serializable {
         this.idLineProduction = idLineaProduccion;
     }
 
-    public Production(Integer idLineaProduccion, String nombre, boolean estado, int unidades, int productoId) {
-        this.idLineProduction = idLineaProduccion;
-        this.name = nombre;
-        this.state = estado;
-        this.unity = unidades;
-        this.productId = productoId;
+    public Production(Integer idLineProduction, String name, boolean state, int unity, int productId) {
+        this.idLineProduction = idLineProduction;
+        this.name = name;
+        this.state = state;
+        this.unity = unity;
+        this.productId = productId;
     }
 
     public Integer getIdLineProduction() {

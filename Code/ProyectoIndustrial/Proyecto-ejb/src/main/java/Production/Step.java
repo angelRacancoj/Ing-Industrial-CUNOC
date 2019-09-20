@@ -36,15 +36,15 @@ public class Step implements Serializable {
     public Step() {
     }
 
-    public Step(Integer idPaso) {
-        this.idStep = idPaso;
+    public Step(Integer idStep) {
+        this.idStep = idStep;
     }
 
-    public Step(Integer idPaso, String nombre, String descripcion, int etapaId) {
-        this.idStep = idPaso;
-        this.name = nombre;
-        this.description = descripcion;
-        this.StageId = etapaId;
+    public Step(Integer idStep, String name, String description, int stageId) {
+        this.idStep = idStep;
+        this.name = name;
+        this.description = description;
+        this.StageId = stageId;
     }
 
     public Integer getIdStep() {
