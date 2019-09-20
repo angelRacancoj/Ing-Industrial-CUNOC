@@ -1,5 +1,6 @@
 package Group;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,14 +12,14 @@ import javax.persistence.Table;
  *
  * @author angelrg
  */
-
 @Entity
 @Table(
         name = "GRUPO"
 )
-public class Group {
+public class Group implements Serializable {
+
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_grupo")
     private Integer idGroup;
     @Column(name = "informacion")
@@ -27,6 +28,12 @@ public class Group {
     private String section;
 
     public Group() {
+    }
+
+    public Group(Integer idGroup, String infomation, String section) {
+        this.idGroup = idGroup;
+        this.infomation = infomation;
+        this.section = section;
     }
 
     public Integer getIdGroup() {
@@ -52,6 +59,5 @@ public class Group {
     public void setSection(String section) {
         this.section = section;
     }
- 
-    
+
 }

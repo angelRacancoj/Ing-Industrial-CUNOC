@@ -1,6 +1,7 @@
 package Group;
 
 import User.User;
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,13 +17,12 @@ import javax.persistence.TemporalType;
  *
  * @author angelrg
  */
-
 @Entity
 @Table(
         name = "GRUPO_USUARIO"
 )
 
-public class GroupUser {
+public class GroupUser implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +37,13 @@ public class GroupUser {
     private Date admissionDate;
 
     public GroupUser() {
+    }
+
+    public GroupUser(Integer idGroupUser, User user, Group group, Date admissionDate) {
+        this.idGroupUser = idGroupUser;
+        this.user = user;
+        this.group = group;
+        this.admissionDate = admissionDate;
     }
 
     public Integer getidGroupUser() {
