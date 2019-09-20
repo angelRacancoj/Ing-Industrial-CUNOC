@@ -1,5 +1,6 @@
 package User;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +12,16 @@ import javax.persistence.Table;
 @Table(
         name = "ROL_USUARIO"
 )
-public class RolUser {
+public class RolUser implements Serializable{
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol")
     private Integer idRol;
     @Column(name = "nombre")
     private String name;
+    
+    public RolUser(){
+    }
     
     public RolUser(Integer idRol,String name){
         this.idRol=idRol;
