@@ -1,6 +1,8 @@
 package Produce;
 
 import Group.Group;
+import Production.Produccion;
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,15 +18,15 @@ import javax.persistence.TemporalType;
  *
  * @author angelrg
  */
-
 @Entity
 @Table(
         name = "HISTORIAL"
 )
 
-public class History {
+public class History implements Serializable {
+
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "historial_id")
     private Integer history_id;
     @Column(name = "fecha_inicio")
@@ -33,18 +35,29 @@ public class History {
     @Column(name = "fecha_fin")
     @Temporal(TemporalType.DATE)
     private Date endDate;
-    @Column(name = "costo_total",scale = 2)
+    @Column(name = "costo_total", scale = 2)
     private double totalCost;
     @Column(name = "lotes_producidos")
     private Integer batchesProducedInteger;
     @Column(name = "esta_activo")
     private boolean isActive;
-//    @ManyToOne(optional = false)
-//    private Produce produce;
+    @ManyToOne(optional = false)
+    private Produccion produccion;
     @ManyToOne(optional = false)
     private Group group;
 
     public History() {
+    }
+
+    public History(Integer history_id, Date startDate, Date endDate, double totalCost, Integer batchesProducedInteger, boolean isActive, Produccion produccion, Group group) {
+        this.history_id = history_id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.totalCost = totalCost;
+        this.batchesProducedInteger = batchesProducedInteger;
+        this.isActive = isActive;
+        this.produccion = produccion;
+        this.group = group;
     }
 
     public Integer getHistory_id() {
@@ -87,14 +100,6 @@ public class History {
         this.isActive = isActive;
     }
 
-//    public Produce getProduce() {
-//        return produce;
-//    }
-//
-//    public void setProduce(Produce produce) {
-//        this.produce = produce;
-//    }
-
     public Group getGroup() {
         return group;
     }
@@ -102,6 +107,21 @@ public class History {
     public void setGroup(Group group) {
         this.group = group;
     }
-    
-    
+
+    public Integer getBatchesProducedInteger() {
+        return batchesProducedInteger;
+    }
+
+    public void setBatchesProducedInteger(Integer batchesProducedInteger) {
+        this.batchesProducedInteger = batchesProducedInteger;
+    }
+
+    public Produccion getProduccion() {
+        return produccion;
+    }
+
+    public void setProduccion(Produccion produccion) {
+        this.produccion = produccion;
+    }
+
 }
