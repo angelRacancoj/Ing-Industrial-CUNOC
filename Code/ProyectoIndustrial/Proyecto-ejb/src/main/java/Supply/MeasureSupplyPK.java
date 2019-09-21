@@ -1,16 +1,25 @@
 package Supply;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class MeasureSupplyPK {
+public class MeasureSupplyPK implements Serializable{
+    @Column(name = "codigo_insumo")
     private Integer codeSupply;
+    @Column(name = "medida_id")
     private Integer idMeasure;
 
     public MeasureSupplyPK() {
     }
 
+    public MeasureSupplyPK(Integer codeSupply, Integer idMeasure) {
+        this.codeSupply = codeSupply;
+        this.idMeasure = idMeasure;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
