@@ -20,26 +20,26 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(
-        name = "HISTORIAL"
+        name = "HISTORY"
 )
 
 public class History implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "historial_id")
+    @Column(name = "history_id")
     private Integer history_id;
-    @Column(name = "fecha_inicio")
+    @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
-    @Column(name = "fecha_fin")
+    @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
-    @Column(name = "costo_total", scale = 2)
+    @Column(name = "total_cost", scale = 2)
     private double totalCost;
-    @Column(name = "lotes_producidos")
+    @Column(name = "batches_produced")
     private Integer batchesProduced;
-    @Column(name = "esta_activo")
+    @Column(name = "is_active")
     private boolean isActive;
     @ManyToOne(optional = false)
     private Produccion produccion;

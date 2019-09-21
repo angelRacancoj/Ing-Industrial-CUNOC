@@ -22,13 +22,13 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(
-        name = "MODIFICACION_INSUMO"
+        name = "MODIFY_SUPPLY"
 )
 public class ModifySupply implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_modificacion_insumo")
+    @Column(name = "id_modify_supply")
     private Integer idModifySupply;
     @ManyToOne(optional = false)
     private User user;
@@ -36,26 +36,26 @@ public class ModifySupply implements Serializable {
     private Supply supply;
     @Column(columnDefinition = "ENUM('POR_FALTANTE','POR_ROBO','ATRIBUTOS')")
     @Enumerated(EnumType.STRING)
-    private ModificationType status;
-    @Column(name = "cantidad")
+    private ModificationType modifyType;
+    @Column(name = "quantity")
     private Integer quantity;
-    @Column(name = "fecha")
+    @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    @Column(name = "nota")
-    private String nota;
+    @Column(name = "note")
+    private String note;
 
     public ModifySupply() {
     }
 
-    public ModifySupply(Integer idModifySupply, User user, Supply supply, ModificationType status, Integer quantity, Date date, String nota) {
+    public ModifySupply(Integer idModifySupply, User user, Supply supply, ModificationType modifyType, Integer quantity, Date date, String note) {
         this.idModifySupply = idModifySupply;
         this.user = user;
         this.supply = supply;
-        this.status = status;
+        this.modifyType = modifyType;
         this.quantity = quantity;
         this.date = date;
-        this.nota = nota;
+        this.note = note;
     }
 
     public Integer getIdModifySupply() {
@@ -82,12 +82,12 @@ public class ModifySupply implements Serializable {
         this.supply = supply;
     }
 
-    public ModificationType getStatus() {
-        return status;
+    public ModificationType getmodifyType() {
+        return modifyType;
     }
 
-    public void setStatus(ModificationType status) {
-        this.status = status;
+    public void setmodifyType(ModificationType modifyType) {
+        this.modifyType = modifyType;
     }
 
     public Integer getQuantity() {
@@ -106,12 +106,12 @@ public class ModifySupply implements Serializable {
         this.date = date;
     }
 
-    public String getNota() {
-        return nota;
+    public String getNote() {
+        return note;
     }
 
-    public void setNota(String nota) {
-        this.nota = nota;
+    public void setNote(String note) {
+        this.note = note;
     }
 
 }

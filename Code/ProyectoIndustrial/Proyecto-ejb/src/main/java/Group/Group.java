@@ -14,25 +14,25 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(
-        name = "GRUPO"
+        name = "GROUP"
 )
 public class Group implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_grupo")
+    @Column(name = "id_group")
     private Integer idGroup;
-    @Column(name = "informacion")
-    private String infomation;
-    @Column(name = "seccion", length = 2)
+    @Column(name = "information")
+    private String information;
+    @Column(name = "section", length = 2)
     private String section;
 
     public Group() {
     }
 
-    public Group(Integer idGroup, String infomation, String section) {
+    public Group(Integer idGroup, String information, String section) {
         this.idGroup = idGroup;
-        this.infomation = infomation;
+        this.information = information;
         this.section = section;
     }
 
@@ -44,12 +44,12 @@ public class Group implements Serializable {
         this.idGroup = idGroup;
     }
 
-    public String getInfomation() {
-        return infomation;
+    public String getInformation() {
+        return information;
     }
 
-    public void setInfomation(String infomation) {
-        this.infomation = infomation;
+    public void setInformation(String information) {
+        this.information = information;
     }
 
     public String getSection() {

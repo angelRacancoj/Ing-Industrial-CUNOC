@@ -62,8 +62,8 @@ public class ModifySupplyTest {
         ModificationType testModType = ModificationType.POR_ROBO;
 
         //Act
-        modifySupply.setStatus(testModType);
-        ModificationType result = modifySupply.getStatus();
+        modifySupply.setmodifyType(testModType);
+        ModificationType result = modifySupply.getmodifyType();
 
         //Assert
         Assert.assertEquals(result, testModType);
@@ -104,8 +104,8 @@ public class ModifySupplyTest {
         String testText = "Esta es una nota de prueba";
 
         //Act
-        modifySupply.setNota(testText);
-        String result = modifySupply.getNota();
+        modifySupply.setNote(testText);
+        String result = modifySupply.getNote();
         
         //Assert
         Assert.assertEquals(result, testText);

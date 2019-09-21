@@ -35,8 +35,8 @@ public class GroupTest {
         String testText = "Este es un texto de prueba";
 
         //Act
-        testGroup.setInfomation(testText);
-        String result = testGroup.getInfomation();
+        testGroup.setInformation(testText);
+        String result = testGroup.getInformation();
 
         //Assert
         Assert.assertEquals(result, testText);
