@@ -1,5 +1,6 @@
 package Supply;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,29 +15,40 @@ import javax.persistence.TemporalType;
 @Table(
         name = "INSUMO"
 )
-public class Supply {
+public class Supply implements Serializable{
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "codigo")
     private Integer code;
-    @Column(name = "nombre", insertable = true, updatable = true)
+    @Column(name = "nombre")
     private String name;
-    @Column(name = "fecha_caducidad", insertable = true, updatable = true)
+    @Column(name = "fecha_caducidad")
     @Temporal(TemporalType.DATE)
     private Date expirationDate;
-    @Column(name = "fecha_ingreso", insertable = true, updatable = true)
+    @Column(name = "fecha_ingreso")
     @Temporal(TemporalType.DATE)
     private Date dateOfAdmission;
-    @Column(name = "costo",scale = 2, insertable = true, updatable = true)
+    @Column(name = "costo",scale = 2)
     private double cost;
-    @Column(name = "cantidad",scale = 2, insertable = true, updatable = true)
+    @Column(name = "cantidad",scale = 2)
     private double quantity;
-    @Column(name = "disponibilidad", insertable = true, updatable = true)
+    @Column(name = "disponibilidad")
     private boolean availability;
-    @Column(name = "descripcion", insertable = true, updatable = true)
+    @Column(name = "descripcion")
     private String description;
 
     public Supply() {
+    }
+
+    public Supply(Integer code, String name, Date expirationDate, Date dateOfAdmission, double cost, double quantity, boolean availability, String description) {
+        this.code = code;
+        this.name = name;
+        this.expirationDate = expirationDate;
+        this.dateOfAdmission = dateOfAdmission;
+        this.cost = cost;
+        this.quantity = quantity;
+        this.availability = availability;
+        this.description = description;
     }
 
     public Integer getCode() {

@@ -1,5 +1,6 @@
 package Supply;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +12,21 @@ import javax.persistence.Table;
 @Table(
         name = "MEDIDA"
 )
-public class Measure {
+public class Measure implements Serializable{
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_medida")
     private Integer idMeasure;
-    @Column(name = "nombre", insertable = true, updatable = true)
+    @Column(name = "nombre")
     private String name;
+
+    public Measure() {
+    }
+
+    public Measure(Integer idMeasure, String name) {
+        this.idMeasure = idMeasure;
+        this.name = name;
+    }
 
     public Integer getIdMeasure() {
         return idMeasure;
