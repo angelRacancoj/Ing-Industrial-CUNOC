@@ -1,5 +1,6 @@
 package User;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,9 +13,8 @@ import javax.persistence.Table;
 @Table(
         name = "USUARIO"
 )
-public class User {
+public class User implements Serializable{
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "carnet")
     private Integer carnet;
     @Column(name = "nombre")
@@ -31,7 +31,10 @@ public class User {
     private RolUser rolUser;
     @ManyToOne
     private Career career;
-
+    
+    public User(){
+    }
+    
     public User(Integer carnet, String name, String email, Integer phone, String password, Integer state, RolUser rolUser, Career career) {
         this.carnet = carnet;
         this.name = name;

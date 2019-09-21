@@ -2,6 +2,7 @@ package Modify;
 
 import Supply.Supply;
 import User.User;
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,14 +20,14 @@ import javax.persistence.TemporalType;
  *
  * @author angelrg
  */
-
 @Entity
 @Table(
         name = "MODIFICACION_INSUMO"
 )
-public class ModifySupply {
+public class ModifySupply implements Serializable {
+
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_modificacion_insumo")
     private Integer idModifySupply;
     @ManyToOne(optional = false)
@@ -43,6 +44,19 @@ public class ModifySupply {
     private Date date;
     @Column(name = "nota")
     private String nota;
+
+    public ModifySupply() {
+    }
+
+    public ModifySupply(Integer idModifySupply, User user, Supply supply, ModificationType status, Integer quantity, Date date, String nota) {
+        this.idModifySupply = idModifySupply;
+        this.user = user;
+        this.supply = supply;
+        this.status = status;
+        this.quantity = quantity;
+        this.date = date;
+        this.nota = nota;
+    }
 
     public Integer getIdModifySupply() {
         return idModifySupply;
@@ -99,6 +113,5 @@ public class ModifySupply {
     public void setNota(String nota) {
         this.nota = nota;
     }
-    
-    
+
 }
