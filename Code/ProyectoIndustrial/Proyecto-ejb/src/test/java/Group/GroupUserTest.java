@@ -30,16 +30,28 @@ public class GroupUserTest {
     public void testSetAndGetUser() throws Exception {
         //Arrange
         GroupUser testGroupUser = new GroupUser();
-//       User user = new User
+        User user = new User();
+        
+        //Act
+        testGroupUser.setUser(user);
+        User result = testGroupUser.getUser();
+        
+        //Assert
+        Assert.assertEquals(result, user);
     }
 
     @Test
-    public void testSetAndGetIdGroupGroup() throws Exception {
+    public void testSetAndGetGroup() throws Exception {
         //Arrange
         GroupUser testGroupUser = new GroupUser();
+        Group group = new Group();
 
         //Act
+        testGroupUser.setGroup(group);
+        Group result = testGroupUser.getGroup();
+        
         //Assert
+        Assert.assertEquals(result, group);
     }
 
     @Test

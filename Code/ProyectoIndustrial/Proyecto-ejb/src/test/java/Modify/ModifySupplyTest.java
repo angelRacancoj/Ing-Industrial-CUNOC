@@ -1,5 +1,7 @@
 package Modify;
 
+import Supply.Supply;
+import User.User;
 import java.time.Instant;
 import java.util.Date;
 import org.testng.Assert;
@@ -29,18 +31,28 @@ public class ModifySupplyTest {
     public void testGetAndSetUser() throws Exception {
         //Arrange
         ModifySupply modifySupply = new ModifySupply();
+        User user = new User();
 
         //Act
+        modifySupply.setUser(user);
+        User result = modifySupply.getUser();
+        
         //Assert
+        Assert.assertEquals(result, user);
     }
 
     @Test
     public void testGetAndSetSupply() throws Exception {
         //Arrange
         ModifySupply modifySupply = new ModifySupply();
+        Supply supply = new Supply();
 
         //Act
+        modifySupply.setSupply(supply);
+        Supply result = modifySupply.getSupply();
+        
         //Assert
+        Assert.assertEquals(result, supply);
     }
 
     @Test

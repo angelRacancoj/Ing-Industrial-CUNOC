@@ -38,7 +38,7 @@ public class History implements Serializable {
     @Column(name = "costo_total", scale = 2)
     private double totalCost;
     @Column(name = "lotes_producidos")
-    private Integer batchesProducedInteger;
+    private Integer batchesProduced;
     @Column(name = "esta_activo")
     private boolean isActive;
     @ManyToOne(optional = false)
@@ -49,12 +49,12 @@ public class History implements Serializable {
     public History() {
     }
 
-    public History(Integer history_id, Date startDate, Date endDate, double totalCost, Integer batchesProducedInteger, boolean isActive, Produccion produccion, Group group) {
+    public History(Integer history_id, Date startDate, Date endDate, double totalCost, Integer batchesProduced, boolean isActive, Produccion produccion, Group group) {
         this.history_id = history_id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalCost = totalCost;
-        this.batchesProducedInteger = batchesProducedInteger;
+        this.batchesProduced = batchesProduced;
         this.isActive = isActive;
         this.produccion = produccion;
         this.group = group;
@@ -108,12 +108,12 @@ public class History implements Serializable {
         this.group = group;
     }
 
-    public Integer getBatchesProducedInteger() {
-        return batchesProducedInteger;
+    public Integer getBatchesProduced() {
+        return batchesProduced;
     }
 
-    public void setBatchesProducedInteger(Integer batchesProducedInteger) {
-        this.batchesProducedInteger = batchesProducedInteger;
+    public void setBatchesProduced(Integer batchesProduced) {
+        this.batchesProduced = batchesProduced;
     }
 
     public Produccion getProduccion() {
