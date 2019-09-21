@@ -1,5 +1,6 @@
 package Production;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,12 +13,12 @@ import javax.persistence.Table;
         name = "COMENTARIO"
 )
 
-public class Commentary {
+public class Commentary implements Serializable{
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_comentario")
     private Integer idCommentary;
-    @Column(name = "texto", insertable = true, updatable = true)
+    @Column(name = "texto")
     private String text;
     
 
