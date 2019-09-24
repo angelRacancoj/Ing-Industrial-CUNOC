@@ -21,14 +21,14 @@ public class NecessarySupply implements Serializable{
     @Column(name = "id_insumo_necesario")
     private Integer idNecessarySupply;
     @ManyToOne
-    private Produccion produccion;
+    private Production produccion;
     @ManyToOne
     private Supply supply;
 
     public NecessarySupply() {
     }
 
-    public NecessarySupply(Integer idNecessarySupply, Produccion produccion, Supply supply) {
+    public NecessarySupply(Integer idNecessarySupply, Production produccion, Supply supply) {
         this.idNecessarySupply = idNecessarySupply;
         this.produccion = produccion;
         this.supply = supply;
@@ -43,11 +43,11 @@ public class NecessarySupply implements Serializable{
         this.idNecessarySupply = idNecessarySupply;
     }
 
-    public Produccion getProduccion() {
+    public Production getProduction() {
         return produccion;
     }
 
-    public void setProduccion(Produccion produccion) {
+    public void setProduction(Production produccion) {
         this.produccion = produccion;
     }
 
