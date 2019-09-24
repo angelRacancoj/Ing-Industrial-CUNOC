@@ -20,26 +20,26 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(
-        name = "HISTORIAL"
+        name = "HISTORY"
 )
 
 public class History implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "historial_id")
+    @Column(name = "history_id")
     private Integer history_id;
-    @Column(name = "fecha_inicio")
+    @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
-    @Column(name = "fecha_fin")
+    @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
-    @Column(name = "costo_total", scale = 2)
+    @Column(name = "total_cost", scale = 2)
     private double totalCost;
-    @Column(name = "lotes_producidos")
-    private Integer batchesProducedInteger;
-    @Column(name = "esta_activo")
+    @Column(name = "batches_produced")
+    private Integer batchesProduced;
+    @Column(name = "is_active")
     private boolean isActive;
     @ManyToOne(optional = false)
     private Produccion produccion;
@@ -49,12 +49,12 @@ public class History implements Serializable {
     public History() {
     }
 
-    public History(Integer history_id, Date startDate, Date endDate, double totalCost, Integer batchesProducedInteger, boolean isActive, Produccion produccion, Group group) {
+    public History(Integer history_id, Date startDate, Date endDate, double totalCost, Integer batchesProduced, boolean isActive, Produccion produccion, Group group) {
         this.history_id = history_id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalCost = totalCost;
-        this.batchesProducedInteger = batchesProducedInteger;
+        this.batchesProduced = batchesProduced;
         this.isActive = isActive;
         this.produccion = produccion;
         this.group = group;
@@ -108,12 +108,12 @@ public class History implements Serializable {
         this.group = group;
     }
 
-    public Integer getBatchesProducedInteger() {
-        return batchesProducedInteger;
+    public Integer getBatchesProduced() {
+        return batchesProduced;
     }
 
-    public void setBatchesProducedInteger(Integer batchesProducedInteger) {
-        this.batchesProducedInteger = batchesProducedInteger;
+    public void setBatchesProduced(Integer batchesProduced) {
+        this.batchesProduced = batchesProduced;
     }
 
     public Produccion getProduccion() {

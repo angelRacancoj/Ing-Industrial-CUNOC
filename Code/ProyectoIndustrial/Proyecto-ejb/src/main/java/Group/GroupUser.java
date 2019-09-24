@@ -19,20 +19,20 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(
-        name = "GRUPO_USUARIO"
+        name = "GROUP_USER"
 )
 
 public class GroupUser implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_grupo_usuario")
+    @Column(name = "id_group_user")
     private Integer idGroupUser;
     @ManyToOne(optional = false)
     private User user;
     @ManyToOne(optional = false)
     private Group group;
-    @Column(name = "fecha_ingreso")
+    @Column(name = "admission_date")
     @Temporal(TemporalType.DATE)
     private Date admissionDate;
 
