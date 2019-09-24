@@ -23,6 +23,17 @@ public class Product implements Serializable{
     @Column(name = "descripcion")
     private String description;
 
+    public Product() {
+    }
+
+    public Product(Integer idProduct, String name, String description) {
+        this.idProduct = idProduct;
+        this.name = name;
+        this.description = description;
+    }
+    
+    
+
     public Integer getIdProduct() {
         return idProduct;
     }
