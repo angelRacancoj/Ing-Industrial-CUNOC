@@ -26,7 +26,7 @@ public class User implements Serializable{
     @Column(name = "contrasenia")
     private String password;
     @Column(name = "estado")
-    private Integer state;
+    private Boolean state;
     @ManyToOne
     private RolUser rolUser;
     @ManyToOne
@@ -35,7 +35,7 @@ public class User implements Serializable{
     public User(){
     }
     
-    public User(Integer carnet, String name, String email, Integer phone, String password, Integer state, RolUser rolUser, Career career) {
+    public User(Integer carnet, String name, String email, Integer phone, String password, Boolean state, RolUser rolUser, Career career) {
         this.carnet = carnet;
         this.name = name;
         this.email = email;
@@ -86,11 +86,11 @@ public class User implements Serializable{
         this.password = password;
     }
 
-    public Integer getState() {
+    public Boolean getState() {
         return state;
     }
 
-    public void setState(Integer state) {
+    public void setState(Boolean state) {
         this.state = state;
     }
 
