@@ -15,58 +15,56 @@ CREATE SCHEMA IF NOT EXISTS `PRODUCCION_INDUSTRIAL` DEFAULT CHARACTER SET utf8 ;
 USE `PRODUCCION_INDUSTRIAL` ;
 
 -- -----------------------------------------------------
--- Table `PRODUCCION_INDUSTRIAL`.`ROL_USUARIO`
+-- Table `PRODUCCION_INDUSTRIAL`.`ROL_USER`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`ROL_USUARIO` ;
+DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`ROL_USER` ;
 
-CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`ROL_USUARIO` (
+CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`ROL_USER` (
   `id_rol` INT NOT NULL,
-  `nombre` VARCHAR(45) NOT NULL,
+  `name_rol` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_rol`))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
--- Table `PRODUCCION_INDUSTRIAL`.`CARRERA`
+-- Table `PRODUCCION_INDUSTRIAL`.`CAREER`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`CARRERA` ;
+DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`CAREER` ;
 
-CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`CARRERA` (
-  `id_carrera` INT NOT NULL,
-  `nombre_carrera` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_carrera`))
+CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`CAREER` (
+  `id_career` INT NOT NULL,
+  `name_career` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_career`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `PRODUCCION_INDUSTRIAL`.`USUARIO`
+-- Table `PRODUCCION_INDUSTRIAL`.`USER`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`USUARIO` ;
+DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`USER` ;
 
-CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`USUARIO` (
+CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`USER` (
   `carnet` INT NOT NULL,
-  `nombre` VARCHAR(60) NOT NULL,
-  `correo_electronico` VARCHAR(60) NOT NULL,
-  `telefono` INT NOT NULL,
-  `contrasenia` VARCHAR(400) NOT NULL,
-  `estado` TINYINT(1) NULL,
+  `name` VARCHAR(60) NOT NULL,
+  `email` VARCHAR(60) NOT NULL,
+  `phone` INT NOT NULL,
+  `password` VARCHAR(400) NOT NULL,
+  `state` TINYINT(1) NULL,
   `id_rol` INT NOT NULL,
-  `carrera_id` INT NOT NULL,
+  `id_career` INT NOT NULL,
   PRIMARY KEY (`carnet`),
-  INDEX `fk_USUARIO_ROL_USUARIO1_idx` (`id_rol` ASC),
-  INDEX `fk_USUARIO_CARRERA1_idx` (`carrera_id` ASC),
+  INDEX `fk_USUARIO_ROL_USUARIO1_idx` (`id_rol` ASC) VISIBLE,
+  INDEX `fk_USUARIO_CARRERA1_idx` (`id_career` ASC) VISIBLE,
   CONSTRAINT `fk_USUARIO_ROL_USUARIO1`
     FOREIGN KEY (`id_rol`)
-    REFERENCES `PRODUCCION_INDUSTRIAL`.`ROL_USUARIO` (`id_rol`)
+    REFERENCES `PRODUCCION_INDUSTRIAL`.`ROL_USER` (`id_rol`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_USUARIO_CARRERA1`
-    FOREIGN KEY (`carrera_id`)
-    REFERENCES `PRODUCCION_INDUSTRIAL`.`CARRERA` (`id_carrera`)
+    FOREIGN KEY (`id_career`)
+    REFERENCES `PRODUCCION_INDUSTRIAL`.`CAREER` (`id_career`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `PRODUCCION_INDUSTRIAL`.`INSUMO`
