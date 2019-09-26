@@ -1,7 +1,7 @@
 package Supply;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,15 +23,15 @@ public class Measure implements Serializable{
     private String name;
     
     @OneToMany(mappedBy = "measure_id")
-    private Collection<Supply> SupplyCollection;
+    private ArrayList<Supply> SupplyCollection = new ArrayList<Supply>();
 
     public Measure() {
     }
 
-    public Measure(Integer idMeasure, String name, Collection<Supply> SupplyCollection) {
+    public Measure(Integer idMeasure, String name, ArrayList<Supply> SupplyCollection) {
         this.idMeasure = idMeasure;
         this.name = name;
-        this.SupplyCollection = SupplyCollection;
+        this.SupplyCollection.addAll(SupplyCollection);
     }
 
     public Integer getIdMeasure() {
@@ -50,11 +50,11 @@ public class Measure implements Serializable{
         this.name = name;
     }
 
-    public Collection<Supply> getSupplyCollection() {
+    public ArrayList<Supply> getSupplyCollection() {
         return SupplyCollection;
     }
 
-    public void setSupplyCollection(Collection<Supply> SupplyCollection) {
+    public void setSupplyCollection(ArrayList<Supply> SupplyCollection) {
         this.SupplyCollection = SupplyCollection;
-    }    
+    }
 }
