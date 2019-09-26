@@ -22,12 +22,12 @@ public class Commentary implements Serializable{
     @Column(name = "texto")
     private String text;
     @ManyToOne
-    private Paso paso;
+    private Step paso;
 
     public Commentary() {
     }
 
-    public Commentary(Integer idCommentary, String text, Paso paso) {
+    public Commentary(Integer idCommentary, String text, Step paso) {
         this.idCommentary = idCommentary;
         this.text = text;
         this.paso = paso;
@@ -52,11 +52,11 @@ public class Commentary implements Serializable{
         this.text = text;
     }
 
-    public Paso getPaso() {
+    public Step getStep() {
         return paso;
     }
 
-    public void setPaso(Paso paso) {
+    public void setStep(Step paso) {
         this.paso = paso;
     }
     

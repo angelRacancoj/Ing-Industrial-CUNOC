@@ -10,14 +10,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(
-        name = "ROL_USUARIO"
+        name = "ROL_USER"
 )
 public class RolUser implements Serializable{
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol")
     private Integer idRol;
-    @Column(name = "nombre")
+    @Column(name = "name_rol")
     private String name;
     
     public RolUser(){
