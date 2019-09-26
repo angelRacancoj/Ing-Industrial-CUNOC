@@ -41,12 +41,12 @@ public class Supply implements Serializable{
     
     @ManyToOne(optional = false)
     @JoinColumn(name = "measure_id", referencedColumnName = "id_measure")
-    private Supply supply;
+    private Measure measure;
     
     public Supply() {
     }
 
-    public Supply(Integer code, String name, LocalDate expirationDate, LocalDate dateOfAdmission, double cost, double quantity, boolean availability, String description, Supply supply) {
+    public Supply(Integer code, String name, LocalDate expirationDate, LocalDate dateOfAdmission, double cost, double quantity, boolean availability, String description, Measure measure) {
         this.code = code;
         this.name = name;
         this.expirationDate = expirationDate;
@@ -55,7 +55,7 @@ public class Supply implements Serializable{
         this.quantity = quantity;
         this.availability = availability;
         this.description = description;
-        this.supply = supply;
+        this.measure = measure;
     }
 
     public Integer getCode() {
@@ -122,11 +122,11 @@ public class Supply implements Serializable{
         this.description = description;
     }
 
-    public Supply getSupply() {
-        return supply;
+    public Measure getMeasure() {
+        return measure;
     }
 
-    public void setSupply(Supply supply) {
-        this.supply = supply;
+    public void setMeasure(Measure measure) {
+        this.measure = measure;
     }
 }
