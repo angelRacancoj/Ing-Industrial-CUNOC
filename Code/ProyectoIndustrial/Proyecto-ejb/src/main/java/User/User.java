@@ -6,30 +6,33 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(
-        name = "USUARIO"
+        name = "USER"
 )
 public class User implements Serializable{
     @Id
     @Column(name = "carnet")
     private Integer carnet;
-    @Column(name = "nombre")
+    @Column(name = "name")
     private String name;
-    @Column(name = "correo_electronico")
+    @Column(name = "email")
     private String email;
-    @Column(name = "telefono")
+    @Column(name = "phone")
     private Integer phone;
-    @Column(name = "contrasenia")
+    @Column(name = "password")
     private String password;
-    @Column(name = "estado")
+    @Column(name = "state")
     private Boolean state;
     @ManyToOne
+    @JoinColumn(name="id_rol")
     private RolUser rolUser;
     @ManyToOne
+    @JoinColumn(name="id_career")
     private Career career;
     
     public User(){
