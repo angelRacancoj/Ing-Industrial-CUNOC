@@ -31,8 +31,10 @@ public class ModifySupply implements Serializable {
     @Column(name = "id_modify_supply")
     private Integer idModifySupply;
     @ManyToOne(optional = false)
+    @JoinColumn(name = "carnet_user", referencedColumnName = "carnet")
     private User user;
     @ManyToOne(optional = false)
+    @JoinColumn(name = "supply_id", referencedColumnName = "code")
     private Supply supply;
     @Column(columnDefinition = "ENUM('POR_FALTANTE','POR_ROBO','ATRIBUTOS')")
     @Enumerated(EnumType.STRING)
