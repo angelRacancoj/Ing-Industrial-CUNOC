@@ -6,7 +6,7 @@
 package Produce;
 
 import Group.Group;
-import Production.Produccion;
+import Production.Production;
 import java.time.Instant;
 import java.util.Date;
 import org.testng.annotations.Test;
@@ -106,11 +106,11 @@ public class HistoryTest {
     public void testSetAndGetProduction() throws Exception {
         //Arrange
         History history = new History();
-        Produccion production = new Produccion();
+        Production production = new Production();
 
         //Act
         history.setProduccion(production);
-        Produccion result = history.getProduccion();
+        Production result = history.getProduccion();
 
         //Assert
         Assert.assertEquals(result, production);

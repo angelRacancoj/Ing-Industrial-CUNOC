@@ -25,11 +25,11 @@ public class NecessarySupplyTest {
     public void testSetAndGetIdProduction() throws Exception {
         // Arrange
         NecessarySupply testNecessarySupply = new NecessarySupply();
-        Produccion testVal = new Produccion();
+        Production testVal = new Production();
         
         // Act
-        testNecessarySupply.setProduccion(testVal);
-        Produccion result = testNecessarySupply.getProduccion();
+        testNecessarySupply.setProduction(testVal);
+        Production result = testNecessarySupply.getProduction();
         
         // Assert
         Assert.assertEquals(result, testVal);

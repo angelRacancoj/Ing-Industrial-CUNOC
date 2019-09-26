@@ -1,46 +1,52 @@
 package Supply;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(
-        name = "INSUMO"
+        name = "SUPPLY"
 )
 public class Supply implements Serializable{
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    @Column(name = "codigo")
+    @Column(name = "code")
     private Integer code;
-    @Column(name = "nombre")
+    @Column(name = "name")
     private String name;
-    @Column(name = "fecha_caducidad")
+    @Column(name = "expiration_date")
     @Temporal(TemporalType.DATE)
-    private Date expirationDate;
-    @Column(name = "fecha_ingreso")
+    private LocalDate expirationDate;
+    @Column(name = "date_of_admission")
     @Temporal(TemporalType.DATE)
-    private Date dateOfAdmission;
-    @Column(name = "costo",scale = 2)
+    private LocalDate dateOfAdmission;
+    @Column(name = "cost",scale = 2)
     private double cost;
-    @Column(name = "cantidad",scale = 2)
+    @Column(name = "quantity",scale = 2)
     private double quantity;
-    @Column(name = "disponibilidad")
+    @Column(name = "availability")
     private boolean availability;
-    @Column(name = "descripcion")
+    @Column(name = "description")
     private String description;
-
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "measure_id", referencedColumnName = "id_measure")
+    private Measure measure;
+    
     public Supply() {
     }
 
-    public Supply(Integer code, String name, Date expirationDate, Date dateOfAdmission, double cost, double quantity, boolean availability, String description) {
+    public Supply(Integer code, String name, LocalDate expirationDate, LocalDate dateOfAdmission, double cost, double quantity, boolean availability, String description, Measure measure) {
         this.code = code;
         this.name = name;
         this.expirationDate = expirationDate;
@@ -49,6 +55,7 @@ public class Supply implements Serializable{
         this.quantity = quantity;
         this.availability = availability;
         this.description = description;
+        this.measure = measure;
     }
 
     public Integer getCode() {
@@ -67,19 +74,19 @@ public class Supply implements Serializable{
         this.name = name;
     }
 
-    public Date getExpirationDate() {
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }
 
-    public Date getDateOfAdmission() {
+    public LocalDate getDateOfAdmission() {
         return dateOfAdmission;
     }
 
-    public void setDateOfAdmission(Date dateOfAdmission) {
+    public void setDateOfAdmission(LocalDate dateOfAdmission) {
         this.dateOfAdmission = dateOfAdmission;
     }
 
@@ -114,5 +121,12 @@ public class Supply implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
+    public Measure getMeasure() {
+        return measure;
+    }
+
+    public void setMeasure(Measure measure) {
+        this.measure = measure;
+    }
 }
