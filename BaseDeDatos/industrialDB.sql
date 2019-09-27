@@ -125,13 +125,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `PRODUCCION_INDUSTRIAL`.`PRODUCTO`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`PRODUCTO` ;
+DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`PRODUCT` ;
 
-CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`PRODUCTO` (
-  `id_producto` INT NOT NULL,
-  `nombre` VARCHAR(45) NOT NULL,
-  `descripcion` TINYTEXT NOT NULL,
-  PRIMARY KEY (`id_producto`))
+CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`PRODUCT` (
+  `id_product` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `description` TINYTEXT NOT NULL,
+  PRIMARY KEY (`id_product`))
 ENGINE = InnoDB;
 
 
@@ -167,42 +167,41 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `PRODUCCION_INDUSTRIAL`.`PRODUCCION`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`PRODUCCION` ;
+DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`PRODUCTION` ;
 
-CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`PRODUCCION` (
-  `id_linea_produccion` INT NOT NULL,
-  `nombre` VARCHAR(60) NOT NULL,
-  `estado` TINYINT(1) NOT NULL,
-  `unidades` INT NOT NULL,
-  `calificacion` DOUBLE NULL,
-  `precio_lote` DOUBLE NULL,
-  `producto_id` INT NOT NULL,
-  PRIMARY KEY (`id_linea_produccion`),
-  INDEX `fk_LINEA_DE_PRODUCCION_PRODUCTO1_idx` (`producto_id` ASC),
+CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`PRODUCTION` (
+  `id_line_production` INT NOT NULL,
+  `name` VARCHAR(60) NOT NULL,
+  `state` TINYINT(1) NOT NULL,
+  `unity` INT NOT NULL,
+  `qualification` DOUBLE NULL,
+  `price_lot` DOUBLE NULL,
+  `product_id` INT NOT NULL,
+  PRIMARY KEY (`id_line_production`),
+  INDEX `fk_LINEA_DE_PRODUCCION_PRODUCTO1_idx` (`product_id` ASC),
   CONSTRAINT `fk_LINEA_DE_PRODUCCION_PRODUCTO1`
-    FOREIGN KEY (`producto_id`)
-    REFERENCES `PRODUCCION_INDUSTRIAL`.`PRODUCTO` (`id_producto`)
+    FOREIGN KEY (`product_id`)
+    REFERENCES `PRODUCCION_INDUSTRIAL`.`PRODUCT` (`id_product`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `PRODUCCION_INDUSTRIAL`.`ETAPA`
+-- Table `PRODUCCION_INDUSTRIAL`.`STAGE`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`ETAPA` ;
+DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`STAGE` ;
 
-CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`ETAPA` (
-  `id_etapa` INT NOT NULL,
-  `nombre` VARCHAR(45) NOT NULL,
-  `descripcion` TINYTEXT NOT NULL,
-  `linea_de_produccion_id` INT NOT NULL,
-  `tiempo_minutos` INT NOT NULL,
-  PRIMARY KEY (`id_etapa`),
-  INDEX `fk_ETAPA_LINEA_DE_PRODUCCION1_idx` (`linea_de_produccion_id` ASC),
+CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`STAGE` (
+  `id_stage` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `description` TINYTEXT NOT NULL,
+  `line_production_id` INT NOT NULL,
+  PRIMARY KEY (`id_stage`),
+  INDEX `fk_ETAPA_LINEA_DE_PRODUCCION1_idx` (`line_production_id` ASC) VISIBLE,
   CONSTRAINT `fk_ETAPA_LINEA_DE_PRODUCCION1`
-    FOREIGN KEY (`linea_de_produccion_id`)
-    REFERENCES `PRODUCCION_INDUSTRIAL`.`PRODUCCION` (`id_linea_produccion`)
+    FOREIGN KEY (`line_production_id`)
+    REFERENCES `PRODUCCION_INDUSTRIAL`.`PRODUCTION` (`id_line_production`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -254,18 +253,18 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `PRODUCCION_INDUSTRIAL`.`PASO`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`PASO` ;
+DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`STEP` ;
 
-CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`PASO` (
-  `id_paso` INT NOT NULL,
-  `nombre` VARCHAR(45) NOT NULL,
-  `descripcion` TINYTEXT NOT NULL,
-  `etapa_id` INT NOT NULL,
-  PRIMARY KEY (`id_paso`),
-  INDEX `fk_PASO_ETAPA1_idx` (`etapa_id` ASC),
+CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`STEP` (
+  `id_step` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `description` TINYTEXT NOT NULL,
+  `stage_id` INT NOT NULL,
+  PRIMARY KEY (`id_step`),
+  INDEX `fk_PASO_ETAPA1_idx` (`stage_id` ASC) VISIBLE,
   CONSTRAINT `fk_PASO_ETAPA1`
-    FOREIGN KEY (`etapa_id`)
-    REFERENCES `PRODUCCION_INDUSTRIAL`.`ETAPA` (`id_etapa`)
+    FOREIGN KEY (`stage_id`)
+    REFERENCES `PRODUCCION_INDUSTRIAL`.`STAGE` (`id_stage`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -297,19 +296,19 @@ DROP TABLE IF EXISTS `PRODUCCION_INDUSTRIAL`.`INSUMO_NECESARIO` ;
 
 CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`INSUMO_NECESARIO` (
   `id_insumo_necesario` INT NOT NULL,
-  `id_linea_produccion` INT NOT NULL,
   `codigo_insumo` INT NOT NULL,
+`PASO_id_paso` INT NOT NULL,
   PRIMARY KEY (`id_insumo_necesario`),
-  INDEX `fk_INSUMOS_NECESARIOS_PRODUCCION1_idx` (`id_linea_produccion` ASC),
-  INDEX `fk_INSUMOS_NECESARIOS_INSUMO1_idx` (`codigo_insumo` ASC),
-  CONSTRAINT `fk_INSUMOS_NECESARIOS_PRODUCCION1`
-    FOREIGN KEY (`id_linea_produccion`)
-    REFERENCES `PRODUCCION_INDUSTRIAL`.`PRODUCCION` (`id_linea_produccion`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  INDEX `fk_INSUMOS_NECESARIOS_INSUMO1_idx` (`codigo_insumo` ASC) ,
+  INDEX `fk_INSUMO_NECESARIO_PASO1_idx` (`PASO_id_paso` ASC) ,
   CONSTRAINT `fk_INSUMOS_NECESARIOS_INSUMO1`
     FOREIGN KEY (`codigo_insumo`)
     REFERENCES `PRODUCCION_INDUSTRIAL`.`INSUMO` (`codigo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_INSUMO_NECESARIO_PASO1`
+    FOREIGN KEY (`PASO_id_paso`)
+    REFERENCES `PRODUCCION_INDUSTRIAL`.`STEP` (`id_step`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
