@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`STAGE` (
   `description` TINYTEXT NOT NULL,
   `line_production_id` INT NOT NULL,
   PRIMARY KEY (`id_stage`),
-  INDEX `fk_ETAPA_LINEA_DE_PRODUCCION1_idx` (`line_production_id` ASC) VISIBLE,
+  INDEX `fk_ETAPA_LINEA_DE_PRODUCCION1_idx` (`line_production_id` ASC) ,
   CONSTRAINT `fk_ETAPA_LINEA_DE_PRODUCCION1`
     FOREIGN KEY (`line_production_id`)
     REFERENCES `PRODUCCION_INDUSTRIAL`.`PRODUCTION` (`id_line_production`)
@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `PRODUCCION_INDUSTRIAL`.`STEP` (
   `description` TINYTEXT NOT NULL,
   `stage_id` INT NOT NULL,
   PRIMARY KEY (`id_step`),
-  INDEX `fk_PASO_ETAPA1_idx` (`stage_id` ASC) VISIBLE,
+  INDEX `fk_PASO_ETAPA1_idx` (`stage_id` ASC) ,
   CONSTRAINT `fk_PASO_ETAPA1`
     FOREIGN KEY (`stage_id`)
     REFERENCES `PRODUCCION_INDUSTRIAL`.`STAGE` (`id_stage`)
