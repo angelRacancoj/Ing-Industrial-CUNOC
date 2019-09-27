@@ -10,17 +10,17 @@ import javax.persistence.Table;
 
 @Entity
 @Table(
-        name = "PRODUCTO"
+        name = "PRODUCT"
 )
 
 public class Product implements Serializable{
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    @Column(name = "id_producto")
+    @Column(name = "id_product")
     private Integer idProduct;
-    @Column(name = "nombre")
+    @Column(name = "name")
     private String name;
-    @Column(name = "descripcion")
+    @Column(name = "description")
     private String description;
 
     public Product() {

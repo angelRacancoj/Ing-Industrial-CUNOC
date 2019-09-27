@@ -12,25 +12,25 @@ import javax.persistence.Table;
 
 @Entity
 @Table(
-        name = "INSUMO_NECESARIO"
+        name = "NECESSARYSUPPLY"
 )
 
 public class NecessarySupply implements Serializable{
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    @Column(name = "id_insumo_necesario")
+    @Column(name = "idNecessarySupply")
     private Integer idNecessarySupply;
     @ManyToOne
-    private Production produccion;
+    private Production production;
     @ManyToOne
     private Supply supply;
 
     public NecessarySupply() {
     }
 
-    public NecessarySupply(Integer idNecessarySupply, Production produccion, Supply supply) {
+    public NecessarySupply(Integer idNecessarySupply, Production production, Supply supply) {
         this.idNecessarySupply = idNecessarySupply;
-        this.produccion = produccion;
+        this.production = production;
         this.supply = supply;
     }
     
@@ -44,11 +44,11 @@ public class NecessarySupply implements Serializable{
     }
 
     public Production getProduction() {
-        return produccion;
+        return production;
     }
 
     public void setProduction(Production produccion) {
-        this.produccion = produccion;
+        this.production = produccion;
     }
 
     public Supply getSupply() {

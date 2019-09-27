@@ -11,15 +11,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(
-        name = "COMENTARIO"
+        name = "COMMENTARY"
 )
 
 public class Commentary implements Serializable{
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    @Column(name = "id_comentario")
+    @Column(name = "id_commentary")
     private Integer idCommentary;
-    @Column(name = "texto")
+    @Column(name = "text")
     private String text;
     @ManyToOne
     private Step paso;
