@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.JoinColumn;
 
 /**
  *
@@ -42,10 +43,10 @@ public class History implements Serializable {
     @Column(name = "is_active")
     private boolean isActive;
     @ManyToOne(optional = false)
-    @JoinColumn(name = "group_id", referencedColumnName = "id_production_line")
+    @JoinColumn(name = "group_id", referencedColumnName = "id_group")
     private Production production;
     @ManyToOne(optional = false)
-    @JoinColumn(name = "production_id", referencedColumnName = "id_group")
+    @JoinColumn(name = "production_id", referencedColumnName = "id_production_line ")
     private Group group;
 
     public History() {

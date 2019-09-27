@@ -109,8 +109,8 @@ public class HistoryTest {
         Production production = new Production();
 
         //Act
-        history.setProduccion(production);
-        Production result = history.getProduccion();
+        history.setProduction(production);
+        Production result = history.getProduction();
 
         //Assert
         Assert.assertEquals(result, production);
