@@ -29,8 +29,10 @@ public class GroupUser implements Serializable {
     @Column(name = "id_group_user")
     private Integer idGroupUser;
     @ManyToOne(optional = false)
+    @JoinColumn(name = "carnet_user", referencedColumnName = "carnet")
     private User user;
     @ManyToOne(optional = false)
+    @JoinColumn(name = "group_id", referencedColumnName = "id_group")
     private Group group;
     @Column(name = "admission_date")
     @Temporal(TemporalType.DATE)
