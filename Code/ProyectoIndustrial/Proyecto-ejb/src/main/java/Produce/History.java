@@ -1,7 +1,7 @@
 package Produce;
 
 import Group.Group;
-import Production.Produccion;
+import Production.Production;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -42,21 +42,23 @@ public class History implements Serializable {
     @Column(name = "is_active")
     private boolean isActive;
     @ManyToOne(optional = false)
-    private Produccion produccion;
+    @JoinColumn(name = "group_id", referencedColumnName = "id_production_line")
+    private Production production;
     @ManyToOne(optional = false)
+    @JoinColumn(name = "production_id", referencedColumnName = "id_group")
     private Group group;
 
     public History() {
     }
 
-    public History(Integer history_id, Date startDate, Date endDate, double totalCost, Integer batchesProduced, boolean isActive, Produccion produccion, Group group) {
+    public History(Integer history_id, Date startDate, Date endDate, double totalCost, Integer batchesProduced, boolean isActive, Production production, Group group) {
         this.history_id = history_id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalCost = totalCost;
         this.batchesProduced = batchesProduced;
         this.isActive = isActive;
-        this.produccion = produccion;
+        this.production = production;
         this.group = group;
     }
 
@@ -116,12 +118,12 @@ public class History implements Serializable {
         this.batchesProduced = batchesProduced;
     }
 
-    public Produccion getProduccion() {
-        return produccion;
+    public Production getProduction() {
+        return production;
     }
 
-    public void setProduccion(Produccion produccion) {
-        this.produccion = produccion;
+    public void setProduction(Production production) {
+        this.production = production;
     }
 
 }
