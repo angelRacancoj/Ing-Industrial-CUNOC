@@ -1,37 +1,46 @@
+
 package Production;
 
-
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author daniel
  */
 @Entity
-@Table(name = "PASO")
+@Table(name = "step")
 @XmlRootElement
+
 public class Step implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "id_paso")
+    @Column(name = "id_step")
     private Integer idStep;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "descripcion")
+    @Column(name = "description")
     private String description;
-    @Basic(optional = false)
-    @Column(name = "etapa_id")
-    private int StageId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stepId")
+    private List<NecessarySupply> necessarySupplyList;
+    @JoinColumn(name = "stage_id", referencedColumnName = "id_stage")
+    @ManyToOne(optional = false)
+    private Stage stageId;
 
     public Step() {
     }
@@ -40,11 +49,10 @@ public class Step implements Serializable {
         this.idStep = idStep;
     }
 
-    public Step(Integer idStep, String name, String description, int stageId) {
+    public Step(Integer idStep, String name, String description) {
         this.idStep = idStep;
         this.name = name;
         this.description = description;
-        this.StageId = stageId;
     }
 
     public Integer getIdStep() {
@@ -71,12 +79,21 @@ public class Step implements Serializable {
         this.description = description;
     }
 
-    public int getStageId() {
-        return StageId;
+    @XmlTransient
+    public List<NecessarySupply> getNecessarySupplyList() {
+        return necessarySupplyList;
     }
 
-    public void setStageId(int StageId) {
-        this.StageId = StageId;
+    public void setNecessarySupplyList(List<NecessarySupply> necessarySupplyList) {
+        this.necessarySupplyList = necessarySupplyList;
+    }
+
+    public Stage getStageId() {
+        return stageId;
+    }
+
+    public void setStageId(Stage stageId) {
+        this.stageId = stageId;
     }
 
     @Override
@@ -101,7 +118,7 @@ public class Step implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.Industrial.Paso[ idPaso=" + idStep + " ]";
+        return "Production.Step[ idStep=" + idStep + " ]";
     }
     
 }
