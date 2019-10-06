@@ -21,9 +21,9 @@ public class StepTest {
         Integer idStep = 1;
         String name = "test";
         String description = "test";
-        int stageId = 2;
+        
         // Act
-        Step stepTest = new Step(idStep, name, description, stageId);
+        Step stepTest = new Step(idStep, name, description);
         Step result = stepTest;
         // Assert
         Assert.assertEquals(result, stepTest);
@@ -79,11 +79,12 @@ public class StepTest {
     public void testSetAndGetStageId() throws Exception {
         // Arrange
         Step testStep = new Step();
+        Stage stage = new Stage();
         int testVal = 1;
 
         // Act
-        testStep.setStageId(testVal);
-        int result = testStep.getStageId();
+        testStep.setStageId(stage);
+        Stage result = testStep.getStageId();
 
         // Assert
         Assert.assertEquals(result, testVal);

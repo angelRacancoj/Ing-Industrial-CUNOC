@@ -1,40 +1,47 @@
- package Production;
-
+package Production;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author daniel
  */
 @Entity
-@Table(name = "ETAPA")
+@Table(name = "stage")
 @XmlRootElement
+
 public class Stage implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "id_etapa")
+    @Column(name = "id_stage")
     private Integer idStage;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "descripcion")
+    @Column(name = "description")
     private String description;
-    @Basic(optional = false)
-    @Column(name = "linea_de_produccion_id")
-    private int lineProductionId;
-    @Basic(optional = false)
-    @Column(name = "tiempo_minutos")
-    private int timeMinutes;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stageId")
+    private List<Commentary> commentaryList;
+    @JoinColumn(name = "production_id", referencedColumnName = "id_production")
+    @ManyToOne(optional = false)
+    private Production productionId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stageId")
+    private List<Step> stepList;
 
     public Stage() {
     }
@@ -43,12 +50,10 @@ public class Stage implements Serializable {
         this.idStage = idStage;
     }
 
-    public Stage(Integer idStage, String name, String description, int lineProductionId, int timeMinutes) {
+    public Stage(Integer idStage, String name, String description) {
         this.idStage = idStage;
         this.name = name;
         this.description = description;
-        this.lineProductionId = lineProductionId;
-        this.timeMinutes = timeMinutes;
     }
 
     public Integer getIdStage() {
@@ -75,20 +80,30 @@ public class Stage implements Serializable {
         this.description = description;
     }
 
-    public int getLineProductionId() {
-        return lineProductionId;
+    @XmlTransient
+    public List<Commentary> getCommentaryList() {
+        return commentaryList;
     }
 
-    public void setLineProductionId(int lineProductionId) {
-        this.lineProductionId = lineProductionId;
+    public void setCommentaryList(List<Commentary> commentaryList) {
+        this.commentaryList = commentaryList;
     }
 
-    public int getTimeMinutes() {
-        return timeMinutes;
+    public Production getProductionId() {
+        return productionId;
     }
 
-    public void setTimeMinutes(int timeMinutes) {
-        this.timeMinutes = timeMinutes;
+    public void setProductionId(Production productionId) {
+        this.productionId = productionId;
+    }
+
+    @XmlTransient
+    public List<Step> getStepList() {
+        return stepList;
+    }
+
+    public void setStepList(List<Step> stepList) {
+        this.stepList = stepList;
     }
 
     @Override
@@ -113,7 +128,7 @@ public class Stage implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.Industrial.Etapa[ idEtapa=" + idStage + " ]";
+        return "Production.Stage[ idStage=" + idStage + " ]";
     }
     
 }

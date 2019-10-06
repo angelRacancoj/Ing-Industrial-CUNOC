@@ -17,10 +17,10 @@ public class ProductionTest {
         String nameTest = "test";
         boolean stateTest = true;
         int unityTest = 2;
-        int productIdTest = 3;
+        
 
         // Act
-        Production productionTest = new Production(idLineProductionTest, nameTest, stateTest, unityTest, productIdTest);
+        Production productionTest = new Production(idLineProductionTest, nameTest, stateTest, unityTest);
         Production result = productionTest;
         // Assert
         Assert.assertEquals(result, productionTest);
@@ -34,8 +34,8 @@ public class ProductionTest {
         int testVal = 1;
 
         // Act
-        testProduction.setIdLineProduction(testVal);
-        int result = testProduction.getIdLineProduction();
+        testProduction.setIdProduction(testVal);
+        int result = testProduction.getIdProduction();
 
         // Assert
         Assert.assertEquals(result, testVal);
@@ -109,10 +109,11 @@ public class ProductionTest {
         // Arrange
         Production testProduction = new Production();
         int testVal = 1;
+        Product product = new Product();
 
         // Act
-        testProduction.setProductId(testVal);
-        int result = testProduction.getProductId();
+        testProduction.setProductId(product);
+        Product result = testProduction.getProductId();
 
         // Assert
         Assert.assertEquals(result, testVal);
