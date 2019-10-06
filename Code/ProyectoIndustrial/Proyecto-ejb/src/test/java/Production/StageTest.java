@@ -16,11 +16,10 @@ public class StageTest {
         Integer idStageTest = 1;
         String nameTest = "teset";
         String descriptionTest = "test";
-        int lineProductionIdTest = 2;
-        int timeMinutesTest = 3;
+        
 
         // Act
-        Stage stageTest = new Stage(idStageTest, nameTest, descriptionTest, lineProductionIdTest, timeMinutesTest);
+        Stage stageTest = new Stage(idStageTest, nameTest, descriptionTest);
         Stage result = stageTest;
         // Assert
         Assert.assertEquals(result, stageTest);
@@ -75,35 +74,21 @@ public class StageTest {
 
     //set and get of lineProductionId test
     @Test
-    public void testSetAndGetLineProductionId() throws Exception {
+    public void testSetAndGetProductionId() throws Exception {
         // Arrange
         Stage testStage = new Stage();
+        Production production = new Production();
         int testVal = 1;
 
         // Act
-        testStage.setLineProductionId(testVal);
-        int result = testStage.getLineProductionId();
+        testStage.setProductionId(production);
+        Production result = testStage.getProductionId();
 
         // Assert
         Assert.assertEquals(result, testVal);
     }
 
-    //set and get of timeMinutes test
-    @Test
-    public void testSetAndGetTimeMinutes() throws Exception {
-        // Arrange
-        Stage testStage = new Stage();
-        int testVal = 1;
-
-        // Act
-        testStage.setTimeMinutes(testVal);
-        int result = testStage.getTimeMinutes();
-
-        // Assert
-        Assert.assertEquals(result, testVal);
-    }
-
-    //equals test
+    
     @Test
     public void testEquals() throws Exception {
         // Arrange

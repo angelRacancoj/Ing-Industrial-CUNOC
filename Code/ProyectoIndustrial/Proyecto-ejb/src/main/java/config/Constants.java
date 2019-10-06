@@ -1,14 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package config;
 
 /**
+ * Proyecto-ejb
+ * @author jose - 02.10.2019 
+ * @Title: Constants
+ * @Description: description
  *
- * @author angelrg
+ * Changes History
  */
 public class Constants {
-    public static final String PERSISTENCE_UNIT_NAME= "Proyecto-Industrial";
+    
+    public static final String PERSISTENCE_UNIT_NAME = "Proyecto-Industrial";
+
 }

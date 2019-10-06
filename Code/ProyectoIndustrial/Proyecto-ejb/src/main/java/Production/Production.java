@@ -1,66 +1,77 @@
+
 package Production;
 
-
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import Produce.History;
 
 /**
  *
  * @author daniel
  */
 @Entity
-@Table(name = "PRODUCCION")
+@Table(name = "production")
 @XmlRootElement
 public class Production implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "id_linea_produccion")
-    private Integer idLineProduction;
+    @Column(name = "id_production")
+    private Integer idProduction;
     @Basic(optional = false)
-    @Column(name = "nombre")
+    @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "estado")
+    @Column(name = "state")
     private boolean state;
     @Basic(optional = false)
-    @Column(name = "unidades")
+    @Column(name = "unity")
     private int unity;
-    @Column(name = "calificacion")
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "qualification")
     private Double qualification;
-    @Column(name = "precio_lote")
-    private Double lotPrice;
-    @Basic(optional = false)
-    @Column(name = "producto_id")
-    private int productId;
+    @Column(name = "price_lot")
+    private Double priceLot;
+    @JoinColumn(name = "product_id", referencedColumnName = "id_product")
+    @ManyToOne(optional = false)
+    private Product productId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productionId")
+    private List<History> historyList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productionId")
+    private List<Stage> stageList;
 
     public Production() {
     }
 
-    public Production(Integer idLineaProduccion) {
-        this.idLineProduction = idLineaProduccion;
+    public Production(Integer idProduction) {
+        this.idProduction = idProduction;
     }
 
-    public Production(Integer idLineProduction, String name, boolean state, int unity, int productId) {
-        this.idLineProduction = idLineProduction;
+    public Production(Integer idProduction, String name, boolean state, int unity) {
+        this.idProduction = idProduction;
         this.name = name;
         this.state = state;
         this.unity = unity;
-        this.productId = productId;
     }
 
-    public Integer getIdLineProduction() {
-        return idLineProduction;
+    public Integer getIdProduction() {
+        return idProduction;
     }
 
-    public void setIdLineProduction(Integer idLineProduction) {
-        this.idLineProduction = idLineProduction;
+    public void setIdProduction(Integer idProduction) {
+        this.idProduction = idProduction;
     }
 
     public String getName() {
@@ -95,26 +106,44 @@ public class Production implements Serializable {
         this.qualification = qualification;
     }
 
-    public Double getLotPrice() {
-        return lotPrice;
+    public Double getPriceLot() {
+        return priceLot;
     }
 
-    public void setLotPrice(Double lotPrice) {
-        this.lotPrice = lotPrice;
+    public void setPriceLot(Double priceLot) {
+        this.priceLot = priceLot;
     }
 
-    public int getProductId() {
+    public Product getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Product productId) {
         this.productId = productId;
+    }
+
+    @XmlTransient
+    public List<History> getHistoryList() {
+        return historyList;
+    }
+
+    public void setHistoryList(List<History> historyList) {
+        this.historyList = historyList;
+    }
+
+    @XmlTransient
+    public List<Stage> getStageList() {
+        return stageList;
+    }
+
+    public void setStageList(List<Stage> stageList) {
+        this.stageList = stageList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idLineProduction != null ? idLineProduction.hashCode() : 0);
+        hash += (idProduction != null ? idProduction.hashCode() : 0);
         return hash;
     }
 
@@ -125,7 +154,7 @@ public class Production implements Serializable {
             return false;
         }
         Production other = (Production) object;
-        if ((this.idLineProduction == null && other.idLineProduction != null) || (this.idLineProduction != null && !this.idLineProduction.equals(other.idLineProduction))) {
+        if ((this.idProduction == null && other.idProduction != null) || (this.idProduction != null && !this.idProduction.equals(other.idProduction))) {
             return false;
         }
         return true;
@@ -133,7 +162,7 @@ public class Production implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.Industrial.Produccion[ idLineaProduccion=" + idLineProduction + " ]";
+        return "Production.Production[ idProduction=" + idProduction + " ]";
     }
     
 }
