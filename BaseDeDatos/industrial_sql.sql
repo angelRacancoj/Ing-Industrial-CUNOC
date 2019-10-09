@@ -175,7 +175,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`career` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`career` (
-  `id_career` INT(11) NOT NULL,
+  `id_career` INT(11) NOT NULL AUTO_INCREMENT,
   `name_career` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_career`))
 ENGINE = InnoDB
@@ -202,7 +202,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`rol_user` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`rol_user` (
-  `id_rol` INT(11) NOT NULL,
+  `id_rol` INT(11) NOT NULL AUTO_INCREMENT,
   `name_rol` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_rol`))
 ENGINE = InnoDB

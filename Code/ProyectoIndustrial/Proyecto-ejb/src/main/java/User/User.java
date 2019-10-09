@@ -29,10 +29,10 @@ public class User implements Serializable{
     @Column(name = "state")
     private Boolean state;
     @ManyToOne
-    @JoinColumn(name="id_rol")
+    @JoinColumn(name="id_rol",referencedColumnName = "id_rol")
     private RolUser rolUser;
     @ManyToOne
-    @JoinColumn(name="id_career")
+    @JoinColumn(name="id_career",referencedColumnName = "id_career")
     private Career career;
     
     public User(){
