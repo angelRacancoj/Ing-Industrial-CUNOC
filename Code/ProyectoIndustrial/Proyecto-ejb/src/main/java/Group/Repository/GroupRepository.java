@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Group.Repository;
 
 import Group.Group;
@@ -14,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 
 /**
  *
@@ -44,6 +40,12 @@ public class GroupRepository {
 //        return null;
     }
     
-    
+    public Optional<List<Group>> getAll(){
+        CriteriaQuery criteriaQuery = entityManager.getCriteriaBuilder().createQuery();
+        criteriaQuery.select(criteriaQuery.from(Group.class));
+        
+        Query query = entityManager.createQuery(criteriaQuery);
+        return Optional.of(query.getResultList());
+    }
     
 }
