@@ -7,12 +7,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.criteria.Expression;
 
 @Entity
 @Table(
         name = "ROL_USER"
 )
 public class RolUser implements Serializable{
+
+    public static Expression<String> get(String carnet) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol")
