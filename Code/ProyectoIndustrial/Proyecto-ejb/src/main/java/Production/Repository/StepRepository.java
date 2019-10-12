@@ -1,28 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Production.Repository;
 
-import Production.Production;
-import Production.Stage;
 import Production.Step;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import config.Constants;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.Query;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 
 /**
  *
  * @author daniel
  */
+@Stateless
+@LocalBean
 public class StepRepository {
 
-    //@PersistenceContext(name = config.Constants.PERSISTENCE_UNIT_NAME)
+    @PersistenceContext(name = config.Constants.PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
 
     /**
@@ -43,28 +38,23 @@ public class StepRepository {
 
     }
 
-    public Optional<List<Step>> AllSteps() {
+    public List<Step> AllSteps() {
 
         String consult = "SELECT s FROM Step s";
         List<Step> steps = entityManager.createQuery(consult).getResultList();
 
-        try {
-            return Optional.of(steps);
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+        
+            return steps;
+       
 
     }
 
-    public Optional<List<Step>> findStepLikeName(String nameStep) {
-        //Query query = entityManager.createQuery("");
+    public List<Step> findStepLikeName(String nameStep) {
+        
         TypedQuery<Step> typedQuery = entityManager.createQuery("SELECT s FROM Step s WHERE s.name LIKE  " + nameStep, Step.class);
-        //Production production = typedQuery.getSingleResult();
-        try {
-            return Optional.of(typedQuery.getResultList());
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+        
+        return typedQuery.getResultList();
+        
 
     }
 
