@@ -37,7 +37,7 @@ public class SupplyRepository {
         return Optional.of(entityManager.createQuery(criteriaQuery).getSingleResult());
     }
     
-    public Optional<List<Supply>> getSupply(Integer codeSupply, String nameSupply, boolean availabilitySupply, LocalDate expirationDateSupply){       
+        public Optional<List<Supply>> getSupply(Integer codeSupply, String nameSupply, boolean availabilitySupply, LocalDate expirationDateSupply){       
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Supply> criteriaQuery = criteriaBuilder.createQuery(Supply.class);
         Root<Supply> supply = criteriaQuery.from(Supply.class);
