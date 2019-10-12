@@ -40,12 +40,12 @@ public class GroupRepository {
 //        return null;
     }
     
-    public Optional<List<Group>> getAll(){
+    public List<Group> getAll(){
         CriteriaQuery criteriaQuery = entityManager.getCriteriaBuilder().createQuery();
         criteriaQuery.select(criteriaQuery.from(Group.class));
         
         Query query = entityManager.createQuery(criteriaQuery);
-        return Optional.of(query.getResultList());
+        return query.getResultList();
     }
     
 }

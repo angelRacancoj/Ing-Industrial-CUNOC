@@ -26,12 +26,12 @@ public class HistoryRespository {
         return Optional.of(entityManager.find(History.class, id));
     }
 
-    public Optional<List<History>> getAll() {
+    public List<History> getAll() {
         CriteriaQuery criteriaQuery = entityManager.getCriteriaBuilder().createQuery();
         criteriaQuery.select(criteriaQuery.from(History.class));
 
         Query query = entityManager.createQuery(criteriaQuery);
-        return Optional.of(query.getResultList());
+        return query.getResultList();
     }
 
 }

@@ -27,24 +27,24 @@ public class ModifySupplyRepository {
         return Optional.of(entityManager.find(ModifySupply.class, id));
     }
     
-    public Optional<List<ModifySupply>> getModificationByUser(Integer id){
+    public List<ModifySupply> getModificationByUser(Integer id){
         Query query = entityManager.createQuery("SELECT ms FROM ModifySupply ms WHERE ms.user.carnet = :id");
         query.setParameter("id", id);
-        return Optional.of(query.getResultList());
+        return query.getResultList();
     }
     
-    public Optional<List<ModifySupply>> getModificationBySupply(Integer id){
+    public List<ModifySupply> getModificationBySupply(Integer id){
         Query query = entityManager.createQuery("SELECT ms FROM ModifySupply ms WHERE ms.supply.code = :id");
         query.setParameter("id", id);
-        return Optional.of(query.getResultList());
+        return query.getResultList();
     }
     
-    public Optional<List<ModifySupply>> getAll(){
+    public List<ModifySupply> getAll(){
         CriteriaQuery criteriaQuery = entityManager.getCriteriaBuilder().createQuery();
         criteriaQuery.select(criteriaQuery.from(ModifySupply.class));
         
         Query query = entityManager.createQuery(criteriaQuery);
-        return Optional.of(query.getResultList());
+        return query.getResultList();
     }
     
 }

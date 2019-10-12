@@ -28,23 +28,23 @@ public class GroupUserRepository {
         return Optional.of(entityManager.find(GroupUser.class, id));
     }
 
-    public Optional<List<User>> findUsersByGroup(Integer groupId) {
+    public List<User> findUsersByGroup(Integer groupId) {
         Query query = entityManager.createQuery("SELECT u FROM GroupUser g, User u WHERE g.group.idGroup = :groupId AND g.user.carnet = u.carnet");
         query.setParameter("groupId", groupId);
-        return Optional.of(query.getResultList());
+        return query.getResultList();
     }
 
-    public Optional<List<Group>> findGroupsOfUser(Integer carnet) {
+    public List<Group> findGroupsOfUser(Integer carnet) {
         Query query = entityManager.createQuery("SELECT gu FROM GroupUser gu, Group g WHERE gu.user.carnet = :carnet AND gu.group.idGroup = g.idGroup");
         query.setParameter("carnet", carnet);
-        return Optional.of(query.getResultList());
+        return query.getResultList();
     }
 
-    public Optional<List<GroupUser>> getAll() {
+    public List<GroupUser> getAll() {
         CriteriaQuery criteriaQuery = entityManager.getCriteriaBuilder().createQuery();
         criteriaQuery.select(criteriaQuery.from(GroupUser.class));
 
         Query query = entityManager.createQuery(criteriaQuery);
-        return Optional.of(query.getResultList());
+        return query.getResultList();
     }
 }
