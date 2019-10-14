@@ -48,11 +48,12 @@ public class History implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name = "production_id", referencedColumnName = "id_production_line ")
     private Group group;
+    private Production productionId;
 
     public History() {
     }
 
-    public History(Integer history_id, Date startDate, Date endDate, double totalCost, Integer batchesProduced, boolean isActive, Production production, Group group) {
+    public History(Integer history_id, Date startDate, Date endDate, double totalCost, Integer batchesProduced, boolean isActive, Production production, Group group, Production productionId) {
         this.history_id = history_id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -61,6 +62,7 @@ public class History implements Serializable {
         this.isActive = isActive;
         this.production = production;
         this.group = group;
+        this.productionId = productionId;
     }
 
     public Integer getHistory_id() {
@@ -125,6 +127,14 @@ public class History implements Serializable {
 
     public void setProduction(Production production) {
         this.production = production;
+    }
+
+    public Production getProductionId() {
+        return productionId;
+    }
+
+    public void setProductionId(Production productionId) {
+        this.productionId = productionId;
     }
 
 }
