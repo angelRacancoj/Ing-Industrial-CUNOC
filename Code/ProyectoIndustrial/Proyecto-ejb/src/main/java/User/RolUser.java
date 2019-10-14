@@ -14,10 +14,6 @@ import javax.persistence.criteria.Expression;
         name = "ROL_USER"
 )
 public class RolUser implements Serializable{
-
-    public static Expression<String> get(String carnet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol")
