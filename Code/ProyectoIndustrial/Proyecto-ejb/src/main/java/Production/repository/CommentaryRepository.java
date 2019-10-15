@@ -1,4 +1,4 @@
-package Production.Repository;
+package Production.repository;
 
 import Production.Commentary;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
