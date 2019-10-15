@@ -33,12 +33,12 @@ public class GroupService {
         
         try {
             entityManager.getTransaction().begin();
-            Collection<History> attachedHistoryCollection = new ArrayList<History>();
-            for (History historyCollectionHistoryToAttach : group.getHistoryCollection()) {
-                historyCollectionHistoryToAttach = entityManager.getReference(historyCollectionHistoryToAttach.getClass(), historyCollectionHistoryToAttach.getHistory_id());
-                attachedHistoryCollection.add(historyCollectionHistoryToAttach);
+            Collection<History> atHistory = new ArrayList<History>();
+            for (History history : group.getHistoryCollection()) {
+                history = entityManager.getReference(history.getClass(), history.getHistory_id());
+                atHistory.add(history);
             }
-            group.setHistoryCollection(attachedHistoryCollection);
+            group.setHistoryCollection(atHistory);
             Collection<GroupUser> attachedGroupUserCollection = new ArrayList<GroupUser>();
             for (GroupUser groupUserCollectionGroupUserToAttach : group.getGroupUserCollection()) {
                 groupUserCollectionGroupUserToAttach = entityManager.getReference(groupUserCollectionGroupUserToAttach.getClass(), groupUserCollectionGroupUserToAttach.getidGroupUser());
