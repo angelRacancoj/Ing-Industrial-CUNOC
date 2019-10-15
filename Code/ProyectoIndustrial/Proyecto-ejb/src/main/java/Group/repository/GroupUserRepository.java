@@ -1,4 +1,4 @@
-package Group.Repository;
+package Group.repository;
 
 import Group.GroupUser;
 import Group.Group;

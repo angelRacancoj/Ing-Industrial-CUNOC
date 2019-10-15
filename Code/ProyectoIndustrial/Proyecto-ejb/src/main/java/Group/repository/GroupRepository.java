@@ -1,4 +1,4 @@
-package Group.Repository;
+package Group.repository;
 
 import Group.Group;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
