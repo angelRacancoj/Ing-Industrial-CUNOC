@@ -78,14 +78,14 @@ public class StageTest {
         // Arrange
         Stage testStage = new Stage();
         Production production = new Production();
-        int testVal = 1;
+        
 
         // Act
         testStage.setProductionId(production);
         Production result = testStage.getProductionId();
 
         // Assert
-        Assert.assertEquals(result, testVal);
+        Assert.assertEquals(result, production);
     }
 
     

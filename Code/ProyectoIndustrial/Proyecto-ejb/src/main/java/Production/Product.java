@@ -1,12 +1,15 @@
 package Production;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(
@@ -22,6 +25,8 @@ public class Product implements Serializable{
     private String name;
     @Column(name = "description")
     private String description;
+    @OneToMany(mappedBy = "productId")
+    private List<Production> productionList;
 
     public Product() {
     }
@@ -56,6 +61,15 @@ public class Product implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    @XmlTransient
+    public List<Production> getProductionList() {
+        return productionList;
+    }
+
+    public void setProductionList(List<Production> productionList) {
+        this.productionList = productionList;
     }
     
 }

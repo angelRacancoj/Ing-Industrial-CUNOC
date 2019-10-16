@@ -1,4 +1,4 @@
-package Production.Repository;
+package Production.repository;
 
 import Production.Step;
 import javax.persistence.EntityManager;

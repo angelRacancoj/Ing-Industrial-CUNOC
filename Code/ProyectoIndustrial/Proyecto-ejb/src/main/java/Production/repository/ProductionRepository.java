@@ -1,4 +1,4 @@
-package Production.Repository;
+package Production.repository;
 
 import Production.Production;
 import javax.persistence.EntityManager;
