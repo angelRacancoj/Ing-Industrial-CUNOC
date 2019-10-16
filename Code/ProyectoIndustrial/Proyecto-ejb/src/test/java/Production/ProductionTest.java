@@ -104,20 +104,20 @@ public class ProductionTest {
     }
     
     //set and get of ProductId test
-    @Test
-    public void testSetAndGetProductId() throws Exception {
-        // Arrange
-        Production testProduction = new Production();
-        int testVal = 1;
-        Product product = new Product();
-
-        // Act
-        testProduction.setProductId(product);
-        Product result = testProduction.getProductId();
-
-        // Assert
-        Assert.assertEquals(result, testVal);
-    }
+//    @Test
+//    public void testSetAndGetProductId() throws Exception {
+//        // Arrange
+//        Production testProduction = new Production();
+//        int testVal = 1;
+//        Product product = new Product();
+//
+//        // Act
+//        testProduction.setProductId(product);
+//        Product result = testProduction.getProductId();
+//
+//        // Assert
+//        Assert.assertEquals(result, testVal);
+//    }
     
     //equals test
     @Test

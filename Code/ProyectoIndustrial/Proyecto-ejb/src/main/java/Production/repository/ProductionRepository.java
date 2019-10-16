@@ -31,17 +31,17 @@ public class ProductionRepository {
      * @param idProduction
      * @return Production
      */
-    public Optional<Production> findByIdProduction(String idProduction){
-        //Query query = entityManager.createQuery("");
-        TypedQuery <Production> typedQuery = entityManager.createQuery("SELECT p FROM Production p WHERE p.idProduction  = "+idProduction , Production.class);
-        //Production production = typedQuery.getSingleResult();
-        try {
-            return Optional.of(typedQuery.getSingleResult());
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-        
-    }
+//    public Optional<Production> findByIdProduction(String idProduction){
+//        //Query query = entityManager.createQuery("");
+//        TypedQuery <Production> typedQuery = entityManager.createQuery("SELECT p FROM Production p WHERE p.idProduction  = "+idProduction , Production.class);
+//        //Production production = typedQuery.getSingleResult();
+//        try {
+//            return Optional.of(typedQuery.getSingleResult());
+//        } catch (Exception e) {
+//            return Optional.empty();
+//        }
+//        
+//    }
     
     public List<Production> AllProductions(){
         
