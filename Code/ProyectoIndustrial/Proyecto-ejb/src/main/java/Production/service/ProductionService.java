@@ -27,17 +27,7 @@ import javax.persistence.PersistenceContext;
 public class ProductionService {
 
     @PersistenceContext(name = config.Constants.PERSISTENCE_UNIT_NAME)
-    private EntityManager em;
-    
-    public ProductionService() {
-        this.emf = Persistence.createEntityManagerFactory("*******");
-    }
-    
-     private EntityManagerFactory emf = null;
-    
-      public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
+    private EntityManager entityManager;
     
     public void create(Production production) {
         if (production.getHistoryList() == null) {
@@ -51,48 +41,48 @@ public class ProductionService {
            
             Product productId = production.getProductId();
             if (productId != null) {
-                productId = em.getReference(productId.getClass(), productId.getIdProduct());
+                productId = entityManager.getReference(productId.getClass(), productId.getIdProduct());
                 production.setProductId(productId);
             }
             List<History> attachedHistoryList = new ArrayList<History>();
             for (History historyListHistoryToAttach : production.getHistoryList()) {
-                historyListHistoryToAttach = em.getReference(historyListHistoryToAttach.getClass(), historyListHistoryToAttach.getHistory_id());
+                historyListHistoryToAttach = entityManager.getReference(historyListHistoryToAttach.getClass(), historyListHistoryToAttach.getHistory_id());
                 attachedHistoryList.add(historyListHistoryToAttach);
             }
             production.setHistoryList(attachedHistoryList);
             List<Stage> attachedStageList = new ArrayList<Stage>();
             for (Stage stageListStageToAttach : production.getStageList()) {
-                stageListStageToAttach = em.getReference(stageListStageToAttach.getClass(), stageListStageToAttach.getIdStage());
+                stageListStageToAttach = entityManager.getReference(stageListStageToAttach.getClass(), stageListStageToAttach.getIdStage());
                 attachedStageList.add(stageListStageToAttach);
             }
             production.setStageList(attachedStageList);
-            em.persist(production);
+            entityManager.persist(production);
             if (productId != null) {
                 productId.getProductionList().add(production);
-                productId = em.merge(productId);
+                productId = entityManager.merge(productId);
             }
             for (History historyListHistory : production.getHistoryList()) {
                 Production oldProductionIdOfHistoryListHistory = historyListHistory.getProduction();
                 historyListHistory.setProduction(production);
-                historyListHistory = em.merge(historyListHistory);
+                historyListHistory = entityManager.merge(historyListHistory);
                 if (oldProductionIdOfHistoryListHistory != null) {
                     oldProductionIdOfHistoryListHistory.getHistoryList().remove(historyListHistory);
-                    oldProductionIdOfHistoryListHistory = em.merge(oldProductionIdOfHistoryListHistory);
+                    oldProductionIdOfHistoryListHistory = entityManager.merge(oldProductionIdOfHistoryListHistory);
                 }
             }
             for (Stage stageListStage : production.getStageList()) {
                 Production oldProductionIdOfStageListStage = stageListStage.getProductionId();
                 stageListStage.setProductionId(production);
-                stageListStage = em.merge(stageListStage);
+                stageListStage = entityManager.merge(stageListStage);
                 if (oldProductionIdOfStageListStage != null) {
                     oldProductionIdOfStageListStage.getStageList().remove(stageListStage);
-                    oldProductionIdOfStageListStage = em.merge(oldProductionIdOfStageListStage);
+                    oldProductionIdOfStageListStage = entityManager.merge(oldProductionIdOfStageListStage);
                 }
             }
-            em.getTransaction().commit();
+            entityManager.getTransaction().commit();
         } finally {
-            if (em != null) {
-                em.close();
+            if (entityManager != null) {
+                entityManager.close();
             }
         }
     }
