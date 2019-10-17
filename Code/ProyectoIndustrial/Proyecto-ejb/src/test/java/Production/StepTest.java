@@ -75,20 +75,20 @@ public class StepTest {
     }
 
     //set and get of StageId test
-//    @Test
-//    public void testSetAndGetStageId() throws Exception {
-//        // Arrange
-//        Step testStep = new Step();
-//        Stage stage = new Stage();
-//        int testVal = 1;
-//
-//        // Act
-//        testStep.setStageId(stage);
-//        Stage result = testStep.getStageId();
-//
-//        // Assert
-//        Assert.assertEquals(result, testVal);
-//    }
+    @Test
+    public void testSetAndGetStageId() throws Exception {
+        // Arrange
+        Step testStep = new Step();
+        Stage stage = new Stage();
+        int testVal = 1;
+
+        // Act
+        testStep.setStageId(stage);
+        Stage result = testStep.getStageId();
+
+        // Assert
+        Assert.assertEquals(result, testVal);
+    }
 
     
 

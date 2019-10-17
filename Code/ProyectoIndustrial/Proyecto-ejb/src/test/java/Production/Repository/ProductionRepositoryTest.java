@@ -16,17 +16,17 @@ import org.testng.annotations.Test;
  * @author daniel
  */
 public class ProductionRepositoryTest {
-//    @Test
-//    public void productionBuilderTest() throws Exception {
-//        // Arrange
-//        
-//        ProductionRepository productionRepository = new ProductionRepository();
-//        
-//
-//        // Act
-//        Optional<Production> production = productionRepository.findByIdProduction("1");
-//        // Assert
-//        System.out.println(production.get().getName());
-//        
-//    }
+    @Test
+    public void productionBuilderTest() throws Exception {
+        // Arrange
+        
+        ProductionRepository productionRepository = new ProductionRepository();
+        
+
+        // Act
+        Optional<Production> production = productionRepository.findByIdProduction("1");
+        // Assert
+        System.out.println(production.get().getName());
+        
+    }
 }

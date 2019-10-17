@@ -73,20 +73,20 @@ public class StageTest {
     
 
     //set and get of lineProductionId test
-//    @Test
-//    public void testSetAndGetProductionId() throws Exception {
-//        // Arrange
-//        Stage testStage = new Stage();
-//        Production production = new Production();
-//        int testVal = 1;
-//
-//        // Act
-//        testStage.setProductionId(production);
-//        Production result = testStage.getProductionId();
-//
-//        // Assert
-//        Assert.assertEquals(result, testVal);
-//    }
+    @Test
+    public void testSetAndGetProductionId() throws Exception {
+        // Arrange
+        Stage testStage = new Stage();
+        Production production = new Production();
+        int testVal = 1;
+
+        // Act
+        testStage.setProductionId(production);
+        Production result = testStage.getProductionId();
+
+        // Assert
+        Assert.assertEquals(result, testVal);
+    }
 
     
     @Test
