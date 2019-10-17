@@ -24,6 +24,8 @@ public class Career implements Serializable{
         this.idCareer = idCareer;
         this.name = name;
     }
+    public Career(){
+    }
     public Career(String name){
         this.name=name;
     }

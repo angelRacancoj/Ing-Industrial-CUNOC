@@ -29,6 +29,8 @@ public class RolUser implements Serializable{
     public RolUser(String name) {
         this.name=name;
     }
+    public RolUser(){
+    }
 
     public Integer getIdRolUser() {
         return idRol;
