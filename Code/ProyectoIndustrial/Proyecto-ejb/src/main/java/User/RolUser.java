@@ -21,11 +21,12 @@ public class RolUser implements Serializable{
     @Column(name = "name_rol")
     private String name;
     
-    public RolUser(){
-    }
-    
     public RolUser(Integer idRol,String name){
         this.idRol=idRol;
+        this.name=name;
+    }
+
+    public RolUser(String name) {
         this.name=name;
     }
 

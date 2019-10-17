@@ -20,11 +20,12 @@ public class Career implements Serializable{
     @Column(name = "name_career")
     private String name;
     
-    public Career(){
-    }
     public Career(Integer idCareer, String name) {
         this.idCareer = idCareer;
         this.name = name;
+    }
+    public Career(String name){
+        this.name=name;
     }
     
     public Integer getIdCareer() {
