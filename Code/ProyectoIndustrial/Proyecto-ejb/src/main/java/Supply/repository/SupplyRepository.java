@@ -1,5 +1,5 @@
 
-package Supply.Repository;
+package Supply.repository;
 
 import Supply.Supply;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
