@@ -23,7 +23,7 @@ public class UserRepository {
     @PersistenceContext(name=PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
     
-    public Optional<List<User>> getUser(Integer carnet, String name, Integer state,Integer id_rol,Integer id_career){       
+    public List<User> getUser(Integer carnet, String name, Integer state,Integer id_rol,Integer id_career){       
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
         Root<User> User = criteriaQuery.from(User.class);
@@ -45,7 +45,7 @@ public class UserRepository {
         }
         criteriaQuery.where((Predicate[]) predicates.stream().toArray());
         TypedQuery<User> query = entityManager.createQuery(criteriaQuery);
-        return Optional.of(query.getResultList());
+        return query.getResultList();
     }
     
 }
