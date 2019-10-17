@@ -19,7 +19,7 @@ public class ProductionRepository {
     @PersistenceContext(name = config.Constants.PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
     
-    
+     
     /**
      * fecha de creacion de la produccion
      * reacion entre comentario y paso

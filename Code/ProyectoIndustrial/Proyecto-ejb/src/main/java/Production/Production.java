@@ -2,16 +2,21 @@
 package Production;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import Produce.History;
@@ -27,6 +32,7 @@ public class Production implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_production")
     private Integer idProduction;
@@ -44,12 +50,18 @@ public class Production implements Serializable {
     private Double qualification;
     @Column(name = "price_lot")
     private Double priceLot;
+    @Basic(optional = false)
+    @Column(name = "creation_date")
+    @Temporal(TemporalType.DATE)
+    private Date creationDate;
+    @Column(name = "description")
+    private String description;
     @JoinColumn(name = "product_id", referencedColumnName = "id_product")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Product productId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productionId")
     private List<History> historyList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productionId")
+    @OneToMany(mappedBy = "productionId")
     private List<Stage> stageList;
 
     public Production() {
@@ -59,11 +71,12 @@ public class Production implements Serializable {
         this.idProduction = idProduction;
     }
 
-    public Production(Integer idProduction, String name, boolean state, int unity) {
+    public Production(Integer idProduction, String name, boolean state, int unity, Date creationDate) {
         this.idProduction = idProduction;
         this.name = name;
         this.state = state;
         this.unity = unity;
+        this.creationDate = creationDate;
     }
 
     public Integer getIdProduction() {
@@ -112,6 +125,22 @@ public class Production implements Serializable {
 
     public void setPriceLot(Double priceLot) {
         this.priceLot = priceLot;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Product getProductId() {

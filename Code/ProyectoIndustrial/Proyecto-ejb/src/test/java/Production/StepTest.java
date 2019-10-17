@@ -80,14 +80,13 @@ public class StepTest {
         // Arrange
         Step testStep = new Step();
         Stage stage = new Stage();
-        int testVal = 1;
 
         // Act
         testStep.setStageId(stage);
         Stage result = testStep.getStageId();
 
         // Assert
-        Assert.assertEquals(result, testVal);
+        Assert.assertEquals(result, stage);
     }
 
     
