@@ -5,18 +5,13 @@
  */
 package Production.service;
 
-import Produce.History;
-import Production.Product;
 import Production.Production;
-import Production.Stage;
-import java.util.ArrayList;
-import java.util.List;
+import Production.exceptions.MandatoryAttributeProductionException;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import  static config.Constants.*;
 
 /**
  *
@@ -26,64 +21,50 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class ProductionService {
 
-    @PersistenceContext(name = config.Constants.PERSISTENCE_UNIT_NAME)
+    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
-    
-    public void create(Production production) {
-        if (production.getHistoryList() == null) {
-            production.setHistoryList(new ArrayList<History>());
+
+    public void create(Production production) throws MandatoryAttributeProductionException {
+
+        if (production.getName() == null) {
+            throw new MandatoryAttributeProductionException("Nombre nulo");
         }
-        if (production.getStageList() == null) {
-            production.setStageList(new ArrayList<Stage>());
+        if (production.getUnity() == 0) {
+            throw new MandatoryAttributeProductionException("Unidad por lote nulo");
+
         }
-        
-        try {
-           
-            Product productId = production.getProductId();
-            if (productId != null) {
-                productId = entityManager.getReference(productId.getClass(), productId.getIdProduct());
-                production.setProductId(productId);
-            }
-            List<History> attachedHistoryList = new ArrayList<History>();
-            for (History historyListHistoryToAttach : production.getHistoryList()) {
-                historyListHistoryToAttach = entityManager.getReference(historyListHistoryToAttach.getClass(), historyListHistoryToAttach.getHistory_id());
-                attachedHistoryList.add(historyListHistoryToAttach);
-            }
-            production.setHistoryList(attachedHistoryList);
-            List<Stage> attachedStageList = new ArrayList<Stage>();
-            for (Stage stageListStageToAttach : production.getStageList()) {
-                stageListStageToAttach = entityManager.getReference(stageListStageToAttach.getClass(), stageListStageToAttach.getIdStage());
-                attachedStageList.add(stageListStageToAttach);
-            }
-            production.setStageList(attachedStageList);
-            entityManager.persist(production);
-            if (productId != null) {
-                productId.getProductionList().add(production);
-                productId = entityManager.merge(productId);
-            }
-            for (History historyListHistory : production.getHistoryList()) {
-                Production oldProductionIdOfHistoryListHistory = historyListHistory.getProduction();
-                historyListHistory.setProduction(production);
-                historyListHistory = entityManager.merge(historyListHistory);
-                if (oldProductionIdOfHistoryListHistory != null) {
-                    oldProductionIdOfHistoryListHistory.getHistoryList().remove(historyListHistory);
-                    oldProductionIdOfHistoryListHistory = entityManager.merge(oldProductionIdOfHistoryListHistory);
-                }
-            }
-            for (Stage stageListStage : production.getStageList()) {
-                Production oldProductionIdOfStageListStage = stageListStage.getProductionId();
-                stageListStage.setProductionId(production);
-                stageListStage = entityManager.merge(stageListStage);
-                if (oldProductionIdOfStageListStage != null) {
-                    oldProductionIdOfStageListStage.getStageList().remove(stageListStage);
-                    oldProductionIdOfStageListStage = entityManager.merge(oldProductionIdOfStageListStage);
-                }
-            }
-            entityManager.getTransaction().commit();
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
+        if (production.getCreationDate() == null) {
+            throw new MandatoryAttributeProductionException("Fecha de creacion nula");
         }
+        if (production.getProductId() == null) {
+            throw new MandatoryAttributeProductionException("Producto nulo");
+        }
+
+        entityManager.persist(production);
+        entityManager.getTransaction().commit();
+
     }
+    
+     public void edit(Production oldProduction) throws MandatoryAttributeProductionException {
+         
+         //se setea antes o despues?
+        if (oldProduction.getName() == null) {
+            throw new MandatoryAttributeProductionException("Nombre nulo");
+        }
+        if (oldProduction.getUnity() == 0) {
+            throw new MandatoryAttributeProductionException("Unidad por lote nulo");
+
+        }
+        if (oldProduction.getCreationDate() == null) {
+            throw new MandatoryAttributeProductionException("Fecha de creacion nula");
+        }
+        if (oldProduction.getProductId() == null) {
+            throw new MandatoryAttributeProductionException("Producto nulo");
+        }
+
+        //hay que hacer commit?
+        //entityManager.getTransaction().commit();
+
+    }
+
 }
