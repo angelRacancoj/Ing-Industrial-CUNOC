@@ -38,8 +38,7 @@ public class Group implements Serializable {
     public Group() {
     }
 
-    public Group(Integer idGroup, String information, String section) {
-        this.idGroup = idGroup;
+    public Group(String information, String section) {
         this.information = information;
         this.section = section;
     }

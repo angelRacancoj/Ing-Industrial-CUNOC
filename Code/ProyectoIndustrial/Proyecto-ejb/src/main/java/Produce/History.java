@@ -65,6 +65,15 @@ public class History implements Serializable {
         this.productionId = productionId;
     }
 
+    public History(Date startDate, Integer batchesProduced, boolean isActive, Production production, Group group, Production productionId) {
+        this.startDate = startDate;
+        this.batchesProduced = batchesProduced;
+        this.isActive = isActive;
+        this.production = production;
+        this.group = group;
+        this.productionId = productionId;
+    }
+
     public Integer getHistory_id() {
         return history_id;
     }
