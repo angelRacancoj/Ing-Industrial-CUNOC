@@ -1,4 +1,4 @@
-package Modify.Repository;
+package Modify.repository;
 
 import Modify.ModifySupply;
 import static config.Constants.PERSISTENCE_UNIT_NAME;

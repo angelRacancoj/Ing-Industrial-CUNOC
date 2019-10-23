@@ -1,4 +1,4 @@
-package Produce.Repository;
+package Produce.repository;
 
 import Produce.History;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
