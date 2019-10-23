@@ -19,8 +19,8 @@ public class ProductionTest {
         int unityTest = 2;
         
 
-        // Act
-        Production productionTest = new Production(idLineProductionTest, nameTest, stateTest, unityTest);
+         //Act
+        Production productionTest = new Production(idLineProductionTest);
         Production result = productionTest;
         // Assert
         Assert.assertEquals(result, productionTest);
@@ -28,7 +28,7 @@ public class ProductionTest {
 
     //set and get of idLineProduction test
     @Test
-    public void testSetAndGetIdLineProduction() throws Exception {
+    public void testSetAndGetIdProduction() throws Exception {
         // Arrange
         Production testProduction = new Production();
         int testVal = 1;
@@ -105,10 +105,9 @@ public class ProductionTest {
     
     //set and get of ProductId test
     @Test
-    public void testSetAndGetProductId() throws Exception {
+    public void testSetAndGetProduct() throws Exception {
         // Arrange
         Production testProduction = new Production();
-        int testVal = 1;
         Product product = new Product();
 
         // Act
@@ -116,7 +115,7 @@ public class ProductionTest {
         Product result = testProduction.getProductId();
 
         // Assert
-        Assert.assertEquals(result, testVal);
+        Assert.assertEquals(result, product);
     }
     
     //equals test

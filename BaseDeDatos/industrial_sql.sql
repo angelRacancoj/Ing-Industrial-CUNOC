@@ -13,7 +13,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 DROP SCHEMA IF EXISTS `produccion_industrial` ;
 
 -- -----------------------------------------------------
--- Schema produccion_industrial
+-- Schema produccion_industrial  
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `produccion_industrial` ;
 USE `produccion_industrial` ;
@@ -38,13 +38,15 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`production` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`production` (
-  `id_production` INT(11) NOT NULL,
+  `id_production` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NOT NULL,
   `state` TINYINT(1) NOT NULL,
   `unity` INT(11) NOT NULL,
   `qualification` DOUBLE NULL DEFAULT NULL,
   `price_lot` DOUBLE NULL DEFAULT NULL,
-  `product_id` INT(11) NOT NULL,
+  `creation_date` DATE NOT NULL,
+  `description` TINYTEXT NULL,
+  `product_id` INT(11) NULL,
   PRIMARY KEY (`id_production`),
   INDEX `fk_LINEA_DE_PRODUCCION_PRODUCTO1_idx` (`product_id` ASC),
   CONSTRAINT `fk_LINEA_DE_PRODUCCION_PRODUCTO1`
@@ -60,10 +62,10 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`stage` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`stage` (
-  `id_stage` INT(11) NOT NULL,
+  `id_stage` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NOT NULL,
-  `production_id` INT(11) NOT NULL,
+  `production_id` INT(11) NULL,
   PRIMARY KEY (`id_stage`),
   INDEX `fk_ETAPA_LINEA_DE_PRODUCCION1_idx` (`production_id` ASC),
   CONSTRAINT `fk_ETAPA_LINEA_DE_PRODUCCION1`
@@ -134,10 +136,10 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`step` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`step` (
-  `id_step` INT(11) NOT NULL,
+  `id_step` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NOT NULL,
-  `stage_id` INT(11) NOT NULL,
+  `stage_id` INT(11) NULL,
   PRIMARY KEY (`id_step`),
   INDEX `fk_PASO_ETAPA1_idx` (`stage_id` ASC),
   CONSTRAINT `fk_PASO_ETAPA1`
@@ -175,7 +177,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`career` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`career` (
-  `id_career` INT(11) NOT NULL,
+  `id_career` INT(11) NOT NULL AUTO_INCREMENT,
   `name_career` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_career`))
 ENGINE = InnoDB
@@ -202,7 +204,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`rol_user` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`rol_user` (
-  `id_rol` INT(11) NOT NULL,
+  `id_rol` INT(11) NOT NULL AUTO_INCREMENT,
   `name_rol` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_rol`))
 ENGINE = InnoDB
