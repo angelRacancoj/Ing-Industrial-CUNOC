@@ -24,6 +24,9 @@ public class CareerRepository{
     @PersistenceContext(name=PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
     
+    public void setEntityManager(EntityManager entityManager){
+        this.entityManager=entityManager;
+    }
     
     public List<Career> getCareer(Integer id_career,String name){       
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();

@@ -3,6 +3,7 @@ package User.service;
 import User.Career;
 import User.RolUser;
 import User.User;
+import User.exception.UserException;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -15,29 +16,34 @@ public class UserService {
     @PersistenceContext(name=PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
     
-    public void createUser(Integer carnet,String name,String email,Integer phone,String password,Boolean state,RolUser rolUser,Career career){ 
-        User user = new User(carnet, name, email, phone, password, state, rolUser, career); 
+    public void createUser(User user) throws UserException{
+        if(user==null){
+            throw new UserException("user is null");
+        }
         entityManager.persist(user);
     }
-    public void updateUser(Integer carnet,String name,String email,Integer phone,String password,Boolean state,RolUser rolUser,Career career){
-        User user = entityManager.find(User.class, carnet);
-        if(name!=null){
-            user.setName(name);
+    public void updateUser(User user) throws UserException{
+        if(user==null){
+            throw new UserException("rolUser is null");
         }
-        if(email!=null){
-            user.setEmail(email);
+        User updateUser = entityManager.find(User.class, user.getCarnet());
+        if(user.getName()!=null){
+            updateUser.setName(user.getName());
         }
-        if(phone!=null){
-            user.setPhone(phone); 
+        if(user.getEmail()!=null){
+            updateUser.setEmail(user.getEmail());
         }
-        if(password!=null){
-            user.setPassword(password); 
+        if(user.getPhone()!=null){
+            updateUser.setPhone(user.getPhone()); 
         }
-        if(rolUser!=null){
-            user.setRolUser(rolUser);
+        if(user.getPassword()!=null){
+            updateUser.setPassword(user.getPassword()); 
         }
-        if(career!=null){
-            user.setCareer(career);
+        if(user.getRolUser()!=null){
+            updateUser.setRolUser(user.getRolUser());
+        }
+        if(user.getCareer()!=null){
+            updateUser.setCareer(user.getCareer());
         }
         
     }
