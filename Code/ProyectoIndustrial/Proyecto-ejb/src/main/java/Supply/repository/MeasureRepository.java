@@ -2,7 +2,6 @@
 package Supply.repository;
 
 import Supply.Measure;
-import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -12,6 +11,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import static config.Constants.PERSISTENCE_UNIT_NAME;
 
 @Stateless
 @LocalBean

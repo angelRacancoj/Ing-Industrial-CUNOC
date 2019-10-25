@@ -1,6 +1,7 @@
 package Production.repository;
 
 import Production.Stage;
+import static config.Constants.PERSISTENCE_UNIT_NAME;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -17,19 +18,26 @@ import javax.persistence.TypedQuery;
 @LocalBean
 public class StageRepository {
 
-    @PersistenceContext(name = config.Constants.PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
+    public static final String QUERY_FIND_BY_ID = "SELECT s FROM Stage s WHERE s.idStage = ?";
+    public static final String QUERY_ALL_STAGES = "SELECT s FROM Stage s";
+    public static final String QUERY_LIKE_STAGES = "SELECT s FROM Stage s WHERE s.name  LIKE  ?";
+
+    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     /**
-     * Busca una Stage por el id si no encuentra nada devulve un Optional
-     * vacio
+     * Busca una Stage por el id si no encuentra nada devulve un Optional vacio
      *
      * @param idStage
      * @return Production
      */
-    public Optional<Stage> findByIdStage(String idStage) {
+    public Optional<Stage> findByIdStage(int idStage) {
 
-        TypedQuery<Stage> typedQuery = entityManager.createQuery("SELECT s FROM Stage s WHERE s.idStage = " + idStage, Stage.class);
+        TypedQuery<Stage> typedQuery = entityManager.createQuery(QUERY_FIND_BY_ID, Stage.class)
+                .setParameter(1, idStage);
         try {
             return Optional.of(typedQuery.getSingleResult());
         } catch (Exception e) {
@@ -39,22 +47,17 @@ public class StageRepository {
     }
 
     public List<Stage> AllStages() {
-
-        String consult = "SELECT s FROM Stage s";
-        List<Stage> stages = entityManager.createQuery(consult).getResultList();
-
-        
-            return stages;
-        
+        TypedQuery<Stage> typedQuery = entityManager.createQuery(QUERY_ALL_STAGES, Stage.class);
+        return typedQuery.getResultList();
 
     }
 
     public List<Stage> findStageLikeName(String nameStage) {
-        
-        TypedQuery<Stage> typedQuery = entityManager.createQuery("SELECT s FROM Stage s WHERE s.name  LIKE  " + nameStage, Stage.class);
-           
-            return typedQuery.getResultList();
-    
+
+        TypedQuery<Stage> typedQuery = entityManager.createQuery(QUERY_LIKE_STAGES, Stage.class)
+                .setParameter(1, nameStage);
+
+        return typedQuery.getResultList();
 
     }
 
