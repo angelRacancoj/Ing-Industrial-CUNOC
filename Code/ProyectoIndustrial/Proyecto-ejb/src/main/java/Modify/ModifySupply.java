@@ -61,6 +61,23 @@ public class ModifySupply implements Serializable {
         this.note = note;
     }
 
+    public ModifySupply(User user, Supply supply, ModificationType modifyType, Integer quantity, Date date, String note) {
+        this.user = user;
+        this.supply = supply;
+        this.modifyType = modifyType;
+        this.quantity = quantity;
+        this.date = date;
+        this.note = note;
+    }
+    
+    public ModifySupply(User user, Supply supply, ModificationType modifyType, Integer quantity, Date date) {
+        this.user = user;
+        this.supply = supply;
+        this.modifyType = modifyType;
+        this.quantity = quantity;
+        this.date = date;
+    }
+
     public Integer getIdModifySupply() {
         return idModifySupply;
     }

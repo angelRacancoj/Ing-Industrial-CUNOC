@@ -42,8 +42,7 @@ public class GroupUser implements Serializable {
     public GroupUser() {
     }
 
-    public GroupUser(Integer idGroupUser, User user, Group group, Date admissionDate) {
-        this.idGroupUser = idGroupUser;
+    public GroupUser(User user, Group group, Date admissionDate) {
         this.user = user;
         this.group = group;
         this.admissionDate = admissionDate;
