@@ -31,9 +31,9 @@ public class Supply implements Serializable{
     @Temporal(TemporalType.DATE)
     private LocalDate dateOfAdmission;
     @Column(name = "cost",scale = 2)
-    private double cost;
+    private Double cost;
     @Column(name = "quantity",scale = 2)
-    private double quantity;
+    private Double quantity;
     @Column(name = "availability")
     private boolean availability;
     @Column(name = "description")
@@ -46,7 +46,7 @@ public class Supply implements Serializable{
     public Supply() {
     }
 
-    public Supply(Integer code, String name, LocalDate expirationDate, LocalDate dateOfAdmission, double cost, double quantity, boolean availability, String description, Measure measure) {
+    public Supply(Integer code, String name, LocalDate expirationDate, LocalDate dateOfAdmission, Double cost, Double quantity, boolean availability, String description, Measure measure) {
         this.code = code;
         this.name = name;
         this.expirationDate = expirationDate;
@@ -90,19 +90,19 @@ public class Supply implements Serializable{
         this.dateOfAdmission = dateOfAdmission;
     }
 
-    public double getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
-    public double getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 
