@@ -23,6 +23,9 @@ public class RolUserRepository {
     @PersistenceContext(name=PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
     
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     public List<RolUser> getRolUser(Integer id_rol, String name){       
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -35,7 +38,7 @@ public class RolUserRepository {
         if(name!=null){
             predicates.add(criteriaBuilder.like(RolUser.get("name"), "%" + name + "%"));
         }
-        criteriaQuery.where((Predicate[]) predicates.stream().toArray());
+        criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
         TypedQuery<RolUser> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList(); 
     }

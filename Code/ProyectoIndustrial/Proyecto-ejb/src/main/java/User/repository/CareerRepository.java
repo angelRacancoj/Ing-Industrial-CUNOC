@@ -19,27 +19,27 @@ import javax.persistence.criteria.Root;
 
 @Stateless
 @LocalBean
-public class CareerRepository{
-    
-    @PersistenceContext(name=PERSISTENCE_UNIT_NAME)
+public class CareerRepository {
+
+    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
-    
-    public void setEntityManager(EntityManager entityManager){
-        this.entityManager=entityManager;
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
-    
-    public List<Career> getCareer(Integer id_career,String name){       
+
+    public List<Career> getCareer(Integer id_career, String name) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Career> criteriaQuery = criteriaBuilder.createQuery(Career.class);
         Root<Career> Career = criteriaQuery.from(Career.class);
-        List<Predicate> predicates=new ArrayList<>();
-        if(id_career!=null){
-            predicates.add(criteriaBuilder.equal(Career.get("id_career"),id_career));
+        List<Predicate> predicates = new ArrayList<>();
+        if (id_career != null) {
+            predicates.add(criteriaBuilder.equal(Career.get("id_career"), id_career));
         }
-        if(name!=null){
+        if (name != null) {
             predicates.add(criteriaBuilder.like(Career.get("name"), "%" + name + "%"));
         }
-        criteriaQuery.where((Predicate[]) predicates.stream().toArray());
+        criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
         TypedQuery<Career> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList();
     }

@@ -27,14 +27,28 @@ public class UserRepositoryTest {
     public void getUserByCarnetTest() {
         Integer carnet = 201630875;
         TypedQuery<User> typeQuery = Mockito.mock(TypedQuery.class);
+
         Mockito.when(entityManager.createQuery(GET_USER_BY_CARNET, User.class)).thenReturn(typeQuery);
         Mockito.when(typeQuery.setParameter("carnet", carnet)).thenReturn(typeQuery);
         User user = new User();
         Mockito.when(typeQuery.getSingleResult()).thenReturn(user);
+
         UserRepository userRepository = new UserRepository();
         userRepository.setEntityManager(entityManager);
         Optional<User> result = userRepository.getUserByCarnet(carnet);
         Assert.assertEquals(result.get(), user);
+    }
+
+    @Test
+    public void getUseTest() {
+        List<User> users = new ArrayList<>();
+        users.add(new User());
+        Predicate predicate = Mockito.mock(Predicate.class);
+        CriteriaQuery<User> criteriaQuery = Mockito.mock(CriteriaQuery.class);
+        List<User> result = mockittoWhen(users, predicate, criteriaQuery, null, null, null).getUser(null, null, null, null, null);
+
+        //asserte
+        Assert.assertEquals(result, users);
     }
 
     @Test
@@ -44,33 +58,33 @@ public class UserRepositoryTest {
         users.add(new User());
         Predicate predicate = Mockito.mock(Predicate.class);
         CriteriaQuery<User> criteriaQuery = Mockito.mock(CriteriaQuery.class);
-        List<User> result = mockittoWhen(users,predicate,criteriaQuery,"carnet",carnet).getUser(carnet, null,null, null, null);
-        
+        List<User> result = mockittoWhen(users, predicate, criteriaQuery, "carnet", carnet, null).getUser(carnet, null, null, null, null);
+
         //asserte
         Assert.assertEquals(result, users);
 
         Predicate[] predicates = new Predicate[1];
         predicates[0] = predicate;
-        
+
         //verefy query
         Mockito.verify(criteriaQuery).where(predicates);
     }
 
     @Test
     public void getUserWithNameTest() {
-        Integer carnet = 201630879;
+        String name = "fulanito";
         List<User> users = new ArrayList<>();
         users.add(new User());
         Predicate predicate = Mockito.mock(Predicate.class);
         CriteriaQuery<User> criteriaQuery = Mockito.mock(CriteriaQuery.class);
-        List<User> result = mockittoWhen(users,predicate,criteriaQuery,"carnet",carnet).getUser(carnet, null,null, null, null);
-        
+        List<User> result = mockittoWhen(users, predicate, criteriaQuery, "carnet", null, name).getUser(null, name, null, null, null);
+
         //asserte
         Assert.assertEquals(result, users);
 
         Predicate[] predicates = new Predicate[1];
         predicates[0] = predicate;
-        
+
         //verefy query
         Mockito.verify(criteriaQuery).where(predicates);
     }
@@ -80,29 +94,17 @@ public class UserRepositoryTest {
         Integer state = 1;
         List<User> users = new ArrayList<>();
         users.add(new User());
-        CriteriaBuilder criteriaBuilder = Mockito.mock(CriteriaBuilder.class);
-        CriteriaQuery<User> criteriaQuery = Mockito.mock(CriteriaQuery.class);
-        Root<User> user = Mockito.mock(Root.class);
         Predicate predicate = Mockito.mock(Predicate.class);
-        TypedQuery<User> typeQuery = Mockito.mock(TypedQuery.class);
-        Mockito.when(entityManager.getCriteriaBuilder()).thenReturn(criteriaBuilder);
-        Mockito.when(criteriaBuilder.createQuery(User.class)).thenReturn(criteriaQuery);
-        Mockito.when(criteriaQuery.from(User.class)).thenReturn(user);
-        Mockito.when(criteriaBuilder.equal(user.get("state"), state)).thenReturn(predicate);
-        Mockito.when(criteriaQuery.where(predicate)).thenReturn(criteriaQuery);
-        Mockito.when(entityManager.createQuery(criteriaQuery)).thenReturn(typeQuery);
-        Mockito.when(typeQuery.getResultList()).thenReturn(users);
-        UserRepository userRepository = new UserRepository();
-        userRepository.setEntityManager(entityManager);
-        Mockito.when(criteriaQuery.where(Mockito.any(Predicate[].class))).thenReturn(criteriaQuery);
+        CriteriaQuery<User> criteriaQuery = Mockito.mock(CriteriaQuery.class);
+        List<User> result = mockittoWhen(users, predicate, criteriaQuery, "state", state, null).getUser(null, null, state, null, null);
 
-        List<User> result = userRepository.getUser(null, null, state, null, null);
-
+        //asserte
         Assert.assertEquals(result, users);
 
         Predicate[] predicates = new Predicate[1];
         predicates[0] = predicate;
 
+        //verefy query
         Mockito.verify(criteriaQuery).where(predicates);
     }
 
@@ -113,33 +115,58 @@ public class UserRepositoryTest {
         users.add(new User());
         Predicate predicate = Mockito.mock(Predicate.class);
         CriteriaQuery<User> criteriaQuery = Mockito.mock(CriteriaQuery.class);
-        List<User> result = mockittoWhen(users,predicate,criteriaQuery,"id_rol",idRol).getUser(null, null,null, idRol, null);
-        
+        List<User> result = mockittoWhen(users, predicate, criteriaQuery, "id_rol", idRol, null).getUser(null, null, null, idRol, null);
+
         //asserte
         Assert.assertEquals(result, users);
 
         Predicate[] predicates = new Predicate[1];
         predicates[0] = predicate;
-        
+
         //verefy query
         Mockito.verify(criteriaQuery).where(predicates);
     }
 
-    private UserRepository mockittoWhen(List<User> users,Predicate predicate,CriteriaQuery<User> criteriaQuery,String atribute,Integer value) {
-        
+    @Test
+    public void getUserWithIdCareer() {
+        Integer idCareer = 1;
+        List<User> users = new ArrayList<>();
+        users.add(new User());
+        Predicate predicate = Mockito.mock(Predicate.class);
+        CriteriaQuery<User> criteriaQuery = Mockito.mock(CriteriaQuery.class);
+        List<User> result = mockittoWhen(users, predicate, criteriaQuery, "id_Career", idCareer, null).getUser(null, null, null, null, idCareer);
+
+        //asserte
+        Assert.assertEquals(result, users);
+
+        Predicate[] predicates = new Predicate[1];
+        predicates[0] = predicate;
+
+        //verefy query
+        Mockito.verify(criteriaQuery).where(predicates);
+    }
+
+    private UserRepository mockittoWhen(List<User> users, Predicate predicate, CriteriaQuery<User> criteriaQuery, String atribute, Integer value, String value2) {
+
         CriteriaBuilder criteriaBuilder = Mockito.mock(CriteriaBuilder.class);
         Root<User> user = Mockito.mock(Root.class);
         TypedQuery<User> typeQuery = Mockito.mock(TypedQuery.class);
-        
+
         Mockito.when(entityManager.getCriteriaBuilder()).thenReturn(criteriaBuilder);
         Mockito.when(criteriaBuilder.createQuery(User.class)).thenReturn(criteriaQuery);
         Mockito.when(criteriaQuery.from(User.class)).thenReturn(user);
-        Mockito.when(criteriaBuilder.equal(user.get(atribute), value)).thenReturn(predicate);
+        if (atribute == null) {
+            //not add predicate
+        } else if (value == null) {
+            Mockito.when(criteriaBuilder.like(user.get(atribute), "%" + value2 + "%")).thenReturn(predicate);
+        } else {
+            Mockito.when(criteriaBuilder.equal(user.get(atribute), value)).thenReturn(predicate);
+        }
         Mockito.when(criteriaQuery.where(predicate)).thenReturn(criteriaQuery);
         Mockito.when(entityManager.createQuery(criteriaQuery)).thenReturn(typeQuery);
         Mockito.when(typeQuery.getResultList()).thenReturn(users);
         Mockito.when(criteriaQuery.where(Mockito.any(Predicate[].class))).thenReturn(criteriaQuery);
-        
+
         UserRepository userRepository = new UserRepository();
         userRepository.setEntityManager(entityManager);
         return userRepository;
