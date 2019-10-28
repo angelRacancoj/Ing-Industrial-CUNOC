@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
  */
 public class StepRepositoryTest {
     int stepId = 1;
-    List<Step> steps= new ArrayList<Step>();
+    List<Step> steps= new ArrayList<>();
     StepRepository stepRepository = new StepRepository();
     
    
@@ -40,7 +40,6 @@ public class StepRepositoryTest {
     @Test
     public void FindByIdProductionTest() throws Exception {
         // Arrange
-        stepId = 1;
         Step step = new Step();
         EntityManager entityManager= getmanager(stepId, step, false);
         
@@ -56,7 +55,6 @@ public class StepRepositoryTest {
     @Test
     public void FindByIdProductionNoResultExceptionTest() throws Exception {
         // Arrange
-        stepId = 1;
         Step step = new Step();
         EntityManager entityManager= getmanager(stepId, step, true);
         
@@ -100,10 +98,6 @@ public class StepRepositoryTest {
         Mockito.when(typedQuery.getResultList()).thenReturn(steps);
         
         stepRepository.setEntityManager(entityManager);
-        
-        
-        
-
         // Act
         List<Step> result = stepRepository.findStepLikeName(name);
         // Assert

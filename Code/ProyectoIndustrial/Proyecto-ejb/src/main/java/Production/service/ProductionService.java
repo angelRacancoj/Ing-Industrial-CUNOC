@@ -47,7 +47,7 @@ public class ProductionService {
     
      public void edit(Production oldProduction) throws MandatoryAttributeProductionException {
          
-         //se setea antes o despues?
+         
         if (oldProduction.getName() == null) {
             throw new MandatoryAttributeProductionException("Nombre nulo");
         }
@@ -61,9 +61,9 @@ public class ProductionService {
         if (oldProduction.getProductId() == null) {
             throw new MandatoryAttributeProductionException("Producto nulo");
         }
-
-        //hay que hacer commit?
-        //entityManager.getTransaction().commit();
+        
+        entityManager.merge(oldProduction);
+        
 
     }
 

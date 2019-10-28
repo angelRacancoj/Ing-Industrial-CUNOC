@@ -19,14 +19,9 @@ import org.testng.annotations.Test;
 public class ProductionRepositoryTest {
     
     
-    private TypedQuery getTypedQuery(){
-        TypedQuery<Production> typedQuery = Mockito.mock(TypedQuery.class);
-        
-        
-        
-        return typedQuery;
-        
-    }
+    List<Production> productions= new ArrayList<>();
+    ProductionRepository productionRepository = new  ProductionRepository();
+    int productionId = 1;
     
     private EntityManager getmanager(String query, int productionId , Production expected, boolean mockError) {
         
@@ -45,10 +40,9 @@ public class ProductionRepositoryTest {
     @Test
     public void FindByIdProductionTest() throws Exception {
         // Arrange
-        int productionId = 1;
         Production production = new Production();
         EntityManager entityManager= getmanager(QUERY_FIND_BY_ID, productionId, production, false);
-        ProductionRepository productionRepository = new  ProductionRepository();
+        
         productionRepository.setEntityManager(entityManager);
 
         // Act
@@ -61,10 +55,9 @@ public class ProductionRepositoryTest {
     @Test
     public void FindByIdProductionNoResultExceptionTest() throws Exception {
         // Arrange
-        int productionId = 1;
+
         Production production = new Production();
         EntityManager entityManager= getmanager(QUERY_FIND_BY_ID, productionId, production, true);
-        ProductionRepository productionRepository = new  ProductionRepository();
         productionRepository.setEntityManager(entityManager);
 
         // Act
@@ -77,11 +70,10 @@ public class ProductionRepositoryTest {
     @Test
     public void AllProductionsTest() throws Exception {
         // Arrange
-        List<Production> productions= new ArrayList<Production>();       
+             
         EntityManager entityManager= Mockito.mock(EntityManager.class);
         TypedQuery<Production> typedQuery = Mockito.mock(TypedQuery.class);
         Mockito.when(entityManager.createQuery(QUERY_ALL_PRODUCTIONS, Production.class)).thenReturn(typedQuery);
-        ProductionRepository productionRepository = new  ProductionRepository();
         productionRepository.setEntityManager(entityManager);        
         Mockito.when(typedQuery.getResultList()).thenReturn(productions);
         
@@ -98,16 +90,13 @@ public class ProductionRepositoryTest {
     public void findProductionLikeNameTest() throws Exception {
         // Arrange
         String name= "nombre";
-        List<Production> productions= new ArrayList<Production>();
+        
         
         EntityManager entityManager= Mockito.mock(EntityManager.class);
         TypedQuery<Production> typedQuery = Mockito.mock(TypedQuery.class);
         Mockito.when(entityManager.createQuery(QUERY_LIKE_PRODUCTIONS, Production.class)).thenReturn(typedQuery);
         Mockito.when(typedQuery.setParameter(1, name)).thenReturn(typedQuery); 
         Mockito.when(typedQuery.getResultList()).thenReturn(productions);
-         
-         
-        ProductionRepository productionRepository = new  ProductionRepository();
         productionRepository.setEntityManager(entityManager);
         
         

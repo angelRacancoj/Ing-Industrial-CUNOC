@@ -49,8 +49,7 @@ public class StageService {
         }
         
 
-        //hay que hacer commit o merge?
-        //entityManager.getTransaction().commit();
+        entityManager.merge(oldStage);
 
     }
     

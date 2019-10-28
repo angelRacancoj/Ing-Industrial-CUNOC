@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
  */
 public class StageRepositoryTest {
     int stageId = 1;
-    List<Stage> stages= new ArrayList<Stage>();
+    List<Stage> stages= new ArrayList<>();
     StageRepository stageRepository = new StageRepository();
     
    
@@ -42,7 +42,7 @@ public class StageRepositoryTest {
     @Test
     public void FindByIdProductionTest() throws Exception {
         // Arrange
-        stageId = 1;
+        
         Stage stage = new Stage();
         EntityManager entityManager= getmanager( stageId, stage, false);
         
@@ -58,10 +58,8 @@ public class StageRepositoryTest {
     @Test
     public void FindByIdProductionNoResultExceptionTest() throws Exception {
         // Arrange
-        stageId = 1;
         Stage stage = new Stage();
-        EntityManager entityManager= getmanager(stageId, stage, true);
-        
+        EntityManager entityManager= getmanager(stageId, stage, true);      
         stageRepository.setEntityManager(entityManager);
 
         // Act
@@ -103,9 +101,6 @@ public class StageRepositoryTest {
         
         stageRepository.setEntityManager(entityManager);
         
-        
-        
-
         // Act
         List<Stage> result = stageRepository.findStageLikeName(name);
         // Assert

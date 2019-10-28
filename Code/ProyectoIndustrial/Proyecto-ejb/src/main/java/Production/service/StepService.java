@@ -25,33 +25,32 @@ public class StepService {
     private EntityManager entityManager;
     
     
-    public void create(Step stage) throws MandatoryAttributeProductionException {
+    public void create(Step step) throws MandatoryAttributeProductionException {
 
-        if (stage.getName() == null) {
+        if (step.getName() == null) {
             throw new MandatoryAttributeProductionException("Nombre nulo");
         }
-        if (stage.getDescription()== null) {
+        if (step.getDescription()== null) {
             throw new MandatoryAttributeProductionException("Descropcion nula");
         }
 
-        entityManager.persist(stage);
+        entityManager.persist(step);
         entityManager.getTransaction().commit();
 
     }
     
-     public void edit(Step oldStage) throws MandatoryAttributeProductionException {
+     public void edit(Step oldStep) throws MandatoryAttributeProductionException {
          
          //se setea antes o despues?
-        if (oldStage.getName() == null) {
+        if (oldStep.getName() == null) {
             throw new MandatoryAttributeProductionException("Nombre nulo");
         }
-        if (oldStage.getDescription()== null) {
+        if (oldStep.getDescription()== null) {
             throw new MandatoryAttributeProductionException("Descripcion nula");
         }
         
 
-        //hay que hacer commit o merge?
-        //entityManager.getTransaction().commit();
+        entityManager.merge(oldStep);
 
     }
     
