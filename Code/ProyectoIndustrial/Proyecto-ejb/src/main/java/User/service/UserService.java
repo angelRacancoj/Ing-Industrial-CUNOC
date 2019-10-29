@@ -9,6 +9,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import static config.Constants.PERSISTENCE_UNIT_NAME;
 
 @Stateless
 @LocalBean
