@@ -24,7 +24,7 @@ USE `produccion_industrial` ;
 DROP TABLE IF EXISTS `produccion_industrial`.`product` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`product` (
-  `id_product` INT(11) NOT NULL,
+  `id_product` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NOT NULL,
   PRIMARY KEY (`id_product`))
@@ -81,7 +81,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`COMMENTARY` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`COMMENTARY` (
-  `id_commentary` INT(11) NOT NULL,
+  `id_commentary` INT(11) NOT NULL AUTO_INCREMENT,
   `commentary` TINYTEXT NOT NULL,
   `stage_id` INT(11) NOT NULL,
   PRIMARY KEY (`id_commentary`),
