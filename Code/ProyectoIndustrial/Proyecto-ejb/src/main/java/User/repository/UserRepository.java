@@ -1,5 +1,6 @@
 package User.repository;
 
+import Production.Step;
 import User.RolUser;
 import User.User;
 import java.util.ArrayList;
@@ -23,27 +24,41 @@ public class UserRepository {
     @PersistenceContext(name=PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
     
+    public void setEntityManager(EntityManager entityManager){
+        this.entityManager=entityManager;
+    }
+    
+    public Optional<User> getUserByCarnet(Integer carnet){
+        TypedQuery<User> typeQuerry= entityManager.createQuery("SELECT u FROM user u WHERE u.carnet = :carnet",User.class);
+        typeQuerry.setParameter("carnet",carnet);
+        try {
+            return Optional.of(typeQuerry.getSingleResult());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+    
     public List<User> getUser(Integer carnet, String name, Integer state,Integer id_rol,Integer id_career){       
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-        Root<User> User = criteriaQuery.from(User.class);
+        Root<User> user = criteriaQuery.from(User.class);
         List<Predicate> predicates=new ArrayList<>();
         if(carnet!=null){
-            predicates.add(criteriaBuilder.like(User.get("carnet"), "%" + carnet + "%"));
+            predicates.add(criteriaBuilder.equal(user.get("carnet"),carnet));
         }
         if(name!=null){
-            predicates.add(criteriaBuilder.like(User.get("name"), "%" + name + "%"));
+            predicates.add(criteriaBuilder.like(user.get("name"), "%" + name + "%"));
         }
         if(state!=null){
-            predicates.add(criteriaBuilder.equal(User.get("state"), state));
+            predicates.add(criteriaBuilder.equal(user.get("state"), state));
         }
         if(id_rol!=null){
-            predicates.add(criteriaBuilder.equal(User.get("id_rol"), id_rol));
+            predicates.add(criteriaBuilder.equal(user.get("id_rol"), id_rol));
         }
         if(id_career!=null){
-            predicates.add(criteriaBuilder.equal(User.get("id_career"), id_career));
+            predicates.add(criteriaBuilder.equal(user.get("id_career"), id_career));
         }
-        criteriaQuery.where((Predicate[]) predicates.stream().toArray());
+        criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
         TypedQuery<User> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList();
     }
