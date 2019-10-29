@@ -1,12 +1,16 @@
 
 package Supply.service;
 
+import Modify.ModificationType;
+import Modify.service.ModifySupplyService;
 import Supply.Measure;
 import Supply.Supply;
 import Supply.exception.MandatoryAttributeSupplyException;
 import User.User;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,8 +20,15 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class SupplyServices {
     
-    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
+    
     EntityManager entityManager;
+    ModifySupplyService modifySupplyService = new ModifySupplyService();
+    
+    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+    
 
     public SupplyServices() {
     }
@@ -44,45 +55,43 @@ public class SupplyServices {
         return newSupply;
     }
     
-    public Supply modifyByMissing(Supply supplyToChange, Double newQuantity, User user) throws MandatoryAttributeSupplyException{
+    public Supply modifyByMissing(Supply supplyToChange, Integer newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException{
         if (newQuantity == null){
             throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
         } else {
             supplyToChange.setQuantity(newQuantity);
-            saveModificationHistory(supplyToChange, user, TypeModification.MODIFY_BY_MISSING);
+            saveModificationHistory(supplyToChange, user, ModificationType.POR_FALTANTE, newQuantity, noteModify);
         }
         return supplyToChange;
     }
     
-    public Supply modifyByTheft(Supply supplyToChange, User user){
+    public Supply modifyByTheft(Supply supplyToChange, User user, String noteModify){
         supplyToChange = deactivateSupplySimple(supplyToChange);
-        saveModificationHistory(supplyToChange, user, TypeModification.MODIFY_BY_THEFT);
+        saveModificationHistory(supplyToChange, user, ModificationType.POR_ROBO, 0, noteModify);
         return supplyToChange; 
     }
     
     public Supply deactiveSupply(Supply supplyToChange, User user){
         supplyToChange = deactivateSupplySimple(supplyToChange);
-        saveModificationHistory(supplyToChange, user, TypeModification.ATTRIBUTES);
         return supplyToChange;
     }
     
     private Supply deactivateSupplySimple(Supply supplyToChange){
-        supplyToChange.setQuantity(0.0);
+        supplyToChange.setQuantity(0);
         supplyToChange.setAvailability(false);
         return supplyToChange;
     }
     
-    public Supply activateSupply(Supply supplyToChange, Double newQuantity, User user) throws MandatoryAttributeSupplyException{
+    public Supply activateSupply(Supply supplyToChange, Integer newQuantity, User user) throws MandatoryAttributeSupplyException{
         if (newQuantity == null){
             throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
         }
         supplyToChange.setAvailability(true);
         supplyToChange.setQuantity(newQuantity);
-        saveModificationHistory(supplyToChange, user, TypeModification.ATTRIBUTES);
         return supplyToChange;
     }
     
-    public Supply modifySupply(Supply supply, String newName, LocalDate newExpirationDate, Double newCost, Double newQuantity, boolean newAvailability, String newDescription, Measure newMeasure, User user) throws MandatoryAttributeSupplyException{
+    public Supply modifySupply(Supply supply, String newName, LocalDate newExpirationDate, Double newCost, boolean newAvailability, String newDescription, Measure newMeasure, User user) throws MandatoryAttributeSupplyException{
         if (newName == null){
             throw new MandatoryAttributeSupplyException("Atributo Nombre Obligatorio");
         } 
@@ -92,24 +101,19 @@ public class SupplyServices {
         if (newCost == null){
             throw new MandatoryAttributeSupplyException("Atributo Costo Obligatorio");
         }
-        if (newQuantity == null){
-            throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
-        }
         if (newMeasure == null){
             throw new MandatoryAttributeSupplyException("Atributo Medida Obligatorio");
         }
         supply.setName(newName);
         supply.setExpirationDate(newExpirationDate);
         supply.setCost(newCost);
-        supply.setQuantity(newQuantity);
         supply.setAvailability(newAvailability);
         supply.setDescription(newDescription);
         supply.setMeasure(newMeasure);
-        saveModificationHistory(supply, user, TypeModification.ATTRIBUTES);
         return supply;
     }
     
-    private void saveModificationHistory(Supply supply, User user, TypeModification typeModification){
-        //Guardar El cambio en entidad "modify_supply"
+    private void saveModificationHistory(Supply supply, User user, ModificationType typeModification, Integer newQuantity, String note){
+        modifySupplyService.createModifySupply(user, supply, typeModification, newQuantity, Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()), note);
     }
 }
