@@ -91,7 +91,7 @@ public class ModifySupplyRepositoryTest {
     
     @Test
     public void getAllTest(){
-        int supplyId = 1;
+        // Arrange
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         Query query = Mockito.mock(Query.class);
         
