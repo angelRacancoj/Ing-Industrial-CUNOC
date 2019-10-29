@@ -21,17 +21,23 @@ public class NecessarySupply implements Serializable{
     @Column(name = "idNecessarySupply")
     private Integer idNecessarySupply;
     @ManyToOne
-    private Production production;
+    private Step step_id;
     @ManyToOne
-    private Supply supply;
+    private Supply supply_code;
 
     public NecessarySupply() {
     }
 
-    public NecessarySupply(Integer idNecessarySupply, Production production, Supply supply) {
+    public NecessarySupply(Integer idNecessarySupply, Step step_id, Supply supply_code) {
         this.idNecessarySupply = idNecessarySupply;
-        this.production = production;
-        this.supply = supply;
+        this.step_id = step_id;
+        this.supply_code = supply_code;
+    }
+    
+    public NecessarySupply(Step step_id, Supply supply_code) {
+        this.idNecessarySupply = idNecessarySupply;
+        this.step_id = step_id;
+        this.supply_code = supply_code;
     }
     
     
@@ -43,20 +49,20 @@ public class NecessarySupply implements Serializable{
         this.idNecessarySupply = idNecessarySupply;
     }
 
-    public Production getProduction() {
-        return production;
+    public Step getStep() {
+        return step_id;
     }
 
-    public void setProduction(Production produccion) {
-        this.production = produccion;
+    public void setStep(Step step_id) {
+        this.step_id = step_id;
     }
 
-    public Supply getSupply() {
-        return supply;
+    public Supply getSupplyCode() {
+        return supply_code;
     }
 
-    public void setSupply(Supply supply) {
-        this.supply = supply;
+    public void setSupplyCode(Supply supply_code) {
+        this.supply_code = supply_code;
     }
     
     
