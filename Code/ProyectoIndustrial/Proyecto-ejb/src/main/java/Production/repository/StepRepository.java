@@ -1,6 +1,7 @@
 package Production.repository;
 
 import Production.Step;
+import static config.Constants.PERSISTENCE_UNIT_NAME;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -17,8 +18,15 @@ import javax.persistence.TypedQuery;
 @LocalBean
 public class StepRepository {
 
-    @PersistenceContext(name = config.Constants.PERSISTENCE_UNIT_NAME)
-    private EntityManager entityManager;
+     private EntityManager entityManager;
+    public static final String QUERY_FIND_BY_ID = "SELECT s FROM Step s WHERE s.idStep = ?";
+    public static final String QUERY_ALL_STEPS = "SELECT s FROM Step s";
+    public static final String QUERY_LIKE_STEPS = "SELECT s FROM Step s WHERE s.name LIKE  ?" ;
+
+    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     /**
      * Busca un Step por el id si no encuentra nada devulve un Optional
@@ -27,9 +35,10 @@ public class StepRepository {
      * @param idStep
      * @return Step
      */
-    public Optional<Step> findByIdStep(String idStep) {
+    public Optional<Step> findByIdStep(int idStep) {
 
-        TypedQuery<Step> typedQuery = entityManager.createQuery("SELECT s FROM Step s WHERE s.idStep = " + idStep, Step.class);
+        TypedQuery<Step> typedQuery = entityManager.createQuery( QUERY_FIND_BY_ID, Step.class)
+                .setParameter(1, idStep);
         try {
             return Optional.of(typedQuery.getSingleResult());
         } catch (Exception e) {
@@ -40,18 +49,16 @@ public class StepRepository {
 
     public List<Step> AllSteps() {
 
-        String consult = "SELECT s FROM Step s";
-        List<Step> steps = entityManager.createQuery(consult).getResultList();
-
-        
-            return steps;
+        TypedQuery<Step> typedQuery = entityManager.createQuery(QUERY_ALL_STEPS, Step.class);
+            return typedQuery.getResultList();
        
 
     }
 
     public List<Step> findStepLikeName(String nameStep) {
         
-        TypedQuery<Step> typedQuery = entityManager.createQuery("SELECT s FROM Step s WHERE s.name LIKE  " + nameStep, Step.class);
+        TypedQuery<Step> typedQuery = entityManager.createQuery(QUERY_LIKE_STEPS, Step.class)
+                .setParameter(1, nameStep);
         
         return typedQuery.getResultList();
         
