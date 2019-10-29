@@ -155,7 +155,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`NECESSARY_SUPPLY` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`NECESSARY_SUPPLY` (
-  `id_necessary_supply` INT(11) NOT NULL,
+  `id_necessary_supply` INT(11) NOT NULL AUTO_INCREMENT,
   `step_id` INT(11) NOT NULL,
   `supply_code` INT(11) NOT NULL,
   PRIMARY KEY (`id_necessary_supply`),
