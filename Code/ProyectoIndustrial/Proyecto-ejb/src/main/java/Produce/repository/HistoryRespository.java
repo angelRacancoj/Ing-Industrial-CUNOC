@@ -18,19 +18,22 @@ import static config.Constants.PERSISTENCE_UNIT_NAME;
 @Stateless
 @LocalBean
 public class HistoryRespository {
+    
+    public static final String GET_ALL = "SELECT h FROM History h";
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     public Optional<History> findById(int id) {
         return Optional.of(entityManager.find(History.class, id));
     }
 
     public List<History> getAll() {
-        CriteriaQuery criteriaQuery = entityManager.getCriteriaBuilder().createQuery();
-        criteriaQuery.select(criteriaQuery.from(History.class));
-
-        Query query = entityManager.createQuery(criteriaQuery);
+        Query query = entityManager.createQuery(GET_ALL);
         return query.getResultList();
     }
 

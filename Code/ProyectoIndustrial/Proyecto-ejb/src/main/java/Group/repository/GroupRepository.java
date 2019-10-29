@@ -1,15 +1,14 @@
 package Group.repository;
 
 import Group.Group;
+import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaQuery;
-import static config.Constants.PERSISTENCE_UNIT_NAME;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -20,32 +19,31 @@ import static config.Constants.PERSISTENCE_UNIT_NAME;
 @LocalBean
 public class GroupRepository {
     
-    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
+    public static final String FIND_BY_ID = "SELECT g FROM Group g WHERE g.idGroup = :id";
+    public static final String GET_ALL = "SELECT g FROM Group g";
+    
+    
     private EntityManager entityManager;
     
+    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+    
     public Optional<Group> findById(Integer id){
-        Query query = entityManager.createQuery("SELECT g FROM Group g WHERE g.idGroup = :id").setParameter("id", id);
-        return query.getResultStream().findFirst();
-        
-//        try {
-//            return Optional.of((Group) query.getSingleResult());
-//        } catch (Exception e) {
-//            return Optional.empty();
-//        }
-        
-//        List<Group> result = query.getResultList();
-//        if (result.size() > 0) {
-//            return Optional.of(result.get(0));
-//        }
-//        return null;
+        TypedQuery<Group> typedQuery = entityManager.createQuery(FIND_BY_ID,Group.class).setParameter("id", id);
+        try {
+            return Optional.of(typedQuery.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+ 
     }
     
     public List<Group> getAll(){
-        CriteriaQuery criteriaQuery = entityManager.getCriteriaBuilder().createQuery();
-        criteriaQuery.select(criteriaQuery.from(Group.class));
-        
-        Query query = entityManager.createQuery(criteriaQuery);
-        return query.getResultList();
+        TypedQuery<Group> typedQuery = entityManager.createQuery(GET_ALL,Group.class);
+        return typedQuery.getResultList();
     }
     
 }
