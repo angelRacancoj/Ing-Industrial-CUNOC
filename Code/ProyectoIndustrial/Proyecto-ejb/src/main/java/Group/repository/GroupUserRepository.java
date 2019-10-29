@@ -3,7 +3,6 @@ package Group.repository;
 import Group.GroupUser;
 import Group.Group;
 import User.User;
-import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.LocalBean;
@@ -12,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
+import static config.Constants.PERSISTENCE_UNIT_NAME;
 
 /**
  *

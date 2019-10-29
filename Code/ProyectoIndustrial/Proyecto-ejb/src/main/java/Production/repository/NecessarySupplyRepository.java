@@ -2,7 +2,6 @@ package Production.repository;
 
 import Production.NecessarySupply;
 import Supply.Supply;
-import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import static config.Constants.PERSISTENCE_UNIT_NAME;
 
 
 @Stateless

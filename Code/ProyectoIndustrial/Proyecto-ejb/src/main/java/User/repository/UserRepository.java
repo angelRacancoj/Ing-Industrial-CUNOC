@@ -2,7 +2,6 @@ package User.repository;
 
 import User.RolUser;
 import User.User;
-import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import static config.Constants.PERSISTENCE_UNIT_NAME;
 
 @Stateless
 @LocalBean
