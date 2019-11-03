@@ -14,19 +14,25 @@ import static config.Constants.PERSISTENCE_UNIT_NAME;
 public class CareerService {
     @PersistenceContext(name=PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
+    
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
-    public void createCareer(Career career) throws UserException{
+    public Career createCareer(Career career) throws UserException{
         if(career==null){
              throw new UserException("career is null");
         }
         entityManager.persist(career);
+        return career;
     }
 
-    public void updateCareer(Career career) throws UserException{
+    public Career updateCareer(Career career) throws UserException{
         if(career==null){
             throw new UserException("career is null");
         }
         Career updateCareer = entityManager.find(Career.class, career.getIdCareer());
         updateCareer.setName(career.getName());
+        return updateCareer;
     }
 }
