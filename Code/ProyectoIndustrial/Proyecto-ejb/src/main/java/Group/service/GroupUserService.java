@@ -1,13 +1,13 @@
 package Group.service;
 
 import Group.*;
-import User.User;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
-import java.util.Date;
+import java.util.Optional;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TransactionRequiredException;
 
 /**
  *
@@ -20,14 +20,41 @@ public class GroupUserService {
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
-    
-    public void  createGroupUser(User user, Group group, Date admissionDate){
-        GroupUser groupUser = new GroupUser(user, group, admissionDate);
-        entityManager.persist(groupUser);
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
-    
-    public void updateUserGroup(Integer groupId, Group group){
-        GroupUser groupUser = entityManager.find(GroupUser.class, groupId);
+
+    public GroupUser createGroupUser(GroupUser groupUser) {
+        entityManager.persist(groupUser);
+        return groupUser;
+    }
+
+    /**
+     * Change the group of an user
+     *
+     * @param groupUser
+     * @param group
+     * @return
+     */
+    public GroupUser updateUserGroup(GroupUser groupUser, Group group) {
         groupUser.setGroup(group);
+        entityManager.merge(groupUser);
+        return groupUser;
+    }
+
+    /**
+     * This method remove a user from a group
+     *
+     * @param groupUser
+     * @return
+     */
+    public Optional<GroupUser> removeUserFromGroup(GroupUser groupUser) {
+        try {
+            entityManager.remove(groupUser);
+            return Optional.of(groupUser);
+        } catch (TransactionRequiredException e) {
+            return Optional.empty();
+        }
     }
 }

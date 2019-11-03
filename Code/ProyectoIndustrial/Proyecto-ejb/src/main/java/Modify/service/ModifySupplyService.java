@@ -1,11 +1,7 @@
 package Modify.service;
 
-import Modify.ModificationType;
 import Modify.ModifySupply;
-import Supply.Supply;
-import User.User;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
-import java.util.Date;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,25 +18,19 @@ public class ModifySupplyService {
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
 
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
     /**
-     * The comment can be empty
+     * Create a new modification history
      *
-     * @param user
-     * @param supply
-     * @param modifyType
-     * @param quantity
-     * @param date
-     * @param note
+     * @param modifySupply
+     * @return 
      */
-    public void createModifySupply(User user, Supply supply, ModificationType modifyType, Integer quantity, Date date, String note) {
+    public ModifySupply createModifySupply(ModifySupply modifySupply) {
 
-        if (!note.isEmpty()) {
-            ModifySupply modifySupply = new ModifySupply(user, supply, modifyType, quantity, date, note);
-            entityManager.persist(modifySupply);
-        } else {
-            ModifySupply modifySupply = new ModifySupply(user, supply, modifyType, quantity, date);
-            entityManager.persist(modifySupply);
-        }
-
+        entityManager.persist(modifySupply);
+        return modifySupply;
     }
 }

@@ -18,26 +18,33 @@ public class GroupService {
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
 
-    public void createGroup(String information, String section) {
-        Group group = new Group(information, section);
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    public Group createGroup(Group group) {
         entityManager.persist(group);
+        return group;
     }
 
     /**
      * To update just information or section, send the same text, if the text is
      * empty can't update the fill
      *
-     * @param idGroup
+     * @param group
      * @param information
      * @param section
+     * @return
      */
-    public void updateGroup(Integer idGroup, String information, String section) {
-        Group group = entityManager.find(Group.class, idGroup);
-        if (!information.isEmpty() && !group.getInformation().equalsIgnoreCase(information)) {
+    public Group updateGroup(Group group, String information, String section) {
+
+        if ((information != null) && (!information.isEmpty())) {
             group.setInformation(information);
         }
-        if (!section.isEmpty() && !group.getSection().equalsIgnoreCase(section)) {
+        if ((section != null) && (!section.isEmpty())) {
             group.setSection(section);
         }
+
+        return entityManager.merge(group);
     }
 }
