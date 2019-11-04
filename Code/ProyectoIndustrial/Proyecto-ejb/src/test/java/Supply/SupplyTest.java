@@ -9,13 +9,13 @@ import org.testng.annotations.Test;
 public class SupplyTest {
     
     Supply testSupply = new Supply();
-    int testCode = 100;
+    Integer testCode = 100;
     String testName = "name test of a Supply";
     LocalDate testExpirationDate = LocalDate.now();
     LocalDate testDateAdmission = LocalDate.now(); 
-    double testCost = 10.10;
-    double testQuantity = 20.20;
-    boolean testAvailability = true;
+    Double testCost = 10.10;
+    Integer testQuantity = 20;
+    Boolean testAvailability = true;
     String testDescription = "Text of Description of a Supply";
     Measure testMeasure = new Measure();
     Supply testSupplyFullConstructor = new Supply(testCode, testName, testExpirationDate, testDateAdmission, testCost, testQuantity, testAvailability, testDescription, testMeasure);
@@ -23,7 +23,7 @@ public class SupplyTest {
     @Test
     public void testSetAndGetCode() throws Exception {
         testSupply.setCode(testCode);
-        int result = testSupply.getCode();
+        Integer result = testSupply.getCode();
         
         Assert.assertEquals(result,testCode);
     }
@@ -55,7 +55,7 @@ public class SupplyTest {
     @Test
     public void testSetAndGetCost() throws Exception {
         testSupply.setCost(testCost);
-        double result = testSupply.getCost();
+        Double result = testSupply.getCost();
         
         Assert.assertEquals(result,testCost);
     }
@@ -63,7 +63,7 @@ public class SupplyTest {
     @Test
     public void testSetAndGetQuantity() throws Exception {
         testSupply.setQuantity(testQuantity);
-        double result = testSupply.getQuantity();
+        Integer result = testSupply.getQuantity();
         
         Assert.assertEquals(result,testQuantity);
     }
@@ -71,7 +71,7 @@ public class SupplyTest {
     @Test
     public void testSetAndGetAvailability() throws Exception {
         testSupply.setAvailability(testAvailability);
-        boolean result = testSupply.isAvailability();
+        Boolean result = testSupply.isAvailability();
         
         Assert.assertEquals(result,testAvailability);
     }

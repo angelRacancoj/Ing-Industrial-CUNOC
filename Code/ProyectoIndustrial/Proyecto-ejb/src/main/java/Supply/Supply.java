@@ -35,7 +35,7 @@ public class Supply implements Serializable{
     @Column(name = "quantity",scale = 2)
     private Integer quantity;
     @Column(name = "availability")
-    private boolean availability;
+    private Boolean availability;
     @Column(name = "description")
     private String description;
     
