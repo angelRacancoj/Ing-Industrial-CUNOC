@@ -15,19 +15,25 @@ public class RolUserService {
     @PersistenceContext(name=PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
     
-    public void createRolUser(RolUser rolUser) throws UserException{
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+    
+    public RolUser createRolUser(RolUser rolUser) throws UserException{
         if(rolUser==null){
             throw new UserException("rolUser is null");
         }
         entityManager.persist(rolUser);
+        return rolUser;
     }
     
-    public void updateRolUser(RolUser rolUser) throws UserException{
+    public RolUser updateRolUser(RolUser rolUser) throws UserException{
         if(rolUser==null){
             throw new UserException("rolUser is null");
         }
         RolUser updateRolUser = entityManager.find(RolUser.class, rolUser.getIdRolUser());
         updateRolUser.setName(rolUser.getName());
+        return rolUser;
     }
    
 }
