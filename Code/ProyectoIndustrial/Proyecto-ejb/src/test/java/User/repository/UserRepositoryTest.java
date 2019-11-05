@@ -1,12 +1,14 @@
 package User.repository;
 
 import User.Career;
+import java.lang.Exception;
 import User.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -39,6 +41,22 @@ public class UserRepositoryTest {
         Assert.assertEquals(result.get(), user);
     }
 
+    @Test
+    public void getUserByCarnetEmptyTest() {
+        Integer carnet = 201630875;
+        TypedQuery<User> typeQuery = Mockito.mock(TypedQuery.class);
+
+        Mockito.when(entityManager.createQuery(GET_USER_BY_CARNET, User.class)).thenReturn(typeQuery);
+        Mockito.when(typeQuery.setParameter("carnet", carnet)).thenReturn(typeQuery);
+        User user = new User();
+        Mockito.when(typeQuery.getSingleResult()).thenThrow(NoResultException.class);   
+
+        UserRepository userRepository = new UserRepository();
+        userRepository.setEntityManager(entityManager);
+        Optional<User> result = userRepository.getUserByCarnet(carnet);
+        Assert.assertEquals(result, Optional.empty());
+    }
+    
     @Test
     public void getUseTest() {
         List<User> users = new ArrayList<>();

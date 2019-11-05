@@ -17,13 +17,18 @@ public class UserService {
     @PersistenceContext(name=PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
     
-    public void createUser(User user) throws UserException{
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+    
+    public User createUser(User user) throws UserException{
         if(user==null){
             throw new UserException("user is null");
         }
         entityManager.persist(user);
+        return user;
     }
-    public void updateUser(User user) throws UserException{
+    public User updateUser(User user) throws UserException{
         if(user==null){
             throw new UserException("rolUser is null");
         }
@@ -46,7 +51,7 @@ public class UserService {
         if(user.getCareer()!=null){
             updateUser.setCareer(user.getCareer());
         }
-        
+        return updateUser;
     }
     public void stateUser(Integer carnet,Boolean state){
         User user = entityManager.find(User.class, carnet);

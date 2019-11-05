@@ -2,6 +2,7 @@
 package Supply.service;
 
 import Modify.ModificationType;
+import Modify.ModifySupply;
 import Modify.service.ModifySupplyService;
 import Supply.Measure;
 import Supply.Supply;
@@ -11,6 +12,7 @@ import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,15 +23,19 @@ import javax.persistence.PersistenceContext;
 public class SupplyServices {
     
     
-    EntityManager entityManager;
-    ModifySupplyService modifySupplyService = new ModifySupplyService();
+    private EntityManager entityManager;
+    private ModifySupplyService modifySupplyService;
     
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
     
-
+    @EJB
+    public void setModifySupplyService(ModifySupplyService modifySupplyService){
+        this.modifySupplyService = modifySupplyService;
+    }
+    
     public SupplyServices() {
     }
     
@@ -114,6 +120,7 @@ public class SupplyServices {
     }
     
     private void saveModificationHistory(Supply supply, User user, ModificationType typeModification, Integer newQuantity, String note){
-        modifySupplyService.createModifySupply(user, supply, typeModification, newQuantity, Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()), note);
+        ModifySupply newModifySupply = new ModifySupply(user, supply, typeModification, newQuantity,  Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()), note);
+        modifySupplyService.createModifySupply(newModifySupply);
     }
 }
