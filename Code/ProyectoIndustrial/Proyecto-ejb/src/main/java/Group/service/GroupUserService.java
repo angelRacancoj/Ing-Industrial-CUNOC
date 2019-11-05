@@ -1,6 +1,7 @@
 package Group.service;
 
 import Group.*;
+import Group.facade.GroupUserServiceFacade;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.util.Optional;
 import javax.ejb.LocalBean;
@@ -16,7 +17,7 @@ import javax.persistence.TransactionRequiredException;
 @Stateless
 @LocalBean
 
-public class GroupUserService {
+public class GroupUserService implements GroupUserServiceFacade{
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
@@ -25,6 +26,7 @@ public class GroupUserService {
         this.entityManager = entityManager;
     }
 
+    @Override
     public GroupUser createGroupUser(GroupUser groupUser) {
         entityManager.persist(groupUser);
         return groupUser;

@@ -6,6 +6,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import Group.facade.GroupServiceFacade;
 
 /**
  *
@@ -13,7 +14,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class GroupService {
+public class GroupService implements GroupServiceFacade{
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
@@ -22,6 +23,7 @@ public class GroupService {
         this.entityManager = entityManager;
     }
 
+    @Override
     public Group createGroup(Group group) {
         entityManager.persist(group);
         return group;
@@ -36,6 +38,7 @@ public class GroupService {
      * @param section
      * @return
      */
+    @Override
     public Group updateGroup(Group group, String information, String section) {
 
         if ((information != null) && (!information.isEmpty())) {
