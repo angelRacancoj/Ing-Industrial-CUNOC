@@ -1,7 +1,6 @@
 package Produce.repository;
 
 import Produce.History;
-import Produce.facade.HistoryRepositoryFacade;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.LocalBean;
@@ -17,7 +16,7 @@ import static config.Constants.PERSISTENCE_UNIT_NAME;
  */
 @Stateless
 @LocalBean
-public class HistoryRespository implements HistoryRepositoryFacade {
+public class HistoryRespository {
 
     public static final String GET_ALL = "SELECT h FROM History h";
 
@@ -28,12 +27,10 @@ public class HistoryRespository implements HistoryRepositoryFacade {
         this.entityManager = entityManager;
     }
 
-    @Override
     public Optional<History> findById(int id) {
         return Optional.of(entityManager.find(History.class, id));
     }
 
-    @Override
     public List<History> getAll() {
         Query query = entityManager.createQuery(GET_ALL);
         return query.getResultList();

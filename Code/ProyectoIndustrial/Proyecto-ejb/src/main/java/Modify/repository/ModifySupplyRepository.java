@@ -1,7 +1,6 @@
 package Modify.repository;
 
 import Modify.ModifySupply;
-import Modify.facade.ModifySupplyRepositoryFacade;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +17,7 @@ import javax.persistence.Query;
 
 @Stateless
 @LocalBean
-public class ModifySupplyRepository implements ModifySupplyRepositoryFacade{
+public class ModifySupplyRepository{
     
     public static final String FIND_MODIFICATION_BY_USER = "SELECT ms FROM ModifySupply ms WHERE ms.user.carnet = :idUser";
     public static final String FIND_MODIFICATION_BY_SUPPLY = "SELECT ms FROM ModifySupply ms WHERE ms.supply.code = :idSupply";

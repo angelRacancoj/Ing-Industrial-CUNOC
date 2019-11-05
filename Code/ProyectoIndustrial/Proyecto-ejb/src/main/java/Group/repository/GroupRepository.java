@@ -1,7 +1,6 @@
 package Group.repository;
 
 import Group.Group;
-import Group.facade.GroupRepositoryFacade;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +18,7 @@ import javax.persistence.TypedQuery;
 
 @Stateless
 @LocalBean
-public class GroupRepository implements GroupRepositoryFacade{
+public class GroupRepository{
     
     public static final String FIND_BY_ID = "SELECT g FROM Group g WHERE g.idGroup = :id";
     public static final String GET_ALL = "SELECT g FROM Group g";
@@ -33,7 +32,6 @@ public class GroupRepository implements GroupRepositoryFacade{
         this.entityManager = entityManager;
     }
     
-    @Override
     public Optional<Group> findById(Integer id){
         TypedQuery<Group> typedQuery = entityManager.createQuery(FIND_BY_ID,Group.class).setParameter("id", id);
         try {
@@ -44,7 +42,6 @@ public class GroupRepository implements GroupRepositoryFacade{
  
     }
     
-    @Override
     public List<Group> getAll(){
         TypedQuery<Group> typedQuery = entityManager.createQuery(GET_ALL,Group.class);
         return typedQuery.getResultList();

@@ -1,7 +1,6 @@
 package Modify.service;
 
 import Modify.ModifySupply;
-import Modify.facade.ModifySupplyServiceFacade;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -14,7 +13,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class ModifySupplyService implements ModifySupplyServiceFacade{
+public class ModifySupplyService{
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
@@ -29,7 +28,6 @@ public class ModifySupplyService implements ModifySupplyServiceFacade{
      * @param modifySupply
      * @return 
      */
-    @Override
     public ModifySupply createModifySupply(ModifySupply modifySupply) {
 
         entityManager.persist(modifySupply);

@@ -2,7 +2,6 @@ package Group.repository;
 
 import Group.GroupUser;
 import Group.Group;
-import Group.facade.GroupUserRepositoryFacade;
 import User.User;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +10,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaQuery;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 
 /**
@@ -20,7 +18,7 @@ import static config.Constants.PERSISTENCE_UNIT_NAME;
  */
 @Stateless
 @LocalBean
-public class GroupUserRepository implements GroupUserRepositoryFacade{
+public class GroupUserRepository{
     
     public static final String FIND_USERS_BY_GROUP = "SELECT u FROM GroupUser g, User u WHERE g.group.idGroup = :groupId AND g.user.carnet = u.carnet";
     public static final String FIND_GROUP_OF_USERS = "SELECT u FROM GroupUser g, User u WHERE g.group.idGroup = :groupId AND g.user.carnet = u.carnet";
@@ -36,7 +34,6 @@ public class GroupUserRepository implements GroupUserRepositoryFacade{
         this.entityManager = entityManager;
     }
 
-    @Override
     public Optional<GroupUser> findById(Integer id) {
         return Optional.of(entityManager.find(GroupUser.class, id));
     }
@@ -53,7 +50,6 @@ public class GroupUserRepository implements GroupUserRepositoryFacade{
         return query.getResultList();
     }
 
-    @Override
     public List<GroupUser> getAll() {
         Query query = entityManager.createQuery(GET_ALL_GROUP_USERS);
         return query.getResultList();

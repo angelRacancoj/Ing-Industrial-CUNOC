@@ -1,7 +1,6 @@
 package Produce.service;
 
 import Produce.History;
-import Produce.facade.HistoryServiceFacade;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.util.Date;
 import javax.ejb.LocalBean;
@@ -15,7 +14,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class HistoryService implements HistoryServiceFacade {
+public class HistoryService {
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
@@ -24,7 +23,6 @@ public class HistoryService implements HistoryServiceFacade {
         this.entityManager = entityManager;
     }
 
-    @Override
     public History createHistory(History history) {
         entityManager.persist(history);
         return history;
