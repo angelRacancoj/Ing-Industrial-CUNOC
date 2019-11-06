@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import Produce.History;
+import java.time.LocalDate;
 
 /**
  *
@@ -53,15 +54,15 @@ public class Production implements Serializable {
     @Basic(optional = false)
     @Column(name = "creation_date")
     @Temporal(TemporalType.DATE)
-    private Date creationDate;
+    private LocalDate creationDate;
     @Column(name = "description")
     private String description;
     @JoinColumn(name = "product_id", referencedColumnName = "id_product")
     @ManyToOne
     private Product productId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productionId")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "productionId")
     private List<History> historyList;
-    @OneToMany(mappedBy = "productionId")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "productionId")
     private List<Stage> stageList;
 
     public Production() {
@@ -71,7 +72,7 @@ public class Production implements Serializable {
         this.idProduction = idProduction;
     }
 
-    public Production(Integer idProduction, String name, boolean state, int unity, Date creationDate) {
+    public Production(Integer idProduction, String name, boolean state, int unity, LocalDate creationDate) {
         this.idProduction = idProduction;
         this.name = name;
         this.state = state;
@@ -127,11 +128,11 @@ public class Production implements Serializable {
         this.priceLot = priceLot;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 

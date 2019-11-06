@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Production.service;
 
 import Production.Production;
@@ -21,10 +17,15 @@ import  static config.Constants.*;
 @LocalBean
 public class ProductionService {
 
-    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
+    
     private EntityManager entityManager;
+    
+    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
-    public void create(Production production) throws MandatoryAttributeProductionException {
+    public Production create(Production production) throws MandatoryAttributeProductionException {
 
         if (production.getName() == null) {
             throw new MandatoryAttributeProductionException("Nombre nulo");
@@ -41,30 +42,29 @@ public class ProductionService {
         }
 
         entityManager.persist(production);
-        entityManager.getTransaction().commit();
-
+        return production;
     }
     
-     public void edit(Production oldProduction) throws MandatoryAttributeProductionException {
+     public Production edit(Production Production) throws MandatoryAttributeProductionException {
          
          
-        if (oldProduction.getName() == null) {
+        if (Production.getName() == null) {
             throw new MandatoryAttributeProductionException("Nombre nulo");
         }
-        if (oldProduction.getUnity() == 0) {
+        if (Production.getUnity() == 0) {
             throw new MandatoryAttributeProductionException("Unidad por lote nulo");
 
         }
-        if (oldProduction.getCreationDate() == null) {
+        if (Production.getCreationDate() == null) {
             throw new MandatoryAttributeProductionException("Fecha de creacion nula");
         }
-        if (oldProduction.getProductId() == null) {
+        if (Production.getProductId() == null) {
             throw new MandatoryAttributeProductionException("Producto nulo");
         }
         
-        entityManager.merge(oldProduction);
+        entityManager.merge(Production);
         
-
+        return Production;
     }
 
 }

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Production.service;
 
 
@@ -21,24 +17,14 @@ import javax.persistence.PersistenceContext;
 @Stateless
 @LocalBean
 public class StageService {
+     private EntityManager entityManager;
+    
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
-    private EntityManager entityManager;
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    } 
     
-        public void create(Stage stage) throws MandatoryAttributeProductionException {
-
-        if (stage.getName() == null) {
-            throw new MandatoryAttributeProductionException("Nombre nulo");
-        }
-        if (stage.getDescription()== null) {
-            throw new MandatoryAttributeProductionException("Descropcion nula");
-        }
-
-        entityManager.persist(stage);
-        entityManager.getTransaction().commit();
-
-    }
-    
-     public void edit(Stage oldStage) throws MandatoryAttributeProductionException {
+     public Stage edit(Stage oldStage) throws MandatoryAttributeProductionException {
          
          //se setea antes o despues?
         if (oldStage.getName() == null) {
@@ -50,6 +36,8 @@ public class StageService {
         
 
         entityManager.merge(oldStage);
+        
+        return oldStage;
 
     }
     
