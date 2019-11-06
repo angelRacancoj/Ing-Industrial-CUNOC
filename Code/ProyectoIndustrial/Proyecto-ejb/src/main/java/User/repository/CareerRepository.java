@@ -2,6 +2,7 @@ package User.repository;
 
 import User.Career;
 import User.RolUser;
+import User.exception.UserException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,16 +29,19 @@ public class CareerRepository {
         this.entityManager = entityManager;
     }
 
-    public List<Career> getCareer(Integer id_career, String name) {
+    public List<Career> getCareer(Career career) throws UserException {
+        if (career == null) {
+            throw new UserException("career is null");
+        }
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Career> criteriaQuery = criteriaBuilder.createQuery(Career.class);
         Root<Career> Career = criteriaQuery.from(Career.class);
         List<Predicate> predicates = new ArrayList<>();
-        if (id_career != null) {
-            predicates.add(criteriaBuilder.equal(Career.get("id_career"), id_career));
+        if (career.getIdCareer() != null) {
+            predicates.add(criteriaBuilder.equal(Career.get("id_career"), career.getIdCareer()));
         }
-        if (name != null) {
-            predicates.add(criteriaBuilder.like(Career.get("name"), "%" + name + "%"));
+        if (career.getName() != null) {
+            predicates.add(criteriaBuilder.like(Career.get("name"), "%" + career.getName() + "%"));
         }
         criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
         TypedQuery<Career> query = entityManager.createQuery(criteriaQuery);
