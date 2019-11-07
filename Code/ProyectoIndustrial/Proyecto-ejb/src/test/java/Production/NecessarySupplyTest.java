@@ -22,21 +22,21 @@ public class NecessarySupplyTest {
     }
     
     @Test
-    public void testSetAndGetIdProduction() throws Exception {
+    public void testSetAndGetIdStep() throws Exception {
         // Arrange
         NecessarySupply testNecessarySupply = new NecessarySupply();
-        Production testVal = new Production();
+        Step testVal = new Step();
         
         // Act
-        testNecessarySupply.setProduction(testVal);
-        Production result = testNecessarySupply.getProduction();
+        testNecessarySupply.setStep(testVal);
+        Step result = testNecessarySupply.getStep();
         
         // Assert
         Assert.assertEquals(result, testVal);
         
     }
     
-    
+        
     @Test
     
     public void testSetAndGetIdSupply() throws Exception {
@@ -45,8 +45,8 @@ public class NecessarySupplyTest {
         Supply testVal = new Supply();
         
         // Act
-        testNecessarySupply.setSupply(testVal);
-        Supply result = testNecessarySupply.getSupply();
+        testNecessarySupply.setSupplyCode(testVal);
+        Supply result = testNecessarySupply.getStep();
         
         // Assert
         Assert.assertEquals(result, testVal);

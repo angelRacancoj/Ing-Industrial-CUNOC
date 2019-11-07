@@ -2,31 +2,36 @@ package Production;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(
-        name = "PRODUCT"
+        name = "product"
 )
 
 public class Product implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
     @Column(name = "id_product")
     private Integer idProduct;
+    @Basic(optional = false)
     @Column(name = "name")
     private String name;
+    @Basic(optional = false)
     @Column(name = "description")
     private String description;
-    @OneToMany(mappedBy = "productId")
-    private List<Production> productionList;
 
     public Product() {
     }
@@ -63,13 +68,6 @@ public class Product implements Serializable{
         this.description = description;
     }
     
-    @XmlTransient
-    public List<Production> getProductionList() {
-        return productionList;
-    }
 
-    public void setProductionList(List<Production> productionList) {
-        this.productionList = productionList;
-    }
     
 }

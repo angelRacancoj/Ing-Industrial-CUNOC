@@ -1,8 +1,9 @@
 package Production.service;
 
-import Production.Step;
 import Production.NecessarySupply;
+import Production.Step;
 import Supply.Supply;
+import Production.exceptions.MandatoryAttributeProductionException;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -16,20 +17,29 @@ public class NecessarySupplyService {
     @PersistenceContext(name=PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
     
-    public void createNecessarySupply(Step step_id, Supply supply_code){ 
-        NecessarySupply necessarySupply = new NecessarySupply(step_id, supply_code); 
-        entityManager.persist(necessarySupply);
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
-    public void updateNecessarySupply(Integer idNecessarySupply,Step step_id, Supply supply_code){
-        NecessarySupply necessarySupply = entityManager.find(NecessarySupply.class, idNecessarySupply);
-        if(step_id!=null){
-            necessarySupply.setStep(step_id);
+    
+    public NecessarySupply createNecessarySupply(NecessarySupply necessarySupply) throws MandatoryAttributeProductionException{
+        if(necessarySupply==null){
+            throw new MandatoryAttributeProductionException("Necessary Supply is null");
         }
-        if(supply_code!=null){
-            necessarySupply.setSupplyCode(supply_code);
+        entityManager.persist(necessarySupply);
+        return necessarySupply;
+    }
+    public NecessarySupply updateNecessarySupply(NecessarySupply necessarySupply, Step step, Supply supply) throws MandatoryAttributeProductionException{
+        if(necessarySupply==null){
+            throw new MandatoryAttributeProductionException("Necessary Supply is null");
         }
-        
-        
+        NecessarySupply updateNecessarySupply = entityManager.find(NecessarySupply.class, necessarySupply.getIdNecessarySupply());
+        if(step!=null){
+            updateNecessarySupply.setStep(step);
+        }
+        if(supply!=null){
+            updateNecessarySupply.setSupplyCode(supply);
+        }
+        return updateNecessarySupply;
     }
     
     

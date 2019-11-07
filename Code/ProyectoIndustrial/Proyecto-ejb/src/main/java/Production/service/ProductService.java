@@ -2,6 +2,7 @@ package Production.service;
 
 
 import Production.Product;
+import Production.exceptions.MandatoryAttributeProductionException;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -14,23 +15,29 @@ public class ProductService {
     @PersistenceContext(name=PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
     
-    public void createProduct(Integer idProduct,String name,String description){ 
-        Product product = new Product(idProduct, name, description);
-        entityManager.persist(product);
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
     
-    public void updateProduct(Integer idProduct, String name,String description){
-        Product product = entityManager.find(Product.class, name);
-        if(idProduct!=null){
-            product.setIdProduct(idProduct);
+    public Product createProduct(Product product) throws MandatoryAttributeProductionException{
+        if(product==null){
+            throw new MandatoryAttributeProductionException("Product is null");
         }
+        entityManager.persist(product);
+        return product;
+    }
+    public Product updateProduct(Product product, String name, String descripcion) throws MandatoryAttributeProductionException{
+        if(product==null){
+            throw new MandatoryAttributeProductionException("Product is null");
+        }
+        Product updateProduct = entityManager.find(Product.class, product.getIdProduct());
         if(name!=null){
-            product.setName(name);
+            updateProduct.setName(name);
         }
-        if(description!=null){
-            product.setDescription(description);
+        if(descripcion!=null){
+            updateProduct.setDescription(descripcion);
         }
-        
+        return updateProduct;
     }
     
 
