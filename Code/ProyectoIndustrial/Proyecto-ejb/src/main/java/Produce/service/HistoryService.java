@@ -2,7 +2,7 @@ package Produce.service;
 
 import Produce.History;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,7 +35,7 @@ public class HistoryService {
      * @param date
      * @return
      */
-    public boolean setEndDate(History history, Date date) {
+    public boolean setEndDate(History history, LocalDate date) {
         if (history.isIsActive()) {
             history.setEndDate(date);
             history.setIsActive(false);

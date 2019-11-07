@@ -1,8 +1,7 @@
 package Group;
 
 import User.User;
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -58,11 +57,11 @@ public class GroupUserTest {
     public void testSetAndGetIdGroupAdmissionDate() throws Exception {
         //Arrange
         GroupUser testGroupUser = new GroupUser();
-        Date testDate = Date.from(Instant.now());
+        LocalDate testDate = LocalDate.now();
 
         //Act
         testGroupUser.setAdmissionDate(testDate);
-        Date result = testGroupUser.getAdmissionDate();
+        LocalDate result = testGroupUser.getAdmissionDate();
 
         //Assert
         Assert.assertEquals(result, testDate);
