@@ -2,27 +2,32 @@ package Production;
 
 import Supply.Supply;
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(
-        name = "NECESSARYSUPPLY"
+        name = "NECESSARY_SUPPLY"
 )
 
 public class NecessarySupply implements Serializable{
+    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    @Column(name = "idNecessarySupply")
+    @Basic(optional = false)
+    @Column(name = "id_necessary_supply")
     private Integer idNecessarySupply;
-    @ManyToOne
+    @JoinColumn(name = "step_id", referencedColumnName = "id_step")
+    @ManyToOne(optional = false)
     private Step step_id;
-    @ManyToOne
+    @JoinColumn(name = "supply_code", referencedColumnName = "code")
+    @ManyToOne(optional = false)
     private Supply supply_code;
 
     public NecessarySupply() {

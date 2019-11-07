@@ -39,11 +39,11 @@ public class CommentaryTest {
     public void testSetAndGetPaso() throws Exception {
         // Arrange
         Commentary commentaryTest = new Commentary();
-        Step testVal = new Step();
+        Stage testVal = new Stage();
         
         // Act
-        commentaryTest.setStep(testVal);
-        Step result = commentaryTest.getStep();
+        commentaryTest.setStageId(testVal);
+        Stage result = commentaryTest.getStageId();
         
         
         // Assert

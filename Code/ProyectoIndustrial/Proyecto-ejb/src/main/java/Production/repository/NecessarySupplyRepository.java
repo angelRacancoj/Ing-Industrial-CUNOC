@@ -1,8 +1,6 @@
 package Production.repository;
 
 import Production.NecessarySupply;
-import Supply.Supply;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -15,41 +13,60 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
+import java.util.Optional;
+import javax.persistence.NoResultException;
+import static org.eclipse.persistence.sessions.remote.corba.sun.TransporterHelper.id;
 
 
 @Stateless
 @LocalBean
 public class NecessarySupplyRepository {
     
+    public static final String FIND_BY_ID = "SELECT g FROM NECESSARY_SUPPLY g WHERE g.id_necessary_supply = :id";
+    public static final String FIND_BY_STEP = "SELECT g FROM NECESSARY_SUPPLY g WHERE g.step_id = :step";
+    public static final String FIND_BY_SUPPLY = "SELECT g FROM NECESSARY_SUPPLY g WHERE g.supply_code = :supply";
+    public static final String GET_ALL = "SELECT g FROM NECESSARY_SUPPLY g";
     
     
-    
+    private EntityManager entityManager;
     
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
-    private EntityManager entityManager;
 
-    public NecessarySupplyRepository() {
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
-
-    public List<NecessarySupply> getNecessarySupply(Integer codeStep){       
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<NecessarySupply> criteriaQuery = criteriaBuilder.createQuery(NecessarySupply.class);
-        Root<NecessarySupply> necessarySupply = criteriaQuery.from(NecessarySupply.class);
-        ArrayList<Predicate> predicates = new ArrayList<>();
-
-        if (codeStep != null){
-            predicates.add(criteriaBuilder.like(necessarySupply.get("code"), "%" + codeStep + "%"));
+    
+    public Optional<NecessarySupply> getNecessarySupplyById(Integer id){
+        TypedQuery<NecessarySupply> typedQuery = entityManager.createQuery(FIND_BY_ID,NecessarySupply.class).setParameter("id", id);
+        try {
+            return Optional.of(typedQuery.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
         }
-
-        criteriaQuery.where((Predicate[]) predicates.toArray());
-        TypedQuery<NecessarySupply> query = entityManager.createQuery(criteriaQuery);
-        return query.getResultList();
+    }
+    
+    public Optional<NecessarySupply> getNecessarySupplyByStep(Integer stepId){
+        TypedQuery<NecessarySupply> typedQuery = entityManager.createQuery(FIND_BY_STEP,NecessarySupply.class).setParameter("step", stepId);
+        try {
+            return Optional.of(typedQuery.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+    }
+    
+    public Optional<NecessarySupply> getNecessarySupplyBySupply(Integer supplyCode){
+        TypedQuery<NecessarySupply> typedQuery = entityManager.createQuery(FIND_BY_STEP,NecessarySupply.class).setParameter("supply", supplyCode);
+        try {
+            return Optional.of(typedQuery.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
     
     
-    
-    
-    
-    
+    public List<NecessarySupply> getAll(){
+        TypedQuery<NecessarySupply> typedQuery = entityManager.createQuery(GET_ALL,NecessarySupply.class);
+        return typedQuery.getResultList();
+    }
     
 }

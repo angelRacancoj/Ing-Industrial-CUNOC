@@ -1,11 +1,13 @@
 package Production;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -15,27 +17,34 @@ import javax.persistence.Table;
 )
 
 public class Commentary implements Serializable{
+    
+    
+    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
     @Column(name = "id_commentary")
     private Integer idCommentary;
-    @Column(name = "text")
+    @Basic(optional = false)
+    @Column(name = "commentary")
     private String text;
-    @ManyToOne
-    private Step step;
+    @JoinColumn(name = "stage_id", referencedColumnName = "id_stage")
+    @ManyToOne(optional = false)
+    private Stage stageId;
+
+    
 
     public Commentary() {
     }
 
-    public Commentary(Integer idCommentary, String text, Step step) {
+    public Commentary(Integer idCommentary, String text, Stage stageId) {
         this.idCommentary = idCommentary;
         this.text = text;
-        this.step = step;
+        this.stageId = stageId;
     }
     
-    public Commentary(String text, Step step) {
+    public Commentary(String text, Stage stageId) {
         this.text = text;
-        this.step = step;
+        this.stageId = stageId;
     }
     
     
@@ -56,12 +65,12 @@ public class Commentary implements Serializable{
         this.text = text;
     }
 
-    public Step getStep() {
-        return step;
+    public Stage getStageId() {
+        return stageId;
     }
 
-    public void setStep(Step step) {
-        this.step = step;
+    public void setStageId(Stage stageId) {
+        this.stageId = stageId;
     }
     
     
