@@ -45,8 +45,8 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`production` (
   `qualification` DOUBLE NULL DEFAULT NULL,
   `price_lot` DOUBLE NULL DEFAULT NULL,
   `creation_date` DATE NOT NULL,
-  `description` TINYTEXT NULL,
-  `product_id` INT(11) NULL,
+  `description` TINYTEXT NULL DEFAULT NULL,
+  `product_id` INT(11) NOT NULL,
   PRIMARY KEY (`id_production`),
   INDEX `fk_LINEA_DE_PRODUCCION_PRODUCTO1_idx` (`product_id` ASC),
   CONSTRAINT `fk_LINEA_DE_PRODUCCION_PRODUCTO1`
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`stage` (
   `id_stage` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NOT NULL,
-  `production_id` INT(11) NULL,
+  `production_id` INT(11) NOT NULL,
   PRIMARY KEY (`id_stage`),
   INDEX `fk_ETAPA_LINEA_DE_PRODUCCION1_idx` (`production_id` ASC),
   CONSTRAINT `fk_ETAPA_LINEA_DE_PRODUCCION1`
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`step` (
   `id_step` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NOT NULL,
-  `stage_id` INT(11) NULL,
+  `stage_id` INT(11) NOT NULL,
   PRIMARY KEY (`id_step`),
   INDEX `fk_PASO_ETAPA1_idx` (`stage_id` ASC),
   CONSTRAINT `fk_PASO_ETAPA1`
