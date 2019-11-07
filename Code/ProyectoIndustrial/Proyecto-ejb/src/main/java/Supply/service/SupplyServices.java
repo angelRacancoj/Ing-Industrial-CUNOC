@@ -10,8 +10,6 @@ import Supply.exception.MandatoryAttributeSupplyException;
 import User.User;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -120,7 +118,7 @@ public class SupplyServices {
     }
     
     private void saveModificationHistory(Supply supply, User user, ModificationType typeModification, Integer newQuantity, String note){
-        ModifySupply newModifySupply = new ModifySupply(user, supply, typeModification, newQuantity,  Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()), note);
+        ModifySupply newModifySupply = new ModifySupply(user, supply, typeModification, newQuantity,  LocalDate.now(), note);
         modifySupplyService.createModifySupply(newModifySupply);
     }
 }
