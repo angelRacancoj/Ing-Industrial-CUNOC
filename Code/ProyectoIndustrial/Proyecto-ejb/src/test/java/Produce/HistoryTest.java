@@ -8,6 +8,7 @@ package Produce;
 import Group.Group;
 import Production.Production;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 import org.testng.annotations.Test;
 import org.testng.Assert;
@@ -36,11 +37,11 @@ public class HistoryTest {
     public void testSetAndGetStartDate() throws Exception {
         //Arrange
         History history = new History();
-        Date testDate = Date.from(Instant.now());
+        LocalDate testDate = LocalDate.now();
 
         //Act
         history.setStartDate(testDate);
-        Date result = history.getStartDate();
+        LocalDate result = history.getStartDate();
 
         //Assert
         Assert.assertEquals(result, testDate);
@@ -50,11 +51,11 @@ public class HistoryTest {
     public void testSetAndGetEndDate() throws Exception {
         //Arrange
         History history = new History();
-        Date testDate = Date.from(Instant.now());
+        LocalDate testDate = LocalDate.now();
 
         //Act
         history.setEndDate(testDate);
-        Date result = history.getEndDate();
+        LocalDate result = history.getEndDate();
 
         //Assert
         Assert.assertEquals(result, testDate);
