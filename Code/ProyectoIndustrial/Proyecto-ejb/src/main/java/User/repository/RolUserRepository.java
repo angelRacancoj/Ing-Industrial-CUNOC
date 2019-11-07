@@ -2,6 +2,7 @@ package User.repository;
 
 import User.Career;
 import User.RolUser;
+import User.exception.UserException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,26 +21,30 @@ import static config.Constants.PERSISTENCE_UNIT_NAME;
 @Stateless
 @LocalBean
 public class RolUserRepository {
-    @PersistenceContext(name=PERSISTENCE_UNIT_NAME)
+
+    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
-    
+
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    public List<RolUser> getRolUser(Integer id_rol, String name){       
+    public List<RolUser> getRolUser(RolUser rolUser) throws UserException {
+        if (rolUser == null) {
+            throw new UserException("rolUser is null");
+        }
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<RolUser> criteriaQuery = criteriaBuilder.createQuery(RolUser.class);
         Root<RolUser> RolUser = criteriaQuery.from(RolUser.class);
-        List<Predicate> predicates=new ArrayList<>();
-        if(id_rol!=null){
-            predicates.add(criteriaBuilder.equal(RolUser.get("id_rol"),id_rol));
+        List<Predicate> predicates = new ArrayList<>();
+        if (rolUser.getIdRolUser() != null) {
+            predicates.add(criteriaBuilder.equal(RolUser.get("id_rol"), rolUser.getIdRolUser()));
         }
-        if(name!=null){
-            predicates.add(criteriaBuilder.like(RolUser.get("name"), "%" + name + "%"));
+        if (rolUser.getName() != null) {
+            predicates.add(criteriaBuilder.like(RolUser.get("name"), "%" + rolUser.getName() + "%"));
         }
         criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
         TypedQuery<RolUser> query = entityManager.createQuery(criteriaQuery);
-        return query.getResultList(); 
+        return query.getResultList();
     }
 }
