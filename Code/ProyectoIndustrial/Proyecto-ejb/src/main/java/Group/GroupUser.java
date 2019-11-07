@@ -2,7 +2,7 @@ package Group;
 
 import User.User;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.JoinColumn;
 
 /**
@@ -36,13 +34,12 @@ public class GroupUser implements Serializable {
     @JoinColumn(name = "group_id", referencedColumnName = "id_group")
     private Group group;
     @Column(name = "admission_date")
-    @Temporal(TemporalType.DATE)
-    private Date admissionDate;
+    private LocalDate admissionDate;
 
     public GroupUser() {
     }
 
-    public GroupUser(User user, Group group, Date admissionDate) {
+    public GroupUser(User user, Group group, LocalDate admissionDate) {
         this.user = user;
         this.group = group;
         this.admissionDate = admissionDate;
@@ -72,11 +69,11 @@ public class GroupUser implements Serializable {
         this.group = group;
     }
 
-    public Date getAdmissionDate() {
+    public LocalDate getAdmissionDate() {
         return admissionDate;
     }
 
-    public void setAdmissionDate(Date admissionDate) {
+    public void setAdmissionDate(LocalDate admissionDate) {
         this.admissionDate = admissionDate;
     }
 

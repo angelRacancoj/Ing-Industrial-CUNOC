@@ -3,6 +3,7 @@ package Produce;
 import Group.Group;
 import Production.Production;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,11 +32,9 @@ public class History implements Serializable {
     @Column(name = "history_id")
     private Integer history_id;
     @Column(name = "start_date")
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
+    private LocalDate startDate;
     @Column(name = "end_date")
-    @Temporal(TemporalType.DATE)
-    private Date endDate;
+    private LocalDate endDate;
     @Column(name = "total_cost", scale = 2)
     private double totalCost;
     @Column(name = "batches_produced")
@@ -53,7 +52,7 @@ public class History implements Serializable {
     public History() {
     }
 
-    public History(Integer history_id, Date startDate, Date endDate, double totalCost, Integer batchesProduced, boolean isActive, Production production, Group group, Production productionId) {
+    public History(Integer history_id, LocalDate startDate, LocalDate endDate, double totalCost, Integer batchesProduced, boolean isActive, Production production, Group group, Production productionId) {
         this.history_id = history_id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -65,7 +64,7 @@ public class History implements Serializable {
         this.productionId = productionId;
     }
 
-    public History(Date startDate, Integer batchesProduced, boolean isActive, Production production, Group group, Production productionId) {
+    public History(LocalDate startDate, Integer batchesProduced, boolean isActive, Production production, Group group, Production productionId) {
         this.startDate = startDate;
         this.batchesProduced = batchesProduced;
         this.isActive = isActive;
@@ -82,19 +81,19 @@ public class History implements Serializable {
         this.history_id = history_id;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
