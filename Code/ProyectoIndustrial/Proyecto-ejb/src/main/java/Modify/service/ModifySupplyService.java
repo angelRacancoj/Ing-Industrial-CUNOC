@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class ModifySupplyService {
+public class ModifySupplyService{
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;

@@ -16,7 +16,7 @@ import javax.persistence.TransactionRequiredException;
 @Stateless
 @LocalBean
 
-public class GroupUserService {
+public class GroupUserService{
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;

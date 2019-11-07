@@ -17,7 +17,7 @@ import javax.persistence.Query;
 
 @Stateless
 @LocalBean
-public class ModifySupplyRepository {
+public class ModifySupplyRepository{
     
     public static final String FIND_MODIFICATION_BY_USER = "SELECT ms FROM ModifySupply ms WHERE ms.user.carnet = :idUser";
     public static final String FIND_MODIFICATION_BY_SUPPLY = "SELECT ms FROM ModifySupply ms WHERE ms.supply.code = :idSupply";

@@ -10,7 +10,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaQuery;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 
 /**
@@ -19,7 +18,7 @@ import static config.Constants.PERSISTENCE_UNIT_NAME;
  */
 @Stateless
 @LocalBean
-public class GroupUserRepository {
+public class GroupUserRepository{
     
     public static final String FIND_USERS_BY_GROUP = "SELECT u FROM GroupUser g, User u WHERE g.group.idGroup = :groupId AND g.user.carnet = u.carnet";
     public static final String FIND_GROUP_OF_USERS = "SELECT u FROM GroupUser g, User u WHERE g.group.idGroup = :groupId AND g.user.carnet = u.carnet";

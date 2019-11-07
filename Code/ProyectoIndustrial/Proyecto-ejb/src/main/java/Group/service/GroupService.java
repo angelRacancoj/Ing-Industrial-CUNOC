@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class GroupService {
+public class GroupService{
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;

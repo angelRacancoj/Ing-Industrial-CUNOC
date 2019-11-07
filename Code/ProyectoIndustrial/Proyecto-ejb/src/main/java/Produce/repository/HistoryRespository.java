@@ -8,7 +8,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaQuery;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 
 /**
@@ -18,7 +17,7 @@ import static config.Constants.PERSISTENCE_UNIT_NAME;
 @Stateless
 @LocalBean
 public class HistoryRespository {
-    
+
     public static final String GET_ALL = "SELECT h FROM History h";
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)

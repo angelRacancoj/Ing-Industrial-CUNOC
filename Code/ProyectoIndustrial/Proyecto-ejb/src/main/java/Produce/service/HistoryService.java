@@ -1,8 +1,6 @@
 package Produce.service;
 
-import Group.Group;
 import Produce.History;
-import Production.Production;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.util.Date;
 import javax.ejb.LocalBean;
