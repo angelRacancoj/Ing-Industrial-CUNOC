@@ -53,7 +53,7 @@ public class Production implements Serializable {
     private Double priceLot;
     @Basic(optional = false)
     @Column(name = "creation_date")
-    @Temporal(TemporalType.DATE)
+    
     private LocalDate creationDate;
     @Column(name = "description")
     private String description;
