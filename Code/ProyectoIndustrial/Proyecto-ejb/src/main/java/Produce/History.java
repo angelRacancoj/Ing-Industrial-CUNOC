@@ -41,18 +41,17 @@ public class History implements Serializable {
     private Integer batchesProduced;
     @Column(name = "is_active")
     private boolean isActive;
-    @ManyToOne(optional = false)
     @JoinColumn(name = "group_id", referencedColumnName = "id_group")
-    private Production production;
     @ManyToOne(optional = false)
-    @JoinColumn(name = "production_id", referencedColumnName = "id_production_line ")
     private Group group;
-    private Production productionId;
+    @JoinColumn(name = "production_id", referencedColumnName = "id_production")
+    @ManyToOne(optional = false)
+    private Production production;
 
     public History() {
     }
 
-    public History(Integer history_id, LocalDate startDate, LocalDate endDate, double totalCost, Integer batchesProduced, boolean isActive, Production production, Group group, Production productionId) {
+    public History(Integer history_id, LocalDate startDate, LocalDate endDate, double totalCost, Integer batchesProduced, boolean isActive, Production production, Group group) {
         this.history_id = history_id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -61,16 +60,14 @@ public class History implements Serializable {
         this.isActive = isActive;
         this.production = production;
         this.group = group;
-        this.productionId = productionId;
     }
 
-    public History(LocalDate startDate, Integer batchesProduced, boolean isActive, Production production, Group group, Production productionId) {
+    public History(LocalDate startDate, Integer batchesProduced, boolean isActive, Production production, Group group) {
         this.startDate = startDate;
         this.batchesProduced = batchesProduced;
         this.isActive = isActive;
         this.production = production;
         this.group = group;
-        this.productionId = productionId;
     }
 
     public Integer getHistory_id() {
@@ -136,13 +133,4 @@ public class History implements Serializable {
     public void setProduction(Production production) {
         this.production = production;
     }
-
-    public Production getProductionId() {
-        return productionId;
-    }
-
-    public void setProductionId(Production productionId) {
-        this.productionId = productionId;
-    }
-
 }
