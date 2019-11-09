@@ -22,7 +22,7 @@ public class Measure implements Serializable{
     @Column(name = "name")
     private String name;
     
-    @OneToMany(mappedBy = "measure_id")
+    @OneToMany(mappedBy = "measure")
     private ArrayList<Supply> SupplyCollection = new ArrayList<Supply>();
 
     public Measure() {

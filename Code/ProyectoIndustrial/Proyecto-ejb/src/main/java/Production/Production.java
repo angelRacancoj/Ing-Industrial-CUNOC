@@ -60,7 +60,7 @@ public class Production implements Serializable {
     @JoinColumn(name = "product_id", referencedColumnName = "id_product")
     @ManyToOne
     private Product productId;
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "productionId")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "production")
     private List<History> historyList;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "productionId")
     private List<Stage> stageList;

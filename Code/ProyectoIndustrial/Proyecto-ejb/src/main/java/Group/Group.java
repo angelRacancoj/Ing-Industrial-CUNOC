@@ -28,11 +28,11 @@ public class Group implements Serializable {
     private Integer idGroup;
     @Column(name = "information")
     private String information;
-    @Column(name = "section", length = 2)
+    @Column(name = "section")
     private String section;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     private Collection<History> historyCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     private Collection<GroupUser> groupUserCollection;
 
     public Group() {
