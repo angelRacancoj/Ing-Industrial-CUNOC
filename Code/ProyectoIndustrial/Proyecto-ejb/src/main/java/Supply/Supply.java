@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 @Table(
@@ -25,10 +23,8 @@ public class Supply implements Serializable{
     @Column(name = "name")
     private String name;
     @Column(name = "expiration_date")
-    @Temporal(TemporalType.DATE)
     private LocalDate expirationDate;
     @Column(name = "date_of_admission")
-    @Temporal(TemporalType.DATE)
     private LocalDate dateOfAdmission;
     @Column(name = "cost",scale = 2)
     private Double cost;

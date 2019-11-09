@@ -3,7 +3,7 @@ package Modify;
 import Supply.Supply;
 import User.User;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,8 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.JoinColumn;
 
 /**
@@ -43,15 +41,14 @@ public class ModifySupply implements Serializable {
     @Column(name = "quantity")
     private Integer quantity;
     @Column(name = "date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    private LocalDate date;
     @Column(name = "note")
     private String note;
 
     public ModifySupply() {
     }
 
-    public ModifySupply(Integer idModifySupply, User user, Supply supply, ModificationType modifyType, Integer quantity, Date date, String note) {
+    public ModifySupply(Integer idModifySupply, User user, Supply supply, ModificationType modifyType, Integer quantity, LocalDate date, String note) {
         this.idModifySupply = idModifySupply;
         this.user = user;
         this.supply = supply;
@@ -61,7 +58,7 @@ public class ModifySupply implements Serializable {
         this.note = note;
     }
 
-    public ModifySupply(User user, Supply supply, ModificationType modifyType, Integer quantity, Date date, String note) {
+    public ModifySupply(User user, Supply supply, ModificationType modifyType, Integer quantity, LocalDate date, String note) {
         this.user = user;
         this.supply = supply;
         this.modifyType = modifyType;
@@ -70,7 +67,7 @@ public class ModifySupply implements Serializable {
         this.note = note;
     }
     
-    public ModifySupply(User user, Supply supply, ModificationType modifyType, Integer quantity, Date date) {
+    public ModifySupply(User user, Supply supply, ModificationType modifyType, Integer quantity, LocalDate date) {
         this.user = user;
         this.supply = supply;
         this.modifyType = modifyType;
@@ -118,11 +115,11 @@ public class ModifySupply implements Serializable {
         this.quantity = quantity;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

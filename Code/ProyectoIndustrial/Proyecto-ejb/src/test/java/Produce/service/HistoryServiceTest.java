@@ -6,6 +6,7 @@
 package Produce.service;
 
 import Produce.History;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import org.mockito.Mockito;
@@ -48,7 +49,7 @@ public class HistoryServiceTest {
         mergeHistory(history, entityManager, historyService);
 
         // Act
-        Date date = new Date(2019, 1, 1);
+        LocalDate date = LocalDate.now();
         boolean result = historyService.setEndDate(history, date);
 
         // Assert
@@ -67,7 +68,7 @@ public class HistoryServiceTest {
         mergeHistory(history, entityManager, historyService);
 
         // Act
-        Date date = new Date(2019, 1, 1);
+        LocalDate date = LocalDate.now();
         boolean result = historyService.setEndDate(history, date);
 
         // Assert

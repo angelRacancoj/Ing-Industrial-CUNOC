@@ -2,8 +2,7 @@ package Modify;
 
 import Supply.Supply;
 import User.User;
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -87,11 +86,11 @@ public class ModifySupplyTest {
     public void testGetAndSetDate() throws Exception {
         //Arrange
         ModifySupply modifySupply = new ModifySupply();
-        Date testDate = Date.from(Instant.now());
+        LocalDate testDate = LocalDate.now();
 
         //Act
         modifySupply.setDate(testDate);
-        Date result = modifySupply.getDate();
+        LocalDate result = modifySupply.getDate();
 
         //Assert
         Assert.assertEquals(result, testDate);
