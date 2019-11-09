@@ -5,12 +5,14 @@
  */
 package com.hospital.configuration;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.annotation.FacesConfig;
 
 /**
  *
  * @author teodoro
  */
+@ApplicationScoped
 @FacesConfig
 public class ConfigApplication {
     
