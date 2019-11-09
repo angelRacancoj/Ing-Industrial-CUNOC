@@ -30,9 +30,9 @@ public class Group implements Serializable {
     private String information;
     @Column(name = "section")
     private String section;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     private Collection<History> historyCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
     private Collection<GroupUser> groupUserCollection;
 
     public Group() {

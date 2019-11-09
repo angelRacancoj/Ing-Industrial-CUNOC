@@ -36,7 +36,7 @@ public class Step implements Serializable {
     @Basic(optional = false)
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stepId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "step_id")
     private List<NecessarySupply> necessarySupplyList;
     @JoinColumn(name = "stage_id", referencedColumnName = "id_stage")
     @ManyToOne(optional = false)
