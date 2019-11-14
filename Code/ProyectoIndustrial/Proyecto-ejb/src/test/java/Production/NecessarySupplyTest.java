@@ -37,7 +37,7 @@ public class NecessarySupplyTest {
     }
     
         
-    @Test
+    /*@Test
     
     public void testSetAndGetIdSupply() throws Exception {
         // Arrange
@@ -51,7 +51,7 @@ public class NecessarySupplyTest {
         // Assert
         Assert.assertEquals(result, testVal);
         
-    }
+    }*/
     
     
 }

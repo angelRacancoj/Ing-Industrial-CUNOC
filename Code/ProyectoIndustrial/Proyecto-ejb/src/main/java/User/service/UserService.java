@@ -1,10 +1,7 @@
 package User.service;
 
-import User.Career;
-import User.RolUser;
 import User.User;
 import User.exception.UserException;
-import static config.Constants.PERSISTENCE_UNIT_NAME;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,7 +21,7 @@ public class UserService {
 
     public User createUser(User user) throws UserException {
         if (user == null) {
-            throw new UserException("user is null");
+            throw new UserException("User is null");
         }
         entityManager.persist(user);
         return user;
@@ -32,7 +29,7 @@ public class UserService {
 
     public User updateUser(User user) throws UserException {
         if (user == null) {
-            throw new UserException("rolUser is null");
+            throw new UserException("User is null");
         }
         User updateUser = entityManager.find(User.class, user.getCarnet());
         if (user.getName() != null) {
@@ -56,7 +53,7 @@ public class UserService {
         if (user.getCareer() != null) {
             updateUser.setCareer(user.getCareer());
         }
-
+        
         return updateUser;
     }
 
