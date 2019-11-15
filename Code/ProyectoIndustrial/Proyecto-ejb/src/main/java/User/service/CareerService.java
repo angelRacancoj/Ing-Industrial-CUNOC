@@ -2,7 +2,6 @@ package User.service;
 
 import User.Career;
 import User.exception.UserException;
-import static config.Constants.PERSISTENCE_UNIT_NAME;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

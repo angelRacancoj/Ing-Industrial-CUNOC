@@ -1,7 +1,5 @@
 package User.repository;
 
-import Production.Step;
-import User.RolUser;
 import User.User;
 import User.exception.UserException;
 import java.util.ArrayList;
@@ -11,7 +9,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -42,7 +39,7 @@ public class UserRepository {
 
     public List<User> getUser(User user) throws UserException {
         if (user == null) {
-            throw new UserException("rolUser is null");
+            throw new UserException("User is null");
         }
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
