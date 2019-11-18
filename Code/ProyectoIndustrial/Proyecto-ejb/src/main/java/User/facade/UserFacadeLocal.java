@@ -5,10 +5,13 @@ import User.RolUser;
 import User.User;
 import User.exception.UserException;
 import java.util.List;
+import java.util.Optional;
 import javax.ejb.Local;
 
 @Local
 public interface UserFacadeLocal {
+    
+    public Optional<User> getAuthenticatedUser();
 
     public User createUser(User user) throws UserException;
 
