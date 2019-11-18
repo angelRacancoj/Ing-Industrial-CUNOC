@@ -75,7 +75,7 @@ public class SupplyServices {
         return supplyToChange; 
     }
     
-    public Supply deactiveSupply(Supply supplyToChange, User user){
+    public Supply deactiveSupply(Supply supplyToChange){
         supplyToChange = deactivateSupplySimple(supplyToChange);
         return supplyToChange;
     }
@@ -86,7 +86,7 @@ public class SupplyServices {
         return supplyToChange;
     }
     
-    public Supply activateSupply(Supply supplyToChange, Integer newQuantity, User user) throws MandatoryAttributeSupplyException{
+    public Supply activateSupply(Supply supplyToChange, Integer newQuantity) throws MandatoryAttributeSupplyException{
         if (newQuantity == null){
             throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
         }
@@ -95,7 +95,7 @@ public class SupplyServices {
         return supplyToChange;
     }
     
-    public Supply modifySupply(Supply supply, String newName, LocalDate newExpirationDate, Double newCost, boolean newAvailability, String newDescription, Measure newMeasure, User user) throws MandatoryAttributeSupplyException{
+    public Supply modifySupply(Supply supply, String newName, LocalDate newExpirationDate, Double newCost, boolean newAvailability, String newDescription, Measure newMeasure) throws MandatoryAttributeSupplyException{
         if (newName == null){
             throw new MandatoryAttributeSupplyException("Atributo Nombre Obligatorio");
         } 
