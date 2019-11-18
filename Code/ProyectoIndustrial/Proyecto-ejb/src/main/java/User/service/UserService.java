@@ -2,11 +2,22 @@ package User.service;
 
 import User.User;
 import User.exception.UserException;
+import User.repository.UserRepository;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
+import static config.SecurityConstants.PBKDF_ITERATIONS;
+import static config.SecurityConstants.PBKDF_SALT_SIZE;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.ejb.SessionContext;
+import javax.inject.Inject;
+import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 @Stateless
 @LocalBean
@@ -14,6 +25,15 @@ public class UserService {
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
+
+    @Resource
+    SessionContext securityContext;
+
+    @Inject
+    private Pbkdf2PasswordHash pbkdf2PasswordHash;
+
+    @EJB
+    UserRepository userRepository;
 
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -23,6 +43,14 @@ public class UserService {
         if (user == null) {
             throw new UserException("User is null");
         }
+        char passwordInput[] = user.getPassword().toCharArray();
+        Map<String, String> map = new HashMap<>();
+        map.put("Iterations", PBKDF_ITERATIONS);
+        map.put("Algorithm", PBKDF_ITERATIONS);
+        map.put("SaltSizeBytes", PBKDF_SALT_SIZE);
+        pbkdf2PasswordHash.initialize(map);
+        String passwordOutput = pbkdf2PasswordHash.generate(passwordInput);
+        user.setPassword(passwordOutput);
         entityManager.persist(user);
         return user;
     }
@@ -53,8 +81,13 @@ public class UserService {
         if (user.getCareer() != null) {
             updateUser.setCareer(user.getCareer());
         }
-        
+
         return updateUser;
+    }
+
+    public Optional<User> getAuthenticatedUser() {
+        String carnet = securityContext.getCallerPrincipal().getName();
+        return userRepository.getUserByCarnet(Integer.parseInt(carnet));
     }
 
 }

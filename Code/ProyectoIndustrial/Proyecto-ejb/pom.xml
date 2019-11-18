@@ -13,7 +13,7 @@
     <packaging>ejb</packaging>
     <name>Proyecto-ejb</name>
     
-    <properties>
+	<properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -80,6 +80,9 @@
         </plugins>
     </build>
     <dependencies>
+
+	
+  
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>javax.persistence</artifactId>
@@ -149,5 +152,26 @@
             <scope>test</scope>
         </dependency>
 
+	<dependency>
+	<groupId>org.primefaces</groupId>
+	<artifactId>primefaces</artifactId>
+	<version>7</version>
+	</dependency>	
+
+	<dependency>
+	<groupId>org.primefaces.themes</groupId>
+	<artifactId>all-themes</artifactId>
+	<version>1.0.10</version>
+	</dependency>
     </dependencies>
+
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>	
+
 </project>

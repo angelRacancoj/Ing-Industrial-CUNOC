@@ -11,6 +11,7 @@ import User.service.CareerService;
 import User.service.RolUserService;
 import User.service.UserService;
 import java.util.List;
+import java.util.Optional;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -25,7 +26,7 @@ public class UserFacade implements UserFacadeLocal {
     private CareerRepository careerRepository;
     private RolUserService rolUserService;
     private RolUserRepository rolUserRepository;
-
+    
     @EJB
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -55,7 +56,12 @@ public class UserFacade implements UserFacadeLocal {
     public void setRolUserRepository(RolUserRepository rolUserRepository) {
         this.rolUserRepository = rolUserRepository;
     }
-
+    
+    @Override
+    public Optional<User> getAuthenticatedUser() {
+        return userService.getAuthenticatedUser();
+    }
+    
     @Override
     public User createUser(User user) throws UserException {
         return userService.createUser(user);
