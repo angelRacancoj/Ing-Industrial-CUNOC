@@ -59,12 +59,8 @@
                         </ul>
                         <h:form>
                             <ul class="nav navbar-nav navbar-right">
-                                <li jsf:rendered="#{not empty request.userPrincipal}">
-                                    <p class="navbar-text">#{i18nLabels.Signedinas} <span>User Name</span>, 
-                                        <h:commandLink styleClass="navbar-link"
-                                                       action="#{logoutView.logout()}"
-                                                       value="#{i18nLabels.Logout}"/>
-                                    </p>
+                                <li jsf:rendered="userPrincipal">
+                                    <p class="navbar-text"><span>User Name</span></p>
                                 </li>
                             </ul>
                         </h:form>
