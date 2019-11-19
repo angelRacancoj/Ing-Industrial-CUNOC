@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 public class ProductionRepositoryTest {
     
     
-    List<Production> productions= new ArrayList<>();
+    List<Production> productions = new ArrayList<>();
     ProductionRepository productionRepository = new  ProductionRepository();
     int productionId = 1;
     

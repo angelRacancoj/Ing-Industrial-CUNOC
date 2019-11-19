@@ -1,21 +1,15 @@
 package Production.repository;
 
 import Production.NecessarySupply;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.NoResultException;
-import static org.eclipse.persistence.sessions.remote.corba.sun.TransporterHelper.id;
 
 
 @Stateless
@@ -55,7 +49,7 @@ public class NecessarySupplyRepository {
     }
     
     public Optional<NecessarySupply> getNecessarySupplyBySupply(Integer supplyCode){
-        TypedQuery<NecessarySupply> typedQuery = entityManager.createQuery(FIND_BY_STEP,NecessarySupply.class).setParameter("supply", supplyCode);
+        TypedQuery<NecessarySupply> typedQuery = entityManager.createQuery(FIND_BY_SUPPLY,NecessarySupply.class).setParameter("supply", supplyCode);
         try {
             return Optional.of(typedQuery.getSingleResult());
         } catch (NoResultException e) {
@@ -64,9 +58,13 @@ public class NecessarySupplyRepository {
     }
     
     
-    public List<NecessarySupply> getAll(){
+    public Optional<List<NecessarySupply>> getAll(){
         TypedQuery<NecessarySupply> typedQuery = entityManager.createQuery(GET_ALL,NecessarySupply.class);
-        return typedQuery.getResultList();
+        try {
+            return Optional.of(typedQuery.getResultList());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
     
 }

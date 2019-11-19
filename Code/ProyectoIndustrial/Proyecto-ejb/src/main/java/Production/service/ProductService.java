@@ -27,17 +27,14 @@ public class ProductService {
         return product;
     }
     public Product updateProduct(Product product, String name, String descripcion) throws MandatoryAttributeProductionException{
-        if(product==null){
-            throw new MandatoryAttributeProductionException("Product is null");
+        if ((name != null)&& (!name.isEmpty())) {
+            product.setName(name);
         }
-        Product updateProduct = entityManager.find(Product.class, product.getIdProduct());
-        if(name!=null){
-            updateProduct.setName(name);
+        if ((descripcion != null)&& (!descripcion.isEmpty())) {
+            product.setDescription(descripcion);
         }
-        if(descripcion!=null){
-            updateProduct.setDescription(descripcion);
-        }
-        return updateProduct;
+
+        return entityManager.merge(product);
     }
     
 

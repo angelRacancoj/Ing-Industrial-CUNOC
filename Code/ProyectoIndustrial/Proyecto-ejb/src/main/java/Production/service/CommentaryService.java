@@ -1,6 +1,7 @@
 package Production.service;
 
 import Production.Commentary;
+import Production.Stage;
 import Production.exceptions.MandatoryAttributeProductionException;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import javax.ejb.LocalBean;
@@ -26,18 +27,17 @@ public class CommentaryService {
         entityManager.persist(commentary);
         return commentary;
     }
-    public Commentary updateCommentary(Commentary commentary, String text, Integer stageId) throws MandatoryAttributeProductionException{
-        if(commentary==null){
-            throw new MandatoryAttributeProductionException("Commentary is null");
+    public Commentary updateCommentary(Commentary commentary, String text, Stage stageId) throws MandatoryAttributeProductionException{
+        
+        if ((text != null) && (!text.isEmpty())) {
+            commentary.setText(text);
         }
-        Commentary updateCommentary = entityManager.find(Commentary.class, commentary.getIdCommentary());
-        if(text!=null){
-            updateCommentary.setText(commentary.getText());
+        if ((stageId != null)) {
+            commentary.setStageId(stageId);
         }
-        if(stageId!=null){
-            updateCommentary.setStageId(commentary.getStageId());
-        }
-        return updateCommentary;
+
+        return entityManager.merge(commentary);
+        
     }
     
     
