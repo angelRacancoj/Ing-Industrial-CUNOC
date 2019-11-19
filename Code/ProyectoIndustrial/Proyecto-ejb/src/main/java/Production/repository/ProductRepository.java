@@ -53,9 +53,13 @@ public class ProductRepository {
     }
     
     
-    public List<Product> getAll(){
+    public Optional<List<Product>> getAll(){
         TypedQuery<Product> typedQuery = entityManager.createQuery(GET_ALL,Product.class);
-        return typedQuery.getResultList();
+        try {
+            return Optional.of(typedQuery.getResultList());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 }
 

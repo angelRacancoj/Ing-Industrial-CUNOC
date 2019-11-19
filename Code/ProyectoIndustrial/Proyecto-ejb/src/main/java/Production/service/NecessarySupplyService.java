@@ -29,17 +29,15 @@ public class NecessarySupplyService {
         return necessarySupply;
     }
     public NecessarySupply updateNecessarySupply(NecessarySupply necessarySupply, Step step, Supply supply) throws MandatoryAttributeProductionException{
-        if(necessarySupply==null){
-            throw new MandatoryAttributeProductionException("Necessary Supply is null");
+        
+        if ((step != null)) {
+            necessarySupply.setStep(step);
         }
-        NecessarySupply updateNecessarySupply = entityManager.find(NecessarySupply.class, necessarySupply.getIdNecessarySupply());
-        if(step!=null){
-            updateNecessarySupply.setStep(step);
+        if ((supply != null)) {
+            necessarySupply.setSupplyCode(supply);
         }
-        if(supply!=null){
-            updateNecessarySupply.setSupplyCode(supply);
-        }
-        return updateNecessarySupply;
+
+        return entityManager.merge(necessarySupply);
     }
     
     

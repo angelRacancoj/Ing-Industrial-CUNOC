@@ -39,7 +39,7 @@ public class CommentaryRepository {
     }
     
     public Optional<Commentary> getCommentaryByStage(Integer stageId){
-        TypedQuery<Commentary> typedQuery = entityManager.createQuery(FIND_BY_ID,Commentary.class).setParameter("stageId", stageId);
+        TypedQuery<Commentary> typedQuery = entityManager.createQuery(FIND_BY_STAGE_ID,Commentary.class).setParameter("stageId", stageId);
         try {
             return Optional.of(typedQuery.getSingleResult());
         } catch (NoResultException e) {
@@ -47,9 +47,13 @@ public class CommentaryRepository {
         }
     }
     
-    public List<Commentary> getAll(){
+    public Optional<List<Commentary>> getAll(){
         TypedQuery<Commentary> typedQuery = entityManager.createQuery(GET_ALL,Commentary.class);
-        return typedQuery.getResultList();
+        try {
+            return Optional.of(typedQuery.getResultList());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
     
     
