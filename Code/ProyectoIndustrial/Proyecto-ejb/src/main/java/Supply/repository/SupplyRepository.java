@@ -20,12 +20,16 @@ import static config.Constants.PERSISTENCE_UNIT_NAME;
 @LocalBean
 public class SupplyRepository {
 
-    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
 
     public SupplyRepository() {
     }
     
+    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
     public List<Supply> getSupply(Integer codeSupply, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply){       
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Supply> criteriaQuery = criteriaBuilder.createQuery(Supply.class);
@@ -40,19 +44,23 @@ public class SupplyRepository {
             predicates.add(criteriaBuilder.like(supply.get("name"), "%" + nameSupply + "%"));
         }
         
-        if (availabilitySupply.equals(AvailabilityFilter.AVAILABLE)){
-            predicates.add(criteriaBuilder.equal(supply.get("availability"), "1"));
-        } else if (availabilitySupply.equals(AvailabilityFilter.NOT_AVAILABLE)){
-            predicates.add(criteriaBuilder.equal(supply.get("availability"), "0"));
+        if (availabilitySupply != null){
+            if (availabilitySupply.equals(AvailabilityFilter.AVAILABLE)){
+                predicates.add(criteriaBuilder.equal(supply.get("availability"), "1"));
+            } else if (availabilitySupply.equals(AvailabilityFilter.NOT_AVAILABLE)){
+                predicates.add(criteriaBuilder.equal(supply.get("availability"), "0"));
+            }
         }
         
-        if (expirationDateSupply.equals(expirationDateSupply.EXPIRED)){
-            predicates.add(criteriaBuilder.lessThanOrEqualTo(supply.get("expiration_date"), LocalDate.now()));
-        } else if (expirationDateSupply.equals(expirationDateSupply.NOT_EXPIRED)){
-            predicates.add(criteriaBuilder.greaterThan(supply.get("expiration_date"), LocalDate.now()));
+        if (expirationDateSupply != null){
+            if (expirationDateSupply.equals(expirationDateSupply.EXPIRED)){
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(supply.get("expiration_date"), LocalDate.now()));
+            } else if (expirationDateSupply.equals(expirationDateSupply.NOT_EXPIRED)){
+                predicates.add(criteriaBuilder.greaterThan(supply.get("expiration_date"), LocalDate.now()));
+            }    
         }
         
-        criteriaQuery.where((Predicate[]) predicates.toArray());
+        criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
         TypedQuery<Supply> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList();
     }

@@ -1,15 +1,11 @@
 package config;
 
-/**
- * Proyecto-ejb
- * @author jose - 02.10.2019 
- * @Title: Constants
- * @Description: description
- *
- * Changes History
- */
+
 public class Constants {
     
     public static final String PERSISTENCE_UNIT_NAME = "Proyecto-Industrial";
-
+    public static final String JDBC_RESOURCE = "jdbc_poolLaboratorioIndustrial";
+    public static final String ADMINISTRADOR= "Administrador";
+    public static final String ESTUDIANTE= "Estudiante";
+          
 }
