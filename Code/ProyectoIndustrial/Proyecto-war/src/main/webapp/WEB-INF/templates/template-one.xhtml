@@ -15,15 +15,14 @@
         <h:outputScript name="jquery/jquery.js" library="primefaces" />
         <h:outputScript name="jquery/jquery-plugins.js" library="primefaces" />
         <h:outputScript name="core.js" library="primefaces" />
-        <h:outputScript library="js" name="bootstrap.min.js"/>
 
         <ui:insert name="head-extras">
             <!--head extras-->
         </ui:insert>
         <title>
             Industrial | 
-            <ui:insert name="title">
-                page title
+            <ui:insert name="head">
+                page head
             </ui:insert>
         </title>
     </h:head>
@@ -42,20 +41,18 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">JEE Tutorial</a>
+                        <a class="navbar-brand" href="#">
+                            <ui:insert name="title">
+                                page title
+                            </ui:insert>
+                        </a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
+                            <ui:insert name="nav-bar">
+                                page head
+                            </ui:insert>
 
-                            <li>
-                                <p:link  outcome="login" value="#{i18nLabels.Home}"/>
-                            </li>
-                            <li>
-                                <p:link outcome="journals" value="#{i18nLabels.Journals}"/>
-                            </li>
-                            <li>
-                                <p:link outcome="subscriptions" value="#{i18nLabels.Subscriptions}"/>
-                            </li>
                         </ul>
                         <h:form>
                             <ul class="nav navbar-nav navbar-right">
@@ -72,10 +69,10 @@
                 <p:confirmDialog global="true">
                     <div class="pull-right">
                         <p:commandLink styleClass="btn btn-success ui-confirmdialog-yes">
-                            <span class="glyphicon glyphicon-ok-sign"></span> #{i18nLabels.Yes}
+                            <span class="glyphicon glyphicon-ok-sign"></span> none
                         </p:commandLink>
                         <p:commandLink styleClass="btn btn-default ui-confirmdialog-no">
-                            <span class="glyphicon glyphicon-remove"></span> #{i18nLabels.No}
+                            <span class="glyphicon glyphicon-remove"></span>no
                         </p:commandLink>
                     </div>
                 </p:confirmDialog>
