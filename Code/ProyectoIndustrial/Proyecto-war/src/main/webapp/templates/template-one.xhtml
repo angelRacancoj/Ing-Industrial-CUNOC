@@ -41,23 +41,29 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">
-                            <ui:insert name="title">
-                                page title
-                            </ui:insert>
-                        </a>
+                        <a class="navbar-brand" href="#">Proyecto industrial</a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <ui:insert name="nav-bar">
-                                page head
-                            </ui:insert>
 
+                            <li>
+                                <p:link   value="menuitem1"/>
+                            </li>
+                            <li>
+                                <p:link  value="menuitem2"/>
+                            </li>
+                            <li>
+                                <p:link value="menuitem3"/>
+                            </li>
                         </ul>
                         <h:form>
                             <ul class="nav navbar-nav navbar-right">
-                                <li jsf:rendered="userPrincipal">
-                                    <p class="navbar-text"><span>User Name</span></p>
+                                <li jsf:rendered="#{not empty request.userPrincipal}">
+                                    <p class="navbar-text">logueado como <span>#{p:remoteUser()}</span>, 
+                                        <h:commandLink styleClass="navbar-link"
+                                                       action="#{logoutView.logout()}"
+                                                       value="#{i18nLabels.Logout}"/>
+                                    </p>
                                 </li>
                             </ul>
                         </h:form>
@@ -66,16 +72,6 @@
             </nav>
 
             <div id="page" class="container">
-                <p:confirmDialog global="true">
-                    <div class="pull-right">
-                        <p:commandLink styleClass="btn btn-success ui-confirmdialog-yes">
-                            <span class="glyphicon glyphicon-ok-sign"></span> none
-                        </p:commandLink>
-                        <p:commandLink styleClass="btn btn-default ui-confirmdialog-no">
-                            <span class="glyphicon glyphicon-remove"></span>no
-                        </p:commandLink>
-                    </div>
-                </p:confirmDialog>
                 <ui:insert name="content">
                     content
                 </ui:insert>
