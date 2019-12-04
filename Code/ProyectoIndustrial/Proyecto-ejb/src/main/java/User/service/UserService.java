@@ -45,9 +45,9 @@ public class UserService {
         }
         char passwordInput[] = user.getPassword().toCharArray();
         Map<String, String> map = new HashMap<>();
-        map.put("Iterations", PBKDF_ITERATIONS);
-        map.put("Algorithm", PBKDF_ITERATIONS);
-        map.put("SaltSizeBytes", PBKDF_SALT_SIZE);
+        map.put("Pbkdf2PasswordHash.Iterations", "3072");
+        map.put("Pbkdf2PasswordHash.Algorithm", "PBKDF2WithHmacSHA256");
+        map.put("Pbkdf2PasswordHash.SaltSizeBytes", "64");
         pbkdf2PasswordHash.initialize(map);
         String passwordOutput = pbkdf2PasswordHash.generate(passwordInput);
         user.setPassword(passwordOutput);

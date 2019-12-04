@@ -22,9 +22,12 @@ public class UserFacade implements UserFacadeLocal {
 
     private UserService userService;
     private UserRepository userRepository;
+    @EJB
     private CareerService careerService;
+    @EJB
     private CareerRepository careerRepository;
     private RolUserService rolUserService;
+    @EJB
     private RolUserRepository rolUserRepository;
     
     @EJB
@@ -107,4 +110,13 @@ public class UserFacade implements UserFacadeLocal {
         return rolUserRepository.getRolUser(rolUser);
     }
 
+    @Override
+    public List<Career> getAllCareer(){
+        return careerRepository.getAllCareer();
+    }
+    
+    @Override
+    public List<RolUser> getAllRolUser(){
+        return rolUserRepository.getAllRolUser();
+    }
 }

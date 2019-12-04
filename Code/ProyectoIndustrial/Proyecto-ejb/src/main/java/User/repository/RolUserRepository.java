@@ -47,4 +47,12 @@ public class RolUserRepository {
         TypedQuery<RolUser> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList();
     }
+    public List<RolUser> getAllRolUser(){
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<RolUser> criteriaQuery = criteriaBuilder.createQuery(RolUser.class);
+        Root<RolUser> rootEntry = criteriaQuery.from(RolUser.class);
+        CriteriaQuery<RolUser> all = criteriaQuery.select(rootEntry); 
+        TypedQuery<RolUser> allQuery = entityManager.createQuery(all);
+        return allQuery.getResultList();
+    }
 }
