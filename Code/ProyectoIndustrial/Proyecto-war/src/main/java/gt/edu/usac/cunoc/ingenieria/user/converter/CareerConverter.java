@@ -19,7 +19,6 @@ public class CareerConverter implements Converter {
     @Override
     public Career getAsObject(FacesContext context, UIComponent component, String careerId) {
         try {
-            System.out.println("----------------------------------------Facade:----------"+userFacade);
             Career career = userFacade.getCareer(new Career(Integer.parseInt(careerId),null)).get(0);
             return career;              
         } catch (Exception e) {

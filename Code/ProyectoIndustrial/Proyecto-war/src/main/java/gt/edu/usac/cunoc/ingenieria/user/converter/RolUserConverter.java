@@ -19,7 +19,9 @@ public class RolUserConverter implements Converter {
     @Override
     public RolUser getAsObject(FacesContext context, UIComponent component, String rolUserId) {
         try {
-            return userFacade.getRolUser(new RolUser(Integer.parseInt(rolUserId), null)).get(0);
+            RolUser rolUser=userFacade.getRolUser(new RolUser(Integer.parseInt(rolUserId), null)).get(0);
+            System.out.println("--------------"+rolUser);
+            return rolUser;
         } catch (Exception e) {
             return null;
         }
