@@ -70,7 +70,7 @@ public class inventoryView implements Serializable {
         this.searchResult = searchResult;
     }
 
-    public void getSupplyByFiltes() {
+    public void searchSupply() {
         setSearchResult(inventoryLocal.getSupply(codeSupply, nameSupply, availabilitySupply, expirationDateSupply));
     }
 

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                    template="templates/template-one.xhtml"
+                    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                    xmlns:p="http://primefaces.org/ui"
+                    xmlns:h="http://xmlns.jcp.org/jsf/html"
+                    xmlns:jsf="http://xmlns.jcp.org/jsf"
+                    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+        <ui:define name="head">
+            Inventario
+        </ui:define>
+
+        <ui:define name="title">
+            Inventario
+        </ui:define>
+
+        <ui:define name="nav-bar">
+            <li>
+                <p:link  value="Op 1"/>
+            </li>
+            <li>
+                <p:link value="Op 2"/>
+            </li>
+            <li>
+                <p:link value="Op 3"/>
+            </li>
+        </ui:define>
+
+        <ui:define name="content">
+            <h:form id="publicationsSearch">
+                <fieldset>
+                    <legend>#{i18nLabels.Search}</legend>
+                    <div class="row">
+                        <div class="form-group col-sm-3">
+                            <p:outputLabel value="Codigo:" styleClass="col-md-4 control-label"/>
+                            <p:inputText id="codeSupply" styleClass="form-control" value="#{inventoryView.codeSupply}"/>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <p:outputLabel value="Codigo:" styleClass="col-md-4 control-label"/>
+                            <p:inputText id="nameSupply" styleClass="form-control" value="#{inventoryView.nameSupply}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="btn-group pull-right">
+                            <p:commandLink styleClass="btn btn-primary"
+                                           update=":supplyTable"
+                                           actionListener="#{inventoryView.searchSupply()}">
+                                <span class="glyphicon glyphicon-search"></span> #{i18nLabels.Search}
+                            </p:commandLink>
+                        </div>
+                    </div>
+                </fieldset>
+            </h:form>
+
+            <div class="row">
+                <p:dataTable id="supplyTable" var="searchResult" value="#{inventoryView.searchResult}"
+                             reflow="true">
+                    <p:column headerText="Codigo">
+                        <h:outputText value="#{searchResult.code}" />
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{searchResult.name}" />
+                    </p:column>
+                    <p:column headerText="Cantidad">
+                        <h:outputText value="#{searchResult.quantity} #{searchResult.measure.name}" />
+                    </p:column>
+                    <p:column headerText="Costo Q">
+                        <h:outputText value="#{searchResult.cost}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha Ingreso">
+                        <h:outputText value="#{searchResult.dateOfAdmission}" >
+                            <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Fecha de Caducidad">
+                        <h:outputText value="#{searchResult.expirationDate}" >
+                            <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </ui:define>
+
+    </ui:composition>
+</html>
