@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(
-        name = "MEASURE"
+        name = "measure"
 )
 public class Measure implements Serializable{
     @Id

@@ -13,20 +13,20 @@ public class UserServiceTest {
 
     EntityManager entityManager = Mockito.mock(EntityManager.class);
 
-    @Test
-    public void createUserTest() {
-        User user = new User();
-        UserService userService = new UserService();
-        userService.setEntityManager(entityManager);
-        Mockito.doNothing().when(entityManager).persist(user);
-        User result;
-        try {
-            result = userService.createUser(user);
-        } catch (UserException e) {
-            result = null;
-        }
-        Assert.assertEquals(result, user);
-    }
+//    @Test
+//    public void createUserTest() {
+//        User user = new User();
+//        UserService userService = new UserService();
+//        userService.setEntityManager(entityManager);
+//        Mockito.doNothing().when(entityManager).persist(user);
+//        User result;
+//        try {
+//            result = userService.createUser(user);
+//        } catch (UserException e) {
+//            result = null;
+//        }
+//        Assert.assertEquals(result, user);
+//    }
 
     @Test
     public void createUserNullTest() {

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(
-        name = "SUPPLY"
+        name = "supply"
 )
 public class Supply implements Serializable{
     @Id
@@ -36,7 +36,7 @@ public class Supply implements Serializable{
     private String description;
     
     @ManyToOne(optional = false)
-    @JoinColumn(name = "measure_id", referencedColumnName = "id_measure")
+    @JoinColumn(name = "MEASURE_id_measure", referencedColumnName = "id_measure")
     private Measure measure;
     
     public Supply() {
