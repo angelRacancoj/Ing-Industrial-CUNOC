@@ -94,11 +94,11 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`measure`
+-- Table `produccion_industrial`.`MEASURE`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`measure` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`MEASURE` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`measure` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`MEASURE` (
   `id_measure` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`id_measure`))
@@ -107,11 +107,11 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`supply`
+-- Table `produccion_industrial`.`SUPPLY`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`supply` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`SUPPLY` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`supply` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`SUPPLY` (
   `code` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NOT NULL,
   `expiration_date` DATE NOT NULL,
@@ -120,12 +120,12 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`supply` (
   `quantity` DOUBLE NOT NULL,
   `availability` TINYINT(1) NOT NULL,
   `description` TINYTEXT NULL DEFAULT NULL,
-  `MEASURE_id_measure` INT(11) NOT NULL,
+  `id_measure` INT(11) NOT NULL,
   PRIMARY KEY (`code`),
-  INDEX `fk_SUPPLY_MEASURE1_idx` (`MEASURE_id_measure` ASC),
+  INDEX `fk_SUPPLY_MEASURE1_idx` (`id_measure` ASC),
   CONSTRAINT `fk_SUPPLY_MEASURE1`
-    FOREIGN KEY (`MEASURE_id_measure`)
-    REFERENCES `produccion_industrial`.`measure` (`id_measure`))
+    FOREIGN KEY (`id_measure`)
+    REFERENCES `produccion_industrial`.`MEASURE` (`id_measure`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`NECESSARY_SUPPLY` (
   INDEX `fk_INSUMO_NECESARIO_PASO1_idx` (`step_id` ASC),
   CONSTRAINT `fk_INSUMOS_NECESARIOS_INSUMO1`
     FOREIGN KEY (`supply_code`)
-    REFERENCES `produccion_industrial`.`supply` (`code`),
+    REFERENCES `produccion_industrial`.`SUPPLY` (`code`),
   CONSTRAINT `fk_INSUMO_NECESARIO_PASO1`
     FOREIGN KEY (`step_id`)
     REFERENCES `produccion_industrial`.`step` (`id_step`))
@@ -172,11 +172,11 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`career`
+-- Table `produccion_industrial`.`CAREER`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`career` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`CAREER` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`career` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`CAREER` (
   `id_career` INT(11) NOT NULL AUTO_INCREMENT,
   `name_career` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_career`))
@@ -185,11 +185,11 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`group`
+-- Table `produccion_industrial`.`GROUP`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`group` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`GROUP` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`group` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`GROUP` (
   `id_group` INT(11) NOT NULL AUTO_INCREMENT,
   `information` MEDIUMTEXT NULL DEFAULT NULL,
   `section` VARCHAR(2) NULL DEFAULT NULL,
@@ -199,11 +199,11 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`rol_user`
+-- Table `produccion_industrial`.`ROL_USER`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`rol_user` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`ROL_USER` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`rol_user` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`ROL_USER` (
   `id_rol` INT(11) NOT NULL AUTO_INCREMENT,
   `name_rol` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_rol`))
@@ -212,11 +212,11 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`user`
+-- Table `produccion_industrial`.`USER`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`user` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`USER` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`user` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`USER` (
   `carnet` INT(11) NOT NULL,
   `name` VARCHAR(60) NOT NULL,
   `email` VARCHAR(60) NOT NULL,
@@ -230,20 +230,20 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`user` (
   INDEX `fk_USUARIO_CARRERA1_idx` (`id_career` ASC),
   CONSTRAINT `fk_USUARIO_CARRERA1`
     FOREIGN KEY (`id_career`)
-    REFERENCES `produccion_industrial`.`career` (`id_career`),
+    REFERENCES `produccion_industrial`.`CAREER` (`id_career`),
   CONSTRAINT `fk_USUARIO_ROL_USUARIO1`
     FOREIGN KEY (`id_rol`)
-    REFERENCES `produccion_industrial`.`rol_user` (`id_rol`))
+    REFERENCES `produccion_industrial`.`ROL_USER` (`id_rol`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`group_user`
+-- Table `produccion_industrial`.`GROUP_USER`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`group_user` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`GROUP_USER` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`group_user` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`GROUP_USER` (
   `id_gruop_user` INT(11) NOT NULL,
   `group_id` INT(11) NOT NULL,
   `user_carnet` INT(11) NOT NULL,
@@ -253,10 +253,10 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`group_user` (
   INDEX `fk_group_user_user1_idx` (`user_carnet` ASC),
   CONSTRAINT `fk_GRUPO_USUARIO_GRUPO1`
     FOREIGN KEY (`group_id`)
-    REFERENCES `produccion_industrial`.`group` (`id_group`),
+    REFERENCES `produccion_industrial`.`GROUP` (`id_group`),
   CONSTRAINT `fk_group_user_user1`
     FOREIGN KEY (`user_carnet`)
-    REFERENCES `produccion_industrial`.`user` (`carnet`)
+    REFERENCES `produccion_industrial`.`USER` (`carnet`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -264,11 +264,11 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`history`
+-- Table `produccion_industrial`.`HISTORY`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`history` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`HISTORY` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`history` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`HISTORY` (
   `history_id` INT(11) NOT NULL AUTO_INCREMENT,
   `start_date` DATE NOT NULL,
   `end_date` DATE NULL DEFAULT NULL,
@@ -282,7 +282,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`history` (
   INDEX `fk_history_production1_idx` (`production_id` ASC),
   CONSTRAINT `fk_HISTORIAL_GRUPO1`
     FOREIGN KEY (`group_id`)
-    REFERENCES `produccion_industrial`.`group` (`id_group`),
+    REFERENCES `produccion_industrial`.`GROUP` (`id_group`),
   CONSTRAINT `fk_history_production1`
     FOREIGN KEY (`production_id`)
     REFERENCES `produccion_industrial`.`production` (`id_production`))
@@ -291,27 +291,27 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`modify_supply`
+-- Table `produccion_industrial`.`MODIFY_SUPPLY`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`modify_supply` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`MODIFY_SUPPLY` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`modify_supply` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`MODIFY_SUPPLY` (
   `id_modify_supply` INT(11) NOT NULL AUTO_INCREMENT,
-  `carnet_user` INT(11) NOT NULL,
-  `SUPPLY_code` INT(11) NOT NULL,
+  `carnet` INT(11) NOT NULL,
+  `code` INT(11) NOT NULL,
   `modify_type` ENUM('POR_FALTANTE', 'POR_ROBO', 'ATRIBUTOS') NOT NULL,
   `cuantity` INT(11) NOT NULL,
   `date` DATE NOT NULL,
   `note` MEDIUMTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id_modify_supply`),
-  INDEX `fk_INSUMO_USUARIO_INSUMO1_idx` (`SUPPLY_code` ASC),
-  INDEX `fk_modify_supply_user1_idx` (`carnet_user` ASC),
+  INDEX `fk_INSUMO_USUARIO_INSUMO1_idx` (`code` ASC),
+  INDEX `fk_modify_supply_user1_idx` (`carnet` ASC),
   CONSTRAINT `fk_INSUMO_USUARIO_INSUMO1`
-    FOREIGN KEY (`SUPPLY_code`)
-    REFERENCES `produccion_industrial`.`supply` (`code`),
+    FOREIGN KEY (`code`)
+    REFERENCES `produccion_industrial`.`SUPPLY` (`code`),
   CONSTRAINT `fk_modify_supply_user1`
-    FOREIGN KEY (`carnet_user`)
-    REFERENCES `produccion_industrial`.`user` (`carnet`))
+    FOREIGN KEY (`carnet`)
+    REFERENCES `produccion_industrial`.`USER` (`carnet`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
