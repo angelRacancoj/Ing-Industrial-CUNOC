@@ -38,13 +38,13 @@ public class Commentary implements Serializable{
         if (!(o instanceof Commentary)) return false;
         Commentary commentary = (Commentary) o;
         return Objects.equals(getIdCommentary(), commentary.getIdCommentary());
-        //return idCommentary != null && idCommentary.equals(commentary.getIdCommentary());
+        
     }
  
     @Override
     public int hashCode() {
         return Objects.hash(getIdCommentary());
-        //return 1;
+        
     }
 
     public Commentary() {

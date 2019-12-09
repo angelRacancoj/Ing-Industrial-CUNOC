@@ -37,13 +37,13 @@ public class NecessarySupply implements Serializable{
         if (!(o instanceof NecessarySupply)) return false;
         NecessarySupply necessarySupply = (NecessarySupply) o;
         return Objects.equals(getIdNecessarySupply(), necessarySupply.getIdNecessarySupply());
-        //return idNecessarySupply != null && idNecessarySupply.equals(necessarySupply.getIdNecessarySupply());
+        
     }
  
     @Override
     public int hashCode() {
         return Objects.hash(getIdNecessarySupply());
-        //return 1;
+        
     }
 
     public NecessarySupply() {

@@ -37,13 +37,13 @@ public class Product implements Serializable{
         if (!(o instanceof Product)) return false;
         Product product = (Product) o;
         return Objects.equals(getIdProduct(), product.getIdProduct());
-        //return idProduct != null && idProduct.equals(product.getIdProduct());
+        
     }
  
     @Override
     public int hashCode() {
         return Objects.hash(getIdProduct());
-        //return 1;
+        
     }
 
     public Product() {
