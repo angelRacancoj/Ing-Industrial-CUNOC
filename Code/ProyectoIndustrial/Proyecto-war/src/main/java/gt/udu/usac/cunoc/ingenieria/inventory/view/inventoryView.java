@@ -1,4 +1,4 @@
-package gt.udu.usac.cunoc.ingenieria.inventory.view;
+ package gt.udu.usac.cunoc.ingenieria.inventory.view;
 
 import Inventory.InventoryLocal;
 import Supply.Supply;

@@ -14,6 +14,10 @@ and open the template in the editor.
                     xmlns:jsf="http://xmlns.jcp.org/jsf"
                     xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+        <f:metadata>
+            <p:importConstants type="com.proyecto.Supply.AvailabilityFilter"/>
+        </f:metadata>
+
         <ui:define name="head">
             Inventario
         </ui:define>
@@ -30,6 +34,12 @@ and open the template in the editor.
                         <div class="form-group col-sm-3">
                             <p:outputLabel value="Nombre:" styleClass="col-md-4 control-label"/>
                             <p:inputText id="nameSupply" styleClass="form-control" value="#{inventoryView.nameSupply}"/>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <p:outputLabel value="Disponibilidad:" styleClass="col-md-4 control-label"/>
+                            <p:selectOneMenu id="availabilitySupply" value="#{inventoryView.availabilitySupply}" >
+                                <f:selectItem value="#{}" />
+                            </p:selectOneMenu>
                         </div>
                     </div>
                     <div class="row">
@@ -70,7 +80,7 @@ and open the template in the editor.
                             <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
                         </h:outputText>
                     </p:column>
-                    
+
                     <p:column headerText="Descripcion">
                         <h:outputText value="#{searchResult.description}" />
                     </p:column>
