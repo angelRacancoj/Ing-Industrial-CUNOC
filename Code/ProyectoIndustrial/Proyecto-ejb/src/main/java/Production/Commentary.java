@@ -1,6 +1,7 @@
 package Production;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +32,20 @@ public class Commentary implements Serializable{
     @ManyToOne(optional = false)
     private Stage stageId;
 
-    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Commentary)) return false;
+        Commentary commentary = (Commentary) o;
+        return Objects.equals(getIdCommentary(), commentary.getIdCommentary());
+        
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdCommentary());
+        
+    }
 
     public Commentary() {
     }
