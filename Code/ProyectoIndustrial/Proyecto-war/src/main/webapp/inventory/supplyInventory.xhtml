@@ -38,7 +38,7 @@ and open the template in the editor.
                         <div class="form-group col-sm-3">
                             <p:outputLabel value="Disponibilidad:" styleClass="col-md-4 control-label"/>
                             <p:selectOneMenu id="availabilitySupply" value="#{inventoryView.availabilitySupply}" >
-                                <f:selectItem value="#{}" />
+                                <f:selectItem value="" />
                             </p:selectOneMenu>
                         </div>
                     </div>
@@ -84,7 +84,54 @@ and open the template in the editor.
                     <p:column headerText="Descripcion">
                         <h:outputText value="#{searchResult.description}" />
                     </p:column>
+
+                    <p:column headerText="Mod. Faltante" styleClass="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Modificar">
+                            <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('modFaltante').show();"
+                                           update=":#{p:component('modFaltante')}">
+                                <f:setPropertyActionListener value="#{searchResult}" target="#{inventoryView.selectedSupply}"/>
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </p:commandLink>
+                        </p>
+
+                    </p:column>
+                    <p:column headerText="Mod. Robo" styleClass="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Reportar">
+                            <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('dlgEdit').show();"
+                                           update=":#{p:component('dlgEdit')}">
+                                <f:setPropertyActionListener value="#{journal}" target="#{journalsView.currentJournal}"/>
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </p:commandLink>
+                        </p>
+                    </p:column>
                 </p:dataTable>
+
+                <p:dialog header="Modificacion por Faltante" id="modFaltante" widgetVar="modFaltante"
+                          fitViewport="true" modal="true" closeOnEscape="true">
+                    <p:ajax event="close" listener="#{inventoryView.cleanActualSupply()}" update="@this" />
+                    <h:form>
+                        <div class="modal-body">
+                            <fieldset>
+                                <div class="row form-group">
+                                    <h:outputText value="Se modificara el Insumo #{searchResult.name} con la cantidad de #{searchResult.quantity} #{searchResult.measure.name}" />
+                                </div>
+                                <div class="row form-group">
+                                    <p:outputLabel for="tag" value="Nueva cantidad: (#{searchResult.measure.name})" styleClass="col-md-4 control-label"/>
+                                    <div class="col-md-8">
+                                        <p:inputNumber id="quantity" styleClass="form-control" pt:placeholder="105.2" value="#{searchResult.quantity}"/>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="modal-footer ">
+                            <p:commandLink styleClass="btn btn-warning btn-lg" style="width: 100%;"
+                                           update="@form,:#{p:component('supplyTable')},:#{p:component('growl')}"
+                                           actionListener="#{journalsView.saveChanges('modFaltante')}">
+                                <span class="glyphicon glyphicon-ok-sign"></span> Guardar
+                            </p:commandLink>
+                        </div>
+                    </h:form>
+                </p:dialog>
             </div>
         </ui:define>
 

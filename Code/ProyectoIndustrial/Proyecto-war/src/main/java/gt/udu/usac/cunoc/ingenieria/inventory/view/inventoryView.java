@@ -1,4 +1,4 @@
- package gt.udu.usac.cunoc.ingenieria.inventory.view;
+package gt.udu.usac.cunoc.ingenieria.inventory.view;
 
 import Inventory.InventoryLocal;
 import Supply.Supply;
@@ -70,6 +70,14 @@ public class inventoryView implements Serializable {
         this.searchResult = searchResult;
     }
 
+    public Supply getActualSupply() {
+        return actualSupply;
+    }
+
+    public void setActualSupply(Supply actualSupply) {
+        this.actualSupply = actualSupply;
+    }
+
     public void searchSupply() {
         setSearchResult(inventoryLocal.getSupply(codeSupply, nameSupply, availabilitySupply, expirationDateSupply));
     }
@@ -79,5 +87,9 @@ public class inventoryView implements Serializable {
             actualSupply = new Supply();
         }
         return actualSupply;
+    }
+
+    public void cleanActualSupply() {
+        setActualSupply(null);
     }
 }
