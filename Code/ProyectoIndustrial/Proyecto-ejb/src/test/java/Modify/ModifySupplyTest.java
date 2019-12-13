@@ -72,11 +72,11 @@ public class ModifySupplyTest {
     public void testGetAndSetQuantity() throws Exception {
         //Arrange
         ModifySupply modifySupply = new ModifySupply();
-        int testVal = 23;
+        double testVal = 23;
 
         //Act
         modifySupply.setQuantity(testVal);
-        int result = modifySupply.getQuantity();
+        double result = modifySupply.getQuantity();
 
         //Assert
         Assert.assertEquals(result, testVal);

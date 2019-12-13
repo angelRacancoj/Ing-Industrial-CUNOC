@@ -29,7 +29,7 @@ public class Supply implements Serializable{
     @Column(name = "cost",scale = 2)
     private Double cost;
     @Column(name = "quantity",scale = 2)
-    private Integer quantity;
+    private Double quantity;
     @Column(name = "availability")
     private Boolean availability;
     @Column(name = "description")
@@ -42,7 +42,7 @@ public class Supply implements Serializable{
     public Supply() {
     }
 
-    public Supply(Integer code, String name, LocalDate expirationDate, LocalDate dateOfAdmission, Double cost, Integer quantity, boolean availability, String description, Measure measure) {
+    public Supply(Integer code, String name, LocalDate expirationDate, LocalDate dateOfAdmission, Double cost, Double quantity, boolean availability, String description, Measure measure) {
         this.code = code;
         this.name = name;
         this.expirationDate = expirationDate;
@@ -94,11 +94,11 @@ public class Supply implements Serializable{
         this.cost = cost;
     }
 
-    public Integer getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 
