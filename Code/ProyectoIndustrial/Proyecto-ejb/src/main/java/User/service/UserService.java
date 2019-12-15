@@ -11,6 +11,7 @@ import static config.Constants.PERSISTENCE_UNIT_NAME;
 import static config.SecurityConstants.PBKDF_ITERATIONS;
 import static config.SecurityConstants.PBKDF_SALT_SIZE;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Resource;
@@ -34,6 +35,10 @@ public class UserService {
 
     @EJB
     UserRepository userRepository;
+    
+    public void setPbkdf2PasswordHash(Pbkdf2PasswordHash pbkdf2PasswordHash){
+        this.pbkdf2PasswordHash=pbkdf2PasswordHash;
+    }   
 
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -85,9 +90,10 @@ public class UserService {
         return updateUser;
     }
 
-    public Optional<User> getAuthenticatedUser() {
+    public List<User> getAuthenticatedUser() throws UserException {
         String carnet = securityContext.getCallerPrincipal().getName();
-        return userRepository.getUserByCarnet(Integer.parseInt(carnet));
+        System.out.println(carnet+"-----------------------------------------------------");
+        return userRepository.getUser(new User(Integer.parseInt(carnet),null,null,null,null,null,null,null));
     }
 
 }

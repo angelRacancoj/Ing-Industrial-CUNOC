@@ -1,7 +1,7 @@
 package Production.service;
 
-import Group.service.GroupService;
 import Production.Product;
+import Production.service.ProductService;
 import Production.exceptions.MandatoryAttributeProductionException;
 import java.security.acl.Group;
 import javax.persistence.EntityManager;

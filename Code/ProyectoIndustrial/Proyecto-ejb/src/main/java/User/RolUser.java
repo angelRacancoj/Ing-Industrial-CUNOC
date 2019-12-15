@@ -1,6 +1,7 @@
 package User;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +33,18 @@ public class RolUser implements Serializable{
     public RolUser(){
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RolUser)) return false;
+        RolUser rolUser = (RolUser) o;
+        return Objects.equals(getIdRolUser(), rolUser.getIdRolUser());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdRolUser());
+    }
     public Integer getIdRolUser() {
         return idRol;
     }

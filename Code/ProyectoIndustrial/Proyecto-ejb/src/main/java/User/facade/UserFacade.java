@@ -61,7 +61,7 @@ public class UserFacade implements UserFacadeLocal {
     }
     
     @Override
-    public Optional<User> getAuthenticatedUser() {
+    public List<User> getAuthenticatedUser() throws UserException{
         return userService.getAuthenticatedUser();
     }
     

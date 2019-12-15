@@ -1,6 +1,7 @@
 package gt.edu.usac.cunoc.ingenieria.login.view;
 
 import User.User;
+import User.exception.UserException;
 import User.facade.UserFacadeLocal;
 import static config.Constants.ADMINISTRADOR;
 import static config.Constants.ESTUDIANTE;
@@ -61,8 +62,8 @@ public class LoginView implements Serializable {
         this.password = password;
     }
 
-    public void login()
-            throws IOException {
+    public void login() 
+            throws IOException,UserException {
         Credential credential = new UsernamePasswordCredential(carnet, new Password(password));
         AuthenticationStatus status = securityContext.authenticate(
                 getRequest(),
@@ -89,16 +90,18 @@ public class LoginView implements Serializable {
         return (HttpServletResponse) externalContext.getResponse();
     }
 
-    private void redirectToIndex()
-            throws IOException {
-        User currentUser = userFacade.getAuthenticatedUser().get();
+    private void redirectToIndex() throws IOException,UserException {
+        User currentUser = userFacade.getAuthenticatedUser().get(0); 
         switch (currentUser.getRolUser().getName()) {
             case ADMINISTRADOR:
-                externalContext.redirect(externalContext.getRequestContextPath() + "/journals/journals.xhtml");
+                System.out.println("admin.------------------------");
+                externalContext.redirect(externalContext.getRequestContextPath() + "/templates/template-one.xhtml");
                 break;
             case ESTUDIANTE:
-                externalContext.redirect(externalContext.getRequestContextPath() + "/subscriptions/subscriptions.xhtml");
+                System.out.println("estudiante----------------------------");
+                externalContext.redirect(externalContext.getRequestContextPath() + "/templates/template-one.xhtml");
                 break;
+            default:
         }
     }
 
