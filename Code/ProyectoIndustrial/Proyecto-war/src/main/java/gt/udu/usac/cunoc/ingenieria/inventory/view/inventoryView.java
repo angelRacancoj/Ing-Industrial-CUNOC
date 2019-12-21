@@ -29,6 +29,7 @@ public class inventoryView implements Serializable {
     List<Supply> searchResult;
 
     Supply actualSupply;
+    Integer quantity;
 
     public Integer getCodeSupply() {
         return codeSupply;
@@ -70,6 +71,14 @@ public class inventoryView implements Serializable {
         this.searchResult = searchResult;
     }
 
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
     public Supply getActualSupply() {
         return actualSupply;
     }
@@ -87,6 +96,12 @@ public class inventoryView implements Serializable {
             actualSupply = new Supply();
         }
         return actualSupply;
+    }
+    
+    public void saveChanges(final String modalIdToClose){
+        if (true) {
+            
+        }
     }
 
     public void cleanActualSupply() {

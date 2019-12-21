@@ -15,7 +15,10 @@ and open the template in the editor.
                     xmlns:f="http://xmlns.jcp.org/jsf/core">
 
         <f:metadata>
+            <!--
             <p:importConstants type="com.proyecto.Supply.AvailabilityFilter"/>
+            -->
+            <p:importConstants type="Supply.repository.AvailabilityFilter"/>
         </f:metadata>
 
         <ui:define name="head">
@@ -35,12 +38,14 @@ and open the template in the editor.
                             <p:outputLabel value="Nombre:" styleClass="col-md-4 control-label"/>
                             <p:inputText id="nameSupply" styleClass="form-control" value="#{inventoryView.nameSupply}"/>
                         </div>
+                        <!-- -->
                         <div class="form-group col-sm-3">
                             <p:outputLabel value="Disponibilidad:" styleClass="col-md-4 control-label"/>
                             <p:selectOneMenu id="availabilitySupply" value="#{inventoryView.availabilitySupply}" >
                                 <f:selectItem value="" />
                             </p:selectOneMenu>
                         </div>
+                        <!-- -->
                     </div>
                     <div class="row">
                         <div class="btn-group pull-right">
@@ -95,6 +100,7 @@ and open the template in the editor.
                         </p>
 
                     </p:column>
+                    <!--
                     <p:column headerText="Mod. Robo" styleClass="text-center">
                         <p data-placement="top" data-toggle="tooltip" title="Reportar">
                             <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('dlgEdit').show();"
@@ -104,6 +110,7 @@ and open the template in the editor.
                             </p:commandLink>
                         </p>
                     </p:column>
+                    -->
                 </p:dataTable>
 
                 <p:dialog header="Modificacion por Faltante" id="modFaltante" widgetVar="modFaltante"
@@ -113,10 +120,10 @@ and open the template in the editor.
                         <div class="modal-body">
                             <fieldset>
                                 <div class="row form-group">
-                                    <h:outputText value="Se modificara el Insumo #{searchResult.name} con la cantidad de #{searchResult.quantity} #{searchResult.measure.name}" />
+                                    <p>Se modificara el Insumo <h:outputText value="#{searchResult.name}"/> con la cantidad de <h:outputText value="#{searchResult.quantity} #{searchResult.measure.name}"/></p>
                                 </div>
                                 <div class="row form-group">
-                                    <p:outputLabel for="tag" value="Nueva cantidad: (#{searchResult.measure.name})" styleClass="col-md-4 control-label"/>
+                                    <p:outputLabel for="quantity" value="Nueva cantidad: (#{searchResult.measure.name})" styleClass="col-md-4 control-label"/>
                                     <div class="col-md-8">
                                         <p:inputNumber id="quantity" styleClass="form-control" pt:placeholder="105.2" value="#{searchResult.quantity}"/>
                                     </div>
