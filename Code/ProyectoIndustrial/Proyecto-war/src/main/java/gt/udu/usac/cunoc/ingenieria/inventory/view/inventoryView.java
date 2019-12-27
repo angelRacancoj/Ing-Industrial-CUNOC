@@ -1,15 +1,24 @@
 package gt.udu.usac.cunoc.ingenieria.inventory.view;
 
 import Inventory.InventoryLocal;
+import Modify.ModificationType;
+import static Modify.ModificationType.POR_FALTANTE;
+import static Modify.ModificationType.ATRIBUTOS;
+import static Modify.ModificationType.POR_ROBO;
 import Supply.Supply;
+import Supply.exception.MandatoryAttributeSupplyException;
+import Supply.facade.SupplyFacadeLocal;
 import Supply.repository.AvailabilityFilter;
 import Supply.repository.ExpirationDateFilter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -22,6 +31,9 @@ public class inventoryView implements Serializable {
     @EJB
     private InventoryLocal inventoryLocal;
 
+    @EJB
+    private SupplyFacadeLocal supplyFacadeLocal;
+
     Integer codeSupply;
     String nameSupply;
     AvailabilityFilter availabilitySupply;
@@ -30,6 +42,15 @@ public class inventoryView implements Serializable {
 
     Supply actualSupply;
     Integer quantity;
+    String note;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     public Integer getCodeSupply() {
         return codeSupply;
@@ -97,11 +118,21 @@ public class inventoryView implements Serializable {
         }
         return actualSupply;
     }
-    
-    public void saveChanges(final String modalIdToClose){
-        if (true) {
-            
+
+    public void saveChangesByMissing(final String modalIdToClose) {
+        try {
+            supplyFacadeLocal.modifyByMissing(actualSupply, quantity, null, note);
+            cleanActualSupply();
+            PrimeFaces.current().executeScript("PF('" + modalIdToClose + ").hide()");
+        } catch (MandatoryAttributeSupplyException ex) {
+            Logger.getLogger(inventoryView.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void saveChangesTheft(final String modalIdToClose) {
+        supplyFacadeLocal.modifyByTheft(actualSupply, null, note);
+        cleanActualSupply();
+        PrimeFaces.current().executeScript("PF('" + modalIdToClose + ").hide()");
     }
 
     public void cleanActualSupply() {
