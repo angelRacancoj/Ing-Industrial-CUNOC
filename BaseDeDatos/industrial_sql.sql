@@ -21,9 +21,9 @@ USE `produccion_industrial` ;
 -- -----------------------------------------------------
 -- Table `produccion_industrial`.`product`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`product` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`PRODUCT` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`product` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`PRODUCT` (
   `id_product` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NOT NULL,
@@ -35,9 +35,9 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `produccion_industrial`.`production`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`production` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`PRODUCTION` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`production` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`PRODUCTION` (
   `id_production` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NOT NULL,
   `state` TINYINT(1) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`production` (
   INDEX `fk_LINEA_DE_PRODUCCION_PRODUCTO1_idx` (`product_id` ASC),
   CONSTRAINT `fk_LINEA_DE_PRODUCCION_PRODUCTO1`
     FOREIGN KEY (`product_id`)
-    REFERENCES `produccion_industrial`.`product` (`id_product`))
+    REFERENCES `produccion_industrial`.`PRODUCT` (`id_product`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -59,9 +59,9 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `produccion_industrial`.`stage`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`stage` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`STAGE` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`stage` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`STAGE` (
   `id_stage` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`stage` (
   INDEX `fk_ETAPA_LINEA_DE_PRODUCCION1_idx` (`production_id` ASC),
   CONSTRAINT `fk_ETAPA_LINEA_DE_PRODUCCION1`
     FOREIGN KEY (`production_id`)
-    REFERENCES `produccion_industrial`.`production` (`id_production`))
+    REFERENCES `produccion_industrial`.`PRODUCTION` (`id_production`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`COMMENTARY` (
   INDEX `fk_comentario_stage1_idx` (`stage_id` ASC),
   CONSTRAINT `fk_comentario_stage1`
     FOREIGN KEY (`stage_id`)
-    REFERENCES `produccion_industrial`.`stage` (`id_stage`))
+    REFERENCES `produccion_industrial`.`STAGE` (`id_stage`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -120,11 +120,11 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`SUPPLY` (
   `quantity` DOUBLE NOT NULL,
   `availability` TINYINT(1) NOT NULL,
   `description` TINYTEXT NULL DEFAULT NULL,
-  `id_measure` INT(11) NOT NULL,
+  `measure_id` INT(11) NOT NULL,
   PRIMARY KEY (`code`),
-  INDEX `fk_SUPPLY_MEASURE1_idx` (`id_measure` ASC),
+  INDEX `fk_SUPPLY_MEASURE1_idx` (`measure_id` ASC),
   CONSTRAINT `fk_SUPPLY_MEASURE1`
-    FOREIGN KEY (`id_measure`)
+    FOREIGN KEY (`measure_id`)
     REFERENCES `produccion_industrial`.`MEASURE` (`id_measure`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -133,9 +133,9 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `produccion_industrial`.`step`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`step` ;
+DROP TABLE IF EXISTS `produccion_industrial`.`STEP` ;
 
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`step` (
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`STEP` (
   `id_step` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NOT NULL,
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`step` (
   INDEX `fk_PASO_ETAPA1_idx` (`stage_id` ASC),
   CONSTRAINT `fk_PASO_ETAPA1`
     FOREIGN KEY (`stage_id`)
-    REFERENCES `produccion_industrial`.`stage` (`id_stage`))
+    REFERENCES `produccion_industrial`.`STAGE` (`id_stage`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`NECESSARY_SUPPLY` (
     REFERENCES `produccion_industrial`.`SUPPLY` (`code`),
   CONSTRAINT `fk_INSUMO_NECESARIO_PASO1`
     FOREIGN KEY (`step_id`)
-    REFERENCES `produccion_industrial`.`step` (`id_step`))
+    REFERENCES `produccion_industrial`.`STEP` (`id_step`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -285,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`HISTORY` (
     REFERENCES `produccion_industrial`.`GROUP` (`id_group`),
   CONSTRAINT `fk_history_production1`
     FOREIGN KEY (`production_id`)
-    REFERENCES `produccion_industrial`.`production` (`id_production`))
+    REFERENCES `produccion_industrial`.`PRODUCTION` (`id_production`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
