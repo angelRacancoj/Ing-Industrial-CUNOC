@@ -2,6 +2,7 @@ package Supply;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +33,19 @@ public class Measure implements Serializable{
         this.idMeasure = idMeasure;
         this.name = name;
         this.SupplyCollection.addAll(SupplyCollection);
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Measure)) return false;
+        Measure measure = (Measure) o;
+        return Objects.equals(getIdMeasure(), measure.getIdMeasure());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdMeasure());
     }
 
     public Integer getIdMeasure() {
