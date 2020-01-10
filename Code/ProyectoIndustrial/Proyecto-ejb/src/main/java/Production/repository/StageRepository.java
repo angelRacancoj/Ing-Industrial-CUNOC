@@ -61,4 +61,15 @@ public class StageRepository {
 
     }
 
+    /**
+     * Find Stages associated to a Production
+     *
+     * TODO
+     *
+     * @param id
+     * @return
+     */
+    public List<Stage> getStageByProductionId(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

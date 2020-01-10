@@ -5,7 +5,10 @@
  */
 package Production.facade;
 
+import Production.NecessarySupply;
 import Production.Production;
+import Production.Stage;
+import Production.Step;
 import Production.exceptions.MandatoryAttributeProductionException;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +26,6 @@ public interface ProductionFacadeLocal {
     public void editProduction(Production production) throws MandatoryAttributeProductionException;
 
     public List<Production> AllProductions();
-    
+
     public Optional<Production> getProductionById(Integer id);
 }

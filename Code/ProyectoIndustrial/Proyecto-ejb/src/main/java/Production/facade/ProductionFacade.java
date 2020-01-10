@@ -29,21 +29,33 @@ public class ProductionFacade implements ProductionFacadeLocal {
         this.productionRepository = productionRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void createProduction(Production production) throws MandatoryAttributeProductionException {
         productionService.create(production);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void editProduction(Production production) throws MandatoryAttributeProductionException {
         productionService.edit(production);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Production> AllProductions() {
         return productionRepository.AllProductions();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Production> getProductionById(Integer id) {
         return productionRepository.findByIdProduction(id);

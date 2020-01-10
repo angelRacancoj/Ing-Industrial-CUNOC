@@ -17,14 +17,22 @@ public class productionCost {
     Production production;
     List<SupplyQuantity> supplies;
     Double cost;
+    int batch;
 
     public productionCost() {
     }
 
-    public productionCost(Production production, List<SupplyQuantity> supplies, Double cost) {
+    public productionCost(Production production, int batch) {
         this.production = production;
-        this.supplies = supplies;
-        this.cost = cost;
+        this.batch = batch;
+    }
+
+    public int getBatch() {
+        return batch;
+    }
+
+    public void setBatch(int batch) {
+        this.batch = batch;
     }
 
     public Production getProduction() {

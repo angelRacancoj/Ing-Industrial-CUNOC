@@ -1,6 +1,7 @@
 package gt.udu.usac.cunoc.ingenieria.inventory.view;
 
 import Inventory.facade.InventoryLocal;
+import Inventory.objects.productionCost;
 import Supply.Supply;
 import Supply.exception.MandatoryAttributeSupplyException;
 import Supply.facade.SupplyFacadeLocal;
@@ -22,98 +23,107 @@ import org.primefaces.PrimeFaces;
 @Named
 @ViewScoped
 public class inventoryView implements Serializable {
-
+    
     @EJB
     private InventoryLocal inventoryLocal;
-
+    
     @EJB
     private SupplyFacadeLocal supplyFacadeLocal;
-
+    
     Integer codeSupply;
     String nameSupply;
     AvailabilityFilter availabilitySupply;
     ExpirationDateFilter expirationDateSupply;
     List<Supply> searchResult;
-
+    List<productionCost> productionCostList;
+    
     Supply actualSupply;
     Integer quantity;
     String note;
-
+    
     public String getNote() {
         return note;
     }
-
+    
     public void setNote(String note) {
         this.note = note;
     }
-
+    
     public Integer getCodeSupply() {
         return codeSupply;
     }
-
+    
     public void setCodeSupply(Integer codeSupply) {
         this.codeSupply = codeSupply;
     }
-
+    
     public String getNameSupply() {
         return nameSupply;
     }
-
+    
     public void setNameSupply(String nameSupply) {
         this.nameSupply = nameSupply;
     }
-
+    
     public AvailabilityFilter getAvailabilitySupply() {
         return availabilitySupply;
     }
-
+    
     public void setAvailabilitySupply(AvailabilityFilter availabilitySupply) {
         this.availabilitySupply = availabilitySupply;
     }
-
+    
     public ExpirationDateFilter getExpirationDateSupply() {
         return expirationDateSupply;
     }
-
+    
     public void setExpirationDateSupply(ExpirationDateFilter expirationDateSupply) {
         this.expirationDateSupply = expirationDateSupply;
     }
-
+    
     public List<Supply> getSearchResult() {
         return searchResult;
     }
-
+    
     public void setSearchResult(List<Supply> searchResult) {
         this.searchResult = searchResult;
     }
-
+    
     public Integer getQuantity() {
         return quantity;
     }
-
+    
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-
+    
     public Supply getActualSupply() {
         return actualSupply;
     }
-
+    
     public void setActualSupply(Supply actualSupply) {
         this.actualSupply = actualSupply;
     }
-
+    
+    public List<productionCost> getProductionCostList() {
+        return productionCostList;
+    }
+    
+    public void setProductionCostList(List<productionCost> productionCostList) {
+        this.productionCostList = productionCostList;
+    }
+    
     public void searchSupply() {
         setSearchResult(inventoryLocal.getSupply(codeSupply, nameSupply, availabilitySupply, expirationDateSupply));
     }
-
+    
     public Supply getSelectedSupply() {
         if (actualSupply == null) {
             actualSupply = new Supply();
         }
         return actualSupply;
     }
-
+    
     public void saveChangesByMissing(final String modalIdToClose) {
         try {
             supplyFacadeLocal.modifyByMissing(actualSupply, quantity, null, note);
@@ -123,13 +133,17 @@ public class inventoryView implements Serializable {
             Logger.getLogger(inventoryView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public void saveChangesTheft(final String modalIdToClose) {
         supplyFacadeLocal.modifyByTheft(actualSupply, null, note);
         cleanActualSupply();
         PrimeFaces.current().executeScript("PF('" + modalIdToClose + ").hide()");
     }
-
+    
+    public void getBestProductionOnAvalaibleMaterial() {
+        setProductionCostList(inventoryLocal.getBestProductsBaseOnAvailableMaterial());
+    }
+    
     public void cleanActualSupply() {
         setActualSupply(null);
     }

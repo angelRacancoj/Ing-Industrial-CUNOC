@@ -40,7 +40,7 @@ public interface InventoryLocal {
      *
      * @return
      */
-    public List<Production> getBestProductsBaseOnAvailableMaterial();
+    public List<productionCost> getBestProductsBaseOnAvailableMaterial();
 
     /**
      * Base on available money calculate the best products to produce base on
@@ -57,9 +57,11 @@ public interface InventoryLocal {
      * Get the cost base on selected Production (selectedProductions) and
      * Quantity of batches
      *
+     * TODO
+     * Add quantity to NecessarySupply object to do the correct calculates
      *
      * @param selectedProduction
      * @return
      */
-    public List<productionCost> costByPruductionAndBatch(List<Production> selectedProduction);
+    public List<productionCost> costByPruductionAndBatch(List<productionCost> selectedProduction);
 }

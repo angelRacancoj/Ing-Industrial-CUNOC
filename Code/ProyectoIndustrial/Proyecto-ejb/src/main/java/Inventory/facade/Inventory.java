@@ -1,14 +1,15 @@
 package Inventory.facade;
 
-import Inventory.objects.productionCost;
-import Production.Production;
-import Supply.Supply;
-import Supply.repository.AvailabilityFilter;
 import Supply.repository.ExpirationDateFilter;
+import Supply.repository.AvailabilityFilter;
 import Supply.repository.SupplyRepository;
+import Inventory.objects.productionCost;
+import Inventory.repository.InventoryRepository;
+import Production.Production;
+import javax.ejb.Stateless;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import Supply.Supply;
 
 /**
  *
@@ -18,11 +19,16 @@ import javax.ejb.Stateless;
 public class Inventory implements InventoryLocal {
 
     private SupplyRepository supplyRepository;
-    
+    private InventoryRepository inventoryRepository;
 
     @EJB
     public void setSupplyRepository(SupplyRepository supplyRepository) {
         this.supplyRepository = supplyRepository;
+    }
+
+    @EJB
+    public void setInventoryRepository(InventoryRepository inventoryRepository) {
+        this.inventoryRepository = inventoryRepository;
     }
 
     /**
@@ -37,8 +43,8 @@ public class Inventory implements InventoryLocal {
      * {@inheritDoc}
      */
     @Override
-    public List<Production> getBestProductsBaseOnAvailableMaterial() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<productionCost> getBestProductsBaseOnAvailableMaterial() {
+        return inventoryRepository.getBestProductsBaseOnAvailableMaterial();
     }
 
     /**
@@ -53,8 +59,7 @@ public class Inventory implements InventoryLocal {
      * {@inheritDoc}
      */
     @Override
-    public List<productionCost> costByPruductionAndBatch(List<Production> selectedProduction) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<productionCost> costByPruductionAndBatch(List<productionCost> selectedProduction) {
+        return inventoryRepository.costByPruductionAndBatch(selectedProduction);
     }
-
 }
