@@ -36,7 +36,7 @@ public class GroupUserRepositoryTest {
         groupUserRepository.setEntityManager(entityManager);
 
         // Act
-        Optional<GroupUser> result = groupUserRepository.findById(idGroupUser);
+        Optional<GroupUser> result = groupUserRepository.findGroupUserById(idGroupUser);
 
         // Assert
         Assert.assertEquals(result.get(), groupUser);
@@ -114,7 +114,7 @@ public class GroupUserRepositoryTest {
         groupUserRepository.setEntityManager(entityManager);
         
         // Act
-        List<GroupUser> result = groupUserRepository.getAll();
+        List<GroupUser> result = groupUserRepository.getAllGroupUser();
         
         //Assert
         Assert.assertEquals(result, groupUser);
