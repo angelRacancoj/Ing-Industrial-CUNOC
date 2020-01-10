@@ -1,0 +1,43 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Inventory.objects;
+
+import Supply.Supply;
+
+/**
+ *
+ * @author angelrg
+ */
+public class SupplyQuantity {
+
+    Supply supply;
+    double quantity;
+
+    public SupplyQuantity() {
+    }
+
+    public SupplyQuantity(Supply supply, double quantity) {
+        this.supply = supply;
+        this.quantity = quantity;
+    }
+
+    public Supply getSupply() {
+        return supply;
+    }
+
+    public void setSupply(Supply supply) {
+        this.supply = supply;
+    }
+
+    public double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
+    }
+
+}

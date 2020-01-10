@@ -1,5 +1,6 @@
-package Inventory;
+package Inventory.facade;
 
+import Inventory.objects.productionCost;
 import Production.Production;
 import Supply.Supply;
 import Supply.repository.AvailabilityFilter;
@@ -17,6 +18,7 @@ import javax.ejb.Stateless;
 public class Inventory implements InventoryLocal {
 
     private SupplyRepository supplyRepository;
+    
 
     @EJB
     public void setSupplyRepository(SupplyRepository supplyRepository) {
@@ -29,15 +31,6 @@ public class Inventory implements InventoryLocal {
     @Override
     public List<Supply> getSupply(Integer codeSupply, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply) {
         return supplyRepository.getSupply(codeSupply, nameSupply, availabilitySupply, expirationDateSupply);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Supply> getExpiredSupplys() {
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -60,7 +53,7 @@ public class Inventory implements InventoryLocal {
      * {@inheritDoc}
      */
     @Override
-    public List<Double> costByPruductionAndBatch(List<Production> selectedProduction) {
+    public List<productionCost> costByPruductionAndBatch(List<Production> selectedProduction) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

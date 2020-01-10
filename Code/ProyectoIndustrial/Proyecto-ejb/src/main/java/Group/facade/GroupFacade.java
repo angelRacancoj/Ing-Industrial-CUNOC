@@ -1,0 +1,156 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Group.facade;
+
+import Group.Group;
+import Group.GroupUser;
+import Group.service.GroupService;
+import Group.service.GroupUserService;
+import Group.repository.GroupUserRepository;
+import Group.repository.GroupRepository;
+import User.User;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import javax.ejb.EJB;
+
+/**
+ *
+ * @author angelrg
+ */
+public class GroupFacade implements GroupFacadelocal {
+
+    private GroupUserRepository groupUserRepository;
+    private GroupRepository groupRepository;
+    private GroupUserService groupUserService;
+    private GroupService groupService;
+
+    @EJB
+    public void setGroupUserRepository(GroupUserRepository groupUserRepository) {
+        this.groupUserRepository = groupUserRepository;
+    }
+
+    @EJB
+    public void setGroupRepository(GroupRepository groupRepository) {
+        this.groupRepository = groupRepository;
+    }
+
+    @EJB
+    public void setGroupUserService(GroupUserService groupUserService) {
+        this.groupUserService = groupUserService;
+    }
+
+    @EJB
+    public void setGroupService(GroupService groupService) {
+        this.groupService = groupService;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Group> createGroup(Group group, List<User> users) {
+        Group newGroup = groupService.createGroup(group);
+        if (!users.isEmpty()) {
+            for (User user : users) {
+                groupUserService.createGroupUser(new GroupUser(user, newGroup, LocalDate.now()));
+            }
+        }
+        return Optional.of(newGroup);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<GroupUser> assignUserToGroup(Group group, User users) {
+        if (groupUserRepository.getGroupUserByUserAndGroup(group.getIdGroup(), users.getCarnet()).isEmpty()) {
+            return Optional.of(groupUserService.createGroupUser(new GroupUser(users, group, LocalDate.now())));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Group updateGroup(Group group, String information, String section) {
+        return groupService.updateGroup(group, information, section);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GroupUser updateUserGroup(GroupUser groupUser, Group group) {
+        return groupUserService.updateUserGroup(groupUser, group);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<GroupUser> removeUserFromGroup(GroupUser groupUser) {
+        return groupUserService.removeUserFromGroup(groupUser);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Group> findById(Integer id) {
+        return groupRepository.findById(id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Group> getAll() {
+        return groupRepository.getAll();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<GroupUser> findGroupUserById(Integer id) {
+        return groupUserRepository.findGroupUserById(id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<User> findUsersByGroup(Integer groupId) {
+        return groupUserRepository.findUsersByGroup(groupId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Group> findGroupsOfUser(Integer carnet) {
+        return groupUserRepository.findGroupsOfUser(carnet);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<GroupUser> getGroupUserByUserAndGroup(Integer groupId, Integer carnet) {
+        return groupUserRepository.getGroupUserByUserAndGroup(groupId, carnet);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<GroupUser> getAllGroupUser() {
+        return groupUserRepository.getAllGroupUser();
+    }
+
+}

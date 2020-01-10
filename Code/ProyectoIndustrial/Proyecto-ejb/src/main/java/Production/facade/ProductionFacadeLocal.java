@@ -7,6 +7,8 @@ package Production.facade;
 
 import Production.Production;
 import Production.exceptions.MandatoryAttributeProductionException;
+import java.util.List;
+import java.util.Optional;
 import javax.ejb.Local;
 
 /**
@@ -15,8 +17,12 @@ import javax.ejb.Local;
  */
 @Local
 public interface ProductionFacadeLocal {
+
+    public void createProduction(Production production) throws MandatoryAttributeProductionException;
+
+    public void editProduction(Production production) throws MandatoryAttributeProductionException;
+
+    public List<Production> AllProductions();
     
-    public void createProduction(Production production)throws MandatoryAttributeProductionException;
-    public void editProduction(Production production)throws MandatoryAttributeProductionException;
-    
+    public Optional<Production> getProductionById(Integer id);
 }

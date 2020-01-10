@@ -1,17 +1,12 @@
 package gt.udu.usac.cunoc.ingenieria.inventory.view;
 
-import Inventory.InventoryLocal;
-import Modify.ModificationType;
-import static Modify.ModificationType.POR_FALTANTE;
-import static Modify.ModificationType.ATRIBUTOS;
-import static Modify.ModificationType.POR_ROBO;
+import Inventory.facade.InventoryLocal;
 import Supply.Supply;
 import Supply.exception.MandatoryAttributeSupplyException;
 import Supply.facade.SupplyFacadeLocal;
 import Supply.repository.AvailabilityFilter;
 import Supply.repository.ExpirationDateFilter;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

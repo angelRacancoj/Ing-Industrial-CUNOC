@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Inventory;
+package Inventory.facade;
 
-import Production.Product;
+import Inventory.objects.productionCost;
 import Production.Production;
 import Supply.Supply;
 import Supply.repository.AvailabilityFilter;
 import Supply.repository.ExpirationDateFilter;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -37,13 +36,6 @@ public interface InventoryLocal {
     public List<Supply> getSupply(Integer codeSupply, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply);
 
     /**
-     * Return list of supply expired to the current date
-     *
-     * @return
-     */
-    public List<Supply> getExpiredSupplys();
-
-    /**
      * Calculate the best Production to produce base on material available
      *
      * @return
@@ -65,10 +57,9 @@ public interface InventoryLocal {
      * Get the cost base on selected Production (selectedProductions) and
      * Quantity of batches
      *
-     * TODO object (Production,batch)
      *
      * @param selectedProduction
      * @return
      */
-    public List<Double> costByPruductionAndBatch(List<Production> selectedProduction);
+    public List<productionCost> costByPruductionAndBatch(List<Production> selectedProduction);
 }
