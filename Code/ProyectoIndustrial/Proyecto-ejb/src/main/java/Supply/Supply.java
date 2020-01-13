@@ -37,7 +37,7 @@ public class Supply implements Serializable{
     private String description;
     
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_measure", referencedColumnName = "id_measure")
+    @JoinColumn(name = "measure_id", referencedColumnName = "id_Measure")
     private Measure measure;
     
     public Supply() {

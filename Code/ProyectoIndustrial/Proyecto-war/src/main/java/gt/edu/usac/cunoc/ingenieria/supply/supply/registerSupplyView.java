@@ -7,7 +7,6 @@ import Supply.exception.MandatoryAttributeSupplyException;
 import Supply.facade.SupplyFacadeLocal;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -28,54 +27,6 @@ public class registerSupplyView implements Serializable{
     public void init(){
         getAllMeasure();
     }
-    
-    public String getName() {
-        return newSupply.getName();
-    }
-
-    public void setName(String name) {
-        this.newSupply.setName(name);
-    }
-
-    public LocalDate getExpirationDate() {
-        return this.newSupply.getExpirationDate();
-    }
-
-    public void setExpirationDate(LocalDate expirationDate) {
-        this.newSupply.setExpirationDate(expirationDate);
-    }
-
-    public Double getQuantity() {
-        return this.newSupply.getQuantity();
-    }
-
-    public void setQuantity(Double quantity) {
-        this.newSupply.setQuantity(quantity);
-    }
-
-    public Double getCost() {
-        return this.newSupply.getCost();
-    }
-
-    public void setCost(Double cost) {
-        this.newSupply.setCost(cost);
-    }
-
-    public Measure getMeasure() {
-        return this.newSupply.getMeasure();
-    }
-
-    public void setMeasure(Measure measure) {
-        this.newSupply.setMeasure(measure);
-    }
-
-    public String getDescription() {
-        return this.newSupply.getDescription();
-    }
-
-    public void setDescription(String description) {
-        this.newSupply.setDescription(description);
-    }
 
     public List<Measure> getMeasures() {
         return measures;
@@ -83,6 +34,14 @@ public class registerSupplyView implements Serializable{
 
     public void setMeasures(List<Measure> measures) {
         this.measures = measures;
+    }
+
+    public Supply getNewSupply() {
+        return newSupply;
+    }
+
+    public void setNewSupply(Supply newSupply) {
+        this.newSupply = newSupply;
     }
         
     private void getAllMeasure(){
@@ -97,9 +56,10 @@ public class registerSupplyView implements Serializable{
     public void save(){
         try {
             supplyFacade.createSupply(this.newSupply);
-            //MessageUtils.addSuccessLocalizedMessage("Insumo Creado");
+            MessageUtils.addSuccessMessage("Insumo Creado");
+            newSupply = new Supply();
         } catch (MandatoryAttributeSupplyException ex) {
-            //MessageUtils.addSuccessLocalizedMessage(ex.getMessage());
+            MessageUtils.addErrorMessage(ex.getMessage());
         }
     }
 }
