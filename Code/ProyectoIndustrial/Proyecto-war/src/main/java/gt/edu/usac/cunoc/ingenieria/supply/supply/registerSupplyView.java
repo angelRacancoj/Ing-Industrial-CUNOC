@@ -16,7 +16,9 @@ import javax.inject.Named;
 @Named
 @ViewScoped
 public class registerSupplyView implements Serializable{
-       
+    
+    private static final String SUPPLY_CREATED = "Insumo Creado";
+    
     @EJB
     private SupplyFacadeLocal supplyFacade;
     
@@ -56,7 +58,7 @@ public class registerSupplyView implements Serializable{
     public void save(){
         try {
             supplyFacade.createSupply(this.newSupply);
-            MessageUtils.addSuccessMessage("Insumo Creado");
+            MessageUtils.addSuccessMessage(SUPPLY_CREATED);
             newSupply = new Supply();
         } catch (MandatoryAttributeSupplyException ex) {
             MessageUtils.addErrorMessage(ex.getMessage());

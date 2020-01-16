@@ -2,6 +2,7 @@
 package Supply;
 
 import java.util.ArrayList;
+import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -11,7 +12,7 @@ public class MeasureTest {
     String testName = "name test of a Measure";
     Supply testSupply1 = new Supply();
     Supply testSupply2 = new Supply();
-    ArrayList<Supply> testSupplyCollection = new ArrayList<Supply>();
+    List<Supply> testSupplyCollection = new ArrayList<Supply>();
     Measure testMeasureFullConstructor = new Measure(testIdMeasure, testName, testSupplyCollection);
     
           
@@ -36,7 +37,7 @@ public class MeasureTest {
         testSupplyCollection.add(testSupply1);
         testSupplyCollection.add(testSupply2);
         testMeasure.setSupplyCollection(testSupplyCollection);
-        ArrayList<Supply> result = testMeasure.getSupplyCollection();
+        List<Supply> result = testMeasure.getSupplyCollection();
       
         Assert.assertEquals(result,testSupplyCollection);
     }
