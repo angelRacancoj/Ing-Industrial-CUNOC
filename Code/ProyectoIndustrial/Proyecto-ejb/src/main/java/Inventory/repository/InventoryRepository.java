@@ -15,11 +15,15 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author angelrg
  */
+@Stateless
+@LocalBean
 public class InventoryRepository {
 
     private SupplyRepository supplyRepository;
