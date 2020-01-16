@@ -49,9 +49,6 @@ and open the template in the editor.
                         <h:outputText value="#{productions.idProduction}"/>
                     </p:column>
                     <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Nombre"/>
-                        </f:facet>
                         <h:outputText value="#{productions.name}" />
                     </p:column >
                     <p:column>
@@ -82,7 +79,7 @@ and open the template in the editor.
 
                 <p:separator />
 
-                <p:commandButton value="Calcular" update=":#{p:component('calculator')}" oncomplete="PF('calculator').show()" onclick="#{supplyCalculatorView.cleanSelectedProduction()}" icon="pi pi-check" />
+                <p:commandButton value="Submit" update=":#{p:component('calculator')}" oncomplete="PF('calculator').show()" actionListener="#{supplyCalculatorView.cleanSelectedProduction()}" icon="pi pi-check" />
 
                 <p:dialog header="Materiales Necesarios" modal="true" showEffect="fade" id="calculator" 
                           widgetVar="calculator" fitViewport="true" closeOnEscape="true">

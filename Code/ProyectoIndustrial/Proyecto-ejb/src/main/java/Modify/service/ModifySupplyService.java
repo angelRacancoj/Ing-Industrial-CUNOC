@@ -20,8 +20,8 @@ public class ModifySupplyService{
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
     
-    @Inject
-    private SecurityContext securityContext;
+//    @Inject
+//    private SecurityContext securityContext;
 
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -35,7 +35,7 @@ public class ModifySupplyService{
      */
     public ModifySupply createModifySupply(ModifySupply modifySupply) {
 
-        securityContext.getCallerPrincipal().getName();
+//        securityContext.getCallerPrincipal().getName();
         entityManager.persist(modifySupply);
         
         return modifySupply;

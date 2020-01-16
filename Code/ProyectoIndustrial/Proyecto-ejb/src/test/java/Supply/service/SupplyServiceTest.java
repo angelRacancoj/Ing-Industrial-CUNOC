@@ -1,4 +1,3 @@
-
 package Supply.service;
 
 import Modify.ModifySupply;
@@ -14,9 +13,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class SupplyServiceTest {
-    
+
     @Test
-    public void createSupplyTestCorrect(){
+    public void createSupplyTestCorrect() {
         //Arrange
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         Supply newSupply = new Supply();
@@ -33,18 +32,18 @@ public class SupplyServiceTest {
         Supply result;
         //Act        
         try {
-            result = supplyServices.create(newSupply);     
+            result = supplyServices.create(newSupply);
         } catch (MandatoryAttributeSupplyException ex) {
             result = null;
         }
         //Assert
         Assert.assertEquals(result, newSupply);
-    }            
-    
+    }
+
     @Test(expectedExceptions = MandatoryAttributeSupplyException.class,
-                expectedExceptionsMessageRegExp = "Atributo Nombre Obligatorio")
-    public void createSupplyTestThrowExceptionName() throws MandatoryAttributeSupplyException{
-                //Arrange
+            expectedExceptionsMessageRegExp = "Atributo Nombre Obligatorio")
+    public void createSupplyTestThrowExceptionName() throws MandatoryAttributeSupplyException {
+        //Arrange
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         Supply newSupply = new Supply();
         Measure measureTest = new Measure();
@@ -57,13 +56,13 @@ public class SupplyServiceTest {
         supplyServices.setEntityManager(entityManager);
         Supply result;
         //Act        
-        result = supplyServices.create(newSupply);     
+        result = supplyServices.create(newSupply);
     }
-    
+
     @Test(expectedExceptions = MandatoryAttributeSupplyException.class,
-                expectedExceptionsMessageRegExp = "Atributo Fecha de Expiración Obligatorio")
-    public void createSupplyTestThrowExceptionDate() throws MandatoryAttributeSupplyException{
-                //Arrange
+            expectedExceptionsMessageRegExp = "Atributo Fecha de Expiración Obligatorio")
+    public void createSupplyTestThrowExceptionDate() throws MandatoryAttributeSupplyException {
+        //Arrange
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         Supply newSupply = new Supply();
         Measure measureTest = new Measure();
@@ -76,13 +75,13 @@ public class SupplyServiceTest {
         supplyServices.setEntityManager(entityManager);
         Supply result;
         //Act        
-        result = supplyServices.create(newSupply);     
+        result = supplyServices.create(newSupply);
     }
-    
+
     @Test(expectedExceptions = MandatoryAttributeSupplyException.class,
-                expectedExceptionsMessageRegExp = "Atributo Costo Obligatorio")
-    public void createSupplyTestThrowExceptionCost() throws MandatoryAttributeSupplyException{
-                //Arrange
+            expectedExceptionsMessageRegExp = "Atributo Costo Obligatorio")
+    public void createSupplyTestThrowExceptionCost() throws MandatoryAttributeSupplyException {
+        //Arrange
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         Supply newSupply = new Supply();
         Measure measureTest = new Measure();
@@ -95,13 +94,13 @@ public class SupplyServiceTest {
         supplyServices.setEntityManager(entityManager);
         Supply result;
         //Act        
-        result = supplyServices.create(newSupply);     
+        result = supplyServices.create(newSupply);
     }
-    
+
     @Test(expectedExceptions = MandatoryAttributeSupplyException.class,
-                expectedExceptionsMessageRegExp = "Atributo Cantidad Obligatorio")
-    public void createSupplyTestThrowExceptionQuantity() throws MandatoryAttributeSupplyException{
-                //Arrange
+            expectedExceptionsMessageRegExp = "Atributo Cantidad Obligatorio")
+    public void createSupplyTestThrowExceptionQuantity() throws MandatoryAttributeSupplyException {
+        //Arrange
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         Supply newSupply = new Supply();
         Measure measureTest = new Measure();
@@ -114,12 +113,12 @@ public class SupplyServiceTest {
         supplyServices.setEntityManager(entityManager);
         Supply result;
         //Act        
-        result = supplyServices.create(newSupply);     
+        result = supplyServices.create(newSupply);
     }
-    
+
     @Test(expectedExceptions = MandatoryAttributeSupplyException.class,
-                expectedExceptionsMessageRegExp = "Atributo Medida Obligatorio")
-    public void createSupplyTestThrowExceptionMeasure() throws MandatoryAttributeSupplyException{
+            expectedExceptionsMessageRegExp = "Atributo Medida Obligatorio")
+    public void createSupplyTestThrowExceptionMeasure() throws MandatoryAttributeSupplyException {
         //Arrange
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         Supply newSupply = new Supply();
@@ -133,66 +132,65 @@ public class SupplyServiceTest {
         supplyServices.setEntityManager(entityManager);
         Supply result;
         //Act        
-        result = supplyServices.create(newSupply);     
+        result = supplyServices.create(newSupply);
     }
-    
+
     @Test
-    public void modifyByMissingTestCorrect(){
+    public void modifyByMissingTestCorrect() {
         try {
             //Arrange
             ModifySupply modifySupply = new ModifySupply();
             SupplyServices supplyServices = new SupplyServices();
             ModifySupplyService modifySupplyService = new ModifySupplyService();
-            
+
             EntityManager entityManager = Mockito.mock(EntityManager.class);
             Mockito.doNothing().when(entityManager).persist(modifySupply);
-            
+
             modifySupplyService.setEntityManager(entityManager);
             supplyServices.setModifySupplyService(modifySupplyService);
-            
+
             Supply supplyToChangeTest = new Supply();
             supplyToChangeTest.setQuantity(1);
             String noteModifyTest = "test note";
             Integer newQuantityTest = 5;
             User userTest = new User();
-            
+
             //Act
-            
             Supply result = supplyServices.modifyByMissing(supplyToChangeTest, newQuantityTest, userTest, noteModifyTest);
-        
+
             //Assert
             Assert.assertEquals(result.getQuantity(), newQuantityTest);
         } catch (MandatoryAttributeSupplyException ex) {
             System.out.println("Error");
         }
     }
-    
+
     @Test(expectedExceptions = MandatoryAttributeSupplyException.class,
-                expectedExceptionsMessageRegExp = "Atributo Cantidad Obligatorio")
-    public void modifyByMissingTestThrowExceptionQuantity() throws MandatoryAttributeSupplyException{
-            //Arrange
-            ModifySupply modifySupply = new ModifySupply();
-            SupplyServices supplyServices = new SupplyServices();
-            ModifySupplyService modifySupplyService = new ModifySupplyService();
-            
-            EntityManager entityManager = Mockito.mock(EntityManager.class);
-            Mockito.doNothing().when(entityManager).persist(modifySupply);
-            
-            modifySupplyService.setEntityManager(entityManager);
-            supplyServices.setModifySupplyService(modifySupplyService);
-            
-            Supply supplyToChangeTest = new Supply();
-            supplyToChangeTest.setQuantity(1);
-            String noteModifyTest = "test note";
-            Integer newQuantityTest = null;
-            User userTest = new User();
-            
-            //Act
-            Supply result = supplyServices.modifyByMissing(supplyToChangeTest, newQuantityTest, userTest, noteModifyTest);
+            expectedExceptionsMessageRegExp = "Atributo Cantidad Obligatorio")
+    public void modifyByMissingTestThrowExceptionQuantity() throws MandatoryAttributeSupplyException {
+        //Arrange
+        ModifySupply modifySupply = new ModifySupply();
+        SupplyServices supplyServices = new SupplyServices();
+        ModifySupplyService modifySupplyService = new ModifySupplyService();
+
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        Mockito.doNothing().when(entityManager).persist(modifySupply);
+
+        modifySupplyService.setEntityManager(entityManager);
+        supplyServices.setModifySupplyService(modifySupplyService);
+
+        Supply supplyToChangeTest = new Supply();
+        supplyToChangeTest.setQuantity(1);
+        String noteModifyTest = "test note";
+        Integer newQuantityTest = null;
+        User userTest = new User();
+
+        //Act
+        Supply result = supplyServices.modifyByMissing(supplyToChangeTest, newQuantityTest, userTest, noteModifyTest);
     }
-    
+
     @Test
-    public void modifyByTheftTest(){
+    public void modifyByTheftTest() {
         //Arrange
         ModifySupply modifySupply = new ModifySupply();
         SupplyServices supplyServices = new SupplyServices();
@@ -211,151 +209,148 @@ public class SupplyServiceTest {
         Integer quantityExpected = 0;
 
         //Act
-
         Supply result = supplyServices.modifyByTheft(supplyToChangeTest, userTest, noteModifyTest);
 
         //Assert
         Assert.assertEquals(result.getQuantity(), quantityExpected);
         Assert.assertEquals(result.isAvailability(), false);
     }
-    
+
     @Test
-    public void deactiveSupplyTest(){
+    public void deactiveSupplyTest() {
         //Arrange
         Supply supplyToChangeTest = new Supply();
         supplyToChangeTest.setAvailability(true);
         Integer quantityExpected = 0;
         SupplyServices supplyServices = new SupplyServices();
-        
+
         //Act
         Supply result = supplyServices.deactiveSupply(supplyToChangeTest);
-        
+
         //Assert
-        Assert.assertEquals(result.isAvailability(),false);
+        Assert.assertEquals(result.isAvailability(), false);
         Assert.assertEquals(result.getQuantity(), quantityExpected);
     }
-    
+
     @Test
-    public void activeSupplyTestCorrect(){
+    public void activeSupplyTestCorrect() {
         try {
             //Arrange
             Supply supplyToChangeTest = new Supply();
             supplyToChangeTest.setAvailability(false);
             Integer newQuantity = 10;
             SupplyServices supplyServices = new SupplyServices();
-            
+
             //Act
             Supply result = supplyServices.activateSupply(supplyToChangeTest, newQuantity);
-            
+
             //Assert
-            Assert.assertEquals(result.isAvailability(),true);
+            Assert.assertEquals(result.isAvailability(), true);
             Assert.assertEquals(result.getQuantity(), newQuantity);
         } catch (MandatoryAttributeSupplyException ex) {
             System.out.println("Error");
         }
     }
-    
+
     @Test(expectedExceptions = MandatoryAttributeSupplyException.class,
-                expectedExceptionsMessageRegExp = "Atributo Cantidad Obligatorio")
-    public void activeSupplyTestThrowException() throws MandatoryAttributeSupplyException{
-            //Arrange
-            Supply supplyToChangeTest = new Supply();
-            supplyToChangeTest.setAvailability(false);
-            Integer newQuantity = null;
-            SupplyServices supplyServices = new SupplyServices();
-            
-            //Act
-            Supply result = supplyServices.activateSupply(supplyToChangeTest, newQuantity);
-            
-            //Assert
-            Assert.assertEquals(result.isAvailability(),true);
-            Assert.assertEquals(result.getQuantity(), newQuantity);
+            expectedExceptionsMessageRegExp = "Atributo Cantidad Obligatorio")
+    public void activeSupplyTestThrowException() throws MandatoryAttributeSupplyException {
+        //Arrange
+        Supply supplyToChangeTest = new Supply();
+        supplyToChangeTest.setAvailability(false);
+        Integer newQuantity = null;
+        SupplyServices supplyServices = new SupplyServices();
+
+        //Act
+        Supply result = supplyServices.activateSupply(supplyToChangeTest, newQuantity);
+
+        //Assert
+        Assert.assertEquals(result.isAvailability(), true);
+        Assert.assertEquals(result.getQuantity(), newQuantity);
     }
-    
+
     @Test
-    public void modifySupplyTestCorrect(){
+    public void modifySupplyTestCorrect() {
         try {
             Supply supply = new Supply();
-            String testName ="Test Name";
+            String testName = "Test Name";
             LocalDate expirationDateTest = LocalDate.now();
             Double costTest = 1.1;
             boolean availabilityTest = true;
             String descriptionTest = "Test Description";
             Measure measureTest = new Measure();
-            
+
             SupplyServices supplyServices = new SupplyServices();
-            
+
             Supply result = supplyServices.modifySupply(supply, testName, expirationDateTest, costTest, availabilityTest, descriptionTest, measureTest);
-            
+
             Assert.assertEquals(result, supply);
         } catch (MandatoryAttributeSupplyException ex) {
             System.out.println("Error");
         }
     }
-    
+
     @Test(expectedExceptions = MandatoryAttributeSupplyException.class,
-                expectedExceptionsMessageRegExp = "Atributo Nombre Obligatorio")
-    public void modifySupplyTestExceptionName() throws MandatoryAttributeSupplyException{
-            Supply supply = new Supply();
-            String testName = null;
-            LocalDate expirationDateTest = LocalDate.now();
-            Double costTest = 1.1;
-            boolean availabilityTest = true;
-            String descriptionTest = "Test Description";
-            Measure measureTest = new Measure();
-            
-            SupplyServices supplyServices = new SupplyServices();
-            
-            Supply result = supplyServices.modifySupply(supply, testName, expirationDateTest, costTest, availabilityTest, descriptionTest, measureTest);       
+            expectedExceptionsMessageRegExp = "Atributo Nombre Obligatorio")
+    public void modifySupplyTestExceptionName() throws MandatoryAttributeSupplyException {
+        Supply supply = new Supply();
+        String testName = null;
+        LocalDate expirationDateTest = LocalDate.now();
+        Double costTest = 1.1;
+        boolean availabilityTest = true;
+        String descriptionTest = "Test Description";
+        Measure measureTest = new Measure();
+
+        SupplyServices supplyServices = new SupplyServices();
+
+        Supply result = supplyServices.modifySupply(supply, testName, expirationDateTest, costTest, availabilityTest, descriptionTest, measureTest);
     }
-    
-      
+
     @Test(expectedExceptions = MandatoryAttributeSupplyException.class,
-                expectedExceptionsMessageRegExp = "Atributo Fecha de Expiración Obligatorio")
-    public void modifySupplyTestExceptionExpirationDate() throws MandatoryAttributeSupplyException{
-            Supply supply = new Supply();
-            String testName ="Test Name";
-            LocalDate expirationDateTest = null;
-            Double costTest = 1.1;
-            boolean availabilityTest = true;
-            String descriptionTest = "Test Description";
-            Measure measureTest = new Measure();
-            
-            SupplyServices supplyServices = new SupplyServices();
-            
-            Supply result = supplyServices.modifySupply(supply, testName, expirationDateTest, costTest, availabilityTest, descriptionTest, measureTest);       
+            expectedExceptionsMessageRegExp = "Atributo Fecha de Expiración Obligatorio")
+    public void modifySupplyTestExceptionExpirationDate() throws MandatoryAttributeSupplyException {
+        Supply supply = new Supply();
+        String testName = "Test Name";
+        LocalDate expirationDateTest = null;
+        Double costTest = 1.1;
+        boolean availabilityTest = true;
+        String descriptionTest = "Test Description";
+        Measure measureTest = new Measure();
+
+        SupplyServices supplyServices = new SupplyServices();
+
+        Supply result = supplyServices.modifySupply(supply, testName, expirationDateTest, costTest, availabilityTest, descriptionTest, measureTest);
     }
-    
-       @Test(expectedExceptions = MandatoryAttributeSupplyException.class,
-                expectedExceptionsMessageRegExp = "Atributo Costo Obligatorio")
-    public void modifySupplyTestExceptionCost() throws MandatoryAttributeSupplyException{
-            Supply supply = new Supply();
-            String testName ="Test Name";
-            LocalDate expirationDateTest = LocalDate.now();
-            Double costTest = null;
-            boolean availabilityTest = true;
-            String descriptionTest = "Test Description";
-            Measure measureTest = new Measure();
-            
-            SupplyServices supplyServices = new SupplyServices();
-            
-            Supply result = supplyServices.modifySupply(supply, testName, expirationDateTest, costTest, availabilityTest, descriptionTest, measureTest);       
-    }
-    
+
     @Test(expectedExceptions = MandatoryAttributeSupplyException.class,
-                expectedExceptionsMessageRegExp = "Atributo Medida Obligatorio")
-    public void modifySupplyTestExceptionMeasure() throws MandatoryAttributeSupplyException{
-            Supply supply = new Supply();
-            String testName ="Test Name";
-            LocalDate expirationDateTest = LocalDate.now();
-            Double costTest = 1.1;
-            boolean availabilityTest = true;
-            String descriptionTest = "Test Description";
-            Measure measureTest = null;
-            
-            SupplyServices supplyServices = new SupplyServices();
-            
-            Supply result = supplyServices.modifySupply(supply, testName, expirationDateTest, costTest, availabilityTest, descriptionTest, measureTest);       
+            expectedExceptionsMessageRegExp = "Atributo Costo Obligatorio")
+    public void modifySupplyTestExceptionCost() throws MandatoryAttributeSupplyException {
+        Supply supply = new Supply();
+        String testName = "Test Name";
+        LocalDate expirationDateTest = LocalDate.now();
+        Double costTest = null;
+        boolean availabilityTest = true;
+        String descriptionTest = "Test Description";
+        Measure measureTest = new Measure();
+
+        SupplyServices supplyServices = new SupplyServices();
+
+        Supply result = supplyServices.modifySupply(supply, testName, expirationDateTest, costTest, availabilityTest, descriptionTest, measureTest);
+    }
+
+    @Test(expectedExceptions = MandatoryAttributeSupplyException.class,
+            expectedExceptionsMessageRegExp = "Atributo Medida Obligatorio")
+    public void modifySupplyTestExceptionMeasure() throws MandatoryAttributeSupplyException {
+        Supply supply = new Supply();
+        String testName = "Test Name";
+        LocalDate expirationDateTest = LocalDate.now();
+        Double costTest = 1.1;
+        boolean availabilityTest = true;
+        String descriptionTest = "Test Description";
+        Measure measureTest = null;
+
+        SupplyServices supplyServices = new SupplyServices();
+
+        Supply result = supplyServices.modifySupply(supply, testName, expirationDateTest, costTest, availabilityTest, descriptionTest, measureTest);
     }
 }
-    
