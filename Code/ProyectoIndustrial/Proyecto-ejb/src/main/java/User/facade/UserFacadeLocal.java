@@ -4,6 +4,7 @@ import User.Career;
 import User.RolUser;
 import User.User;
 import User.exception.UserException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Local;
@@ -30,6 +31,8 @@ public interface UserFacadeLocal {
     public RolUser updateRolUser(RolUser rolUser) throws UserException;
 
     public List<RolUser> getRolUser(RolUser rolUser) throws UserException;
+    
+    public User resetPassword(User user) throws UserException,NoSuchAlgorithmException;
     
     public List<Career> getAllCareer(); 
     

@@ -5,6 +5,7 @@ import User.RolUser;
 import User.User;
 import User.exception.UserException;
 import User.facade.UserFacadeLocal;
+import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -87,6 +88,8 @@ public class CreateUserView implements Serializable {
     public void createUser(){
         try {
             userFacade.createUser(user);
+            cleanUser();
+            MessageUtils.addSuccessMessage("Se ha creado el usuario");
         } catch (UserException ex) {
             Logger.getLogger(CreateUserView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -98,6 +101,10 @@ public class CreateUserView implements Serializable {
 
     private void getAllRolUser() {
         rolUsers = userFacade.getAllRolUser();
+    }
+    
+    private void cleanUser(){
+        user=null;
     }
 
 }

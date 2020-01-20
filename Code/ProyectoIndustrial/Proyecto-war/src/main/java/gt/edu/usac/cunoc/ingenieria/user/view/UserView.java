@@ -7,6 +7,7 @@ import User.exception.UserException;
 import User.facade.UserFacadeLocal;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -117,10 +118,7 @@ public class UserView implements Serializable {
     public void saveChanges(final String modalIdToClose) throws UserException {
         if (currentUser.getCarnet() != null) {
             userFacade.updateUser(currentUser);
-            MessageUtils.addSuccessLocalizedMessage("modifico llave");
-        } else {
-            userFacade.createUser(currentUser);
-            MessageUtils.addSuccessLocalizedMessage("Creo llave");
+            MessageUtils.addSuccessMessage("Se actualizo el usuario");
         }
         clearCurrentUser();
         PrimeFaces.current().executeScript("PF('" + modalIdToClose + "').hide()");
@@ -133,10 +131,29 @@ public class UserView implements Serializable {
     public void changeUserState(final Integer carnet) throws UserException {
         User user = new User();
         user.setCarnet(carnet);
-        user.setState(Boolean.FALSE);
-        System.out.println("----------------------"+user.getState());
-        userFacade.updateUser(user); 
+        user = userFacade.getUser(user).get(0);
+        user.setState(!user.getState());
+        userFacade.updateUser(user);
+        changeLocalStateUser(carnet);
         clearCurrentUser();
+    }
+
+    public void resetPassword(final String modalIdToClose) throws UserException, NoSuchAlgorithmException {
+        if (currentUser.getCarnet() != null) {
+            userFacade.resetPassword(currentUser);
+            MessageUtils.addSuccessMessage("Se actualizo el usuario");
+        }
+        clearCurrentUser();
+        PrimeFaces.current().executeScript("PF('" + modalIdToClose + "').hide()");
+    }
+
+    private void changeLocalStateUser(Integer carnet) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getCarnet() == carnet) {
+                users.get(i).setState(!users.get(i).getState());
+                break;
+            }
+        }
     }
 
     public void cleanCriteria() {

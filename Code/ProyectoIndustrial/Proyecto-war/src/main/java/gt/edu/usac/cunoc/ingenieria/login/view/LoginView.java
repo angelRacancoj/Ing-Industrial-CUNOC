@@ -74,7 +74,7 @@ public class LoginView implements Serializable {
                 facesContext.responseComplete();
                 break;
             case SEND_FAILURE:
-                MessageUtils.addErrorLocalizedMessage("loginfailed");
+                MessageUtils.addErrorMessage("Usuario no encontrado");
                 break;
             case SUCCESS:
                 redirectToIndex();
@@ -94,11 +94,9 @@ public class LoginView implements Serializable {
         User currentUser = userFacade.getAuthenticatedUser().get(0); 
         switch (currentUser.getRolUser().getName()) {
             case ADMINISTRADOR:
-                System.out.println("admin.------------------------");
                 externalContext.redirect(externalContext.getRequestContextPath() + "/templates/template-one.xhtml");
                 break;
             case ESTUDIANTE:
-                System.out.println("estudiante----------------------------");
                 externalContext.redirect(externalContext.getRequestContextPath() + "/templates/template-one.xhtml");
                 break;
             default:

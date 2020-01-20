@@ -10,6 +10,7 @@ import User.repository.UserRepository;
 import User.service.CareerService;
 import User.service.RolUserService;
 import User.service.UserService;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.EJB;
@@ -118,5 +119,10 @@ public class UserFacade implements UserFacadeLocal {
     @Override
     public List<RolUser> getAllRolUser(){
         return rolUserRepository.getAllRolUser();
+    }
+    
+    @Override
+    public User resetPassword(User user) throws UserException,NoSuchAlgorithmException{
+        return userService.resetPassword(user);
     }
 }

@@ -126,6 +126,21 @@ public class User implements Serializable{
     public void setCareer(Career career) {
         this.career = career;
     }
+    
+    public String getMessageState(){
+        if(getState()){
+            return "Desactivar";
+        }else{
+            return "Activar";
+        }
+    }
+    public String getIconState(){
+        if(getState()){
+            return "glyphicon glyphicon-remove";
+        }else{
+            return "glyphicon glyphicon-ok";
+        }
+    }
 
     
     
