@@ -7,12 +7,14 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
+import javax.ejb.EJB;
 
 @Stateless
 @LocalBean
 public class RolUserService {
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
+    @EJB
     private EntityManager entityManager;
 
     public void setEntityManager(EntityManager entityManager) {

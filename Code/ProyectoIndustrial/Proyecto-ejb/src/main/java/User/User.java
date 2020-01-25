@@ -1,6 +1,7 @@
 package User;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(
-        name = "USER"
+        name = "user"
 )
 public class User implements Serializable{
     @Id
@@ -49,6 +50,19 @@ public class User implements Serializable{
         this.career = career;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getCarnet(), user.getCarnet());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCarnet());
+    }
+    
     public Integer getCarnet() {
         return carnet;
     }
@@ -111,6 +125,21 @@ public class User implements Serializable{
 
     public void setCareer(Career career) {
         this.career = career;
+    }
+    
+    public String getMessageState(){
+        if(getState()){
+            return "Desactivar";
+        }else{
+            return "Activar";
+        }
+    }
+    public String getIconState(){
+        if(getState()){
+            return "glyphicon glyphicon-remove";
+        }else{
+            return "glyphicon glyphicon-ok";
+        }
     }
 
     

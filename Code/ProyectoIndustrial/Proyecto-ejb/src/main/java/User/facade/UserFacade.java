@@ -10,6 +10,7 @@ import User.repository.UserRepository;
 import User.service.CareerService;
 import User.service.RolUserService;
 import User.service.UserService;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.EJB;
@@ -22,9 +23,12 @@ public class UserFacade implements UserFacadeLocal {
 
     private UserService userService;
     private UserRepository userRepository;
+    @EJB
     private CareerService careerService;
+    @EJB
     private CareerRepository careerRepository;
     private RolUserService rolUserService;
+    @EJB
     private RolUserRepository rolUserRepository;
     
     @EJB
@@ -58,7 +62,7 @@ public class UserFacade implements UserFacadeLocal {
     }
     
     @Override
-    public Optional<User> getAuthenticatedUser() {
+    public List<User> getAuthenticatedUser() throws UserException{
         return userService.getAuthenticatedUser();
     }
     
@@ -107,4 +111,18 @@ public class UserFacade implements UserFacadeLocal {
         return rolUserRepository.getRolUser(rolUser);
     }
 
+    @Override
+    public List<Career> getAllCareer(){
+        return careerRepository.getAllCareer();
+    }
+    
+    @Override
+    public List<RolUser> getAllRolUser(){
+        return rolUserRepository.getAllRolUser();
+    }
+    
+    @Override
+    public User resetPassword(User user) throws UserException,NoSuchAlgorithmException{
+        return userService.resetPassword(user);
+    }
 }
