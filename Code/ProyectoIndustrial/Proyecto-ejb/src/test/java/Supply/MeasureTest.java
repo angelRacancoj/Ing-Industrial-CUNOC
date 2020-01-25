@@ -2,6 +2,7 @@
 package Supply;
 
 import java.util.ArrayList;
+import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -36,7 +37,7 @@ public class MeasureTest {
         testSupplyCollection.add(testSupply1);
         testSupplyCollection.add(testSupply2);
         testMeasure.setSupplyCollection(testSupplyCollection);
-        ArrayList<Supply> result = testMeasure.getSupplyCollection();
+        List<Supply> result = testMeasure.getSupplyCollection();
       
         Assert.assertEquals(result,testSupplyCollection);
     }

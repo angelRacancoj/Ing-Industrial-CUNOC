@@ -17,6 +17,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
+import javax.ejb.EJB;
 
 @Stateless
 @LocalBean
@@ -38,7 +39,7 @@ public class CareerRepository {
         Root<Career> Career = criteriaQuery.from(Career.class);
         List<Predicate> predicates = new ArrayList<>();
         if (career.getIdCareer() != null) {
-            predicates.add(criteriaBuilder.equal(Career.get("id_career"), career.getIdCareer()));
+            predicates.add(criteriaBuilder.equal(Career.get("idCareer"), career.getIdCareer()));
         }
         if (career.getName() != null) {
             predicates.add(criteriaBuilder.like(Career.get("name"), "%" + career.getName() + "%"));
@@ -46,5 +47,14 @@ public class CareerRepository {
         criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
         TypedQuery<Career> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList();
+    }
+
+    public List<Career> getAllCareer() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Career> criteriaQuery = criteriaBuilder.createQuery(Career.class);
+        Root<Career> rootEntry = criteriaQuery.from(Career.class);
+        CriteriaQuery<Career> all = criteriaQuery.select(rootEntry); 
+        TypedQuery<Career> allQuery = entityManager.createQuery(all);
+        return allQuery.getResultList();
     }
 }
