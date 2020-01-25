@@ -1,14 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./../templates/simple.xhtml"
+                template="../templates/template-one.xhtml"
                 xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:jsf="http://xmlns.jcp.org/jsf"
-                xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
-                xmlns:of="http://omnifaces.org/functions">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
     
     <ui:define name="head">
         Buscar Insumo
@@ -28,25 +26,25 @@
                     <div class="form-group col-sm-4">
                         <p:outputLabel for="code" value="Código:" />
                         <p:inputText id="code" styleClass="form-control" pt:placeholder="Código a buscar"
-                                     value="#{journalsView.nameSearchCriteria}"/>
+                                     value="#{searchSupplyView.codeSearchCriteria}"/>
                     </div>
                     <div class="form-group  col-sm-4">
                         <p:outputLabel for="name" value="Nombre:" />
-                        <p:inputText id="tag" styleClass="form-control" pt:placeholder="Nombre a buscar"
-                                     value="#{journalsView.tagSearchCriteria}"/>
+                        <p:inputText id="name" styleClass="form-control" pt:placeholder="Nombre a buscar"
+                                     value="#{searchSupplyView.nameSearchCriteria}"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="btn-group pull-right">
                         <p:commandLink styleClass="btn btn-danger"
-                                       update=":#{p:component('name')},:#{p:component('tag')}"
-                                       action="#{journalsView.cleanCriteria()}"
-                                       title="#{i18nLabels.CleanCriterias}">
+                                       update=":#{p:component('name')},:#{p:component('code')}"
+                                       action="#{searchSupplyView.cleanCriteria()}"
+                                       title="limpiar">
                             &nbsp;<span class="glyphicon glyphicon-repeat"></span>&nbsp;
                         </p:commandLink>
-                        <p:commandLink styleClass="btn btn-primary" update=":journalTable"
-                                       action="#{journalsView.searchJournals()}">
-                            <span class="glyphicon glyphicon-search"></span> #{i18nLabels.Search}
+                        <p:commandLink styleClass="btn btn-primary" update="supplyTable"
+                                       action="#{searchSupplyView.searchSupplies()}">
+                            <span class="glyphicon glyphicon-search"></span> Buscar
                         </p:commandLink>
                     </div>
                 </div>
@@ -54,62 +52,47 @@
         </h:form>
 
         <div class="row">
-            <p:dataTable id="journalTable" var="journal" value="#{journalsView.journals}"
+            <p:dataTable id="supplyTable" var="supply" value="#{searchSupplyView.supplies}"
                          reflow="true">
-                <p:column headerText="#">
-                    <h:outputText value="Código" />
+                <p:column headerText="Código">
+                    <h:outputText value="#{supply.code}" />
                 </p:column>
 
                 <p:column headerText="Nombre">
-                    <h:outputText value="#{journal.name}" />
+                    <h:outputText value="#{supply.name}" />
                 </p:column>
 
                 <p:column headerText="Fecha Expiración">
-                    <h:outputText value="#{journal.tags}" />
+                    <h:outputText value="#{supply.expirationDate}" />
                 </p:column>
 
                 <p:column headerText="Fecha de Admisión">
-                    <h:outputText value="#{journal.about}" />
+                    <h:outputText value="#{supply.dateOfAdmission}" />
                 </p:column>
 
                 <p:column headerText="Costo">
-                    <h:outputText value="#{journal.ownerProfile.firstName} #{journal.ownerProfile.lastName}" />
+                    <h:outputText value="#{supply.cost}" />
                 </p:column>
 
-                <p:column headerText="Cantidad>
-                    <h:outputText value="#{journal.active ? i18nLabels.Yes : i18nLabels.No }" />
+                <p:column headerText="Cantidad">
+                    <h:outputText value="#{supply.quantity}" />
+                </p:column>
+                
+                <p:column headerText="Medida">
+                    <h:outputText value="#{supply.measure.name}" />
                 </p:column>
 
                 <p:column headerText="Disponibilidad" styleClass="text-center">
-                    <h:outputText value="#{journal.subscriptionsCount}" />
+                    <p:selectBooleanCheckbox value="#{supply.availability}">
+                        
+                    </p:selectBooleanCheckbox>
+                    
                 </p:column>
                 
-                <p:column headerText="Descripción" styleClass="text-center">
-                    <h:outputText value="#{journal.subscriptionsCount}" />
+                <p:column headerText="Descripción">
+                    <h:outputText value="#{supply.description}" />
                 </p:column>
 
-                <p:column headerText="#{i18nLabels.Edit}" styleClass="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="#{i18nLabels.Edit}">
-                        <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('dlgEdit').show();"
-                                       update=":#{p:component('dlgEdit')}">
-                            <f:setPropertyActionListener value="#{journal}" target="#{journalsView.currentJournal}"/>
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </p:commandLink>
-                    </p>
-                </p:column>
-
-                <p:column headerText="#{i18nLabels.Delete}" styleClass="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="#{i18nLabels.Delete}">
-                        <p:commandLink styleClass="btn btn-danger btn-xs"
-                                       actionListener="#{journalsView.deleteJournal(journal.idJournal)}"
-                                       update=":#{p:component('journalTable')}">
-                            <p:confirm header="#{i18nLabels.DeleteJournal}"
-                                       message="#{of:format1(i18nMsgs.deletejournal, journal.name)}?"
-                                       icon="ui-icon-alert"/>
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </p:commandLink>
-                    </p>
-                </p:column>
             </p:dataTable>
         </div>
     </ui:define>

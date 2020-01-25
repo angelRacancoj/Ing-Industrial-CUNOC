@@ -98,4 +98,11 @@ public class searchSupplyView implements Serializable{
             MessageUtils.addSuccessMessage(EMPTY_SEARCH);
         }
     }
+    
+    public void cleanCriteria(){
+        codeSearchCriteria = null;
+        nameSearchCriteria = null;
+        availabilitySearchCriteria = null;
+        expirationDateSearchCriteria = null;
+    }
 }
