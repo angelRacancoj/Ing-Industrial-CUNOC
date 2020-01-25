@@ -22,6 +22,13 @@ and open the template in the editor.
         </ui:define>
 
         <ui:define name="content">
+
+            <script type="text/javascript">
+                function handleDrop(event, ui) {
+                    var droppedProduction = ui.draggable;
+                    droppedProduction.fadeOut('fast');
+                }
+            </script>
             <h:form id="productionsSearch">
                 <fieldset>
                     <legend>#{i18nLabels.Search}</legend>
@@ -31,102 +38,102 @@ and open the template in the editor.
                     <div class="row">
                         <div class="btn-group pull-right">
                             <p:commandLink styleClass="btn btn-primary"
-                                           update=":productionTable"
+                                           update="productionTable"
                                            actionListener="#{supplyCalculatorView.searchProduction()}">
                                 <span class="glyphicon glyphicon-search"></span> Buscar
                             </p:commandLink>
                         </div>
                     </div>
                 </fieldset>
+
+                <div class="row">
+                    <p:fieldset id="availableProductionField" legend="Producciones">
+                        <p:dataTable id="productionTable" var="productions" value="#{supplyCalculatorView.productionList}">
+                            <p:column style="width:20px">
+                                <h:outputText id="dragIcon" styleClass="glyphicon glyphicon-plus"/>
+                                <p:draggable for="dragIcon" revert="true" helper="clone" />
+                            </p:column>
+
+                            <p:column headerText="Codigo">
+                                <h:outputText value="#{productions.idProduction}" />
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{productions.name}" />
+                            </p:column>
+                            <p:column headerText="Tipo de Producto">
+                                <h:outputText value="#{productions.productId.idProduct} #{selectedP.productId.name}" />
+                            </p:column>
+                            <p:column headerText="Costo por lote">
+                                <h:outputText value="Q. #{productions.priceLot}" />
+                            </p:column>
+                            <p:column headerText="Estado">
+                                <h:outputText value="#{productions.state}" />
+                            </p:column>
+                            <p:column headerText="Unidades por lote">
+                                <h:outputText value="#{productions.unity}" />
+                            </p:column>
+
+                            <p:column headerText="Fecha de Creacion">
+                                <h:outputText value="#{productions.creationDate}" >
+                                    <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Descripcion">
+                                <h:outputText value="#{productions.description}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+
+                    <p:fieldset id="selectedProductionArea" legend="Producciones Seleccionadas" style="margin-top:20px">
+                        <p:outputPanel id="dropArea">
+                            <h:outputText value="!!!Arrastra Aquí!!!" rendered="#{empty supplyCalculatorView.selectedProductions}" style="font-size:24px;" />
+                            <p:dataTable id="selectedProductionTable" var="selectedP" value="#{supplyCalculatorView.selectedProductions}" rendered="#{not empty supplyCalculatorView.selectedProductions}">
+
+                                <p:column headerText="Codigo">
+                                    <h:outputText value="#{selectedP.production.idProduction}" />
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{selectedP.production.name}" />
+                                </p:column>
+                                <p:column headerText="Tipo de Producto">
+                                    <h:outputText value="#{selectedP.production.productId.idProduct} #{selectedP.production.productId.name}" />
+                                </p:column>
+                                <p:column headerText="Costo por lote">
+                                    <h:outputText value="Q. #{selectedP.production.priceLot}" />
+                                </p:column>
+                                <p:column headerText="Estado">
+                                    <h:outputText value="#{selectedP.production.state}" />
+                                </p:column>
+                                <p:column headerText="Unidades por lote">
+                                    <h:outputText value="#{selectedP.production.unity}" />
+                                </p:column>
+
+                                <p:column headerText="Fecha de Creacion">
+                                    <h:outputText value="#{selectedP.production.creationDate}" >
+                                        <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column headerText="Descripcion">
+                                    <h:outputText value="#{selectedP.production.description}" />
+                                </p:column>
+                                
+                                <p:column style="width:65px" headerText="Lotes">
+                                    <p:spinner id="minMax" value="#{selectedP.batch}" min="1"/>
+                                </p:column>
+                                
+                            </p:dataTable>
+                        </p:outputPanel>
+                    </p:fieldset>
+
+                    <p:droppable for="selectedProductionArea" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="productionTable" onDrop="handleDrop">
+                        <p:ajax listener="#{supplyCalculatorView.onProductionDrop}" update="dropArea productionTable" />
+                    </p:droppable>
+                </div>
             </h:form>
 
-            <div class="row">
-                <p:selectManyMenu id="productionTable" value="#{supplyCalculatorView.selectedProductions}" var="productions" style="width:90%"
-                                  filter="true" filterMatchMode="contains" showCheckbox="true" converter="productionConverter">
-                    <f:selectItems value="#{supplyCalculatorView.productionList}" var="product" itemLabel="#{product.name}" itemValue="#{product}" />
 
-                    <p:column style="width:2%">
-                        <h:outputText value="#{productions.idProduction}"/>
-                    </p:column>
-                    <p:column>
-                        <h:outputText value="#{productions.name}" />
-                    </p:column >
-                    <p:column>
-                        <h:outputText value="#{productions.productId.idProduct} - #{productions.productId.name}" />
-                    </p:column>
-                    <p:column>
-                        <h:outputText value="Q. #{productions.priceLot}" />
-                    </p:column>
-                    <p:column>
-                        <p:graphicImage value="pi pi-check" rendered="#{productions.state}"/>
-                        <p:graphicImage value="pi pi-times" rendered="#{!productions.state}"/>
-                        <h:outputText value="#{productions.state}" />
-                    </p:column>
-                    <p:column headerText="Unidades por lote">
-                        <h:outputText value="#{productions.unity}" />
-                    </p:column>
-
-                    <p:column>
-                        <h:outputText value="#{productions.creationDate}" >
-                            <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-
-                    <p:column>
-                        <h:outputText value="#{productions.description}" />
-                    </p:column>
-                </p:selectManyMenu>
-
-                <p:separator />
-
-                <p:commandButton value="Submit" update=":#{p:component('calculator')}" oncomplete="PF('calculator').show()" actionListener="#{supplyCalculatorView.cleanSelectedProduction()}" icon="pi pi-check" />
-
-                <p:dialog header="Materiales Necesarios" modal="true" showEffect="fade" id="calculator" 
-                          widgetVar="calculator" fitViewport="true" closeOnEscape="true">
-                    <p:ajax event="close" listener="#{supplyCalculatorView.cleanSelectedProduction()}" update="@this" />
-                    <h:form>
-                        <div class="modal-body">
-                            <fieldset>
-                                <div class="row">
-                                    <p:dataTable id="selectedProductionTable" var="selectedP" value="#{supplyCalculatorView.selectedProductions}"
-                                                 reflow="true">
-                                        <p:column headerText="Codigo">
-                                            <h:outputText value="#{selectedP.idProduction}" />
-                                        </p:column>
-                                        <p:column headerText="Nombre">
-                                            <h:outputText value="#{selectedP.name}" />
-                                        </p:column>
-                                        <p:column headerText="Tipo de Producto">
-                                            <h:outputText value="#{selectedP.productId.idProduct} #{selectedP.productId.name}" />
-                                        </p:column>
-                                        <p:column headerText="Costo por lote">
-                                            <h:outputText value="Q. #{selectedP.priceLot}" />
-                                        </p:column>
-                                        <p:column headerText="Estado">
-                                            <h:outputText value="#{selectedP.state}" />
-                                        </p:column>
-                                        <p:column headerText="Unidades por lote">
-                                            <h:outputText value="#{selectedP.unity}" />
-                                        </p:column>
-
-                                        <p:column headerText="Fecha de Creacion">
-                                            <h:outputText value="#{selectedP.creationDate}" >
-                                                <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
-                                            </h:outputText>
-                                        </p:column>
-
-                                        <p:column headerText="Descripcion">
-                                            <h:outputText value="#{selectedP.description}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                    <h:outputText value="#{supplyCalculatorView.selectedProductions.size()}" />
-                                </div>
-
-                            </fieldset>
-                        </div>
-                    </h:form>
-                </p:dialog>
-            </div>
         </ui:define>
 
     </ui:composition>
