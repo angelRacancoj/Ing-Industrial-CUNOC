@@ -25,7 +25,7 @@ public class SupplyServiceTest {
         newSupply.setName("Prueba");
         newSupply.setExpirationDate(LocalDate.now());
         newSupply.setCost(1.1);
-        newSupply.setQuantity(1);
+        newSupply.setQuantity(1.0);
         newSupply.setMeasure(measureTest);
         Mockito.doNothing().when(entityManager).persist(newSupply);
         SupplyServices supplyServices = new SupplyServices();
@@ -50,7 +50,7 @@ public class SupplyServiceTest {
         Measure measureTest = new Measure();
         newSupply.setExpirationDate(LocalDate.now());
         newSupply.setCost(1.1);
-        newSupply.setQuantity(1);
+        newSupply.setQuantity(1.0);
         newSupply.setMeasure(measureTest);
         Mockito.doNothing().when(entityManager).persist(newSupply);
         SupplyServices supplyServices = new SupplyServices();
@@ -69,7 +69,7 @@ public class SupplyServiceTest {
         Measure measureTest = new Measure();
         newSupply.setName("Prueba");
         newSupply.setCost(1.1);
-        newSupply.setQuantity(1);
+        newSupply.setQuantity(1.0);
         newSupply.setMeasure(measureTest);
         Mockito.doNothing().when(entityManager).persist(newSupply);
         SupplyServices supplyServices = new SupplyServices();
@@ -88,7 +88,7 @@ public class SupplyServiceTest {
         Measure measureTest = new Measure();
         newSupply.setName("Prueba");
         newSupply.setExpirationDate(LocalDate.now());
-        newSupply.setQuantity(1);
+        newSupply.setQuantity(1.0);
         newSupply.setMeasure(measureTest);
         Mockito.doNothing().when(entityManager).persist(newSupply);
         SupplyServices supplyServices = new SupplyServices();
@@ -127,7 +127,7 @@ public class SupplyServiceTest {
         newSupply.setName("Prueba");
         newSupply.setExpirationDate(LocalDate.now());
         newSupply.setCost(1.1);
-        newSupply.setQuantity(1);
+        newSupply.setQuantity(1.0);
         Mockito.doNothing().when(entityManager).persist(newSupply);
         SupplyServices supplyServices = new SupplyServices();
         supplyServices.setEntityManager(entityManager);
@@ -151,9 +151,9 @@ public class SupplyServiceTest {
             supplyServices.setModifySupplyService(modifySupplyService);
             
             Supply supplyToChangeTest = new Supply();
-            supplyToChangeTest.setQuantity(1);
+            supplyToChangeTest.setQuantity(1.0);
             String noteModifyTest = "test note";
-            Integer newQuantityTest = 5;
+            Double newQuantityTest = 5.0;
             User userTest = new User();
             
             //Act
@@ -182,9 +182,9 @@ public class SupplyServiceTest {
             supplyServices.setModifySupplyService(modifySupplyService);
             
             Supply supplyToChangeTest = new Supply();
-            supplyToChangeTest.setQuantity(1);
+            supplyToChangeTest.setQuantity(1.0);
             String noteModifyTest = "test note";
-            Integer newQuantityTest = null;
+            Double newQuantityTest = null;
             User userTest = new User();
             
             //Act
@@ -205,10 +205,10 @@ public class SupplyServiceTest {
         supplyServices.setModifySupplyService(modifySupplyService);
 
         Supply supplyToChangeTest = new Supply();
-        supplyToChangeTest.setQuantity(1);
+        supplyToChangeTest.setQuantity(1.0);
         String noteModifyTest = "test note";
         User userTest = new User();
-        Integer quantityExpected = 0;
+        Double quantityExpected = 0.0;
 
         //Act
 
@@ -224,7 +224,7 @@ public class SupplyServiceTest {
         //Arrange
         Supply supplyToChangeTest = new Supply();
         supplyToChangeTest.setAvailability(true);
-        Integer quantityExpected = 0;
+        Double quantityExpected = 0.0;
         SupplyServices supplyServices = new SupplyServices();
         
         //Act
@@ -241,7 +241,7 @@ public class SupplyServiceTest {
             //Arrange
             Supply supplyToChangeTest = new Supply();
             supplyToChangeTest.setAvailability(false);
-            Integer newQuantity = 10;
+            Double newQuantity = 10.0;
             SupplyServices supplyServices = new SupplyServices();
             
             //Act
@@ -261,7 +261,7 @@ public class SupplyServiceTest {
             //Arrange
             Supply supplyToChangeTest = new Supply();
             supplyToChangeTest.setAvailability(false);
-            Integer newQuantity = null;
+            Double newQuantity = null;
             SupplyServices supplyServices = new SupplyServices();
             
             //Act

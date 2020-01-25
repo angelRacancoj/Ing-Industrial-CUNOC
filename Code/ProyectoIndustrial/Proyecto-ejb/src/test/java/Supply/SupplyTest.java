@@ -14,7 +14,7 @@ public class SupplyTest {
     LocalDate testExpirationDate = LocalDate.now();
     LocalDate testDateAdmission = LocalDate.now(); 
     Double testCost = 10.10;
-    Integer testQuantity = 20;
+    Double testQuantity = 20.0;
     Boolean testAvailability = true;
     String testDescription = "Text of Description of a Supply";
     Measure testMeasure = new Measure();
@@ -63,7 +63,7 @@ public class SupplyTest {
     @Test
     public void testSetAndGetQuantity() throws Exception {
         testSupply.setQuantity(testQuantity);
-        Integer result = testSupply.getQuantity();
+        Double result = testSupply.getQuantity();
         
         Assert.assertEquals(result,testQuantity);
     }

@@ -39,7 +39,7 @@ public class ModifySupply implements Serializable {
     @Enumerated(EnumType.STRING)
     private ModificationType modifyType;
     @Column(name = "quantity")
-    private Integer quantity;
+    private Double quantity;
     @Column(name = "date")
     private LocalDate date;
     @Column(name = "note")
@@ -48,7 +48,7 @@ public class ModifySupply implements Serializable {
     public ModifySupply() {
     }
 
-    public ModifySupply(Integer idModifySupply, User user, Supply supply, ModificationType modifyType, Integer quantity, LocalDate date, String note) {
+    public ModifySupply(Integer idModifySupply, User user, Supply supply, ModificationType modifyType, Double quantity, LocalDate date, String note) {
         this.idModifySupply = idModifySupply;
         this.user = user;
         this.supply = supply;
@@ -58,7 +58,7 @@ public class ModifySupply implements Serializable {
         this.note = note;
     }
 
-    public ModifySupply(User user, Supply supply, ModificationType modifyType, Integer quantity, LocalDate date, String note) {
+    public ModifySupply(User user, Supply supply, ModificationType modifyType, Double quantity, LocalDate date, String note) {
         this.user = user;
         this.supply = supply;
         this.modifyType = modifyType;
@@ -67,7 +67,7 @@ public class ModifySupply implements Serializable {
         this.note = note;
     }
     
-    public ModifySupply(User user, Supply supply, ModificationType modifyType, Integer quantity, LocalDate date) {
+    public ModifySupply(User user, Supply supply, ModificationType modifyType, Double quantity, LocalDate date) {
         this.user = user;
         this.supply = supply;
         this.modifyType = modifyType;
@@ -107,11 +107,11 @@ public class ModifySupply implements Serializable {
         this.modifyType = modifyType;
     }
 
-    public Integer getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 

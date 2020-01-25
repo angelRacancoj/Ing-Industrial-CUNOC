@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="../templates/template-one.xhtml"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+    
+    <ui:define name="head">
+        Buscar Insumo
+    </ui:define>
+    
+    <ui:define name="title">
+        Buscar Insumo
+    </ui:define>
+
+    <ui:define name="content">
+        
+
+        <h:form id="supplySearch">
+            <fieldset>
+                <legend>Buscar Insumo</legend>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <p:outputLabel for="code" value="Código:" />
+                        <p:inputText id="code" styleClass="form-control" pt:placeholder="Código a buscar"
+                                     value="#{searchSupplyView.codeSearchCriteria}"/>
+                    </div>
+                    <div class="form-group  col-sm-4">
+                        <p:outputLabel for="name" value="Nombre:" />
+                        <p:inputText id="name" styleClass="form-control" pt:placeholder="Nombre a buscar"
+                                     value="#{searchSupplyView.nameSearchCriteria}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group pull-right">
+                        <p:commandLink styleClass="btn btn-danger"
+                                       update=":#{p:component('name')},:#{p:component('code')}"
+                                       action="#{searchSupplyView.cleanCriteria()}"
+                                       title="limpiar">
+                            &nbsp;<span class="glyphicon glyphicon-repeat"></span>&nbsp;
+                        </p:commandLink>
+                        <p:commandLink styleClass="btn btn-primary" update="supplyTable"
+                                       action="#{searchSupplyView.searchSupplies()}">
+                            <span class="glyphicon glyphicon-search"></span> Buscar
+                        </p:commandLink>
+                    </div>
+                </div>
+            </fieldset>
+        </h:form>
+
+        <div class="row">
+            <p:dataTable id="supplyTable" var="supply" value="#{searchSupplyView.supplies}"
+                         reflow="true">
+                <p:column headerText="Código">
+                    <h:outputText value="#{supply.code}" />
+                </p:column>
+
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{supply.name}" />
+                </p:column>
+
+                <p:column headerText="Fecha Expiración">
+                    <h:outputText value="#{supply.expirationDate}" />
+                </p:column>
+
+                <p:column headerText="Fecha de Admisión">
+                    <h:outputText value="#{supply.dateOfAdmission}" />
+                </p:column>
+
+                <p:column headerText="Costo">
+                    <h:outputText value="#{supply.cost}" />
+                </p:column>
+
+                <p:column headerText="Cantidad">
+                    <h:outputText value="#{supply.quantity}" />
+                </p:column>
+                
+                <p:column headerText="Medida">
+                    <h:outputText value="#{supply.measure.name}" />
+                </p:column>
+
+                <p:column headerText="Disponibilidad" styleClass="text-center">
+                    <p:selectBooleanCheckbox value="#{supply.availability}">
+                        
+                    </p:selectBooleanCheckbox>
+                    
+                </p:column>
+                
+                <p:column headerText="Descripción">
+                    <h:outputText value="#{supply.description}" />
+                </p:column>
+
+            </p:dataTable>
+        </div>
+    </ui:define>
+
+</ui:composition>

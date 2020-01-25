@@ -59,7 +59,7 @@ public class MeasureRepositoryTest {
         measureRepository.setEntityManager(entityManager);
         
         //Act
-        List<Measure> result = measureRepository.getMeasures();
+        List<Measure> result = measureRepository.getAllMeasures();
         
         //Assert
         Assert.assertEquals(result,list);
@@ -75,7 +75,7 @@ public class MeasureRepositoryTest {
         measureRepository.setEntityManager(entityManager);
         
         //Act
-        List<Measure> result = measureRepository.getMeasures();
+        List<Measure> result = measureRepository.getAllMeasures();
         
         //Assert
         Assert.assertEquals(result,list);

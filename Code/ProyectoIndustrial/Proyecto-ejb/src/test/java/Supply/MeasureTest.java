@@ -12,7 +12,7 @@ public class MeasureTest {
     String testName = "name test of a Measure";
     Supply testSupply1 = new Supply();
     Supply testSupply2 = new Supply();
-    ArrayList<Supply> testSupplyCollection = new ArrayList<Supply>();
+    List<Supply> testSupplyCollection = new ArrayList<Supply>();
     Measure testMeasureFullConstructor = new Measure(testIdMeasure, testName, testSupplyCollection);
     
           
