@@ -2,6 +2,7 @@ package Supply;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,20 +30,20 @@ public class Supply implements Serializable{
     @Column(name = "cost",scale = 2)
     private Double cost;
     @Column(name = "quantity",scale = 2)
-    private Integer quantity;
+    private Double quantity;
     @Column(name = "availability")
     private Boolean availability;
     @Column(name = "description")
     private String description;
     
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_measure", referencedColumnName = "id_measure")
+    @JoinColumn(name = "measure_id", referencedColumnName = "id_Measure")
     private Measure measure;
     
     public Supply() {
     }
 
-    public Supply(Integer code, String name, LocalDate expirationDate, LocalDate dateOfAdmission, Double cost, Integer quantity, boolean availability, String description, Measure measure) {
+    public Supply(Integer code, String name, LocalDate expirationDate, LocalDate dateOfAdmission, Double cost, Double quantity, boolean availability, String description, Measure measure) {
         this.code = code;
         this.name = name;
         this.expirationDate = expirationDate;
@@ -54,6 +55,19 @@ public class Supply implements Serializable{
         this.measure = measure;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Supply)) return false;
+        Supply supply = (Supply) o;
+        return Objects.equals(getCode(), supply.getCode());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCode());
+    }
+    
     public Integer getCode() {
         return code;
     }
@@ -94,11 +108,11 @@ public class Supply implements Serializable{
         this.cost = cost;
     }
 
-    public Integer getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 
