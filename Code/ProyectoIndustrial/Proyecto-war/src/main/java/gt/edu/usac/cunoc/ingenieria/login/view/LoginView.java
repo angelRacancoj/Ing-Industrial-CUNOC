@@ -62,8 +62,7 @@ public class LoginView implements Serializable {
         this.password = password;
     }
 
-    public void login() 
-            throws IOException,UserException {
+    public void login() throws IOException, UserException {
         Credential credential = new UsernamePasswordCredential(carnet, new Password(password));
         AuthenticationStatus status = securityContext.authenticate(
                 getRequest(),
@@ -90,8 +89,8 @@ public class LoginView implements Serializable {
         return (HttpServletResponse) externalContext.getResponse();
     }
 
-    private void redirectToIndex() throws IOException,UserException {
-        User currentUser = userFacade.getAuthenticatedUser().get(0); 
+    private void redirectToIndex() throws IOException, UserException {
+        User currentUser = userFacade.getAuthenticatedUser().get(0);
         switch (currentUser.getRolUser().getName()) {
             case ADMINISTRADOR:
                 externalContext.redirect(externalContext.getRequestContextPath() + "/templates/template-one.xhtml");

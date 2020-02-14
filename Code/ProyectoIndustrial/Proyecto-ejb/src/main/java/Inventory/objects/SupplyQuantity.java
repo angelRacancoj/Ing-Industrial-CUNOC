@@ -6,12 +6,13 @@
 package Inventory.objects;
 
 import Supply.Supply;
+import java.io.Serializable;
 
 /**
  *
  * @author angelrg
  */
-public class SupplyQuantity {
+public class SupplyQuantity implements Serializable{
 
     Supply supply;
     double quantity;

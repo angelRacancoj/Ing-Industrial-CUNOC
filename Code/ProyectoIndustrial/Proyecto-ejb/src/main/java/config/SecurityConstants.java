@@ -14,7 +14,7 @@ package config;
 public class SecurityConstants{
 
     public static final String DATASOURCE_LOOKUP = "${'" + Constants.JDBC_RESOURCE + "'}";
-    public static final String CALLER_QUERY = "select password from user where carnet = ?"; //get pass by carnet
+    public static final String CALLER_QUERY = "select password from USER where carnet = ?"; //get pass by carnet
     public static final String GROUPS_QUERY = "select r.name_rol FROM rol_user r,user u where u.carnet=?";
     public static final String PBKDF_ITERATIONS = "Pbkdf2PasswordHash.Iterations=3072";
     public static final String PBKDF_ALGORITHM = "Pbkdf2PasswordHash.Algorithm=PBKDF2WithHmacSHA256";

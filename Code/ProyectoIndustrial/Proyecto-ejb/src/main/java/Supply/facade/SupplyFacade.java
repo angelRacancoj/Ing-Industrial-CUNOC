@@ -10,6 +10,8 @@ import Supply.Supply;
 import Supply.exception.MandatoryAttributeSupplyException;
 import Supply.service.SupplyServices;
 import User.User;
+import User.exception.UserException;
+import java.time.LocalDate;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -83,6 +85,11 @@ public class SupplyFacade implements SupplyFacadeLocal {
     @Override
     public Supply modifyByMissing(Supply supplyToChange, Double newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException {
         return supplyService.modifyByMissing(supplyToChange, newQuantity, user, noteModify);
+    }
+
+    @Override
+    public Supply modifySupply(Supply supply) throws UserException {
+        return supplyService.modifySupply(supply);
     }
 
 }

@@ -36,8 +36,6 @@ public class Stage implements Serializable {
     @Basic(optional = false)
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stageId")
-    private List<Commentary> commentaryList;
     @JoinColumn(name = "production_id", referencedColumnName = "id_production")
     @ManyToOne(optional = false)
     private Production productionId;
@@ -79,15 +77,6 @@ public class Stage implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @XmlTransient
-    public List<Commentary> getCommentaryList() {
-        return commentaryList;
-    }
-
-    public void setCommentaryList(List<Commentary> commentaryList) {
-        this.commentaryList = commentaryList;
     }
 
     public Production getProductionId() {

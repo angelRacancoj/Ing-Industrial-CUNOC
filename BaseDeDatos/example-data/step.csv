@@ -1,0 +1,29 @@
+"id_step";"name";"description";"stage_id"
+1;"Limpiar plancha";"se debe limpiar la plancha y retirar cualquier pedazo de pintura anterior";1
+2;"Medir";"Se miden y marcan las piezas que se utilizaran";8
+3;"Corte";"Realizar los cortes en base a las mediciones";8
+4;"Estampado";"Se imprime en el cuero y se plancha";8
+5;"Acabados";"Se verifican los acabados del material";9
+6;"Limpiar plancha";"se debe limpiar la plancha y retirar cualquier pedazo de pintura anterior";2
+7;"Medir";"Se miden y marcan las piezas que se utilizaran";7
+8;"Corte";"Realizar los cortes en base a las mediciones";7
+9;"Estampado";"Se imprime en el cuero y se plancha";7
+10;"Acabados";"Se verifican los acabados del material";10
+11;"Limpiar plancha";"se debe limpiar la plancha y retirar cualquier pedazo de pintura anterior";3
+12;"Limpiar marco";"se debe limpiar el marco y retirar cualquier pedazo de pintura anterior";3
+13;"Colocar Pintura";"Esparcir pintura sobre la playera, utilizando el marco";12
+14;"Planchado y Enfriado";"Planchar la playera por 3 min y luego dejar enfriar";12
+15;"Acabados";"Se verifican los acabados del material";13
+16;"Limpiar plancha";"se debe limpiar la plancha y retirar cualquier pedazo de pintura anterior";4
+17;"Imprimir Figura";"Se debe imprimir en hojas fransfer la imagen de manera invertida";11
+18;"Planchado y Enfriado";"Planchar la playera por 3 min con la hoja transfer impresa y luego dejar enfriar";11
+19;"Acabados";"Se verifican los acabados del material";14
+20;"Limpiar impresora";"se debe limpiar la impresora, revisar que no existan trozos de papel";5
+21;"Imprimir";"Se debe imprimir en hojas adhesiva las imagenes";15
+22;"Recortar";"Debe recortarse con la forma del logo (no cuadrado)";15
+23;"Acabados";"Se verifican los acabados del sticker";16
+24;"Limpiar impresora";"se debe limpiar la impresora, revisar que no existan trozos de papel";6
+25;"Limpiar la guillotina";"se debe limpiar la guillotina, revisar que no existan trozos de papel";6
+26;"Imprimir";"Se debe imprimir en hojas adhesiva las imagenes";17
+27;"Recortar";"Debe recortarse de forma cuadra los tickers con la guillotina";17
+28;"Acabados";"Se verifican los acabados del sticker";18

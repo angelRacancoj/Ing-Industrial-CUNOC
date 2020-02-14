@@ -6,13 +6,14 @@
 package Inventory.objects;
 
 import Production.Production;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author angelrg
  */
-public class productionCost {
+public class productionCost implements Serializable{
 
     Production production;
     List<SupplyQuantity> supplies;

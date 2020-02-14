@@ -7,6 +7,8 @@ import Supply.repository.AvailabilityFilter;
 import Supply.repository.ExpirationDateFilter;
 import java.util.List;
 import User.User;
+import User.exception.UserException;
+import java.time.LocalDate;
 import javax.ejb.Local;
 
 @Local
@@ -76,4 +78,16 @@ public interface SupplyFacadeLocal {
      * @throws Supply.exception.MandatoryAttributeSupplyException
      */
     public Supply modifyByMissing(Supply supplyToChange, Double newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException;
+
+    /**
+     * This option allow to modify simple attributes
+     *
+     * @param supply
+     * @param newName
+     * @param newExpirationDate
+     * @param newCost
+     * @param newDescription
+     * @return
+     */
+    public Supply modifySupply(Supply supply) throws UserException;
 }

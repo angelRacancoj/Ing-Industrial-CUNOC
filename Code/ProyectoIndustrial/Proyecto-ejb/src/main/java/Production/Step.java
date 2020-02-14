@@ -1,4 +1,3 @@
-
 package Production;
 
 import java.io.Serializable;
@@ -41,6 +40,8 @@ public class Step implements Serializable {
     @JoinColumn(name = "stage_id", referencedColumnName = "id_stage")
     @ManyToOne(optional = false)
     private Stage stageId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "stepId")
+    private List<Commentary> commentaryList;
 
     public Step() {
     }
@@ -96,6 +97,14 @@ public class Step implements Serializable {
         this.stageId = stageId;
     }
 
+    public List<Commentary> getCommentaryList() {
+        return commentaryList;
+    }
+
+    public void setCommentaryList(List<Commentary> commentaryList) {
+        this.commentaryList = commentaryList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -120,5 +129,5 @@ public class Step implements Serializable {
     public String toString() {
         return "Production.Step[ idStep=" + idStep + " ]";
     }
-    
+
 }

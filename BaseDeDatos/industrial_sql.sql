@@ -24,7 +24,7 @@ USE `produccion_industrial` ;
 DROP TABLE IF EXISTS `produccion_industrial`.`product` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`product` (
-  `id_product` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_product` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NOT NULL,
   PRIMARY KEY (`id_product`))
@@ -38,15 +38,15 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`production` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`production` (
-  `id_production` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_production` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NOT NULL,
   `state` TINYINT(1) NOT NULL,
-  `unity` INT(11) NOT NULL,
+  `unity` INT NOT NULL,
   `qualification` DOUBLE NULL DEFAULT NULL,
   `price_lot` DOUBLE NULL DEFAULT NULL,
   `creation_date` DATE NOT NULL,
   `description` TINYTEXT NULL DEFAULT NULL,
-  `product_id` INT(11) NOT NULL,
+  `product_id` INT NOT NULL,
   PRIMARY KEY (`id_production`),
   INDEX `fk_LINEA_DE_PRODUCCION_PRODUCTO1_idx` (`product_id` ASC),
   CONSTRAINT `fk_LINEA_DE_PRODUCCION_PRODUCTO1`
@@ -62,10 +62,10 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`stage` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`stage` (
-  `id_stage` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_stage` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NOT NULL,
-  `production_id` INT(11) NOT NULL,
+  `production_id` INT NOT NULL,
   PRIMARY KEY (`id_stage`),
   INDEX `fk_ETAPA_LINEA_DE_PRODUCCION1_idx` (`production_id` ASC),
   CONSTRAINT `fk_ETAPA_LINEA_DE_PRODUCCION1`
@@ -76,19 +76,40 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `produccion_industrial`.`step`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `produccion_industrial`.`step` ;
+
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`step` (
+  `id_step` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `description` TINYTEXT NOT NULL,
+  `stage_id` INT NOT NULL,
+  PRIMARY KEY (`id_step`),
+  INDEX `fk_PASO_ETAPA1_idx` (`stage_id` ASC),
+  CONSTRAINT `fk_PASO_ETAPA1`
+    FOREIGN KEY (`stage_id`)
+    REFERENCES `produccion_industrial`.`stage` (`id_stage`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `produccion_industrial`.`COMMENTARY`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `produccion_industrial`.`COMMENTARY` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`COMMENTARY` (
-  `id_commentary` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_commentary` INT NOT NULL AUTO_INCREMENT,
   `commentary` TINYTEXT NOT NULL,
-  `stage_id` INT(11) NOT NULL,
+  `id_step` INT NOT NULL,
   PRIMARY KEY (`id_commentary`),
-  INDEX `fk_comentario_stage1_idx` (`stage_id` ASC),
-  CONSTRAINT `fk_comentario_stage1`
-    FOREIGN KEY (`stage_id`)
-    REFERENCES `produccion_industrial`.`stage` (`id_stage`))
+  INDEX `fk_COMMENTARY_step1_idx` (`id_step` ASC),
+  CONSTRAINT `fk_COMMENTARY_step1`
+    FOREIGN KEY (`id_step`)
+    REFERENCES `produccion_industrial`.`step` (`id_step`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -99,7 +120,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`MEASURE` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`MEASURE` (
-  `id_measure` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_measure` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`id_measure`))
 ENGINE = InnoDB
@@ -112,7 +133,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`SUPPLY` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`SUPPLY` (
-  `code` INT(11) NOT NULL AUTO_INCREMENT,
+  `code` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NOT NULL,
   `expiration_date` DATE NOT NULL,
   `date_of_admission` DATE NOT NULL,
@@ -120,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`SUPPLY` (
   `quantity` DOUBLE NOT NULL,
   `availability` TINYINT(1) NOT NULL,
   `description` TINYTEXT NULL DEFAULT NULL,
-  `measure_id` INT(11) NOT NULL,
+  `measure_id` INT NOT NULL,
   PRIMARY KEY (`code`),
   INDEX `fk_SUPPLY_MEASURE1_idx` (`measure_id` ASC),
   CONSTRAINT `fk_SUPPLY_MEASURE1`
@@ -131,33 +152,15 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`step`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`step` ;
-
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`step` (
-  `id_step` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `description` TINYTEXT NOT NULL,
-  `stage_id` INT(11) NOT NULL,
-  PRIMARY KEY (`id_step`),
-  INDEX `fk_PASO_ETAPA1_idx` (`stage_id` ASC),
-  CONSTRAINT `fk_PASO_ETAPA1`
-    FOREIGN KEY (`stage_id`)
-    REFERENCES `produccion_industrial`.`stage` (`id_stage`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `produccion_industrial`.`NECESSARY_SUPPLY`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `produccion_industrial`.`NECESSARY_SUPPLY` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`NECESSARY_SUPPLY` (
-  `id_necessary_supply` INT(11) NOT NULL AUTO_INCREMENT,
-  `step_id` INT(11) NOT NULL,
-  `supply_code` INT(11) NOT NULL,
+  `id_necessary_supply` INT NOT NULL AUTO_INCREMENT,
+  `step_id` INT NOT NULL,
+  `supply_code` INT NOT NULL,
+  `quantity` DOUBLE NOT NULL,
   PRIMARY KEY (`id_necessary_supply`),
   INDEX `fk_INSUMOS_NECESARIOS_INSUMO1_idx` (`supply_code` ASC),
   INDEX `fk_INSUMO_NECESARIO_PASO1_idx` (`step_id` ASC),
@@ -177,7 +180,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`CAREER` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`CAREER` (
-  `id_career` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_career` INT NOT NULL AUTO_INCREMENT,
   `name_career` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_career`))
 ENGINE = InnoDB
@@ -190,7 +193,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`GROUP` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`GROUP` (
-  `id_group` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_group` INT NOT NULL AUTO_INCREMENT,
   `information` MEDIUMTEXT NULL DEFAULT NULL,
   `section` VARCHAR(2) NULL DEFAULT NULL,
   PRIMARY KEY (`id_group`))
@@ -204,7 +207,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`ROL_USER` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`ROL_USER` (
-  `id_rol` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_rol` INT NOT NULL AUTO_INCREMENT,
   `name_rol` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_rol`))
 ENGINE = InnoDB
@@ -217,14 +220,14 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`USER` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`USER` (
-  `carnet` INT(11) NOT NULL,
+  `carnet` INT NOT NULL,
   `name` VARCHAR(60) NOT NULL,
   `email` VARCHAR(60) NOT NULL,
-  `phone` INT(11) NOT NULL,
+  `phone` INT NOT NULL,
   `password` VARCHAR(400) NOT NULL,
   `state` TINYINT(1) NULL DEFAULT NULL,
-  `id_rol` INT(11) NOT NULL,
-  `id_career` INT(11) NOT NULL,
+  `id_rol` INT NOT NULL,
+  `id_career` INT NOT NULL,
   PRIMARY KEY (`carnet`),
   INDEX `fk_USUARIO_ROL_USUARIO1_idx` (`id_rol` ASC),
   INDEX `fk_USUARIO_CARRERA1_idx` (`id_career` ASC),
@@ -244,9 +247,9 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`GROUP_USER` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`GROUP_USER` (
-  `id_gruop_user` INT(11) NOT NULL,
-  `group_id` INT(11) NOT NULL,
-  `user_carnet` INT(11) NOT NULL,
+  `id_gruop_user` INT NOT NULL,
+  `group_id` INT NOT NULL,
+  `user_carnet` INT NOT NULL,
   `admission_date` DATE NOT NULL,
   PRIMARY KEY (`id_gruop_user`),
   INDEX `fk_GRUPO_USUARIO_GRUPO1_idx` (`group_id` ASC),
@@ -269,14 +272,14 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`HISTORY` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`HISTORY` (
-  `history_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `history_id` INT NOT NULL AUTO_INCREMENT,
   `start_date` DATE NOT NULL,
   `end_date` DATE NULL DEFAULT NULL,
   `total_cost` DOUBLE NULL DEFAULT NULL,
-  `batcheds_produced` INT(11) NOT NULL,
+  `batcheds_produced` INT NOT NULL,
   `is_active` TINYINT(1) NOT NULL DEFAULT '0',
-  `group_id` INT(11) NOT NULL,
-  `production_id` INT(11) NOT NULL,
+  `group_id` INT NOT NULL,
+  `production_id` INT NOT NULL,
   PRIMARY KEY (`history_id`),
   INDEX `fk_HISTORIAL_GRUPO1_idx` (`group_id` ASC),
   INDEX `fk_history_production1_idx` (`production_id` ASC),
@@ -296,11 +299,11 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`MODIFY_SUPPLY` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`MODIFY_SUPPLY` (
-  `id_modify_supply` INT(11) NOT NULL AUTO_INCREMENT,
-  `carnet` INT(11) NOT NULL,
-  `code` INT(11) NOT NULL,
+  `id_modify_supply` INT NOT NULL AUTO_INCREMENT,
+  `carnet` INT NOT NULL,
+  `code` INT NOT NULL,
   `modify_type` ENUM('POR_FALTANTE', 'POR_ROBO', 'ATRIBUTOS') NOT NULL,
-  `cuantity` INT(11) NOT NULL,
+  `cuantity` INT NOT NULL,
   `date` DATE NOT NULL,
   `note` MEDIUMTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id_modify_supply`),

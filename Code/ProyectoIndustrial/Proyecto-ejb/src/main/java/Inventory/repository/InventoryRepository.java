@@ -62,10 +62,7 @@ public class InventoryRepository {
         for (productionCost selectedProd : selectedProduction) {
             List<SupplyQuantity> supplies = new LinkedList<>();
             for (NecessarySupply necessarySupplie : getNecessarySupplies(selectedProd.getProduction())) {
-
-                //Missing add Quantity to do a correct multiplication
-                supplies.add(new SupplyQuantity(necessarySupplie.getSupplyCode(), (0 * selectedProd.getBatch())));
-
+                supplies.add(new SupplyQuantity(necessarySupplie.getSupplyCode(), (necessarySupplie.getQuantity() * selectedProd.getBatch())));
             }
             selectedProd.setSupplies(supplies);
             selectedProd.setCost((selectedProd.getProduction().getPriceLot() * selectedProd.getBatch()));

@@ -165,11 +165,11 @@ and open the template in the editor.
                         <div class="modal-body">
                             <fieldset>
                                 <div class="row form-group">
-                                    <p>Se indicara que el insumo <b><h:outputText value="#{inventoryView.actualSupply.name}"/></b> fue robado con la cantidad de 
-                                        <b><h:outputText value="#{inventoryView.actualSupply.quantity} #{inventoryView.actualSupply.measure.name}"/></b> por lo que la cantidad disponible sera <b>0</b></p>
+                                    <p>Se indicara que el insumo <b><h:outputText value="#{inventoryView.actualSupply.name}"/></b> fue robado con la cantidad</p> 
+                                    <p>de <b><h:outputText value="#{inventoryView.actualSupply.quantity} #{inventoryView.actualSupply.measure.name}"/></b> por lo que la cantidad disponible sera <b>0</b></p>
                                 </div>
                                 <div class="row form-group">
-                                    <p:outputLabel value="Nota:" styleClass="col-md-4 control-label"/>
+                                    <p:outputLabel value="Nota:" styleClass="col-md-2 control-label"/>
                                     <div class="col-md-8">
                                         <p:inputTextarea id="note" styleClass="form-control"
                                                          rows="4" cols="50" maxlength="200" 

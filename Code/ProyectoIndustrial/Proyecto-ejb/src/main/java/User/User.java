@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,9 +11,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(
-        name = "user"
+        name = "USER"
 )
-public class User implements Serializable{
+public class User implements Serializable {
+
     @Id
     @Column(name = "carnet")
     private Integer carnet;
@@ -30,15 +29,15 @@ public class User implements Serializable{
     @Column(name = "state")
     private Boolean state;
     @ManyToOne
-    @JoinColumn(name="id_rol",referencedColumnName = "id_rol")
+    @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
     private RolUser rolUser;
     @ManyToOne
-    @JoinColumn(name="id_career",referencedColumnName = "id_career")
+    @JoinColumn(name = "id_career", referencedColumnName = "id_career")
     private Career career;
-    
-    public User(){
+
+    public User() {
     }
-    
+
     public User(Integer carnet, String name, String email, Integer phone, String password, Boolean state, RolUser rolUser, Career career) {
         this.carnet = carnet;
         this.name = name;
@@ -52,17 +51,21 @@ public class User implements Serializable{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
         User user = (User) o;
         return Objects.equals(getCarnet(), user.getCarnet());
     }
- 
+
     @Override
     public int hashCode() {
         return Objects.hash(getCarnet());
     }
-    
+
     public Integer getCarnet() {
         return carnet;
     }
@@ -126,22 +129,21 @@ public class User implements Serializable{
     public void setCareer(Career career) {
         this.career = career;
     }
-    
-    public String getMessageState(){
-        if(getState()){
+
+    public String getMessageState() {
+        if (getState()) {
             return "Desactivar";
-        }else{
+        } else {
             return "Activar";
         }
     }
-    public String getIconState(){
-        if(getState()){
+
+    public String getIconState() {
+        if (getState()) {
             return "glyphicon glyphicon-remove";
-        }else{
+        } else {
             return "glyphicon glyphicon-ok";
         }
     }
 
-    
-    
 }

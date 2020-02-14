@@ -6,8 +6,6 @@ import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,8 +16,8 @@ import javax.persistence.Table;
         name = "NECESSARY_SUPPLY"
 )
 
-public class NecessarySupply implements Serializable{
-    private static final long serialVersionUID = 1L;
+public class NecessarySupply implements Serializable {
+
     @Id
     @Basic(optional = false)
     @Column(name = "id_necessary_supply")
@@ -30,20 +28,26 @@ public class NecessarySupply implements Serializable{
     @JoinColumn(name = "supply_code", referencedColumnName = "code")
     @ManyToOne(optional = false)
     private Supply supply_code;
-    
+    @Column(name = "quantity", scale = 2)
+    private Double quantity;
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof NecessarySupply)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof NecessarySupply)) {
+            return false;
+        }
         NecessarySupply necessarySupply = (NecessarySupply) o;
         return Objects.equals(getIdNecessarySupply(), necessarySupply.getIdNecessarySupply());
-        
+
     }
- 
+
     @Override
     public int hashCode() {
         return Objects.hash(getIdNecessarySupply());
-        
+
     }
 
     public NecessarySupply() {
@@ -54,14 +58,13 @@ public class NecessarySupply implements Serializable{
         this.step_id = step_id;
         this.supply_code = supply_code;
     }
-    
+
     public NecessarySupply(Step step_id, Supply supply_code) {
         this.idNecessarySupply = idNecessarySupply;
         this.step_id = step_id;
         this.supply_code = supply_code;
     }
-    
-    
+
     public Integer getIdNecessarySupply() {
         return idNecessarySupply;
     }
@@ -85,7 +88,13 @@ public class NecessarySupply implements Serializable{
     public void setSupplyCode(Supply supply_code) {
         this.supply_code = supply_code;
     }
-    
-    
-    
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
 }

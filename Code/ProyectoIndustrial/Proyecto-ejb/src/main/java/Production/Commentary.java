@@ -17,51 +17,46 @@ import javax.persistence.Table;
         name = "COMMENTARY"
 )
 
-public class Commentary implements Serializable{
-    
-    
-    private static final long serialVersionUID = 1L;
+public class Commentary implements Serializable {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_commentary")
     private Integer idCommentary;
     @Basic(optional = false)
     @Column(name = "commentary")
     private String text;
-    @JoinColumn(name = "stage_id", referencedColumnName = "id_stage")
+    @JoinColumn(name = "id_step", referencedColumnName = "id_step")
     @ManyToOne(optional = false)
-    private Stage stageId;
+    private Step stepId;
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Commentary)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Commentary)) {
+            return false;
+        }
         Commentary commentary = (Commentary) o;
         return Objects.equals(getIdCommentary(), commentary.getIdCommentary());
-        
+
     }
- 
+
     @Override
     public int hashCode() {
         return Objects.hash(getIdCommentary());
-        
+
     }
 
     public Commentary() {
     }
 
-    public Commentary(Integer idCommentary, String text, Stage stageId) {
-        this.idCommentary = idCommentary;
-        this.text = text;
-        this.stageId = stageId;
-    }
-    
     public Commentary(String text, Stage stageId) {
         this.text = text;
-        this.stageId = stageId;
+        this.stepId = stepId;
     }
-    
-    
 
     public Integer getIdCommentary() {
         return idCommentary;
@@ -79,14 +74,13 @@ public class Commentary implements Serializable{
         this.text = text;
     }
 
-    public Stage getStageId() {
-        return stageId;
+    public Step getStepId() {
+        return stepId;
     }
 
-    public void setStageId(Stage stageId) {
-        this.stageId = stageId;
+    public void setStepId(Step stepId) {
+        this.stepId = stepId;
     }
     
-    
-   
+
 }

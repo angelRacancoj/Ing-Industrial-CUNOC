@@ -1,4 +1,3 @@
-
 package Production;
 
 import java.io.Serializable;
@@ -31,7 +30,6 @@ import java.time.LocalDate;
 @XmlRootElement
 public class Production implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -53,7 +51,7 @@ public class Production implements Serializable {
     private Double priceLot;
     @Basic(optional = false)
     @Column(name = "creation_date")
-    
+
     private LocalDate creationDate;
     @Column(name = "description")
     private String description;
@@ -190,9 +188,13 @@ public class Production implements Serializable {
         return true;
     }
 
+    public String infoAbout() {
+        return idProduction + " - " + name + " - " + unity+" - Q. "+priceLot;
+    }
+
     @Override
     public String toString() {
         return "Production.Production[ idProduction=" + idProduction + " ]";
     }
-    
+
 }
