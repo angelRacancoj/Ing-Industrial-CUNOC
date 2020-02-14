@@ -59,7 +59,7 @@ public class SupplyServices {
         return newSupply;
     }
     
-    public Supply modifyByMissing(Supply supplyToChange, Integer newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException{
+    public Supply modifyByMissing(Supply supplyToChange, Double newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException{
         if (newQuantity == null){
             throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
         } else {
@@ -71,7 +71,7 @@ public class SupplyServices {
     
     public Supply modifyByTheft(Supply supplyToChange, User user, String noteModify){
         supplyToChange = deactivateSupplySimple(supplyToChange);
-        saveModificationHistory(supplyToChange, user, ModificationType.POR_ROBO, 0, noteModify);
+        saveModificationHistory(supplyToChange, user, ModificationType.POR_ROBO, 0.0, noteModify);
         return supplyToChange; 
     }
     
@@ -81,12 +81,12 @@ public class SupplyServices {
     }
     
     private Supply deactivateSupplySimple(Supply supplyToChange){
-        supplyToChange.setQuantity(0);
+        supplyToChange.setQuantity(0.0);
         supplyToChange.setAvailability(false);
         return supplyToChange;
     }
     
-    public Supply activateSupply(Supply supplyToChange, Integer newQuantity) throws MandatoryAttributeSupplyException{
+    public Supply activateSupply(Supply supplyToChange, Double newQuantity) throws MandatoryAttributeSupplyException{
         if (newQuantity == null){
             throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
         }
@@ -117,7 +117,7 @@ public class SupplyServices {
         return supply;
     }
     
-    private void saveModificationHistory(Supply supply, User user, ModificationType typeModification, Integer newQuantity, String note){
+    private void saveModificationHistory(Supply supply, User user, ModificationType typeModification, Double newQuantity, String note){
         ModifySupply newModifySupply = new ModifySupply(user, supply, typeModification, newQuantity,  LocalDate.now(), note);
         modifySupplyService.createModifySupply(newModifySupply);
     }

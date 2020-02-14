@@ -120,11 +120,11 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`SUPPLY` (
   `quantity` DOUBLE NOT NULL,
   `availability` TINYINT(1) NOT NULL,
   `description` TINYTEXT NULL DEFAULT NULL,
-  `id_measure` INT(11) NOT NULL,
+  `measure_id` INT(11) NOT NULL,
   PRIMARY KEY (`code`),
-  INDEX `fk_SUPPLY_MEASURE1_idx` (`id_measure` ASC),
+  INDEX `fk_SUPPLY_MEASURE1_idx` (`measure_id` ASC),
   CONSTRAINT `fk_SUPPLY_MEASURE1`
-    FOREIGN KEY (`id_measure`)
+    FOREIGN KEY (`measure_id`)
     REFERENCES `produccion_industrial`.`MEASURE` (`id_measure`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -319,3 +319,13 @@ DEFAULT CHARACTER SET = utf8;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO MEASURE (name) VALUES ("Unidad");
+INSERT INTO MEASURE (name) VALUES ("Metro");
+INSERT INTO MEASURE (name) VALUES ("Centimetro");
+INSERT INTO MEASURE (name) VALUES ("Milimetro");
+INSERT INTO MEASURE (name) VALUES ("Kilogramo");
+INSERT INTO MEASURE (name) VALUES ("Gramo");
+INSERT INTO MEASURE (name) VALUES ("Galon");
+INSERT INTO MEASURE (name) VALUES ("Litro");
+INSERT INTO MEASURE (name) VALUES ("Mililitro");

@@ -2,6 +2,7 @@ package Production;
 
 import Supply.Supply;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +30,21 @@ public class NecessarySupply implements Serializable{
     @JoinColumn(name = "supply_code", referencedColumnName = "code")
     @ManyToOne(optional = false)
     private Supply supply_code;
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NecessarySupply)) return false;
+        NecessarySupply necessarySupply = (NecessarySupply) o;
+        return Objects.equals(getIdNecessarySupply(), necessarySupply.getIdNecessarySupply());
+        
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdNecessarySupply());
+        
+    }
 
     public NecessarySupply() {
     }
