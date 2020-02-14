@@ -24,6 +24,8 @@ public class RolUserRepository {
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
+    
+    public static final String QUERY_FIND_BY_ID = "SELECT r FROM RolUser r WHERE r.idRol = :idRolUserParameter";
 
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -46,5 +48,18 @@ public class RolUserRepository {
         criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
         TypedQuery<RolUser> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList();
+    }
+    
+    
+    public Optional<RolUser> findByIdRolUser(int idRolUser) {
+
+        TypedQuery<RolUser> typedQuery = entityManager.createQuery(QUERY_FIND_BY_ID, RolUser.class)
+                .setParameter("idRolUserParameter", idRolUser);
+        try {
+            return Optional.of(typedQuery.getSingleResult());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+
     }
 }

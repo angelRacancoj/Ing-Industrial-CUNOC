@@ -3,6 +3,7 @@ package Production;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.inject.Named;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

@@ -30,4 +30,6 @@ public interface UserFacadeLocal {
     public RolUser updateRolUser(RolUser rolUser) throws UserException;
 
     public List<RolUser> getRolUser(RolUser rolUser) throws UserException;
+    
+    public List<User> getUserEstudent() throws UserException;
 }

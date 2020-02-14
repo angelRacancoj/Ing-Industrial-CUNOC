@@ -2,6 +2,7 @@ package Supply;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class Supply implements Serializable{
     private String description;
     
     @ManyToOne(optional = false)
-    @JoinColumn(name = "measure_id", referencedColumnName = "id_measure")
+    @JoinColumn(name = "id_measure", referencedColumnName = "id_measure")
     private Measure measure;
     
     public Supply() {
@@ -125,4 +126,4 @@ public class Supply implements Serializable{
     public void setMeasure(Measure measure) {
         this.measure = measure;
     }
-}
+    }

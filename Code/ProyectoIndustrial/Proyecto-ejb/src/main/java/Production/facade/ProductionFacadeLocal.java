@@ -5,8 +5,10 @@
  */
 package Production.facade;
 
+import Production.Product;
 import Production.Production;
 import Production.exceptions.MandatoryAttributeProductionException;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -18,5 +20,5 @@ public interface ProductionFacadeLocal {
     
     public void createProduction(Production production)throws MandatoryAttributeProductionException;
     public void editProduction(Production production)throws MandatoryAttributeProductionException;
-    
+    public List<Product> getProduct();
 }
