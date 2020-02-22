@@ -17,7 +17,7 @@ public class GroupTest {
     @Test
     public void testSetAndGetIdGroup() throws Exception {
         // Arrange
-        Group testGroup = new Group();
+        GroupIndustrial testGroup = new GroupIndustrial();
         int testVal = 100;
 
         // Act
@@ -31,7 +31,7 @@ public class GroupTest {
     @Test
     public void testSetAndGetInformation() throws Exception {
         //Arrange
-        Group testGroup = new Group();
+        GroupIndustrial testGroup = new GroupIndustrial();
         String testText = "Este es un texto de prueba";
 
         //Act
@@ -45,7 +45,7 @@ public class GroupTest {
     @Test
     public void testSetAndGetSection() throws Exception {
         //Arange
-        Group testGroup = new Group();
+        GroupIndustrial testGroup = new GroupIndustrial();
         String testText = "A";
 
         //Act

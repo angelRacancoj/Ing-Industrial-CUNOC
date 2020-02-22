@@ -1,4 +1,3 @@
-
 package Production;
 
 import java.io.Serializable;
@@ -12,20 +11,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author daniel
+ * @author daniel, angelrg
  */
 @Entity
 @Table(name = "step")
-@XmlRootElement
-
 public class Step implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "id_step")
@@ -36,11 +31,11 @@ public class Step implements Serializable {
     @Basic(optional = false)
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "step_id")
-    private List<NecessarySupply> necessarySupplyList;
     @JoinColumn(name = "stage_id", referencedColumnName = "id_stage")
     @ManyToOne(optional = false)
     private Stage stageId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStep")
+    private List<Commentary> commentaryList;
 
     public Step() {
     }
@@ -79,15 +74,6 @@ public class Step implements Serializable {
         this.description = description;
     }
 
-    @XmlTransient
-    public List<NecessarySupply> getNecessarySupplyList() {
-        return necessarySupplyList;
-    }
-
-    public void setNecessarySupplyList(List<NecessarySupply> necessarySupplyList) {
-        this.necessarySupplyList = necessarySupplyList;
-    }
-
     public Stage getStageId() {
         return stageId;
     }
@@ -96,29 +82,13 @@ public class Step implements Serializable {
         this.stageId = stageId;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idStep != null ? idStep.hashCode() : 0);
-        return hash;
+    @XmlTransient
+    public List<Commentary> getCommentaryList() {
+        return commentaryList;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Step)) {
-            return false;
-        }
-        Step other = (Step) object;
-        if ((this.idStep == null && other.idStep != null) || (this.idStep != null && !this.idStep.equals(other.idStep))) {
-            return false;
-        }
-        return true;
+    public void setCommentaryList(List<Commentary> commentaryList) {
+        this.commentaryList = commentaryList;
     }
 
-    @Override
-    public String toString() {
-        return "Production.Step[ idStep=" + idStep + " ]";
-    }
-    
 }

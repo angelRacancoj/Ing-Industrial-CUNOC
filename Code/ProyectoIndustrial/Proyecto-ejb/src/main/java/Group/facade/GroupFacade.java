@@ -5,7 +5,7 @@
  */
 package Group.facade;
 
-import Group.Group;
+import Group.GroupIndustrial;
 import Group.GroupUser;
 import Group.service.GroupService;
 import Group.service.GroupUserService;
@@ -52,8 +52,8 @@ public class GroupFacade implements GroupFacadelocal {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Group> createGroup(Group group, List<User> users) {
-        Group newGroup = groupService.createGroup(group);
+    public Optional<GroupIndustrial> createGroup(GroupIndustrial group, List<User> users) {
+        GroupIndustrial newGroup = groupService.createGroup(group);
         if (!users.isEmpty()) {
             for (User user : users) {
                 groupUserService.createGroupUser(new GroupUser(user, newGroup, LocalDate.now()));
@@ -66,7 +66,7 @@ public class GroupFacade implements GroupFacadelocal {
      * {@inheritDoc}
      */
     @Override
-    public Optional<GroupUser> assignUserToGroup(Group group, User users) {
+    public Optional<GroupUser> assignUserToGroup(GroupIndustrial group, User users) {
         if (groupUserRepository.getGroupUserByUserAndGroup(group.getIdGroup(), users.getCarnet()).isEmpty()) {
             return Optional.of(groupUserService.createGroupUser(new GroupUser(users, group, LocalDate.now())));
         }
@@ -77,7 +77,7 @@ public class GroupFacade implements GroupFacadelocal {
      * {@inheritDoc}
      */
     @Override
-    public Group updateGroup(Group group, String information, String section) {
+    public GroupIndustrial updateGroup(GroupIndustrial group, String information, String section) {
         return groupService.updateGroup(group, information, section);
     }
 
@@ -85,7 +85,7 @@ public class GroupFacade implements GroupFacadelocal {
      * {@inheritDoc}
      */
     @Override
-    public GroupUser updateUserGroup(GroupUser groupUser, Group group) {
+    public GroupUser updateUserGroup(GroupUser groupUser, GroupIndustrial group) {
         return groupUserService.updateUserGroup(groupUser, group);
     }
 
@@ -101,7 +101,7 @@ public class GroupFacade implements GroupFacadelocal {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Group> findById(Integer id) {
+    public Optional<GroupIndustrial> findById(Integer id) {
         return groupRepository.findById(id);
     }
 
@@ -109,7 +109,7 @@ public class GroupFacade implements GroupFacadelocal {
      * {@inheritDoc}
      */
     @Override
-    public List<Group> getAll() {
+    public List<GroupIndustrial> getAll() {
         return groupRepository.getAll();
     }
 
@@ -133,7 +133,7 @@ public class GroupFacade implements GroupFacadelocal {
      * {@inheritDoc}
      */
     @Override
-    public List<Group> findGroupsOfUser(Integer carnet) {
+    public List<GroupIndustrial> findGroupsOfUser(Integer carnet) {
         return groupUserRepository.findGroupsOfUser(carnet);
     }
 

@@ -5,8 +5,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,56 +15,39 @@ import javax.persistence.JoinColumn;
  * @author angelrg
  */
 @Entity
-@Table(
-        name = "GROUP_USER"
-)
-
+@Table(name = "group_user")
 public class GroupUser implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_group_user")
-    private Integer idGroupUser;
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "carnet_user", referencedColumnName = "carnet")
-    private User user;
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "group_id", referencedColumnName = "id_group")
-    private Group group;
+    @Column(name = "id_gruop_user")
+    private Integer idGruopUser;
     @Column(name = "admission_date")
     private LocalDate admissionDate;
+    @JoinColumn(name = "group_id", referencedColumnName = "id_group")
+    @ManyToOne(optional = false)
+    private GroupIndustrial groupId;
+    @JoinColumn(name = "user_carnet", referencedColumnName = "carnet")
+    @ManyToOne(optional = false)
+    private User userCarnet;
 
     public GroupUser() {
     }
 
-    public GroupUser(User user, Group group, LocalDate admissionDate) {
-        this.user = user;
-        this.group = group;
+    public GroupUser(Integer idGruopUser) {
+        this.idGruopUser = idGruopUser;
+    }
+
+    public GroupUser(Integer idGruopUser, LocalDate admissionDate) {
+        this.idGruopUser = idGruopUser;
         this.admissionDate = admissionDate;
     }
 
-    public Integer getidGroupUser() {
-        return idGroupUser;
+    public Integer getIdGruopUser() {
+        return idGruopUser;
     }
 
-    public void setidGroupUser(Integer id_group_user) {
-        this.idGroupUser = id_group_user;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setIdGruopUser(Integer idGruopUser) {
+        this.idGruopUser = idGruopUser;
     }
 
     public LocalDate getAdmissionDate() {
@@ -75,6 +56,22 @@ public class GroupUser implements Serializable {
 
     public void setAdmissionDate(LocalDate admissionDate) {
         this.admissionDate = admissionDate;
+    }
+
+    public GroupIndustrial getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(GroupIndustrial groupId) {
+        this.groupId = groupId;
+    }
+
+    public User getUserCarnet() {
+        return userCarnet;
+    }
+
+    public void setUserCarnet(User userCarnet) {
+        this.userCarnet = userCarnet;
     }
 
 }

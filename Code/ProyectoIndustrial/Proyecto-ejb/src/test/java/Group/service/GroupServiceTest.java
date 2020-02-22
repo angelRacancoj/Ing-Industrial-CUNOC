@@ -1,6 +1,6 @@
 package Group.service;
 
-import Group.Group;
+import Group.GroupIndustrial;
 import javax.persistence.EntityManager;
 import org.mockito.Mockito;
 import org.testng.Assert;
@@ -15,7 +15,7 @@ public class GroupServiceTest {
     @Test
     public void createGroupTest(){
         // Arrange
-        Group group = new Group();
+        GroupIndustrial group = new GroupIndustrial();
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         
         Mockito.doNothing().when(entityManager).persist(group);
@@ -24,7 +24,7 @@ public class GroupServiceTest {
         groupService.setEntityManager(entityManager);
         
         // Act
-        Group result = groupService.createGroup(group);
+        GroupIndustrial result = groupService.createGroup(group);
         
         // Assert
         Assert.assertEquals(result, group);
@@ -36,7 +36,7 @@ public class GroupServiceTest {
         String informacion = "hola mundo";
         String section = null;
         EntityManager entityManager = Mockito.mock(EntityManager.class);
-        Group group = Mockito.mock(Group.class);
+        GroupIndustrial group = Mockito.mock(GroupIndustrial.class);
         
         Mockito.when(
                 entityManager.merge(group)
@@ -46,7 +46,7 @@ public class GroupServiceTest {
         groupService.setEntityManager(entityManager);
         
         // Act
-        Group result = groupService.updateGroup(group, informacion, section);
+        GroupIndustrial result = groupService.updateGroup(group, informacion, section);
         
         //Assert
         Assert.assertEquals(result, group);
@@ -59,7 +59,7 @@ public class GroupServiceTest {
         String informacion = null;
         String section = "a";
         EntityManager entityManager = Mockito.mock(EntityManager.class);
-        Group group = Mockito.mock(Group.class);
+        GroupIndustrial group = Mockito.mock(GroupIndustrial.class);
         
         Mockito.when(
                 entityManager.merge(group)
@@ -69,7 +69,7 @@ public class GroupServiceTest {
         groupService.setEntityManager(entityManager);
         
         // Act
-        Group result = groupService.updateGroup(group, informacion, section);
+        GroupIndustrial result = groupService.updateGroup(group, informacion, section);
         
         //Assert
         Assert.assertEquals(result, group);
@@ -82,7 +82,7 @@ public class GroupServiceTest {
         String informacion = "hola mundo";
         String section = "a";
         EntityManager entityManager = Mockito.mock(EntityManager.class);
-        Group group = Mockito.mock(Group.class);
+        GroupIndustrial group = Mockito.mock(GroupIndustrial.class);
         
         Mockito.when(
                 entityManager.merge(group)
@@ -92,7 +92,7 @@ public class GroupServiceTest {
         groupService.setEntityManager(entityManager);
         
         // Act
-        Group result = groupService.updateGroup(group, informacion, section);
+        GroupIndustrial result = groupService.updateGroup(group, informacion, section);
         
         //Assert
         Assert.assertEquals(result, group);

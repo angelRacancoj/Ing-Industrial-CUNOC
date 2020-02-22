@@ -1,7 +1,7 @@
 package Group.repository;
 
 import Group.GroupUser;
-import Group.Group;
+import Group.GroupIndustrial;
 import User.User;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +44,7 @@ public class GroupUserRepository {
         return query.getResultList();
     }
 
-    public List<Group> findGroupsOfUser(Integer carnet) {
+    public List<GroupIndustrial> findGroupsOfUser(Integer carnet) {
         Query query = entityManager.createQuery(FIND_GROUP_OF_USERS);
         query.setParameter(CARNET_PARAMETER_NAME, carnet);
         return query.getResultList();
