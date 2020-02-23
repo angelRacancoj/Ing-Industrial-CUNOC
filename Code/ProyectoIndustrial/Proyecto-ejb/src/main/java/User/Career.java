@@ -26,35 +26,39 @@ public class Career implements Serializable {
     @Column(name = "id_career")
     private Integer idCareer;
     @Column(name = "name_career")
-    private String nameCareer;
+    private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCareer")
     private List<User> userList;
 
     public Career() {
     }
 
-    public Career(Integer idCareer) {
-        this.idCareer = idCareer;
+    public Career(String name) {
+        this.name = name;
     }
 
     public Career(Integer idCareer, String nameCareer) {
         this.idCareer = idCareer;
-        this.nameCareer = nameCareer;
+        this.name = nameCareer;
     }
-    
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Career)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Career)) {
+            return false;
+        }
         Career career = (Career) o;
         return Objects.equals(getIdCareer(), career.getIdCareer());
     }
- 
+
     @Override
     public int hashCode() {
         return Objects.hash(getIdCareer());
     }
-    
+
     public Integer getIdCareer() {
         return idCareer;
     }
@@ -63,12 +67,12 @@ public class Career implements Serializable {
         this.idCareer = idCareer;
     }
 
-    public String getNameCareer() {
-        return nameCareer;
+    public String getName() {
+        return name;
     }
 
-    public void setNameCareer(String nameCareer) {
-        this.nameCareer = nameCareer;
+    public void setName(String nameCareer) {
+        this.name = nameCareer;
     }
 
     @XmlTransient
@@ -79,5 +83,5 @@ public class Career implements Serializable {
     public void setUserList(List<User> userList) {
         this.userList = userList;
     }
-    
+
 }

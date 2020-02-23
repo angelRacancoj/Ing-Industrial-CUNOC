@@ -29,6 +29,8 @@ public class Supply implements Serializable {
     private String internalCode;
     @Column(name = "name")
     private String name;
+    @Column(name = "is_expired")
+    private boolean isExpired;
     @Column(name = "expiration_date")
     private LocalDate expirationDate;
     @Column(name = "date_of_admission")
@@ -43,17 +45,13 @@ public class Supply implements Serializable {
     private String description;
     @JoinColumn(name = "id_measure", referencedColumnName = "id_measure")
     @ManyToOne(optional = false)
-    private Measure idMeasure;
+    private Measure measure;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplyCode")
     private List<NecessarySupply> necessarySupplyList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplyCode")
     private List<ModifySupply> modifySupplyList;
 
     public Supply() {
-    }
-
-    public Supply(Integer code) {
-        this.code = code;
     }
 
     public Supply(Integer code, String internalCode, String name, LocalDate expirationDate, LocalDate dateOfAdmission, double cost, double quantity, boolean availability) {
@@ -65,6 +63,33 @@ public class Supply implements Serializable {
         this.cost = cost;
         this.quantity = quantity;
         this.availability = availability;
+    }
+
+    public Supply(Integer code, String internalCode, String name, boolean isExpired, LocalDate expirationDate, LocalDate dateOfAdmission, double cost, double quantity, boolean availability, String description, Measure measure) {
+        this.code = code;
+        this.internalCode = internalCode;
+        this.name = name;
+        this.isExpired = isExpired;
+        this.expirationDate = expirationDate;
+        this.dateOfAdmission = dateOfAdmission;
+        this.cost = cost;
+        this.quantity = quantity;
+        this.availability = availability;
+        this.description = description;
+        this.measure = measure;
+    }
+
+    public Supply(Integer code, String internalCode, String name, boolean isExpired, LocalDate dateOfAdmission, double cost, double quantity, boolean availability, String description, Measure measure) {
+        this.code = code;
+        this.internalCode = internalCode;
+        this.name = name;
+        this.isExpired = isExpired;
+        this.dateOfAdmission = dateOfAdmission;
+        this.cost = cost;
+        this.quantity = quantity;
+        this.availability = availability;
+        this.description = description;
+        this.measure = measure;
     }
 
     @Override
@@ -108,6 +133,14 @@ public class Supply implements Serializable {
         this.name = name;
     }
 
+    public boolean isIsExpired() {
+        return isExpired;
+    }
+
+    public void setIsExpired(boolean isExpired) {
+        this.isExpired = isExpired;
+    }
+
     public LocalDate getExpirationDate() {
         return expirationDate;
     }
@@ -140,7 +173,7 @@ public class Supply implements Serializable {
         this.quantity = quantity;
     }
 
-    public boolean getAvailability() {
+    public boolean isAvailability() {
         return availability;
     }
 
@@ -156,12 +189,12 @@ public class Supply implements Serializable {
         this.description = description;
     }
 
-    public Measure getIdMeasure() {
-        return idMeasure;
+    public Measure getMeasure() {
+        return measure;
     }
 
-    public void setIdMeasure(Measure idMeasure) {
-        this.idMeasure = idMeasure;
+    public void setMeasure(Measure measure) {
+        this.measure = measure;
     }
 
     public List<NecessarySupply> getNecessarySupplyList() {

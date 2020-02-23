@@ -82,7 +82,6 @@ public class Step implements Serializable {
         this.stageId = stageId;
     }
 
-    @XmlTransient
     public List<Commentary> getCommentaryList() {
         return commentaryList;
     }
@@ -91,4 +90,10 @@ public class Step implements Serializable {
         this.commentaryList = commentaryList;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idStep != null ? idStep.hashCode() : 0);
+        return hash;
+    }
 }

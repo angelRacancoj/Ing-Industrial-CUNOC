@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,6 +21,7 @@ import javax.persistence.JoinColumn;
 public class GroupUser implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_gruop_user")
     private Integer idGruopUser;
     @Column(name = "admission_date")
@@ -33,13 +36,10 @@ public class GroupUser implements Serializable {
     public GroupUser() {
     }
 
-    public GroupUser(Integer idGruopUser) {
-        this.idGruopUser = idGruopUser;
-    }
-
-    public GroupUser(Integer idGruopUser, LocalDate admissionDate) {
-        this.idGruopUser = idGruopUser;
+    public GroupUser(User userCarnet, GroupIndustrial groupId, LocalDate admissionDate) {
         this.admissionDate = admissionDate;
+        this.groupId = groupId;
+        this.userCarnet = userCarnet;
     }
 
     public Integer getIdGruopUser() {

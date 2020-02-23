@@ -205,5 +205,4 @@ public class Production implements Serializable {
     public void setExtraCostList(List<ExtraCost> extraCostList) {
         this.extraCostList = extraCostList;
     }
-
 }

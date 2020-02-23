@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                    template="../templates/template-one.xhtml"
+                    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                    xmlns:p="http://primefaces.org/ui"
+                    xmlns:h="http://xmlns.jcp.org/jsf/html"
+                    xmlns:jsf="http://xmlns.jcp.org/jsf"
+                    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+        <f:metadata>
+        </f:metadata>
+
+        <ui:define name="head">
+            Calculo de Materiales
+        </ui:define>
+
+        <ui:define name="content">
+
+            <script type="text/javascript">
+                function handleDrop(event, ui) {
+                    var droppedProduction = ui.draggable;
+                    droppedProduction.fadeOut('fast');
+                }
+            </script>
+            <h:form id="productionsSearch">
+                <fieldset>
+                    <legend>#{i18nLabels.Search}</legend>
+                    <div class="row">
+
+                    </div>
+                    <div class="row">
+                        <div class="btn-group pull-right">
+                            <p:commandLink styleClass="btn btn-primary"
+                                           update="productionTable"
+                                           actionListener="#{supplyCalculatorView.searchProduction()}">
+                                <span class="glyphicon glyphicon-search"></span> Buscar
+                            </p:commandLink>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="row">
+                    <p:fieldset id="availableProductionField" legend="Producciones">
+                        <p:dataTable id="productionTable" var="productions" value="#{supplyCalculatorView.productionList}">
+                            <p:column style="width:20px">
+                                <h:outputText id="dragIcon" styleClass="glyphicon glyphicon-plus"/>
+                                <p:draggable for="dragIcon" revert="true" helper="clone" />
+                            </p:column>
+
+                            <p:column headerText="Codigo">
+                                <h:outputText value="#{productions.idProduction}" />
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{productions.name}" />
+                            </p:column>
+                            <p:column headerText="Tipo de Producto">
+                                <h:outputText value="#{productions.productId.idProduct} #{selectedP.productId.name}" />
+                            </p:column>
+                            <p:column headerText="Costo por lote">
+                                <h:outputText value="Q. #{productions.priceLot}" />
+                            </p:column>
+                            <p:column headerText="Estado">
+                                <h:outputText value="#{productions.state}" />
+                            </p:column>
+                            <p:column headerText="Unidades por lote">
+                                <h:outputText value="#{productions.unity}" />
+                            </p:column>
+
+                            <p:column headerText="Fecha de Creacion">
+                                <h:outputText value="#{productions.creationDate}" >
+                                    <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Descripcion">
+                                <h:outputText value="#{productions.description}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+
+                    <p:fieldset id="selectedProductionArea" legend="Producciones Seleccionadas" style="margin-top:20px">
+                        <p:outputPanel id="dropArea">
+                            <h:outputText value="!!!Arrastra Aquí!!!" rendered="#{empty supplyCalculatorView.selectedProductions}" style="font-size:24px;" />
+                            <p:dataTable id="selectedProductionTable" var="selectedP" value="#{supplyCalculatorView.selectedProductions}" rendered="#{not empty supplyCalculatorView.selectedProductions}">
+
+                                <p:column headerText="Codigo">
+                                    <h:outputText value="#{selectedP.production.idProduction}" />
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{selectedP.production.name}" />
+                                </p:column>
+                                <p:column headerText="Tipo de Producto">
+                                    <h:outputText value="#{selectedP.production.productId.idProduct} #{selectedP.production.productId.name}" />
+                                </p:column>
+                                <p:column headerText="Costo por lote">
+                                    <h:outputText value="Q. #{selectedP.production.priceLot}" />
+                                </p:column>
+                                <p:column headerText="Estado">
+                                    <h:outputText value="#{selectedP.production.state}" />
+                                </p:column>
+                                <p:column headerText="Unidades por lote">
+                                    <h:outputText value="#{selectedP.production.unity}" />
+                                </p:column>
+
+                                <p:column headerText="Fecha de Creacion">
+                                    <h:outputText value="#{selectedP.production.creationDate}" >
+                                        <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column headerText="Descripcion">
+                                    <h:outputText value="#{selectedP.production.description}" />
+                                </p:column>
+
+                                <p:column style="width:65px" headerText="Lotes">
+                                    <p:spinner id="minMax" value="#{selectedP.batch}" min="1"/>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:outputPanel>
+                    </p:fieldset>
+
+                    <p:droppable for="selectedProductionArea" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="productionTable" onDrop="handleDrop">
+                        <p:ajax listener="#{supplyCalculatorView.onProductionDrop}" update="dropArea productionTable" />
+                    </p:droppable>
+                </div>
+
+                <p:commandLink styleClass="btn btn-primary" oncomplete="PF('necessarySup').show();"
+                               update=":#{p:component('necessarySup')}"
+                               actionListener="#{supplyCalculatorView.productionCost()}">
+                    <span class="glyphicon glyphicon-search"></span> Calcular
+                </p:commandLink>
+            </h:form>
+
+            <p:dialog header="Insumos Necesarios" id="necessarySup" widgetVar="necessarySup"
+                      fitViewport="true" modal="true" closeOnEscape="true">
+                <p:ajax event="close" listener="#{supplyCalculatorView.cleanSelectedProductionAndProductionList()}" update="@this" />
+                <h:form>
+                    <div class="modal-body">
+
+                        <p:dataTable var="finalProd" value="#{supplyCalculatorView.finalProductions}">
+                            <f:facet name="header">
+                                Insumos Necesarios
+                            </f:facet>
+
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column rowspan="2" headerText="Insumo" />
+                                    <p:column colspan="2" headerText="Informacion" />
+                                </p:row>
+                                <p:row>
+                                    <p:column headerText="Nombre" />
+                                    <p:column headerText="Cantidad" />
+                                </p:row>
+                            </p:columnGroup>
+
+                            <p:subTable var="supplyns" value="#{finalProd.supplies}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{finalProd.production.infoAbout}" />
+                                </f:facet>
+                                <p:column>
+                                    <h:outputText value="#{supplyns.supply.code}" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{supplyns.supply.name}" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{supplyns.quantity}" />
+                                </p:column>
+                                <p:columnGroup type="footer">
+                                    <p:row>
+                                        <p:column footerText="Totals: " style="text-align:right"/>
+                                        <p:column footerText="#{finalProd.cost}" />
+                                        <p:column footerText="#{finalProd.cost}" />
+                                    </p:row>
+                                </p:columnGroup>
+                            </p:subTable>
+                        </p:dataTable>
+<!--
+                        <p:repeat value="#{supplyCalculatorView.finalProductions}" var="fProduction" id="nsView">
+                            <p:outputLabel value="#{fProduction.production.infoAbout}" styleClass="col-md-4 control-label"/>
+
+                            <p:dataTable  value="#{fProduction.supplies}" var="supplyNS" >
+                                <p:column headerText="Codigo">
+                                    <h:outputText value="#{supplyNS.supply.code}" />
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{supplyNS.supply.name}" />
+                                </p:column>
+                                <p:column headerText="Cantidad">
+                                    <h:outputText value="#{supplyNS.quantity}" />
+                                </p:column>
+                                <p:column headerText="Descripcion">
+                                    <h:outputText value="#{supplyNS.supply.description}" />
+                                </p:column>
+                            </p:dataTable>
+
+                        </p:repeat>
+-->
+                    </div>
+
+                </h:form>
+            </p:dialog>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

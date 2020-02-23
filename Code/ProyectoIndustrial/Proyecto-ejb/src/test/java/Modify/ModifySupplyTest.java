@@ -33,8 +33,8 @@ public class ModifySupplyTest {
         User user = new User();
 
         //Act
-        modifySupply.setUser(user);
-        User result = modifySupply.getUser();
+        modifySupply.setCarnetUser(user);
+        User result = modifySupply.getCarnetUser();
         
         //Assert
         Assert.assertEquals(result, user);
@@ -47,8 +47,8 @@ public class ModifySupplyTest {
         Supply supply = new Supply();
 
         //Act
-        modifySupply.setSupply(supply);
-        Supply result = modifySupply.getSupply();
+        modifySupply.setSupplyCode(supply);
+        Supply result = modifySupply.getSupplyCode();
         
         //Assert
         Assert.assertEquals(result, supply);
@@ -61,8 +61,8 @@ public class ModifySupplyTest {
         ModificationType testModType = ModificationType.POR_ROBO;
 
         //Act
-        modifySupply.setmodifyType(testModType);
-        ModificationType result = modifySupply.getmodifyType();
+        modifySupply.setModifyType(testModType);
+        ModificationType result = modifySupply.getModifyType();
 
         //Assert
         Assert.assertEquals(result, testModType);

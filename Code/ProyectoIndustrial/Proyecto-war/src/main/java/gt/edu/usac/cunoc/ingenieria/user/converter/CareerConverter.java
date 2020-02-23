@@ -1,14 +1,12 @@
 package gt.edu.usac.cunoc.ingenieria.user.converter;
 
 import User.Career;
-import User.facade.UserFacade;
 import User.facade.UserFacadeLocal;
 import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Named;
 
 
 @FacesConverter(value = "careerConverter", managed = true)
