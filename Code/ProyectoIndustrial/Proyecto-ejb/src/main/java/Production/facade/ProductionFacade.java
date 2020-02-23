@@ -1,4 +1,3 @@
-
 package Production.facade;
 
 
@@ -45,17 +44,45 @@ public class ProductionFacade implements ProductionFacadeLocal {
     
     
     @EJB
-    public  void setProductionService(ProductionService service){
+    public void setProductionService(ProductionService service) {
         productionService = service;
     }
 
-    
-    public void createProduction(Production production)throws MandatoryAttributeProductionException{
+    @EJB
+    public void setProductionRepository(ProductionRepository productionRepository) {
+        this.productionRepository = productionRepository;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void createProduction(Production production) throws MandatoryAttributeProductionException {
         productionService.create(production);
     }
-    
-    public void editProduction(Production production)throws MandatoryAttributeProductionException{
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void editProduction(Production production) throws MandatoryAttributeProductionException {
         productionService.edit(production);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Production> AllProductions() {
+        return productionRepository.AllProductions();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Production> getProductionById(Integer id) {
+        return productionRepository.findByIdProduction(id);
     }
     
     public List<Product> getProduct(){

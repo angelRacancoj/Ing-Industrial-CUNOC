@@ -56,19 +56,16 @@ public class ModifySupplyTest {
 
     @Test
     public void testGetAndSetModificationTypeUser() throws Exception {
-//TODO: Arreglar la prueba unitaria  
-        
-        
-//        //Arrange
-//        ModifySupply modifySupply = new ModifySupply();
-//        ModificationType testModType = ModificationType.POR_ROBO;
-//
-//        //Act
-//        modifySupply.setModifyType(testModType);
-//        ModificationType result = modifySupply.getmodifyType();
-//
-//        //Assert
-//        Assert.assertEquals(result, testModType);
+        //Arrange
+        ModifySupply modifySupply = new ModifySupply();
+        ModificationType testModType = ModificationType.POR_ROBO;
+
+        //Act
+        modifySupply.setModifyType(testModType);
+        ModificationType result = modifySupply.getModifyType();
+
+        //Assert
+        Assert.assertEquals(result, testModType);
     }
 
     @Test

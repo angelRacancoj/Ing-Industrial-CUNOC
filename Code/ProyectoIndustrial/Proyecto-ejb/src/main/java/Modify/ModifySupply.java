@@ -28,8 +28,8 @@ public class ModifySupply implements Serializable {
     private Integer idModifySupply;
     @Column(name = "modify_type")
     private String modifyType;
-    @Column(name = "cuantity")
-    private int cuantity;
+    @Column(name = "quantity")
+    private double quantity;
     @Column(name = "date")
     private LocalDate date;
     @Lob
@@ -49,11 +49,13 @@ public class ModifySupply implements Serializable {
         this.idModifySupply = idModifySupply;
     }
 
-    public ModifySupply(Integer idModifySupply, String modifyType, int cuantity, LocalDate date) {
-        this.idModifySupply = idModifySupply;
-        this.modifyType = modifyType;
-        this.cuantity = cuantity;
+    public ModifySupply(User carnetUser, Supply supplyCode, ModificationType modifyType, double quantity, LocalDate date, String note) {
+        this.modifyType = modifyType.toString();
+        this.quantity = quantity;
         this.date = date;
+        this.note = note;
+        this.supplyCode = supplyCode;
+        this.carnetUser = carnetUser;
     }
 
     public Integer getIdModifySupply() {
@@ -64,20 +66,20 @@ public class ModifySupply implements Serializable {
         this.idModifySupply = idModifySupply;
     }
 
-    public String getModifyType() {
-        return modifyType;
+    public ModificationType getModifyType() {
+        return ModificationType.valueOf(modifyType);
     }
 
-    public void setModifyType(String modifyType) {
-        this.modifyType = modifyType;
+    public void setModifyType(ModificationType modifyType) {
+        this.modifyType = modifyType.toString();
     }
 
-    public int getCuantity() {
-        return cuantity;
+    public double getQuantity() {
+        return quantity;
     }
 
-    public void setCuantity(int cuantity) {
-        this.cuantity = cuantity;
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 
     public LocalDate getDate() {

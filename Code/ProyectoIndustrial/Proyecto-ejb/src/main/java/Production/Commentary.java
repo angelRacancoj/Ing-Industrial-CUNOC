@@ -17,6 +17,7 @@ import javax.persistence.Table;
 public class Commentary implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_commentary")
     private Integer idCommentary;
@@ -81,5 +82,4 @@ public class Commentary implements Serializable {
     public void setIdStep(Step idStep) {
         this.idStep = idStep;
     }
-
 }

@@ -18,7 +18,6 @@ public class GroupUserTest {
         int testVal = 123;
 
         //Act
-        
         testGroupUser.setIdGruopUser(testVal);
         int result = testGroupUser.getIdGruopUser();
 

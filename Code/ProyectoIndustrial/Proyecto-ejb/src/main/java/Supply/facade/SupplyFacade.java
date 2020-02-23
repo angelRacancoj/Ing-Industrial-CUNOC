@@ -1,14 +1,17 @@
 package Supply.facade;
 
 import Supply.Measure;
-import Supply.Supply;
-import Supply.exception.MandatoryAttributeSupplyException;
 import Supply.repository.AvailabilityFilter;
 import Supply.repository.ExpirationDateFilter;
 import Supply.repository.MeasureRepository;
 import Supply.repository.SupplyRepository;
-import Supply.service.SupplyServices;
 import java.util.List;
+import Supply.Supply;
+import Supply.exception.MandatoryAttributeSupplyException;
+import Supply.service.SupplyServices;
+import User.User;
+import User.exception.UserException;
+import java.time.LocalDate;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -17,65 +20,53 @@ import java.util.ArrayList;
 
 @Stateless
 @LocalBean
-public class SupplyFacade implements SupplyFacadeLocal{
+public class SupplyFacade implements SupplyFacadeLocal {
 
     @EJB
     private MeasureRepository measureRepository;
-    
+
     @EJB
     private SupplyServices supplyService;
-    
+
     @EJB
     private SupplyRepository supplyRepository;
-       
+
     @EJB
     public void setMeasureRepository(MeasureRepository measureRepository) {
         this.measureRepository = measureRepository;
     }
-    
+
     @EJB
     public void setSupplyService(SupplyServices supplyService) {
         this.supplyService = supplyService;
     }
-        
+
     /**
-     *Obtiene todas las medidas
-     * @return Lista de medidas
+     * {@inheritDoc}
      */
     @Override
-    public List<Measure> getAllMeasures(){
+    public List<Measure> getAllMeasures() {
         return measureRepository.getAllMeasures();
     }
-    
-    /***
-     * Obtiene una medida por medio de su id
-     * @param measure Objeto de tipo measure que encapsulo el id a buscar
-     * @return La medida con el id proporcionado
-     * @throws MandatoryAttributeSupplyException Si hace falta algun atributo obligatorio
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<Measure> getMeasure(Measure measure) throws MandatoryAttributeSupplyException {
         return measureRepository.getMeasure(measure);
     }
-    
-    /***
-     *Crea un nuevo Insumo en BD
-     * @param newSupply Objeto Supply a crear en BD
-     * @return El Objeto creado en la BD
-     * @throws MandatoryAttributeSupplyException Si hace falta algun atributo obligatorio
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Supply createSupply(Supply newSupply) throws MandatoryAttributeSupplyException {
         return supplyService.create(newSupply);
     }
 
-    /***
-     * Busca los Insumos que cumplan con los criterios de busqueda proporcionados
-     * @param codeSupply codigo del Insumo a buscar
-     * @param nameSupply Nombre del Insumo a buscar
-     * @param availabilitySupply Disponibilidad del Insumo a Buscar
-     * @param expirationDateSupply Fecha de Expiracion del Insumo a Buscar
-     * @return 
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<Supply> searchSupplies(Integer codeSupply, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply) {
@@ -85,6 +76,28 @@ public class SupplyFacade implements SupplyFacadeLocal{
         List<Supply> list =new ArrayList<>();
         list = supplyRepository.getSupply(null, null,AvailabilityFilter.AVAILABLE ,null);
         return list;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Supply modifyByTheft(Supply supplyToChange, User user, String noteModify) {
+        return supplyService.modifyByTheft(supplyToChange, user, noteModify);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Supply modifyByMissing(Supply supplyToChange, Double newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException {
+        return supplyService.modifyByMissing(supplyToChange, newQuantity, user, noteModify);
+    }
+
+    @Override
+    public Supply modifySupply(Supply supply) throws UserException {
+        return supplyService.modifySupply(supply);
     }
 
 }
