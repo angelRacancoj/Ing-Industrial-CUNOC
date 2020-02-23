@@ -5,7 +5,7 @@
  */
 package Produce;
 
-import Group.Group;
+import Group.GroupIndustrial;
 import Production.Production;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -121,11 +121,11 @@ public class HistoryTest {
     public void testSetAndGetGroup() throws Exception {
         //Arrange
         History history = new History();
-        Group testGroup = new Group();
+        GroupIndustrial testGroup = new GroupIndustrial();
 
         //Act
         history.setGroup(testGroup);
-        Group result = history.getGroup();
+        GroupIndustrial result = history.getGroup();
 
         //Assert
         Assert.assertEquals(result, testGroup);

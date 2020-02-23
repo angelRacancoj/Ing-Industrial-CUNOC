@@ -13,10 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(
-        name = "COMMENTARY"
-)
-
+@Table(name = "commentary")
 public class Commentary implements Serializable {
 
     @Id
@@ -26,10 +23,10 @@ public class Commentary implements Serializable {
     private Integer idCommentary;
     @Basic(optional = false)
     @Column(name = "commentary")
-    private String text;
+    private String commentary;
     @JoinColumn(name = "id_step", referencedColumnName = "id_step")
     @ManyToOne(optional = false)
-    private Step stepId;
+    private Step idStep;
 
     @Override
     public boolean equals(Object o) {
@@ -53,9 +50,13 @@ public class Commentary implements Serializable {
     public Commentary() {
     }
 
-    public Commentary(String text, Stage stageId) {
-        this.text = text;
-        this.stepId = stepId;
+    public Commentary(Integer idCommentary) {
+        this.idCommentary = idCommentary;
+    }
+
+    public Commentary(Integer idCommentary, String commentary) {
+        this.idCommentary = idCommentary;
+        this.commentary = commentary;
     }
 
     public Integer getIdCommentary() {
@@ -66,21 +67,19 @@ public class Commentary implements Serializable {
         this.idCommentary = idCommentary;
     }
 
-    public String getText() {
-        return text;
+    public String getCommentary() {
+        return commentary;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setCommentary(String commentary) {
+        this.commentary = commentary;
     }
 
-    public Step getStepId() {
-        return stepId;
+    public Step getIdStep() {
+        return idStep;
     }
 
-    public void setStepId(Step stepId) {
-        this.stepId = stepId;
+    public void setIdStep(Step idStep) {
+        this.idStep = idStep;
     }
-    
-
 }

@@ -36,6 +36,7 @@ DROP TABLE IF EXISTS `produccion_industrial`.`group` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`group` (
   `id_group` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
   `information` MEDIUMTEXT NULL DEFAULT NULL,
   `section` VARCHAR(2) NULL DEFAULT NULL,
   PRIMARY KEY (`id_group`))
@@ -52,6 +53,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`design_data` (
   `iddesign_data` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NULL,
+  `picture` MEDIUMBLOB NULL,
   PRIMARY KEY (`iddesign_data`))
 ENGINE = InnoDB;
 
@@ -273,7 +275,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`career` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`career` (
-  `id_career` INT NOT NULL,
+  `id_career` INT NOT NULL AUTO_INCREMENT,
   `name_career` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_career`))
 ENGINE = InnoDB

@@ -1,12 +1,17 @@
 package User;
 
+import Group.GroupUser;
+import Modify.ModifySupply;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -34,6 +39,10 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_career", referencedColumnName = "id_career")
     private Career career;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCarnet")
+    private List<GroupUser> groupUserList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carnetUser")
+    private List<ModifySupply> modifySupplyList;
 
     public User() {
     }
@@ -128,6 +137,22 @@ public class User implements Serializable {
 
     public void setCareer(Career career) {
         this.career = career;
+    }
+
+    public List<GroupUser> getGroupUserList() {
+        return groupUserList;
+    }
+
+    public void setGroupUserList(List<GroupUser> groupUserList) {
+        this.groupUserList = groupUserList;
+    }
+
+    public List<ModifySupply> getModifySupplyList() {
+        return modifySupplyList;
+    }
+
+    public void setModifySupplyList(List<ModifySupply> modifySupplyList) {
+        this.modifySupplyList = modifySupplyList;
     }
 
     public String getMessageState() {

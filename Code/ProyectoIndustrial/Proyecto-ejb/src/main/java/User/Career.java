@@ -1,34 +1,45 @@
 package User;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author angelrg
+ */
 @Entity
-@Table(
-        name = "CAREER"
-)
-public class Career implements Serializable{
+@Table(name = "career")
+public class Career implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_career")
     private Integer idCareer;
     @Column(name = "name_career")
-    private String name;
-    
-    public Career(Integer idCareer, String name) {
+    private String nameCareer;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCareer")
+    private List<User> userList;
+
+    public Career() {
+    }
+
+    public Career(Integer idCareer) {
         this.idCareer = idCareer;
-        this.name = name;
     }
-    public Career(){
-    }
-    public Career(String name){
-        this.name=name;
+
+    public Career(Integer idCareer, String nameCareer) {
+        this.idCareer = idCareer;
+        this.nameCareer = nameCareer;
     }
     
     @Override
@@ -52,12 +63,21 @@ public class Career implements Serializable{
         this.idCareer = idCareer;
     }
 
-    public String getName() {
-        return name;
+    public String getNameCareer() {
+        return nameCareer;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameCareer(String nameCareer) {
+        this.nameCareer = nameCareer;
+    }
+
+    @XmlTransient
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
     
 }

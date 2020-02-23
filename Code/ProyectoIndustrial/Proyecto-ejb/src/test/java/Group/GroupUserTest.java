@@ -43,11 +43,11 @@ public class GroupUserTest {
     public void testSetAndGetGroup() throws Exception {
         //Arrange
         GroupUser testGroupUser = new GroupUser();
-        Group group = new Group();
+        GroupIndustrial group = new GroupIndustrial();
 
         //Act
         testGroupUser.setGroup(group);
-        Group result = testGroupUser.getGroup();
+        GroupIndustrial result = testGroupUser.getGroup();
         
         //Assert
         Assert.assertEquals(result, group);

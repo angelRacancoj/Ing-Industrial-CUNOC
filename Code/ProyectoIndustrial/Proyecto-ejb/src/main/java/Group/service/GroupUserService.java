@@ -37,7 +37,7 @@ public class GroupUserService{
      * @param group
      * @return
      */
-    public GroupUser updateUserGroup(GroupUser groupUser, Group group) {
+    public GroupUser updateUserGroup(GroupUser groupUser, GroupIndustrial group) {
         groupUser.setGroup(group);
         entityManager.merge(groupUser);
         return groupUser;
