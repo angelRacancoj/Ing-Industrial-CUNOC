@@ -96,7 +96,4 @@ public class Step implements Serializable {
         hash += (idStep != null ? idStep.hashCode() : 0);
         return hash;
     }
-
-    }
-
 }

@@ -1,23 +1,19 @@
 package User.repository;
 
 import User.Career;
-import User.RolUser;
 import User.exception.UserException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
-import javax.ejb.EJB;
 
 @Stateless
 @LocalBean
@@ -41,8 +37,8 @@ public class CareerRepository {
         if (career.getIdCareer() != null) {
             predicates.add(criteriaBuilder.equal(Career.get("idCareer"), career.getIdCareer()));
         }
-        if (career.getName() != null) {
-            predicates.add(criteriaBuilder.like(Career.get("name"), "%" + career.getName() + "%"));
+        if (career.getName()!= null) {
+            predicates.add(criteriaBuilder.like(Career.get("name"), "%" + career.getName()+ "%"));
         }
         criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
         TypedQuery<Career> query = entityManager.createQuery(criteriaQuery);

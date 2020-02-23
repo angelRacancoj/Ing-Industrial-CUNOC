@@ -355,7 +355,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`modify_supply` (
   `carnet_user` INT NOT NULL,
   `supply_code` INT NOT NULL,
   `modify_type` ENUM('POR_FALTANTE', 'POR_ROBO', 'ATRIBUTOS') NOT NULL,
-  `cuantity` INT NOT NULL,
+  `quantity` DOUBLE NOT NULL,
   `date` DATE NOT NULL,
   `note` MEDIUMTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id_modify_supply`),
