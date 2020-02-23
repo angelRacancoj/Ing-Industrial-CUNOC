@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`design_data` (
   `iddesign_data` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NULL,
+  `picture` MEDIUMBLOB NULL,
   PRIMARY KEY (`iddesign_data`))
 ENGINE = InnoDB;
 
