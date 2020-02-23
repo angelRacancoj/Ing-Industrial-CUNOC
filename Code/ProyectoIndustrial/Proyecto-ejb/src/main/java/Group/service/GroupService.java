@@ -1,6 +1,6 @@
 package Group.service;
 
-import Group.Group;
+import Group.GroupIndustrial;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -22,7 +22,7 @@ public class GroupService{
         this.entityManager = entityManager;
     }
 
-    public Group createGroup(Group group) {
+    public GroupIndustrial createGroup(GroupIndustrial group) {
         entityManager.persist(group);
         return group;
     }
@@ -36,7 +36,7 @@ public class GroupService{
      * @param section
      * @return
      */
-    public Group updateGroup(Group group, String information, String section) {
+    public GroupIndustrial updateGroup(GroupIndustrial group, String information, String section) {
 
         if ((information != null) && (!information.isEmpty())) {
             group.setInformation(information);
