@@ -24,7 +24,7 @@ public class ProductionServiceTest {
         @Test
         public void CreateProductionTest() throws MandatoryAttributeProductionException{
             //Arrange
-            Production production = new Production(null, "production", true, 4, localDate);
+            Production production = new Production(null, "name", localDate, true);
             productionService.setEntityManager(entityManager);
             
             Mockito.doNothing().when(entityManager).persist(production);
@@ -42,7 +42,7 @@ public class ProductionServiceTest {
                 expectedExceptionsMessageRegExp = "Nombre nulo")
         public void MandatoryAttributeProductionExceptionNameCreate() throws Exception {
             //Arrange
-            Production production = new Production(null, null, true, 10, localDate);
+            Production production = new Production(null, null, localDate, true);
             production.setProductId(product);
             productionService.setEntityManager(entityManager);
             
@@ -52,27 +52,13 @@ public class ProductionServiceTest {
             
         }
         
-        
-        @Test(expectedExceptions = MandatoryAttributeProductionException.class,
-                expectedExceptionsMessageRegExp = "Unidad por lote nulo")
-        public void MandatoryAttributeProductionExceptionUnityCreate() throws Exception {
-            //Arrange
-            Production production = new Production(null, "nombre", true, 0, localDate);
-            production.setProductId(product);
-            productionService.setEntityManager(entityManager);
-            
-            //Act
-            productionService.create(production);
-            
-            
-        }
         
         @Test(expectedExceptions = MandatoryAttributeProductionException.class,
                 expectedExceptionsMessageRegExp = "Fecha de creacion nula")
-        public void MandatoryAttributeProductionExceptionDateCreate() throws Exception {
+        public void MandatoryAttributeProductionExceptionUnityCreate() throws Exception {
             //Arrange
-            Production production = new Production(null, "nombre", true, 10, null);
-            production.setProductId(product);
+            Production production = new Production(null, "nombre", null, true);
+            
             productionService.setEntityManager(entityManager);
             
             //Act
@@ -82,24 +68,15 @@ public class ProductionServiceTest {
         }
         
         
-        @Test(expectedExceptions = MandatoryAttributeProductionException.class,
-                expectedExceptionsMessageRegExp = "Producto nulo")
-        public void MandatoryAttributeProductionExceptionProductCreate() throws Exception {
-            //Arrange
-            Production production = new Production(null, "nombre", true, 10, localDate);            
-            productionService.setEntityManager(entityManager);
-            
-            //Act
-            productionService.create(production);
-            
-            
-        }
+        
+        
+
         
         
         @Test
         public void editProductionTest() throws MandatoryAttributeProductionException{
             //Arrange
-            Production production = new Production(null, "production", true, 4, localDate);
+            Production production = new Production(null, "production", localDate,true);
             productionService.setEntityManager(entityManager);
             
             //Mockito.doNothing().when(entityManager).merge(production);
@@ -117,7 +94,7 @@ public class ProductionServiceTest {
                 expectedExceptionsMessageRegExp = "Nombre nulo")
         public void MandatoryAttributeProductionExceptionNameEdit() throws Exception {
             //Arrange
-            Production production = new Production(null, null, true, 10, localDate);
+            Production production = new Production(null, null , localDate, true);
             production.setProductId(product);
             productionService.setEntityManager(entityManager);
             
@@ -128,25 +105,13 @@ public class ProductionServiceTest {
         }
         
         
-        @Test(expectedExceptions = MandatoryAttributeProductionException.class,
-                expectedExceptionsMessageRegExp = "Unidad por lote nulo")
-        public void MandatoryAttributeProductionExceptionUnityEdit() throws Exception {
-            //Arrange
-            Production production = new Production(null, "nombre", true, 0, localDate);
-            production.setProductId(product);
-            productionService.setEntityManager(entityManager);
-            
-            //Act
-            productionService.edit(production);
-            
-            
-        }
+      
         
         @Test(expectedExceptions = MandatoryAttributeProductionException.class,
                 expectedExceptionsMessageRegExp = "Fecha de creacion nula")
         public void MandatoryAttributeProductionExceptionDateEdit() throws Exception {
             //Arrange
-            Production production = new Production(null, "nombre", true, 10, null);
+            Production production = new Production(null, "nombre", null, true);
             production.setProductId(product);
             productionService.setEntityManager(entityManager);
             
@@ -157,18 +122,7 @@ public class ProductionServiceTest {
         }
         
         
-        @Test(expectedExceptions = MandatoryAttributeProductionException.class,
-                expectedExceptionsMessageRegExp = "Producto nulo")
-        public void MandatoryAttributeProductionExceptionProductEdit() throws Exception {
-            //Arrange
-            Production production = new Production(null, "nombre", true, 10, localDate);            
-            productionService.setEntityManager(entityManager);
-            
-            //Act
-            productionService.edit(production);
-            
-            
-        }
+        
         
         
 }

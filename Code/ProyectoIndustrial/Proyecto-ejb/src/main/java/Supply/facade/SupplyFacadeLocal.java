@@ -20,7 +20,8 @@ public interface SupplyFacadeLocal {
      * @return Lista de medidas
      */
     public List<Measure> getAllMeasures();
-
+    public List<Supply> getSupplyAvailable() ;
+   
     /**
      * *
      * Obtiene una medida por medio de su id

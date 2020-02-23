@@ -43,13 +43,13 @@ public class SupplyServices {
         if (newSupply.getExpirationDate() == null) {
             throw new MandatoryAttributeSupplyException("Atributo Fecha de Expiración Obligatorio");
         }
-        if (newSupply.getCost() >= 0) {
+        if (newSupply.getCost() == 0.0){
             throw new MandatoryAttributeSupplyException("Atributo Costo Obligatorio");
         }
-        if (newSupply.getQuantity() >= 0) {
+        if (newSupply.getQuantity() == 0.0){
             throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
         }
-        if (newSupply.getMeasure() == null) {
+        if (newSupply.getMeasure() == null){
             throw new MandatoryAttributeSupplyException("Atributo Medida Obligatorio");
         }
         newSupply.setDateOfAdmission(LocalDate.now());

@@ -90,14 +90,14 @@ public class ProductionTest {
     
     //set and get of unity test
     @Test
-    public void testSetAndGetunity() throws Exception {
+    public void testSetAndQuantit() throws Exception {
         // Arrange
         Production testProduction = new Production();
         int testVal = 1;
 
         // Act
-        testProduction.setUnity(testVal);
-        int result = testProduction.getUnity();
+        testProduction.setQuantity(testVal);
+        int result = testProduction.getQuantity();
 
         // Assert
         Assert.assertEquals(result, testVal);

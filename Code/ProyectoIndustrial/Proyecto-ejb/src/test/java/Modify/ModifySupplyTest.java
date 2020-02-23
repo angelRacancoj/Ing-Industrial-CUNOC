@@ -75,7 +75,8 @@ public class ModifySupplyTest {
         double testVal = 23;
 
         //Act
-        modifySupply.setQuantity(testVal);
+        
+        modifySupply.setQuantity((int) testVal);
         double result = modifySupply.getQuantity();
 
         //Assert

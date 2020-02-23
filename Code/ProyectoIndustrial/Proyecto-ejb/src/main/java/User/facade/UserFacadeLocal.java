@@ -37,4 +37,6 @@ public interface UserFacadeLocal {
     public List<Career> getAllCareer(); 
     
     public List<RolUser> getAllRolUser();
+    
+    public List<User> getUserEstudent() throws UserException;
 }

@@ -55,10 +55,10 @@ public class UserRepository {
             predicates.add(criteriaBuilder.equal(userR.get("state"), user.getState()));
         }
         if (user.getRolUser() != null) {
-            predicates.add(criteriaBuilder.equal(userR.get("id_rol"), user.getRolUser().getIdRolUser()));
+            predicates.add(criteriaBuilder.equal(userR.get("rolUser"), user.getRolUser()));
         }
         if (user.getCareer() != null) {
-            predicates.add(criteriaBuilder.equal(userR.get("id_career"), user.getCareer().getIdCareer()));
+            predicates.add(criteriaBuilder.equal(userR.get("career"), user.getCareer().getIdCareer()));
         }
         criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
         TypedQuery<User> query = entityManager.createQuery(criteriaQuery);

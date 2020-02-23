@@ -23,7 +23,7 @@ public class ProductRepository {
 
     public static final String FIND_BY_ID = "SELECT g FROM product g WHERE g.id_product = :id";
     public static final String FIND_BY_NAME = "SELECT g FROM product g WHERE g.name = :name";
-    public static final String GET_ALL = "SELECT g FROM product g";
+    public static final String GET_ALL = "SELECT g FROM Product g";
     
     
     private EntityManager entityManager;

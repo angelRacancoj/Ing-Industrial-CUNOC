@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import Supply.repository.AvailabilityFilter;
+import java.util.ArrayList;
 
 @Stateless
 @LocalBean
@@ -70,6 +72,12 @@ public class SupplyFacade implements SupplyFacadeLocal {
     public List<Supply> searchSupplies(Integer codeSupply, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply) {
         return supplyRepository.getSupply(codeSupply, nameSupply, availabilitySupply, expirationDateSupply);
     }
+    public List<Supply> getSupplyAvailable(){
+        List<Supply> list =new ArrayList<>();
+        list = supplyRepository.getSupply(null, null,AvailabilityFilter.AVAILABLE ,null);
+        return list;
+    }
+
 
     /**
      * {@inheritDoc}

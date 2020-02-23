@@ -28,13 +28,13 @@ public class CommentaryService {
         entityManager.persist(commentary);
         return commentary;
     }
-    public Commentary updateCommentary(Commentary commentary, String text, Step stepId) throws MandatoryAttributeProductionException{
+    public Commentary updateCommentary(Commentary commentary, String text, Step stageId) throws MandatoryAttributeProductionException{
         
         if ((text != null) && (!text.isEmpty())) {
-            commentary.setText(text);
+            commentary.setCommentary(text);
         }
-        if ((stepId != null)) {
-            commentary.setStepId(stepId);
+        if ((stageId != null)) {
+            commentary.setIdStep(stageId);
         }
 
         return entityManager.merge(commentary);
