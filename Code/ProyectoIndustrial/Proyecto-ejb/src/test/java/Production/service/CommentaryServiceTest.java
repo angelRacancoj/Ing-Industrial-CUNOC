@@ -2,6 +2,7 @@ package Production.service;
 
 import Production.Commentary;
 import Production.Stage;
+import Production.Step;
 import Production.exceptions.MandatoryAttributeProductionException;
 import javax.persistence.EntityManager;
 import org.mockito.Mockito;
@@ -35,7 +36,7 @@ public class CommentaryServiceTest {
     public void updateCommentaryTextTest() throws MandatoryAttributeProductionException{
         // Arrange
         String text = "Text";
-        Stage stage = null;
+        Step step = null;
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         Commentary commentary = Mockito.mock(Commentary.class);
         
@@ -47,7 +48,7 @@ public class CommentaryServiceTest {
         commentaryService.setEntityManager(entityManager);
         
         // Act
-        Commentary result = commentaryService.updateCommentary(commentary, text, stage);
+        Commentary result = commentaryService.updateCommentary(commentary, text, step);
         
         //Assert
         Assert.assertEquals(result, commentary);
@@ -61,7 +62,7 @@ public class CommentaryServiceTest {
     public void updateCommentaryStageIdTest() throws MandatoryAttributeProductionException{
         // Arrange
         String text = null;
-        Stage stage = new Stage();
+        Step step = new Step();
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         Commentary commentary = Mockito.mock(Commentary.class);
         
@@ -73,7 +74,7 @@ public class CommentaryServiceTest {
         commentaryService.setEntityManager(entityManager);
         
         // Act
-        Commentary result = commentaryService.updateCommentary(commentary, text, stage);
+        Commentary result = commentaryService.updateCommentary(commentary, text, step);
         
         //Assert
         Assert.assertEquals(result, commentary);
@@ -85,7 +86,7 @@ public class CommentaryServiceTest {
     public void updateCommentaryStageIdAndTextTest() throws MandatoryAttributeProductionException{
         // Arrange
         String text = "Text";
-        Stage stage = new Stage();
+        Step step = new Step();
         EntityManager entityManager = Mockito.mock(EntityManager.class);
         Commentary commentary = Mockito.mock(Commentary.class);
         
@@ -97,7 +98,7 @@ public class CommentaryServiceTest {
         commentaryService.setEntityManager(entityManager);
         
         // Act
-        Commentary result = commentaryService.updateCommentary(commentary, text, stage);
+        Commentary result = commentaryService.updateCommentary(commentary, text, step);
         
         //Assert
         Assert.assertEquals(result, commentary);

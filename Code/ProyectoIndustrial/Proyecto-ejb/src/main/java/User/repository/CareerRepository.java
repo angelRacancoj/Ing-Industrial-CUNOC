@@ -41,8 +41,8 @@ public class CareerRepository {
         if (career.getIdCareer() != null) {
             predicates.add(criteriaBuilder.equal(Career.get("idCareer"), career.getIdCareer()));
         }
-        if (career.getName() != null) {
-            predicates.add(criteriaBuilder.like(Career.get("name"), "%" + career.getName() + "%"));
+        if (career.getNameCareer() != null) {
+            predicates.add(criteriaBuilder.like(Career.get("name"), "%" + career.getNameCareer()+ "%"));
         }
         criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
         TypedQuery<Career> query = entityManager.createQuery(criteriaQuery);

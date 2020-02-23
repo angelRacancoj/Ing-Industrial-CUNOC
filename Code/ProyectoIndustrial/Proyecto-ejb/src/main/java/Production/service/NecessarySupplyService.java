@@ -30,9 +30,7 @@ public class NecessarySupplyService {
     }
     public NecessarySupply updateNecessarySupply(NecessarySupply necessarySupply, Step step, Supply supply) throws MandatoryAttributeProductionException{
         
-        if ((step != null)) {
-            necessarySupply.setStep(step);
-        }
+       
         if ((supply != null)) {
             necessarySupply.setSupplyCode(supply);
         }

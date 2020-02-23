@@ -44,13 +44,13 @@ public class SupplyServices {
         if (newSupply.getExpirationDate() == null){
             throw new MandatoryAttributeSupplyException("Atributo Fecha de Expiración Obligatorio");
         }
-        if (newSupply.getCost() == null){
+        if (newSupply.getCost() == 0.0){
             throw new MandatoryAttributeSupplyException("Atributo Costo Obligatorio");
         }
-        if (newSupply.getQuantity() == null){
+        if (newSupply.getQuantity() == 0.0){
             throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
         }
-        if (newSupply.getMeasure() == null){
+        if (newSupply.getIdMeasure() == null){
             throw new MandatoryAttributeSupplyException("Atributo Medida Obligatorio");
         }
         newSupply.setDateOfAdmission(LocalDate.now());
@@ -113,12 +113,13 @@ public class SupplyServices {
         supply.setCost(newCost);
         supply.setAvailability(newAvailability);
         supply.setDescription(newDescription);
-        supply.setMeasure(newMeasure);
+        supply.setIdMeasure(newMeasure);
         return supply;
     }
     
     private void saveModificationHistory(Supply supply, User user, ModificationType typeModification, Double newQuantity, String note){
-        ModifySupply newModifySupply = new ModifySupply(user, supply, typeModification, newQuantity,  LocalDate.now(), note);
-        modifySupplyService.createModifySupply(newModifySupply);
+        //ModifySupply newModifySupply = new ModifySupply(user, supply, typeModification, newQuantity,  LocalDate.now(), note);
+     
+        //modifySupplyService.createModifySupply(newModifySupply);
     }
 }

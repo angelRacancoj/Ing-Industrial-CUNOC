@@ -32,7 +32,7 @@ public class CareerService {
             throw new UserException("career is null");
         }
         Career updateCareer = entityManager.find(Career.class, career.getIdCareer());
-        updateCareer.setName(career.getName());
+        updateCareer.setNameCareer(career.getNameCareer());
         return updateCareer;
     }
 }

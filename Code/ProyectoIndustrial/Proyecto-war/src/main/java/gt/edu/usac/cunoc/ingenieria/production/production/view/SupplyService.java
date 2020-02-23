@@ -32,9 +32,9 @@ public class SupplyService {
         LocalDate date2 = LocalDate.now();
         Measure measure = new Measure();
         measure.setName("medida 1");
-        Supply su1 = new Supply(1, "hola", date1, date2, 11.3, 1.2, true, "description", measure);
-        list.add(su1);
-        list.add(new Supply(2, "holae", date1, date2, 12.3, 5.3, false, "hola", measure));
+//        Supply su1 = new Supply(1, "hola", date1, date2, 11.3, 1.2, true, "description", measure);
+//        list.add(su1);
+//        list.add(new Supply(2, "holae", date1, date2, 12.3, 5.3, false, "hola", measure));
 
         return list;
     }

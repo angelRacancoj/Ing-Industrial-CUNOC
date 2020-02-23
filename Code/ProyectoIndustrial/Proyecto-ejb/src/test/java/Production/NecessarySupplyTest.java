@@ -1,5 +1,6 @@
 package Production;
 
+import Design.Design;
 import Supply.Supply;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -22,14 +23,14 @@ public class NecessarySupplyTest {
     }
     
     @Test
-    public void testSetAndGetIdStep() throws Exception {
+    public void testSetAndGetIdDesign() throws Exception {
         // Arrange
         NecessarySupply testNecessarySupply = new NecessarySupply();
-        Step testVal = new Step();
+        Design testVal = new Design();
         
         // Act
-        testNecessarySupply.setStep(testVal);
-        Step result = testNecessarySupply.getStep();
+        testNecessarySupply.setDesignId(testVal);
+        Design result = testNecessarySupply.getDesignId();
         
         // Assert
         Assert.assertEquals(result, testVal);

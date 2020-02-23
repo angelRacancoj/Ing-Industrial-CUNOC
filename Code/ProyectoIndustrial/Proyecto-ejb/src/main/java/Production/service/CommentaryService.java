@@ -2,6 +2,7 @@ package Production.service;
 
 import Production.Commentary;
 import Production.Stage;
+import Production.Step;
 import Production.exceptions.MandatoryAttributeProductionException;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import javax.ejb.LocalBean;
@@ -27,13 +28,13 @@ public class CommentaryService {
         entityManager.persist(commentary);
         return commentary;
     }
-    public Commentary updateCommentary(Commentary commentary, String text, Stage stageId) throws MandatoryAttributeProductionException{
+    public Commentary updateCommentary(Commentary commentary, String text, Step stageId) throws MandatoryAttributeProductionException{
         
         if ((text != null) && (!text.isEmpty())) {
-            commentary.setText(text);
+            commentary.setCommentary(text);
         }
         if ((stageId != null)) {
-            commentary.setStageId(stageId);
+            commentary.setIdStep(stageId);
         }
 
         return entityManager.merge(commentary);

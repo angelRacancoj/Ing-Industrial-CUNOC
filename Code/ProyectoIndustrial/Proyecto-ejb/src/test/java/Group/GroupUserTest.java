@@ -18,8 +18,9 @@ public class GroupUserTest {
         int testVal = 123;
 
         //Act
-        testGroupUser.setidGroupUser(testVal);
-        int result = testGroupUser.getidGroupUser();
+        
+        testGroupUser.setIdGruopUser(testVal);
+        int result = testGroupUser.getIdGruopUser();
 
         //Assert
         Assert.assertEquals(result, testVal);
@@ -32,8 +33,8 @@ public class GroupUserTest {
         User user = new User();
         
         //Act
-        testGroupUser.setUser(user);
-        User result = testGroupUser.getUser();
+        testGroupUser.setUserCarnet(user);
+        User result = testGroupUser.getUserCarnet();
         
         //Assert
         Assert.assertEquals(result, user);
@@ -46,8 +47,8 @@ public class GroupUserTest {
         GroupIndustrial group = new GroupIndustrial();
 
         //Act
-        testGroupUser.setGroup(group);
-        GroupIndustrial result = testGroupUser.getGroup();
+        testGroupUser.setGroupId(group);
+        GroupIndustrial result = testGroupUser.getGroupId();
         
         //Assert
         Assert.assertEquals(result, group);

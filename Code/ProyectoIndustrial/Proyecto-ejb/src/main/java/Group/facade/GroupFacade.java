@@ -56,7 +56,7 @@ public class GroupFacade implements GroupFacadelocal {
         GroupIndustrial newGroup = groupService.createGroup(group);
         if (!users.isEmpty()) {
             for (User user : users) {
-                groupUserService.createGroupUser(new GroupUser(user, newGroup, LocalDate.now()));
+                groupUserService.createGroupUser(new GroupUser(null , LocalDate.now()));
             }
         }
         return Optional.of(newGroup);
@@ -68,7 +68,7 @@ public class GroupFacade implements GroupFacadelocal {
     @Override
     public Optional<GroupUser> assignUserToGroup(GroupIndustrial group, User users) {
         if (groupUserRepository.getGroupUserByUserAndGroup(group.getIdGroup(), users.getCarnet()).isEmpty()) {
-            return Optional.of(groupUserService.createGroupUser(new GroupUser(users, group, LocalDate.now())));
+            return Optional.of(groupUserService.createGroupUser(new GroupUser(null, LocalDate.now())));
         }
         return Optional.empty();
     }

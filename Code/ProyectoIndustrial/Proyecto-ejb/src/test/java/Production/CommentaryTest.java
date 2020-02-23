@@ -27,8 +27,8 @@ public class CommentaryTest {
         String testVal = "Hola Mundo";
         
         // Act
-        commentaryTest.setText(testVal);
-        String result = commentaryTest.getText();
+        commentaryTest.setCommentary(testVal);
+        String result = commentaryTest.getCommentary();
         
         
         // Assert
@@ -39,11 +39,11 @@ public class CommentaryTest {
     public void testSetAndGetPaso() throws Exception {
         // Arrange
         Commentary commentaryTest = new Commentary();
-        Stage testVal = new Stage();
+        Step testVal = new Step();
         
         // Act
-        commentaryTest.setStageId(testVal);
-        Stage result = commentaryTest.getStageId();
+        commentaryTest.setIdStep(testVal);
+        Step result = commentaryTest.getIdStep();
         
         
         // Assert

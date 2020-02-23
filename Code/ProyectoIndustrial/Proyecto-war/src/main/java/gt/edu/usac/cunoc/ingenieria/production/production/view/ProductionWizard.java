@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
+
 import javax.inject.Named;
 import org.primefaces.event.FlowEvent;
 
@@ -121,7 +121,7 @@ public class ProductionWizard implements Serializable {
         stepsPreProduction.add(step);
         
         List<NecessarySupply> list = new ArrayList<>();
-        step.setNecessarySupplyList(list);
+        //step.setNecessarySupplyList(list);
         step.setStageId(stagePreProduction);
         
         step = null;
@@ -169,7 +169,7 @@ public class ProductionWizard implements Serializable {
     public Production getProduction() {
         if (production == null) {
             Product product = new Product(null, "nombreProduct", "desc");
-            production = new Production(null, "", true, 1 , LocalDate.now());
+            //production = new Production(null, "", true, 1 , LocalDate.now());
             production.setProductId(product);
         }
         return production;
