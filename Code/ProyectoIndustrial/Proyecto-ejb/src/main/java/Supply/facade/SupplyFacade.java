@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import Supply.repository.AvailabilityFilter;
+import java.util.ArrayList;
 
 @Stateless
 @LocalBean
