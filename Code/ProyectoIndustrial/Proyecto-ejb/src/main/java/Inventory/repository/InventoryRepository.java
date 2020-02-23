@@ -59,24 +59,26 @@ public class InventoryRepository {
     }
 
     public List<productionCost> costByPruductionAndBatch(List<productionCost> selectedProduction) {
-        for (productionCost selectedProd : selectedProduction) {
-            List<SupplyQuantity> supplies = new LinkedList<>();
-            for (NecessarySupply necessarySupplie : getNecessarySupplies(selectedProd.getProduction())) {
-                supplies.add(new SupplyQuantity(necessarySupplie.getSupplyCode(), (necessarySupplie.getQuantity() * selectedProd.getBatch())));
-            }
-            selectedProd.setSupplies(supplies);
-            selectedProd.setCost((selectedProd.getProduction().getPriceLot() * selectedProd.getBatch()));
-        }
-        return selectedProduction;
+//        for (productionCost selectedProd : selectedProduction) {
+//            List<SupplyQuantity> supplies = new LinkedList<>();
+//            for (NecessarySupply necessarySupplie : getNecessarySupplies(selectedProd.getProduction())) {
+//                supplies.add(new SupplyQuantity(necessarySupplie.getSupplyCode(), (necessarySupplie.getQuantity() * selectedProd.getBatch())));
+//            }
+//            selectedProd.setSupplies(supplies);
+//            selectedProd.setCost((selectedProd.getProduction().getPriceLot() * selectedProd.getBatch()));
+//        }
+//        return selectedProduction;
+        return null;
     }
 
     public List<NecessarySupply> getNecessarySupplies(Production production) {
-        List<NecessarySupply> result = new LinkedList<>();
-        for (Stage stageList : production.getStageList()) {
-            for (Step stepList : stageList.getStepList()) {
-                result.addAll(stepList.getNecessarySupplyList());
-            }
-        }
-        return result;
+//        List<NecessarySupply> result = new LinkedList<>();
+//        for (Stage stageList : production.getStageList()) {
+//            for (Step stepList : stageList.getStepList()) {
+//                result.addAll(stepList.getNecessarySupplyList());
+//            }
+//        }
+//        return result;
+        return null;
     }
 }

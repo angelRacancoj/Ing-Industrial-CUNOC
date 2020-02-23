@@ -205,8 +205,4 @@ public class Production implements Serializable {
     public void setExtraCostList(List<ExtraCost> extraCostList) {
         this.extraCostList = extraCostList;
     }
-
-    public String infoAbout() {
-        return idProduction + " - " + name + " - " + unity+" - Q. "+priceLot;
-    }
 }
