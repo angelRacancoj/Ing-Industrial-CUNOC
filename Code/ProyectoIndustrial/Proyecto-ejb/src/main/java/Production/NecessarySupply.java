@@ -1,67 +1,70 @@
 package Production;
 
 import Supply.Supply;
+import Design.Design;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ *
+ * @author angelrg
+ */
 @Entity
-@Table(
-        name = "NECESSARY_SUPPLY"
-)
+@Table(name = "necessary_supply")
+public class NecessarySupply implements Serializable {
 
-public class NecessarySupply implements Serializable{
-    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "id_necessary_supply")
     private Integer idNecessarySupply;
-    @JoinColumn(name = "step_id", referencedColumnName = "id_step")
+    @Basic(optional = false)
+    @Column(name = "quantity")
+    private double quantity;
+    @JoinColumn(name = "design_id", referencedColumnName = "id_design")
     @ManyToOne(optional = false)
-    private Step step_id;
+    private Design designId;
     @JoinColumn(name = "supply_code", referencedColumnName = "code")
     @ManyToOne(optional = false)
-    private Supply supply_code;
-    
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof NecessarySupply)) return false;
-        NecessarySupply necessarySupply = (NecessarySupply) o;
-        return Objects.equals(getIdNecessarySupply(), necessarySupply.getIdNecessarySupply());
-        
-    }
- 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getIdNecessarySupply());
-        
-    }
+    private Supply supplyCode;
 
     public NecessarySupply() {
     }
 
-    public NecessarySupply(Integer idNecessarySupply, Step step_id, Supply supply_code) {
+    public NecessarySupply(Integer idNecessarySupply) {
         this.idNecessarySupply = idNecessarySupply;
-        this.step_id = step_id;
-        this.supply_code = supply_code;
     }
-    
-    public NecessarySupply(Step step_id, Supply supply_code) {
+
+    public NecessarySupply(Integer idNecessarySupply, double quantity) {
         this.idNecessarySupply = idNecessarySupply;
-        this.step_id = step_id;
-        this.supply_code = supply_code;
+        this.quantity = quantity;
     }
-    
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof NecessarySupply)) {
+            return false;
+        }
+        NecessarySupply necessarySupply = (NecessarySupply) o;
+        return Objects.equals(getIdNecessarySupply(), necessarySupply.getIdNecessarySupply());
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdNecessarySupply());
+
+    }
+
     public Integer getIdNecessarySupply() {
         return idNecessarySupply;
     }
@@ -70,22 +73,27 @@ public class NecessarySupply implements Serializable{
         this.idNecessarySupply = idNecessarySupply;
     }
 
-    public Step getStep() {
-        return step_id;
+    public double getQuantity() {
+        return quantity;
     }
 
-    public void setStep(Step step_id) {
-        this.step_id = step_id;
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
+    }
+
+    public Design getDesignId() {
+        return designId;
+    }
+
+    public void setDesignId(Design designId) {
+        this.designId = designId;
     }
 
     public Supply getSupplyCode() {
-        return supply_code;
+        return supplyCode;
     }
 
-    public void setSupplyCode(Supply supply_code) {
-        this.supply_code = supply_code;
+    public void setSupplyCode(Supply supplyCode) {
+        this.supplyCode = supplyCode;
     }
-    
-    
-    
 }

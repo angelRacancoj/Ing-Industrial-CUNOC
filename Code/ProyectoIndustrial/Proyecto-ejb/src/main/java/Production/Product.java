@@ -1,26 +1,27 @@
 package Production;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
-//import java.util.Objects;
+import Design.Design;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author angelrg
+ */
 @Entity
-@Table(
-        name = "product"
-)
+@Table(name = "product")
+public class Product implements Serializable {
 
-public class Product implements Serializable{
-    
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_product")
     private Integer idProduct;
@@ -30,23 +31,35 @@ public class Product implements Serializable{
     @Basic(optional = false)
     @Column(name = "description")
     private String description;
-    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
+    private List<Production> productionList;
+    @OneToMany(mappedBy = "productIdProduct")
+    private List<Design> designList;
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Product)) {
+            return false;
+        }
         Product product = (Product) o;
         return Objects.equals(getIdProduct(), product.getIdProduct());
-        
+
     }
- 
+
     @Override
     public int hashCode() {
         return Objects.hash(getIdProduct());
-        
+
     }
 
     public Product() {
+    }
+
+    public Product(Integer idProduct) {
+        this.idProduct = idProduct;
     }
 
     public Product(Integer idProduct, String name, String description) {
@@ -54,8 +67,6 @@ public class Product implements Serializable{
         this.name = name;
         this.description = description;
     }
-    
-    
 
     public Integer getIdProduct() {
         return idProduct;
@@ -80,7 +91,22 @@ public class Product implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
-    
 
-    
+    @XmlTransient
+    public List<Production> getProductionList() {
+        return productionList;
+    }
+
+    public void setProductionList(List<Production> productionList) {
+        this.productionList = productionList;
+    }
+
+    @XmlTransient
+    public List<Design> getDesignList() {
+        return designList;
+    }
+
+    public void setDesignList(List<Design> designList) {
+        this.designList = designList;
+    }
 }

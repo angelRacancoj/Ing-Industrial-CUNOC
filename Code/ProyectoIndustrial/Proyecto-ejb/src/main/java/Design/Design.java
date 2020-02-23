@@ -1,0 +1,109 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Design;
+
+import Production.NecessarySupply;
+import Production.Product;
+import Production.Production;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author angelrg
+ */
+@Entity
+@Table(name = "design")
+public class Design implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id_design")
+    private Integer idDesign;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "designId")
+    private List<Production> productionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postDesign")
+    private List<Production> productionList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "designId")
+    private List<NecessarySupply> necessarySupplyList;
+    @JoinColumn(name = "design_data", referencedColumnName = "iddesign_data")
+    @ManyToOne
+    private DesignData designData;
+    @JoinColumn(name = "product_id_product", referencedColumnName = "id_product")
+    @ManyToOne
+    private Product productIdProduct;
+
+    public Design() {
+    }
+
+    public Design(Integer idDesign) {
+        this.idDesign = idDesign;
+    }
+
+    public Integer getIdDesign() {
+        return idDesign;
+    }
+
+    public void setIdDesign(Integer idDesign) {
+        this.idDesign = idDesign;
+    }
+
+    @XmlTransient
+    public List<Production> getProductionList() {
+        return productionList;
+    }
+
+    public void setProductionList(List<Production> productionList) {
+        this.productionList = productionList;
+    }
+
+    @XmlTransient
+    public List<Production> getProductionList1() {
+        return productionList1;
+    }
+
+    public void setProductionList1(List<Production> productionList1) {
+        this.productionList1 = productionList1;
+    }
+
+    @XmlTransient
+    public List<NecessarySupply> getNecessarySupplyList() {
+        return necessarySupplyList;
+    }
+
+    public void setNecessarySupplyList(List<NecessarySupply> necessarySupplyList) {
+        this.necessarySupplyList = necessarySupplyList;
+    }
+
+    public DesignData getDesignData() {
+        return designData;
+    }
+
+    public void setDesignData(DesignData designData) {
+        this.designData = designData;
+    }
+
+    public Product getProductIdProduct() {
+        return productIdProduct;
+    }
+
+    public void setProductIdProduct(Product productIdProduct) {
+        this.productIdProduct = productIdProduct;
+    }
+}

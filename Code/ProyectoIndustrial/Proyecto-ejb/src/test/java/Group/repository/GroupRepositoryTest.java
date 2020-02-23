@@ -5,7 +5,7 @@
  */
 package Group.repository;
 
-import Group.Group;
+import Group.GroupIndustrial;
 import static Group.repository.GroupRepository.FIND_BY_ID;
 import static Group.repository.GroupRepository.GET_ALL;
 import java.util.ArrayList;
@@ -29,22 +29,21 @@ public class GroupRepositoryTest {
         // Arrange
         int groupId = 1;
         EntityManager entityManager = Mockito.mock(EntityManager.class);
-        TypedQuery<Group> typeQuery = Mockito.mock(TypedQuery.class);
-        Mockito.when(
-                entityManager.createQuery(FIND_BY_ID, Group.class)
+        TypedQuery<GroupIndustrial> typeQuery = Mockito.mock(TypedQuery.class);
+        Mockito.when(entityManager.createQuery(FIND_BY_ID, GroupIndustrial.class)
         ).thenReturn(typeQuery);
         Mockito.when(
                 typeQuery.setParameter("id", groupId)
         ).thenReturn(typeQuery);
 
-        Group group = new Group();
+        GroupIndustrial group = new GroupIndustrial();
         Mockito.when(typeQuery.getSingleResult()).thenReturn(group);
 
         GroupRepository groupRepository = new GroupRepository();
         groupRepository.setEntityManager(entityManager);
 
         // Act
-        Optional<Group> result = groupRepository.findById(groupId);
+        Optional<GroupIndustrial> result = groupRepository.findById(groupId);
 
         // Assert
         Assert.assertEquals(result.get(), group);
@@ -55,9 +54,8 @@ public class GroupRepositoryTest {
         // Arrange
         int groupId = 1;
         EntityManager entityManager = Mockito.mock(EntityManager.class);
-        TypedQuery<Group> typeQuery = Mockito.mock(TypedQuery.class);
-        Mockito.when(
-                entityManager.createQuery(FIND_BY_ID, Group.class)
+        TypedQuery<GroupIndustrial> typeQuery = Mockito.mock(TypedQuery.class);
+        Mockito.when(entityManager.createQuery(FIND_BY_ID, GroupIndustrial.class)
         ).thenReturn(typeQuery);
         Mockito.when(
                 typeQuery.setParameter("id", groupId)
@@ -69,7 +67,7 @@ public class GroupRepositoryTest {
         groupRepository.setEntityManager(entityManager);
 
         // Act
-        Optional<Group> result = groupRepository.findById(groupId);
+        Optional<GroupIndustrial> result = groupRepository.findById(groupId);
 
         // Assert
         Assert.assertFalse(result.isPresent(), "Expected optional empty");
@@ -79,12 +77,11 @@ public class GroupRepositoryTest {
     public void getAllWithResult(){
         // Arrange
         EntityManager entityManager = Mockito.mock(EntityManager.class);
-        TypedQuery<Group> typedQuery = Mockito.mock(TypedQuery.class);
-        Mockito.when(
-                entityManager.createQuery(GET_ALL, Group.class)
+        TypedQuery<GroupIndustrial> typedQuery = Mockito.mock(TypedQuery.class);
+        Mockito.when(entityManager.createQuery(GET_ALL, GroupIndustrial.class)
         ).thenReturn(typedQuery);
-        List<Group> list = new ArrayList<Group>();
-        Group group = new Group();
+        List<GroupIndustrial> list = new ArrayList<GroupIndustrial>();
+        GroupIndustrial group = new GroupIndustrial();
         list.add(group);
         Mockito.when(typedQuery.getResultList()).thenReturn(list);
         
@@ -92,7 +89,7 @@ public class GroupRepositoryTest {
         groupRepository.setEntityManager(entityManager);
         
         // Act
-        List<Group> result = groupRepository.getAll();
+        List<GroupIndustrial> result = groupRepository.getAll();
         
         // Assert
         Assert.assertEquals(result, list);
@@ -102,18 +99,17 @@ public class GroupRepositoryTest {
     public void getAllEmptyResult(){
         // Arrange
         EntityManager entityManager = Mockito.mock(EntityManager.class);
-        TypedQuery<Group> typedQuery = Mockito.mock(TypedQuery.class);
-        Mockito.when(
-                entityManager.createQuery(GET_ALL, Group.class)
+        TypedQuery<GroupIndustrial> typedQuery = Mockito.mock(TypedQuery.class);
+        Mockito.when(entityManager.createQuery(GET_ALL, GroupIndustrial.class)
         ).thenReturn(typedQuery);
-        List<Group> list = new ArrayList<Group>();
+        List<GroupIndustrial> list = new ArrayList<GroupIndustrial>();
         Mockito.when(typedQuery.getResultList()).thenReturn(list);
         
         GroupRepository groupRepository = new GroupRepository();
         groupRepository.setEntityManager(entityManager);
         
         // Act
-        List<Group> result = groupRepository.getAll();
+        List<GroupIndustrial> result = groupRepository.getAll();
         
         // Assert
         Assert.assertEquals(result, list);

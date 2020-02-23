@@ -6,7 +6,7 @@
 package Group.facade;
 
 import User.User;
-import Group.Group;
+import Group.GroupIndustrial;
 import Group.GroupUser;
 import java.util.List;
 import java.util.Optional;
@@ -24,17 +24,17 @@ public interface GroupFacadelocal {
      * @param users
      * @return
      */
-    public Optional<Group> createGroup(Group group, List<User> users);
+    public Optional<GroupIndustrial> createGroup(GroupIndustrial group, List<User> users);
 
     /**
-     * Add a User in a new Group, this method verify if this relationship
-     * already exist
+     * Add a User in a new GroupIndustrial, this method verify if this relationship
+ already exist
      *
      * @param group
      * @param users
      * @return
      */
-    public Optional<GroupUser> assignUserToGroup(Group group, User users);
+    public Optional<GroupUser> assignUserToGroup(GroupIndustrial group, User users);
 
     /**
      * To update just information or section, send the same text, if the text is
@@ -45,7 +45,7 @@ public interface GroupFacadelocal {
      * @param section
      * @return
      */
-    public Group updateGroup(Group group, String information, String section);
+    public GroupIndustrial updateGroup(GroupIndustrial group, String information, String section);
 
     /**
      * Change the group of an user, in the GroupUser element
@@ -54,7 +54,7 @@ public interface GroupFacadelocal {
      * @param group
      * @return
      */
-    public GroupUser updateUserGroup(GroupUser groupUser, Group group);
+    public GroupUser updateUserGroup(GroupUser groupUser, GroupIndustrial group);
 
     /**
      * This method remove a user from a group
@@ -65,23 +65,23 @@ public interface GroupFacadelocal {
     public Optional<GroupUser> removeUserFromGroup(GroupUser groupUser);
 
     /**
-     * Find a Group base on its ID
+     * Find a GroupIndustrial base on its ID
      *
      * @param id
      * @return
      */
-    public Optional<Group> findById(Integer id);
+    public Optional<GroupIndustrial> findById(Integer id);
 
     /**
      * Return all groups stored in the system
      *
      * @return
      */
-    public List<Group> getAll();
+    public List<GroupIndustrial> getAll();
 
     /**
      * Find a GroupUser base on ID, this entity contain the relationship between
-     * User and a Group
+ User and a GroupIndustrial
      *
      * @param id
      * @return
@@ -89,7 +89,7 @@ public interface GroupFacadelocal {
     public Optional<GroupUser> findGroupUserById(Integer id);
 
     /**
-     * Return the users that are in a Group, base on the ID
+     * Return the users that are in a GroupIndustrial, base on the ID
      *
      * @param groupId
      * @return
@@ -102,7 +102,7 @@ public interface GroupFacadelocal {
      * @param carnet
      * @return
      */
-    public List<Group> findGroupsOfUser(Integer carnet);
+    public List<GroupIndustrial> findGroupsOfUser(Integer carnet);
 
     /**
      * Return al relation between a group and user

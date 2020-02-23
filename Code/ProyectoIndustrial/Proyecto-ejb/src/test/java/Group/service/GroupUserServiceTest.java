@@ -1,6 +1,6 @@
 package Group.service;
 
-import Group.Group;
+import Group.GroupIndustrial;
 import Group.GroupUser;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -47,7 +47,7 @@ public class GroupUserServiceTest {
         groupUserService.setEntityManager(entityManager);
 
         // Act
-        Group group = new Group();
+        GroupIndustrial group = new GroupIndustrial();
         GroupUser result = groupUserService.updateUserGroup(groupUser, group);
 
         //Assert

@@ -1,8 +1,12 @@
 package Supply;
 
+import Modify.ModifySupply;
+import Production.NecessarySupply;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,70 +14,90 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(
-        name = "SUPPLY"
-)
-public class Supply implements Serializable{
+@Table(name = "supply")
+public class Supply implements Serializable {
+
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "code")
     private Integer code;
+    @Column(name = "internal_code")
+    private String internalCode;
     @Column(name = "name")
     private String name;
     @Column(name = "expiration_date")
     private LocalDate expirationDate;
     @Column(name = "date_of_admission")
     private LocalDate dateOfAdmission;
-    @Column(name = "cost",scale = 2)
-    private Double cost;
-    @Column(name = "quantity",scale = 2)
-    private Double quantity;
+    @Column(name = "cost")
+    private double cost;
+    @Column(name = "quantity")
+    private double quantity;
     @Column(name = "availability")
-    private Boolean availability;
+    private boolean availability;
     @Column(name = "description")
     private String description;
-    
+    @JoinColumn(name = "id_measure", referencedColumnName = "id_measure")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "measure_id", referencedColumnName = "id_Measure")
-    private Measure measure;
-    
+    private Measure idMeasure;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplyCode")
+    private List<NecessarySupply> necessarySupplyList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplyCode")
+    private List<ModifySupply> modifySupplyList;
+
     public Supply() {
     }
 
-    public Supply(Integer code, String name, LocalDate expirationDate, LocalDate dateOfAdmission, Double cost, Double quantity, boolean availability, String description, Measure measure) {
+    public Supply(Integer code) {
         this.code = code;
+    }
+
+    public Supply(Integer code, String internalCode, String name, LocalDate expirationDate, LocalDate dateOfAdmission, double cost, double quantity, boolean availability) {
+        this.code = code;
+        this.internalCode = internalCode;
         this.name = name;
         this.expirationDate = expirationDate;
         this.dateOfAdmission = dateOfAdmission;
         this.cost = cost;
         this.quantity = quantity;
         this.availability = availability;
-        this.description = description;
-        this.measure = measure;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Supply)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Supply)) {
+            return false;
+        }
         Supply supply = (Supply) o;
         return Objects.equals(getCode(), supply.getCode());
     }
- 
+
     @Override
     public int hashCode() {
         return Objects.hash(getCode());
     }
-    
+
     public Integer getCode() {
         return code;
     }
 
     public void setCode(Integer code) {
         this.code = code;
+    }
+
+    public String getInternalCode() {
+        return internalCode;
+    }
+
+    public void setInternalCode(String internalCode) {
+        this.internalCode = internalCode;
     }
 
     public String getName() {
@@ -100,23 +124,23 @@ public class Supply implements Serializable{
         this.dateOfAdmission = dateOfAdmission;
     }
 
-    public Double getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(Double cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 
-    public Double getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
-    public boolean isAvailability() {
+    public boolean getAvailability() {
         return availability;
     }
 
@@ -132,11 +156,27 @@ public class Supply implements Serializable{
         this.description = description;
     }
 
-    public Measure getMeasure() {
-        return measure;
+    public Measure getIdMeasure() {
+        return idMeasure;
     }
 
-    public void setMeasure(Measure measure) {
-        this.measure = measure;
+    public void setIdMeasure(Measure idMeasure) {
+        this.idMeasure = idMeasure;
+    }
+
+    public List<NecessarySupply> getNecessarySupplyList() {
+        return necessarySupplyList;
+    }
+
+    public void setNecessarySupplyList(List<NecessarySupply> necessarySupplyList) {
+        this.necessarySupplyList = necessarySupplyList;
+    }
+
+    public List<ModifySupply> getModifySupplyList() {
+        return modifySupplyList;
+    }
+
+    public void setModifySupplyList(List<ModifySupply> modifySupplyList) {
+        this.modifySupplyList = modifySupplyList;
     }
 }

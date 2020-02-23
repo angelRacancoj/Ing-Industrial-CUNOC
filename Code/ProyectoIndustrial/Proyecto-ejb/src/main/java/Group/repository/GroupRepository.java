@@ -1,6 +1,6 @@
 package Group.repository;
 
-import Group.Group;
+import Group.GroupIndustrial;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +32,8 @@ public class GroupRepository{
         this.entityManager = entityManager;
     }
     
-    public Optional<Group> findById(Integer id){
-        TypedQuery<Group> typedQuery = entityManager.createQuery(FIND_BY_ID,Group.class).setParameter("id", id);
+    public Optional<GroupIndustrial> findById(Integer id){
+        TypedQuery<GroupIndustrial> typedQuery = entityManager.createQuery(FIND_BY_ID,GroupIndustrial.class).setParameter("id", id);
         try {
             return Optional.of(typedQuery.getSingleResult());
         } catch (NoResultException e) {
@@ -42,8 +42,8 @@ public class GroupRepository{
  
     }
     
-    public List<Group> getAll(){
-        TypedQuery<Group> typedQuery = entityManager.createQuery(GET_ALL,Group.class);
+    public List<GroupIndustrial> getAll(){
+        TypedQuery<GroupIndustrial> typedQuery = entityManager.createQuery(GET_ALL,GroupIndustrial.class);
         return typedQuery.getResultList();
     }
     

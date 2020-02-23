@@ -1,6 +1,6 @@
 package Group.repository;
 
-import Group.Group;
+import Group.GroupIndustrial;
 import Group.GroupUser;
 import User.User;
 import static Group.repository.GroupUserRepository.FIND_USERS_BY_GROUP;
@@ -83,14 +83,14 @@ public class GroupUserRepositoryTest {
                 query.setParameter(CARNET_PARAMETER_NAME, carnet)
         ).thenReturn(query);
         
-        List<Group> group = new LinkedList<Group>();
+        List<GroupIndustrial> group = new LinkedList<GroupIndustrial>();
         Mockito.when(query.getResultList()).thenReturn(group);
         
         GroupUserRepository groupUserRepository = new GroupUserRepository();
         groupUserRepository.setEntityManager(entityManager);
         
         // Act
-        List<Group> result = groupUserRepository.findGroupsOfUser(carnet);
+        List<GroupIndustrial> result = groupUserRepository.findGroupsOfUser(carnet);
         
         // Assert
         Assert.assertEquals(result, group);
