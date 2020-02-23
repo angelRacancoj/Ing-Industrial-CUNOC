@@ -36,7 +36,6 @@ public class DesignData implements Serializable {
     @Lob
     @Column(name = "picture")
     private byte[] picture;
-
     @OneToMany(mappedBy = "designData")
     private List<Design> designList;
 
