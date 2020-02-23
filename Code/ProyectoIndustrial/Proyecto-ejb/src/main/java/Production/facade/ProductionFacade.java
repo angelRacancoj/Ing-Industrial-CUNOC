@@ -6,6 +6,7 @@ import Production.Production;
 import Production.Step;
 import Production.exceptions.MandatoryAttributeProductionException;
 import Production.repository.ProductRepository;
+import Production.repository.ProductionRepository;
 import Production.repository.StepRepository;
 import Production.service.ProductionService;
 import Production.service.StepService;
@@ -21,6 +22,7 @@ import javax.ejb.Stateless;
 @Stateless
 public class ProductionFacade implements ProductionFacadeLocal {
     private ProductionService productionService ;
+    private ProductionRepository productionRepository;
     private ProductRepository productRepository;
     private StepService stepService;
     private StepRepository stepRepository;
@@ -49,7 +51,7 @@ public class ProductionFacade implements ProductionFacadeLocal {
     }
 
     @EJB
-    public void setProductionRepository(ProductionRepository productionRepository) {
+    public void setProductionRepository(ProductionRepository  productionRepository) {
         this.productionRepository = productionRepository;
     }
 

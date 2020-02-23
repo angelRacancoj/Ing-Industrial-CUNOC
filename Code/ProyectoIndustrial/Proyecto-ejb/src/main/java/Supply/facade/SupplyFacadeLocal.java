@@ -21,10 +21,7 @@ public interface SupplyFacadeLocal {
      */
     public List<Measure> getAllMeasures();
     public List<Supply> getSupplyAvailable() ;
-    
-    public List<Measure> getMeasure(Measure measure) throws MandatoryAttributeSupplyException; 
-    
-
+   
     /**
      * *
      * Obtiene una medida por medio de su id

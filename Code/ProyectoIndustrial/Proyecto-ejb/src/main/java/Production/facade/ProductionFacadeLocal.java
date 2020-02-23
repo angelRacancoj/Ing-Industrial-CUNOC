@@ -26,12 +26,6 @@ public interface ProductionFacadeLocal {
     public void createProduction(Production production)throws MandatoryAttributeProductionException;
     public void editProduction(Production production)throws MandatoryAttributeProductionException;
     public List<Product> getProduct();
-
-    public void createProduction(Production production) throws MandatoryAttributeProductionException;
-
-    public void editProduction(Production production) throws MandatoryAttributeProductionException;
-
     public List<Production> AllProductions();
-
     public Optional<Production> getProductionById(Integer id);
 }

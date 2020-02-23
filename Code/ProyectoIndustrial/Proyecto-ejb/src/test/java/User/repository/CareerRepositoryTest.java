@@ -99,7 +99,7 @@ public class CareerRepositoryTest {
         if (career.getIdCareer() != null) {
             Mockito.when(criteriaBuilder.equal(careerR.get(atribute), career.getIdCareer())).thenReturn(predicate);
         }
-        if (career.getName() != null) {
+        if (career.getName()!= null) {
             Mockito.when(criteriaBuilder.like(careerR.get(atribute), "%" + career.getName() + "%")).thenReturn(predicate);
         }
         Mockito.when(criteriaQuery.where(predicate)).thenReturn(criteriaQuery);

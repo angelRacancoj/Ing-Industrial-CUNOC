@@ -26,8 +26,8 @@ public class CommentaryTest {
         String testVal = "Hola Mundo";
 
         // Act
-        commentaryTest.setText(testVal);
-        String result = commentaryTest.getText();
+        commentaryTest.setCommentary(testVal);
+        String result = commentaryTest.getCommentary();
 
         // Assert
         Assert.assertEquals(result, testVal);
@@ -40,8 +40,8 @@ public class CommentaryTest {
         Step testVal = new Step();
 
         // Act
-        commentaryTest.setStepId(testVal);
-        Step result = commentaryTest.getStepId();
+        commentaryTest.setIdStep(testVal);
+        Step result = commentaryTest.getIdStep();
 
         // Assert
         Assert.assertEquals(result, testVal);

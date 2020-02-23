@@ -49,7 +49,7 @@ public class SupplyServices {
         if (newSupply.getQuantity() == 0.0){
             throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
         }
-        if (newSupply.getIdMeasure() == null){
+        if (newSupply.getMeasure() == null){
             throw new MandatoryAttributeSupplyException("Atributo Medida Obligatorio");
         }
         newSupply.setDateOfAdmission(LocalDate.now());
