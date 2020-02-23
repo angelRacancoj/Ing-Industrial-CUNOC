@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
@@ -32,6 +33,10 @@ public class DesignData implements Serializable {
     private String name;
     @Column(name = "description")
     private String description;
+    @Lob
+    @Column(name = "picture")
+    private byte[] picture;
+
     @OneToMany(mappedBy = "designData")
     private List<Design> designList;
 
@@ -69,6 +74,14 @@ public class DesignData implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
     @XmlTransient
