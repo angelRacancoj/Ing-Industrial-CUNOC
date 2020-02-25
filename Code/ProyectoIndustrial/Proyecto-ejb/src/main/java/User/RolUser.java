@@ -24,8 +24,6 @@ public class RolUser implements Serializable {
     private Integer idRol;
     @Column(name = "name_rol")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRol")
-    private List<User> userList;
 
     public RolUser(Integer idRol, String name) {
         this.idRol = idRol;
@@ -71,13 +69,4 @@ public class RolUser implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }
-
 }

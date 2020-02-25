@@ -27,8 +27,6 @@ public class Career implements Serializable {
     private Integer idCareer;
     @Column(name = "name_career")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCareer")
-    private List<User> userList;
 
     public Career() {
     }
@@ -73,15 +71,6 @@ public class Career implements Serializable {
 
     public void setName(String nameCareer) {
         this.name = nameCareer;
-    }
-
-    @XmlTransient
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
     }
 
 }

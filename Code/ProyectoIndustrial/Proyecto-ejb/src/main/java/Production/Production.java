@@ -36,10 +36,8 @@ public class Production implements Serializable {
     private String name;
     @Basic(optional = false)
     @Column(name = "start_date")
-    @Temporal(TemporalType.DATE)
     private LocalDate startDate;
     @Column(name = "end_date")
-    @Temporal(TemporalType.DATE)
     private LocalDate endDate;
     @Basic(optional = false)
     @Column(name = "state")
