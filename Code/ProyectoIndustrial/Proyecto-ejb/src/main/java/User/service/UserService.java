@@ -28,27 +28,27 @@ import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 @Stateless
 @LocalBean
 public class UserService {
-
+    
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
-
+    
     @Resource
     SessionContext securityContext;
-
+    
     @Inject
     private Pbkdf2PasswordHash pbkdf2PasswordHash;
-
+    
     @EJB
     UserRepository userRepository;
-
+    
     public void setPbkdf2PasswordHash(Pbkdf2PasswordHash pbkdf2PasswordHash) {
         this.pbkdf2PasswordHash = pbkdf2PasswordHash;
     }
-
+    
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
-
+    
     public User createUser(User user) throws UserException {
         if (user == null) {
             throw new UserException("User is null");
@@ -61,7 +61,7 @@ public class UserService {
         }
         return user;
     }
-
+    
     public User updateUser(User user) throws UserException {
         if (user == null) {
             throw new UserException("User is null");
@@ -88,17 +88,22 @@ public class UserService {
         if (user.getCareer() != null) {
             updateUser.setCareer(user.getCareer());
         }
-
+        
         return updateUser;
     }
-
+    
     public List<User> getAuthenticatedUser() throws UserException {
         String carnet = securityContext.getCallerPrincipal().getName();
         return userRepository.getUser(new User(Integer.parseInt(carnet), null, null, null, null, null, null, null));
     }
-
+    
+//    public Optional<User> getLoggedInUser() throws UserException {
+//        String carnet = securityContext.getCallerPrincipal().getName();
+//        return userRepository.getUserByCarnet(Integer.parseInt(carnet));
+//    }
+    
     public User resetPassword(User user) throws UserException, NoSuchAlgorithmException {
-
+        
         System.out.println("----------");
         String[] symbols = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
         int length = 10;
@@ -113,9 +118,9 @@ public class UserService {
         String password = encryptPass(sb.toString());
         userUpdate.setPassword(password);
         return updateUser(userUpdate);
-
+        
     }
-
+    
     private String encryptPass(String pass) {
         char passwordInput[] = pass.toCharArray();
         Map<String, String> map = new HashMap<>();
@@ -125,5 +130,5 @@ public class UserService {
         pbkdf2PasswordHash.initialize(map);
         return pbkdf2PasswordHash.generate(passwordInput);
     }
-
+    
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 @Named
 @RequestScoped
 public class LogoutView {
+
     @Inject
     private HttpServletRequest request;
 
