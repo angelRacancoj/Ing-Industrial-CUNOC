@@ -73,21 +73,21 @@ public class GroupUserServiceTest {
         Assert.assertEquals(result.get(), groupUser);
     }
     
-    @Test
-    public void removeUserFromGroupErrorTest(){
-        // Arrange
-        GroupUser groupUser = new GroupUser();
-        EntityManager entityManager = Mockito.mock(EntityManager.class);
-
-        Mockito.doThrow(TransactionRequiredException.class).when(entityManager).remove(groupUser);
-
-        GroupUserService groupUserService = new GroupUserService();
-        groupUserService.setEntityManager(entityManager);
-        
-        // Act
-        Optional<GroupUser> result = groupUserService.removeUserFromGroup(groupUser);
-        
-        // Assert
-        Assert.assertFalse(result.isPresent(), "Expected error");
-    }
+//    @Test
+//    public void removeUserFromGroupErrorTest(){
+//        // Arrange
+//        GroupUser groupUser = new GroupUser();
+//        EntityManager entityManager = Mockito.mock(EntityManager.class);
+//
+//        Mockito.doThrow(TransactionRequiredException.class).when(entityManager).remove(groupUser);
+//
+//        GroupUserService groupUserService = new GroupUserService();
+//        groupUserService.setEntityManager(entityManager);
+//        
+//        // Act
+//        Optional<GroupUser> result = groupUserService.removeUserFromGroup(groupUser);
+//        
+//        // Assert
+//        Assert.assertFalse(result.isPresent(), "Expected error");
+//    }
 }

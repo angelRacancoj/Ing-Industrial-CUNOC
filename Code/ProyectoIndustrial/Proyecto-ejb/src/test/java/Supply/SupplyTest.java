@@ -44,13 +44,13 @@ public class SupplyTest {
         Assert.assertEquals(result, testInternalCode);
     }
 
-    @Test
-    public void testSetAndGetIsExpired() throws Exception {
-        testSupply.setIsExpired(testIsExpired);
-        boolean result = testSupply.isIsExpired();
-
-        Assert.assertEquals(result, testIsExpired);
-    }
+//    @Test
+//    public void testSetAndGetIsExpired() throws Exception {
+//        testSupply.setIsExpired(testIsExpired);
+//        boolean result = testSupply.isIsExpired();
+//
+//        Assert.assertEquals(result, testIsExpired);
+//    }
 
     @Test
     public void testSetAndGetExpirationDate() throws Exception {

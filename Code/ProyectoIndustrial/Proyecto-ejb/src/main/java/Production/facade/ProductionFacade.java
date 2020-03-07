@@ -1,6 +1,9 @@
 package Production.facade;
 
 
+import Design.Design;
+import Design.DesignData;
+import Production.NecessarySupply;
 import Production.Product;
 import Production.Production;
 import Production.Step;
@@ -8,6 +11,7 @@ import Production.exceptions.MandatoryAttributeProductionException;
 import Production.repository.ProductRepository;
 import Production.repository.ProductionRepository;
 import Production.repository.StepRepository;
+import Production.service.DesignService;
 import Production.service.ProductionService;
 import Production.service.StepService;
 import java.util.List;
@@ -26,6 +30,8 @@ public class ProductionFacade implements ProductionFacadeLocal {
     private ProductRepository productRepository;
     private StepService stepService;
     private StepRepository stepRepository;
+    
+    private DesignService designService;
 
     
     @EJB
@@ -53,6 +59,11 @@ public class ProductionFacade implements ProductionFacadeLocal {
     @EJB
     public void setProductionRepository(ProductionRepository  productionRepository) {
         this.productionRepository = productionRepository;
+    }
+    
+    @EJB
+    public void setDesignService(DesignService designService){
+        this.designService = designService;
     }
 
     /**
@@ -87,11 +98,16 @@ public class ProductionFacade implements ProductionFacadeLocal {
         return productionRepository.findByIdProduction(id);
     }
     
+    @Override
     public List<Product> getProduct(){
         Optional<List<Product>> lista = productRepository.getAll();      
         return lista.get();
     }
     
+    @Override
+    public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys){
+        designService.createDesign(design, designData, necessarySupplys);
+    }
     
     
 }

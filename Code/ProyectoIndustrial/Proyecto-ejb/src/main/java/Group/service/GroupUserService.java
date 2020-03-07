@@ -51,7 +51,8 @@ public class GroupUserService{
      */
     public Optional<GroupUser> removeUserFromGroup(GroupUser groupUser) {
         try {
-            entityManager.remove(groupUser);
+           
+            entityManager.remove(entityManager.merge(groupUser));
             return Optional.of(groupUser);
         } catch (TransactionRequiredException e) {
             return Optional.empty();
