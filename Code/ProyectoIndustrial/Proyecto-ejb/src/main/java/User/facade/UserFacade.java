@@ -112,6 +112,11 @@ public class UserFacade implements UserFacadeLocal {
     }
     
     @Override
+    public RolUser getRolUserById(int rolUser) throws UserException {
+        return rolUserRepository.findRolUserById(rolUser).get();
+    }
+    
+    @Override
     public List<User> getUserEstudent() throws UserException {
         User user = new User();
         Optional<RolUser> rolUser =  rolUserRepository.findByIdRolUser(1);

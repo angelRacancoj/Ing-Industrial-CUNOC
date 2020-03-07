@@ -6,12 +6,11 @@ import User.User;
 import User.exception.UserException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Optional;
 import javax.ejb.Local;
 
 @Local
 public interface UserFacadeLocal {
-    
+
     public List<User> getAuthenticatedUser() throws UserException;
 
     public User createUser(User user) throws UserException;
@@ -31,12 +30,14 @@ public interface UserFacadeLocal {
     public RolUser updateRolUser(RolUser rolUser) throws UserException;
 
     public List<RolUser> getRolUser(RolUser rolUser) throws UserException;
-    
-    public User resetPassword(User user) throws UserException,NoSuchAlgorithmException;
-    
-    public List<Career> getAllCareer(); 
-    
+
+    public RolUser getRolUserById(int rolUser) throws UserException;
+
+    public User resetPassword(User user) throws UserException, NoSuchAlgorithmException;
+
+    public List<Career> getAllCareer();
+
     public List<RolUser> getAllRolUser();
-    
+
     public List<User> getUserEstudent() throws UserException;
 }

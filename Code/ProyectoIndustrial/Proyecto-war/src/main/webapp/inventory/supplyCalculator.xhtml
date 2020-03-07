@@ -64,24 +64,29 @@ and open the template in the editor.
                             <p:column headerText="Tipo de Producto">
                                 <h:outputText value="#{productions.productId.idProduct} #{selectedP.productId.name}" />
                             </p:column>
-                            <p:column headerText="Costo por lote">
-                                <h:outputText value="Q. #{productions.priceLot}" />
+                            <p:column headerText="Costo inicial">
+                                <h:outputText value="Q. #{productions.initCost}" />
                             </p:column>
                             <p:column headerText="Estado">
                                 <h:outputText value="#{productions.state}" />
                             </p:column>
-                            <p:column headerText="Unidades por lote">
-                                <h:outputText value="#{productions.unity}" />
+                            <p:column headerText="Estado">
+                                <h:outputText value="#{productions.state}" />
                             </p:column>
 
                             <p:column headerText="Fecha de Creacion">
-                                <h:outputText value="#{productions.creationDate}" >
+                                <h:outputText value="#{productions.startDate}" >
+                                    <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Fecha de Creacion">
+                                <h:outputText value="#{productions.endDate}" >
                                     <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
                                 </h:outputText>
                             </p:column>
 
-                            <p:column headerText="Descripcion">
-                                <h:outputText value="#{productions.description}" />
+                            <p:column headerText="Diseño">
+                                <h:outputText value="#{productions.designId.idDesign} #{productions.designId.designData.name}" />
                             </p:column>
                         </p:dataTable>
                     </p:fieldset>
@@ -100,24 +105,26 @@ and open the template in the editor.
                                 <p:column headerText="Tipo de Producto">
                                     <h:outputText value="#{selectedP.production.productId.idProduct} #{selectedP.production.productId.name}" />
                                 </p:column>
-                                <p:column headerText="Costo por lote">
-                                    <h:outputText value="Q. #{selectedP.production.priceLot}" />
+                                <p:column headerText="Costo Inicial">
+                                    <h:outputText value="Q. #{selectedP.production.initCost}" />
                                 </p:column>
                                 <p:column headerText="Estado">
                                     <h:outputText value="#{selectedP.production.state}" />
                                 </p:column>
-                                <p:column headerText="Unidades por lote">
-                                    <h:outputText value="#{selectedP.production.unity}" />
-                                </p:column>
 
                                 <p:column headerText="Fecha de Creacion">
-                                    <h:outputText value="#{selectedP.production.creationDate}" >
+                                    <h:outputText value="#{selectedP.production.startDate}" >
+                                        <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Fecha de Finalizacion">
+                                    <h:outputText value="#{selectedP.production.endDate}" >
                                         <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
                                     </h:outputText>
                                 </p:column>
 
-                                <p:column headerText="Descripcion">
-                                    <h:outputText value="#{selectedP.production.description}" />
+                                <p:column headerText="Diseño">
+                                    <h:outputText value="#{productions.designId.idDesign} #{productions.designId.designData.name}" />
                                 </p:column>
 
                                 <p:column style="width:65px" headerText="Lotes">
@@ -184,27 +191,27 @@ and open the template in the editor.
                                 </p:columnGroup>
                             </p:subTable>
                         </p:dataTable>
-<!--
-                        <p:repeat value="#{supplyCalculatorView.finalProductions}" var="fProduction" id="nsView">
-                            <p:outputLabel value="#{fProduction.production.infoAbout}" styleClass="col-md-4 control-label"/>
-
-                            <p:dataTable  value="#{fProduction.supplies}" var="supplyNS" >
-                                <p:column headerText="Codigo">
-                                    <h:outputText value="#{supplyNS.supply.code}" />
-                                </p:column>
-                                <p:column headerText="Nombre">
-                                    <h:outputText value="#{supplyNS.supply.name}" />
-                                </p:column>
-                                <p:column headerText="Cantidad">
-                                    <h:outputText value="#{supplyNS.quantity}" />
-                                </p:column>
-                                <p:column headerText="Descripcion">
-                                    <h:outputText value="#{supplyNS.supply.description}" />
-                                </p:column>
-                            </p:dataTable>
-
-                        </p:repeat>
--->
+                        <!--
+                                                <p:repeat value="#{supplyCalculatorView.finalProductions}" var="fProduction" id="nsView">
+                                                    <p:outputLabel value="#{fProduction.production.infoAbout}" styleClass="col-md-4 control-label"/>
+                        
+                                                    <p:dataTable  value="#{fProduction.supplies}" var="supplyNS" >
+                                                        <p:column headerText="Codigo">
+                                                            <h:outputText value="#{supplyNS.supply.code}" />
+                                                        </p:column>
+                                                        <p:column headerText="Nombre">
+                                                            <h:outputText value="#{supplyNS.supply.name}" />
+                                                        </p:column>
+                                                        <p:column headerText="Cantidad">
+                                                            <h:outputText value="#{supplyNS.quantity}" />
+                                                        </p:column>
+                                                        <p:column headerText="Descripcion">
+                                                            <h:outputText value="#{supplyNS.supply.description}" />
+                                                        </p:column>
+                                                    </p:dataTable>
+                        
+                                                </p:repeat>
+                        -->
                     </div>
 
                 </h:form>

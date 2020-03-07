@@ -3,6 +3,10 @@ package gt.edu.usac.cunoc.ingenieria.user.view;
 import User.Career;
 import User.RolUser;
 import User.User;
+import static config.Constants.ADMINISTRADOR;
+import static config.Constants.ESTUDIANTE;
+import static config.Constants.DOCENTE;
+import static config.Constants.MAIN_PAGE;
 import User.exception.UserException;
 import User.facade.UserFacadeLocal;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
@@ -159,5 +163,21 @@ public class UserView implements Serializable {
     public void cleanCriteria() {
         this.carnetSearchCriteria = "";
         this.nameSearchCriteria = "";
+    }
+
+    public String docente() {
+        return DOCENTE;
+    }
+
+    public String estudiante() {
+        return ESTUDIANTE;
+    }
+
+    public String admin() {
+        return ADMINISTRADOR;
+    }
+
+    public String adminDocente() {
+        return (ADMINISTRADOR + "," + DOCENTE);
     }
 }
