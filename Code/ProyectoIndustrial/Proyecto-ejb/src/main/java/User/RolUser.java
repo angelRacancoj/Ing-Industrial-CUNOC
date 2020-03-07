@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(
-        name = "ROL_USER"
+        name = "rol_user"
 )
 public class RolUser implements Serializable {
 
