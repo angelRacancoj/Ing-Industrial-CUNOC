@@ -5,6 +5,8 @@ import User.exception.UserException;
 import User.facade.UserFacadeLocal;
 import static config.Constants.ADMINISTRADOR;
 import static config.Constants.ESTUDIANTE;
+import static config.Constants.DOCENTE;
+import static config.Constants.MAIN_PAGE;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.IOException;
 import java.io.Serializable;
@@ -93,10 +95,13 @@ public class LoginView implements Serializable {
         User currentUser = userFacade.getAuthenticatedUser().get(0);
         switch (currentUser.getRolUser().getName()) {
             case ADMINISTRADOR:
-                externalContext.redirect(externalContext.getRequestContextPath() + "/templates/template-one.xhtml");
+                externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
                 break;
             case ESTUDIANTE:
-                externalContext.redirect(externalContext.getRequestContextPath() + "/templates/template-one.xhtml");
+                externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
+                break;
+            case DOCENTE:
+                externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
                 break;
             default:
         }
