@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../templates/template-one.xhtml">
+
+            <ui:define name="content">
+
+                <h:form id="editDesignForm"> 
+
+                    <p:fieldset id="designDataField" legend="Escoga el diseño que desea editar">
+                        <p:dataTable id="editDesignTable" var="design" value="#{designView.listDesignEdit}" emptyMessage="No hay diseños disponibles">
+
+                            <p:column headerText="Codigo" filterBy="#{design.designData.iddesignData}" filterMatchMode="contains" >
+                                <h:outputText value="#{design.designData.iddesignData}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre" filterBy="#{design.designData.name}" filterMatchMode="contains">
+                                <h:outputText value="#{design.designData.name}" />
+                            </p:column>
+
+                            <p:column headerText="Descripcion">
+                                <h:outputText value="#{design.designData.description}" />
+                            </p:column>
+
+                        </p:dataTable>
+
+                    </p:fieldset>
+
+                </h:form>
+
+
+
+
+
+
+
+                <p:dialog header="Detalles Insumo" widgetVar="detailsSupply" resizable="false" draggable="false"
+                          showEffect="fade" hideEffect="fade" modal="true">
+
+                    <p:outputPanel id="display">
+                        <h:panelGrid columns="2" cellpadding="4" rendered="#{not empty designView.selectedSupply}">
+                            <f:facet name="header">
+                                <p:graphicImage name="demo/images/car/#{designView.selectedSupply.code}.gif"/>
+                            </f:facet>
+
+                            <h:outputText value="Id:" />
+                            <h:outputText value="#{designView.selectedSupply.code}" style="font-weight:bold"/>
+
+                            <h:outputText value="Costo:" />
+                            <h:outputText value="#{designView.selectedSupply.cost}" style="font-weight:bold"/>
+
+                            <h:outputText value="Fecha Adimision:" />
+                            <h:outputText value="#{designView.selectedSupply.dateOfAdmission}" style="font-weight:bold"/>
+
+                            <h:outputText value="Expiracion:" />
+                            <h:outputText value="#{designView.selectedSupply.expirationDate}" style="font-weight:bold"/>
+
+
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

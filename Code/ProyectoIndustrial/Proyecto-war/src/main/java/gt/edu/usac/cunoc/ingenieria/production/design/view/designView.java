@@ -34,6 +34,8 @@ public class designView implements Serializable {
     private List<Supply> supplies;
     private List<Supply> suppliesSelected;
     private List<NecessarySupply> necessarySupplys;
+    
+    private List<Design> listDesignEdit;
 
     private Supply selectedSupply;
     private UploadedFile file;
@@ -50,9 +52,13 @@ public class designView implements Serializable {
         //supplies = service.createSupplies(5);
         designCreate = new Design();
         designDataCreate = new DesignData();
+        
         supplies = supplyFacade.getSupplyAvailable();
+        listDesignEdit= productionFacadeLocal.AllDesigns();
+        
         suppliesSelected = new ArrayList<>();
         necessarySupplys = new ArrayList<>();
+         
     }
 
     public void createDesign() {
@@ -62,7 +68,7 @@ public class designView implements Serializable {
     }
 
     public void addSupplyCreate(Supply supply) {
-        NecessarySupply  necessarySupply =  new NecessarySupply(null, 0);
+        NecessarySupply  necessarySupply =  new NecessarySupply(null, 0.1);
         necessarySupply.setDesignId(designCreate);
         necessarySupply.setSupplyCode(supply);
         
@@ -142,6 +148,14 @@ public class designView implements Serializable {
 
     public void setDesignDataCreate(DesignData designDataCreate) {
         this.designDataCreate = designDataCreate;
+    }
+
+    public List<Design> getListDesignEdit() {
+        return listDesignEdit;
+    }
+
+    public void setListDesignEdit(List<Design> listDesignEdit) {
+        this.listDesignEdit = listDesignEdit;
     }
     
     
