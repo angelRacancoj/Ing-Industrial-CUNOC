@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author angelrg
  */
 @Entity
-@Table(name = "group")
+@Table(name = "`group`")
 public class GroupIndustrial implements Serializable {
 
     @Id

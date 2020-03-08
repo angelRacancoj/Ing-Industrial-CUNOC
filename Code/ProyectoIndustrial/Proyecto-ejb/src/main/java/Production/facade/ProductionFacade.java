@@ -1,15 +1,21 @@
 package Production.facade;
 
 
+import Design.Design;
+import Design.DesignData;
+import Production.NecessarySupply;
 import Production.Product;
 import Production.Production;
 import Production.Step;
 import Production.exceptions.MandatoryAttributeProductionException;
+import Production.repository.DesignRepository;
 import Production.repository.ProductRepository;
 import Production.repository.ProductionRepository;
 import Production.repository.StepRepository;
+import Production.service.DesignService;
 import Production.service.ProductionService;
 import Production.service.StepService;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.EJB;
@@ -26,6 +32,9 @@ public class ProductionFacade implements ProductionFacadeLocal {
     private ProductRepository productRepository;
     private StepService stepService;
     private StepRepository stepRepository;
+    private DesignRepository designRepository;
+    
+    private DesignService designService;
 
     
     @EJB
@@ -54,7 +63,19 @@ public class ProductionFacade implements ProductionFacadeLocal {
     public void setProductionRepository(ProductionRepository  productionRepository) {
         this.productionRepository = productionRepository;
     }
+    
+    @EJB
+    public void setDesignService(DesignService designService){
+        this.designService = designService;
+    }
 
+    @EJB
+    public void setDesignRepository(DesignRepository designRepository) {
+        this.designRepository = designRepository;
+    }
+
+    
+    
     /**
      * {@inheritDoc}
      */
@@ -87,9 +108,22 @@ public class ProductionFacade implements ProductionFacadeLocal {
         return productionRepository.findByIdProduction(id);
     }
     
+    @Override
     public List<Product> getProduct(){
         Optional<List<Product>> lista = productRepository.getAll();      
         return lista.get();
+    }
+    
+    @Override
+    public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys){
+        designService.createDesign(design, designData, necessarySupplys);
+    }
+    
+    @Override
+    public List<Design> AllDesigns() {
+        List<Design> list = new ArrayList<>();
+        list  = designRepository.AllDesigns();
+        return list;
     }
     
     

@@ -16,11 +16,13 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author angelrg
  */
+@Stateless
 public class GroupFacade implements GroupFacadelocal {
 
     private GroupUserRepository groupUserRepository;

@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -53,6 +52,13 @@ public class RolUser implements Serializable {
     public int hashCode() {
         return Objects.hash(getIdRolUser());
     }
+
+    @Override
+    public String toString() {
+        return "RolUser{" + "idRol=" + idRol + ", name=" + name + '}';
+    }
+    
+    
 
     public Integer getIdRolUser() {
         return idRol;

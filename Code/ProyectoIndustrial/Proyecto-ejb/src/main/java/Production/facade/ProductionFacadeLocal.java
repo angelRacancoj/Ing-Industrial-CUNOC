@@ -5,6 +5,8 @@
  */
 package Production.facade;
 
+import Design.Design;
+import Design.DesignData;
 import Production.Product;
 import Production.NecessarySupply;
 import Production.Production;
@@ -22,10 +24,18 @@ import javax.ejb.Local;
  */
 @Local
 public interface ProductionFacadeLocal {
-    
-    public void createProduction(Production production)throws MandatoryAttributeProductionException;
-    public void editProduction(Production production)throws MandatoryAttributeProductionException;
+
+    public void createProduction(Production production) throws MandatoryAttributeProductionException;
+
+    public void editProduction(Production production) throws MandatoryAttributeProductionException;
+
     public List<Product> getProduct();
+
     public List<Production> AllProductions();
+
     public Optional<Production> getProductionById(Integer id);
+
+    public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys);
+
+    public List<Design> AllDesigns();
 }

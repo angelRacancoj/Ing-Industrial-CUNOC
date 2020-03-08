@@ -72,6 +72,9 @@ public class SupplyFacade implements SupplyFacadeLocal {
     public List<Supply> searchSupplies(Integer codeSupply, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply) {
         return supplyRepository.getSupply(codeSupply, nameSupply, availabilitySupply, expirationDateSupply);
     }
+    
+    
+    @Override
     public List<Supply> getSupplyAvailable(){
         List<Supply> list =new ArrayList<>();
         list = supplyRepository.getSupply(null, null,AvailabilityFilter.AVAILABLE ,null);
