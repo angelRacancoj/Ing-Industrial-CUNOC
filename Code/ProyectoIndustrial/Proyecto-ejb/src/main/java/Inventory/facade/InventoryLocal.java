@@ -33,7 +33,7 @@ public interface InventoryLocal {
      * @param expirationDateSupply
      * @return
      */
-    public List<Supply> getSupply(Integer codeSupply, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply);
+    public List<Supply> getSupply(Integer codeSupply, String internalCode, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply);
 
     /**
      * Calculate the best Production to produce base on material available

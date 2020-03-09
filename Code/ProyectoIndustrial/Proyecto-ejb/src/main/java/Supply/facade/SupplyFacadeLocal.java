@@ -9,6 +9,7 @@ import java.util.List;
 import User.User;
 import User.exception.UserException;
 import java.time.LocalDate;
+import java.util.Optional;
 import javax.ejb.Local;
 
 @Local
@@ -20,18 +21,16 @@ public interface SupplyFacadeLocal {
      * @return Lista de medidas
      */
     public List<Measure> getAllMeasures();
-    public List<Supply> getSupplyAvailable() ;
-   
+
+    public List<Supply> getSupplyAvailable();
+
     /**
      * *
      * Obtiene una medida por medio de su id
      *
-     * @param measure Objeto de tipo measure que encapsulo el id a buscar
      * @return La medida con el id proporcionado
-     * @throws MandatoryAttributeSupplyException Si hace falta algun atributo
-     * obligatorio
      */
-    public List<Measure> getMeasure(Measure measure) throws MandatoryAttributeSupplyException;
+    public Optional<Measure> getMeasureById(Integer id);
 
     /**
      * *
@@ -50,12 +49,13 @@ public interface SupplyFacadeLocal {
      * proporcionados
      *
      * @param codeSupply codigo del Insumo a buscar
+     * @param internalCode
      * @param nameSupply Nombre del Insumo a buscar
      * @param availabilitySupply Disponibilidad del Insumo a Buscar
      * @param expirationDateSupply Fecha de Expiracion del Insumo a Buscar
      * @return
      */
-    public List<Supply> searchSupplies(Integer codeSupply, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply);
+    public List<Supply> searchSupplies(Integer codeSupply, String internalCode, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply);
 
     /**
      * Set the Quantity to cero and save a who do the change

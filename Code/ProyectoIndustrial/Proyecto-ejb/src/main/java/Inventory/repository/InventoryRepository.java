@@ -40,7 +40,7 @@ public class InventoryRepository {
     }
 
     public List<productionCost> getBestProductsBaseOnAvailableMaterial() {
-        List<Supply> availableSupplies = supplyRepository.getSupply(null, null, AvailabilityFilter.AVAILABLE, ExpirationDateFilter.NOT_EXPIRED);
+        List<Supply> availableSupplies = supplyRepository.getSupply(null, null, null, AvailabilityFilter.AVAILABLE, ExpirationDateFilter.NOT_EXPIRED);
         List<Production> productions = productionRepository.AllProductions();
         List<productionCost> result = new ArrayList<>();
 

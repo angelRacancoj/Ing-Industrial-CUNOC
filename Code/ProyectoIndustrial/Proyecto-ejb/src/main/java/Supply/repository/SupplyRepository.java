@@ -30,7 +30,7 @@ public class SupplyRepository {
         this.entityManager = entityManager;
     }
 
-    public List<Supply> getSupply(Integer codeSupply, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply){       
+    public List<Supply> getSupply(Integer codeSupply, String nameSupply, String internalCode, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply){       
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Supply> criteriaQuery = criteriaBuilder.createQuery(Supply.class);
         Root<Supply> supply = criteriaQuery.from(Supply.class);
@@ -42,6 +42,10 @@ public class SupplyRepository {
         
         if (nameSupply != null){
             predicates.add(criteriaBuilder.like(supply.get("name"), "%" + nameSupply + "%"));
+        }
+        
+        if (internalCode != null){
+            predicates.add(criteriaBuilder.like(supply.get("internalCode"), "%" + internalCode + "%"));
         }
         
         if (availabilitySupply != null){

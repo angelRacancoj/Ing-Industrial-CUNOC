@@ -20,5 +20,10 @@
             <to-view-id>/user/users.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>supplies</from-outcome>
+            <to-view-id>/supplies/searchSupply.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 </faces-config>

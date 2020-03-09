@@ -17,6 +17,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import Supply.repository.AvailabilityFilter;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Stateless
 @LocalBean
@@ -53,8 +54,8 @@ public class SupplyFacade implements SupplyFacadeLocal {
      * {@inheritDoc}
      */
     @Override
-    public List<Measure> getMeasure(Measure measure) throws MandatoryAttributeSupplyException {
-        return measureRepository.getMeasure(measure);
+    public Optional<Measure> getMeasureById(Integer id) {
+        return measureRepository.getMeasureById(id);
     }
 
     /**
@@ -69,15 +70,15 @@ public class SupplyFacade implements SupplyFacadeLocal {
      * {@inheritDoc}
      */
     @Override
-    public List<Supply> searchSupplies(Integer codeSupply, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply) {
-        return supplyRepository.getSupply(codeSupply, nameSupply, availabilitySupply, expirationDateSupply);
-    }
-    public List<Supply> getSupplyAvailable(){
-        List<Supply> list =new ArrayList<>();
-        list = supplyRepository.getSupply(null, null,AvailabilityFilter.AVAILABLE ,null);
-        return list;
+    public List<Supply> searchSupplies(Integer codeSupply, String internalCode, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply) {
+        return supplyRepository.getSupply(codeSupply, nameSupply, internalCode, availabilitySupply, expirationDateSupply);
     }
 
+    public List<Supply> getSupplyAvailable() {
+        List<Supply> list = new ArrayList<>();
+        list = supplyRepository.getSupply(null, null, null, AvailabilityFilter.AVAILABLE, null);
+        return list;
+    }
 
     /**
      * {@inheritDoc}
@@ -99,5 +100,7 @@ public class SupplyFacade implements SupplyFacadeLocal {
     public Supply modifySupply(Supply supply) throws UserException {
         return supplyService.modifySupply(supply);
     }
+
+
 
 }

@@ -120,7 +120,7 @@ public class inventoryView implements Serializable {
     }
 
     public void searchSupply() {
-        setSearchResult(inventoryLocal.getSupply(codeSupply, nameSupply, availabilitySupply, expirationDateSupply));
+//        setSearchResult(inventoryLocal.getSupply(codeSupply, nameSupply, availabilitySupply, expirationDateSupply));
     }
 
     public Supply getSelectedSupply() {

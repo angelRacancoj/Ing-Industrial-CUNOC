@@ -35,8 +35,8 @@ public class Inventory implements InventoryLocal {
      * {@inheritDoc}
      */
     @Override
-    public List<Supply> getSupply(Integer codeSupply, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply) {
-        return supplyRepository.getSupply(codeSupply, nameSupply, availabilitySupply, expirationDateSupply);
+    public List<Supply> getSupply(Integer codeSupply, String internalCode, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply) {
+        return supplyRepository.getSupply(codeSupply, nameSupply, internalCode, availabilitySupply, expirationDateSupply);
     }
 
     /**

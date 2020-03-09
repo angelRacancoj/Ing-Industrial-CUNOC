@@ -10,7 +10,6 @@ public class SupplyTest {
     Integer testCode = 100;
     String testInternalCode = "s1";
     String testName = "name test of a Supply";
-    boolean testIsExpired = true;
     LocalDate testExpirationDate = LocalDate.now();
     LocalDate testDateAdmission = LocalDate.now();
     Double testCost = 10.10;
@@ -18,7 +17,7 @@ public class SupplyTest {
     Boolean testAvailability = true;
     String testDescription = "Text of Description of a Supply";
     Measure testMeasure = new Measure();
-    Supply testSupplyFullConstructor = new Supply(testCode, testInternalCode, testName, testIsExpired, testExpirationDate, testDateAdmission, testCost, testQuantity, testAvailability, testDescription, testMeasure);
+    Supply testSupplyFullConstructor = new Supply(testCode, testInternalCode, testName, testExpirationDate, testDateAdmission, testCost, testQuantity, testAvailability, testDescription, testMeasure);
 
     @Test
     public void testSetAndGetCode() throws Exception {
@@ -42,14 +41,6 @@ public class SupplyTest {
         String result = testSupply.getInternalCode();
 
         Assert.assertEquals(result, testInternalCode);
-    }
-
-    @Test
-    public void testSetAndGetIsExpired() throws Exception {
-        testSupply.setIsExpired(testIsExpired);
-        boolean result = testSupply.isIsExpired();
-
-        Assert.assertEquals(result, testIsExpired);
     }
 
     @Test
