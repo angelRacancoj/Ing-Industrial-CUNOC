@@ -25,7 +25,7 @@ public class RolUserRepository {
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     private EntityManager entityManager;
 
-    public static final String QUERY_FIND_BY_ID = "SELECT r FROM rol_user r WHERE r.id_rol = :idRolUserParameter";
+    public static final String QUERY_FIND_BY_ID = "SELECT r FROM RolUser r WHERE r.idRol = :idRolUserParameter";
 
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;

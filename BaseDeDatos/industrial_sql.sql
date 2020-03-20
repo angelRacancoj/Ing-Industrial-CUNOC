@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`product` (
   `description` TINYTEXT NOT NULL,
   PRIMARY KEY (`id_product`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -50,10 +51,10 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`design_data` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`design_data` (
-  `iddesign_data` INT NOT NULL,
+  `iddesign_data` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `description` TINYTEXT NULL,
-  `picture` MEDIUMBLOB NULL,
+  `description` TINYTEXT NULL DEFAULT NULL,
+  `picture` MEDIUMBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`iddesign_data`))
 ENGINE = InnoDB;
 
@@ -65,8 +66,8 @@ DROP TABLE IF EXISTS `produccion_industrial`.`design` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`design` (
   `id_design` INT NOT NULL AUTO_INCREMENT,
-  `design_data` INT NULL,
-  `product_id_product` INT NULL,
+  `design_data` INT NULL DEFAULT NULL,
+  `product_id_product` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id_design`),
   INDEX `fk_design_design_data1_idx` (`design_data` ASC),
   INDEX `fk_design_product1_idx` (`product_id_product` ASC),
@@ -89,16 +90,16 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `produccion_industrial`.`production` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`production` (
-  `id_production` INT NOT NULL,
+  `id_production` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NOT NULL,
   `start_date` DATE NOT NULL,
-  `end_date` DATE NULL,
+  `end_date` DATE NULL DEFAULT NULL,
   `state` TINYINT(1) NOT NULL,
   `qualification` DOUBLE NULL DEFAULT NULL,
-  `quantity` INT NULL,
-  `init_cost` DOUBLE NULL,
-  `final_cost` DOUBLE NULL,
-  `product_id` INT NOT NULL,
+  `quantity` INT NULL DEFAULT NULL,
+  `init_cost` DOUBLE NULL DEFAULT NULL,
+  `final_cost` DOUBLE NULL DEFAULT NULL,
+  `product_id` INT NULL,
   `group_id` INT NOT NULL,
   `design_id` INT NOT NULL,
   `post_design` INT NOT NULL,
@@ -110,21 +111,15 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`production` (
   CONSTRAINT `fk_LINEA_DE_PRODUCCION_PRODUCTO1`
     FOREIGN KEY (`product_id`)
     REFERENCES `produccion_industrial`.`product` (`id_product`),
-  CONSTRAINT `fk_production_group1`
-    FOREIGN KEY (`group_id`)
-    REFERENCES `produccion_industrial`.`group` (`id_group`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_production_design1`
     FOREIGN KEY (`design_id`)
-    REFERENCES `produccion_industrial`.`design` (`id_design`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `produccion_industrial`.`design` (`id_design`),
   CONSTRAINT `fk_production_design2`
     FOREIGN KEY (`post_design`)
-    REFERENCES `produccion_industrial`.`design` (`id_design`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `produccion_industrial`.`design` (`id_design`),
+  CONSTRAINT `fk_production_group1`
+    FOREIGN KEY (`group_id`)
+    REFERENCES `produccion_industrial`.`group` (`id_group`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -154,7 +149,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `produccion_industrial`.`stage` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`stage` (
-  `id_stage` INT NOT NULL,
+  `id_stage` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NOT NULL,
   `production_id` INT NOT NULL,
@@ -173,7 +168,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`step` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`step` (
-  `id_step` INT NOT NULL,
+  `id_step` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` TINYTEXT NOT NULL,
   `stage_id` INT NOT NULL,
@@ -192,16 +187,14 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`commentary` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`commentary` (
-  `id_commentary` INT NOT NULL,
+  `id_commentary` INT NOT NULL AUTO_INCREMENT,
   `commentary` TINYTEXT NOT NULL,
   `id_step` INT NOT NULL,
   PRIMARY KEY (`id_commentary`),
   INDEX `fk_COMMENTARY_step1_idx` (`id_step` ASC),
   CONSTRAINT `fk_COMMENTARY_step1`
     FOREIGN KEY (`id_step`)
-    REFERENCES `produccion_industrial`.`step` (`id_step`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `produccion_industrial`.`step` (`id_step`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -251,7 +244,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`necessary_supply` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`necessary_supply` (
-  `id_necessary_supply` INT NOT NULL,
+  `id_necessary_supply` INT NOT NULL AUTO_INCREMENT,
   `quantity` DOUBLE NOT NULL,
   `supply_code` INT NOT NULL,
   `design_id` INT NOT NULL,
@@ -329,7 +322,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `produccion_industrial`.`group_user` ;
 
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`group_user` (
-  `id_gruop_user` INT NOT NULL,
+  `id_gruop_user` INT NOT NULL AUTO_INCREMENT,
   `admission_date` DATE NOT NULL,
   `group_id` INT NOT NULL,
   `user_carnet` INT NOT NULL,
@@ -338,10 +331,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`group_user` (
   INDEX `fk_group_user_user1_idx` (`user_carnet` ASC),
   CONSTRAINT `fk_GRUPO_USUARIO_GRUPO1`
     FOREIGN KEY (`group_id`)
-    REFERENCES `produccion_industrial`.`group` (`id_group`),
-  CONSTRAINT `fk_group_user_user1`
-    FOREIGN KEY (`user_carnet`)
-    REFERENCES `produccion_industrial`.`user` (`carnet`))
+    REFERENCES `produccion_industrial`.`group` (`id_group`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -375,3 +365,9 @@ DEFAULT CHARACTER SET = utf8;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO `rol_user` (`id_rol`, `name_rol`) VALUES ('1', 'Estudiante');
+INSERT INTO `rol_user` (`id_rol`, `name_rol`) VALUES ('2', 'Catedratico');
+INSERT INTO `rol_user` (`id_rol`, `name_rol`) VALUES ('3', 'Administrador'); 
+
+INSERT INTO `measure` (`id_measure`, `name`) VALUES ('1', 'mililitros'), ('2', 'milimetros'), ('3', 'milimetros cuadrados'), ('4', 'gramos');

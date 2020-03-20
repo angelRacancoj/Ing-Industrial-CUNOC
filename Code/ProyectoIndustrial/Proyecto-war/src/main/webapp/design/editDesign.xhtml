@@ -17,16 +17,26 @@
                     <p:fieldset id="designDataField" legend="Escoga el diseño que desea editar">
                         <p:dataTable id="editDesignTable" var="design" value="#{designView.listDesignEdit}" emptyMessage="No hay diseños disponibles">
 
-                            <p:column headerText="Codigo" filterBy="#{design.designData.iddesignData}" filterMatchMode="contains" >
+                            <p:column headerText="Codigo" filterBy="#{design.designData.iddesignData}" filterMatchMode="contains" style="width: 10%" >
                                 <h:outputText value="#{design.designData.iddesignData}" />
                             </p:column>
 
-                            <p:column headerText="Nombre" filterBy="#{design.designData.name}" filterMatchMode="contains">
+                            <p:column headerText="Nombre" filterBy="#{design.designData.name}" filterMatchMode="contains" style="width: 30%" >
                                 <h:outputText value="#{design.designData.name}" />
                             </p:column>
 
                             <p:column headerText="Descripcion">
                                 <h:outputText value="#{design.designData.description}" />
+                            </p:column>
+
+                            <p:column headerText="Editar" style="width: 10%;">
+                                <p:commandLink styleClass="btn btn-success" style="width: 100%;"
+                                               update=":#{p:component('editDesignForm')},:#{p:component('editDesignTable')}, :#{p:component('formDialogEdit')}"
+                                               onclick="PF('wdialogEdit').show();"
+                                               actionListener="#{designView.selectDesignEdit(design)}" process="@this">
+                                    <span class="glyphicon glyphicon-edit"></span> Editar Diseño
+
+                                </p:commandLink>
                             </p:column>
 
                         </p:dataTable>
@@ -65,6 +75,41 @@
 
                         </h:panelGrid>
                     </p:outputPanel>
+                </p:dialog>
+
+
+                <p:dialog header="Editar diseño" widgetVar="wdialogEdit" resizable="false" draggable="false"
+                          showEffect="fade" hideEffect="fade" modal="true">
+                    <h:form id="formDialogEdit">
+                        <p:fieldset id="designDataField" legend="Datos del diseño">
+
+                            <h:panelGrid columns="2" >
+
+
+                                <h:column/>
+                                <p:fileUpload id="image" value="#{designView.designSelectedEdit.designData.picture}" mode="advanced" skinSimple="true"
+                                              label="Seleccione una imagen" uploadLabel="Subir imagen" cancelLabel="Cancelar"/>
+
+
+
+                                <p:outputLabel for="txtName" value="Nombre:"/>
+                                <p:inputText id="txtName" value="#{designView.designSelectedEdit.designData.name}"  required="true"  styleClass="form-control"/>
+
+
+
+                                <p:outputLabel  value="Descripcion:"/>
+                                <p:inputTextarea value="#{designView.designSelectedEdit.designData.description}" rows="6" cols="33" styleClass="form-control"  />
+
+                            </h:panelGrid>
+                        </p:fieldset>
+                        <p:commandLink styleClass="btn btn-success"  style="width: 60%;"
+                                       update="@form, :#{p:component('growl')}"
+                                       actionListener="#{groupView.editGroup()}"  >
+                            <span class="glyphicon glyphicon-plus-sign"></span> Crear Diseño
+
+                        </p:commandLink>
+                    </h:form>
+
                 </p:dialog>
 
 

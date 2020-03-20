@@ -30,7 +30,10 @@ public class DesignService {
     }
 
     public Design createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys){
+        //entityManager.merge(design.getProductIdProduct());
         
+        //entityManager.merge(designData);
+        //entityManager.merge(necessarySupplys);
         
         design.setDesignData(designData);
         design.setNecessarySupplyList(necessarySupplys);

@@ -61,7 +61,7 @@ public class Production implements Serializable {
     @ManyToOne(optional = false)
     private GroupIndustrial groupId;
     @JoinColumn(name = "product_id", referencedColumnName = "id_product")
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Product productId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productionId")
     private List<Stage> stageList;
@@ -203,4 +203,30 @@ public class Production implements Serializable {
     public void setExtraCostList(List<ExtraCost> extraCostList) {
         this.extraCostList = extraCostList;
     }
+    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idProduction != null ? idProduction.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Production)) {
+            return false;
+        }
+        Production other = (Production) object;
+        if ((this.idProduction == null && other.idProduction != null) || (this.idProduction != null && !this.idProduction.equals(other.idProduction))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entidades.Production[ idProduction=" + idProduction + " ]";
+    }
+    
 }

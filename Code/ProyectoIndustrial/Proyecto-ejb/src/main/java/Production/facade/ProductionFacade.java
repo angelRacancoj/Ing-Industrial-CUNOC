@@ -127,5 +127,11 @@ public class ProductionFacade implements ProductionFacadeLocal {
     }
     
     
+    @Override
+    public Product getProductById(int id){
+        return productRepository.getProductById(id).get();
+         
+    }
+    
     
 }

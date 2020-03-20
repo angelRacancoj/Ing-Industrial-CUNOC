@@ -38,4 +38,6 @@ public interface ProductionFacadeLocal {
     public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys);
 
     public List<Design> AllDesigns();
+    
+     public Product getProductById(int id);
 }
