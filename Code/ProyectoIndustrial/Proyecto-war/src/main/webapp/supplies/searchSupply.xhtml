@@ -201,7 +201,10 @@
                             <div class="col-md-8">
                                 <p:spinner id="quantity" pt:required="true" styleClass="form-control" 
                                            pt:placeholder="Cantidad Actual" min="0" required="true"
-                                           value="#{searchSupplyView.selectedSupply.quantity}"/>
+                                           stepFactor="0.01"
+                                           value="#{searchSupplyView.selectedSupply.quantity}">
+                                    <f:convertNumber maxFractionDigits="4"/>
+                                </p:spinner>  
                             </div>
                         </div>
                         <div class="row form-group">
@@ -258,7 +261,9 @@
                             <p:outputLabel for="costo" value="Costo:" styleClass="col-md-4 control-label"/>
                             <div class="col-md-8">
                                 <p:spinner id="costo" pt:required="true" required="true" styleClass="form-control" 
-                                           value="#{searchSupplyView.selectedSupply.cost}"/>
+                                           stepFactor="0.01" value="#{searchSupplyView.selectedSupply.cost}">
+                                    <f:convertNumber maxFractionDigits="5"/>
+                                </p:spinner>  
                             </div>
                         </div>
                         <div class="row form-group">

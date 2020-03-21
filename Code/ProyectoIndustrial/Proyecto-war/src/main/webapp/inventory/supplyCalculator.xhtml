@@ -1,223 +1,203 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                    template="../templates/template-one.xhtml"
-                    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-                    xmlns:p="http://primefaces.org/ui"
-                    xmlns:h="http://xmlns.jcp.org/jsf/html"
-                    xmlns:jsf="http://xmlns.jcp.org/jsf"
-                    xmlns:f="http://xmlns.jcp.org/jsf/core">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="../templates/template-one.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:of="http://omnifaces.org/functions">
 
-        <f:metadata>
-        </f:metadata>
+    <ui:define name="title">
+        Calculadora
+    </ui:define>
 
-        <ui:define name="head">
-            Calculo de Materiales
-        </ui:define>
-
-        <ui:define name="content">
-
-            <script type="text/javascript">
-                function handleDrop(event, ui) {
-                    var droppedProduction = ui.draggable;
-                    droppedProduction.fadeOut('fast');
-                }
-            </script>
-            <h:form id="productionsSearch">
-                <fieldset>
-                    <legend>#{i18nLabels.Search}</legend>
-                    <div class="row">
-
-                    </div>
-                    <div class="row">
-                        <div class="btn-group pull-right">
-                            <p:commandLink styleClass="btn btn-primary"
-                                           update="productionTable"
-                                           actionListener="#{supplyCalculatorView.searchProduction()}">
-                                <span class="glyphicon glyphicon-search"></span> Buscar
-                            </p:commandLink>
-                        </div>
-                    </div>
-                </fieldset>
-
+    <ui:define name="content">
+        <h:form id="supplyCalculator">
+            <fieldset>
+                <legend>Calcular Insumo Necesarios</legend>
                 <div class="row">
-                    <p:fieldset id="availableProductionField" legend="Producciones">
-                        <p:dataTable id="productionTable" var="productions" value="#{supplyCalculatorView.productionList}">
-                            <p:column style="width:20px">
-                                <h:outputText id="dragIcon" styleClass="glyphicon glyphicon-plus"/>
-                                <p:draggable for="dragIcon" revert="true" helper="clone" />
-                            </p:column>
-
-                            <p:column headerText="Codigo">
-                                <h:outputText value="#{productions.idProduction}" />
-                            </p:column>
-                            <p:column headerText="Nombre">
-                                <h:outputText value="#{productions.name}" />
-                            </p:column>
-                            <p:column headerText="Tipo de Producto">
-                                <h:outputText value="#{productions.productId.idProduct} #{selectedP.productId.name}" />
-                            </p:column>
-                            <p:column headerText="Costo inicial">
-                                <h:outputText value="Q. #{productions.initCost}" />
-                            </p:column>
-                            <p:column headerText="Estado">
-                                <h:outputText value="#{productions.state}" />
-                            </p:column>
-                            <p:column headerText="Estado">
-                                <h:outputText value="#{productions.state}" />
-                            </p:column>
-
-                            <p:column headerText="Fecha de Creacion">
-                                <h:outputText value="#{productions.startDate}" >
-                                    <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
-                                </h:outputText>
-                            </p:column>
-                            <p:column headerText="Fecha de Creacion">
-                                <h:outputText value="#{productions.endDate}" >
-                                    <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
-                                </h:outputText>
-                            </p:column>
-
-                            <p:column headerText="Diseño">
-                                <h:outputText value="#{productions.designId.idDesign} #{productions.designId.designData.name}" />
-                            </p:column>
-                        </p:dataTable>
-                    </p:fieldset>
-
-                    <p:fieldset id="selectedProductionArea" legend="Producciones Seleccionadas" style="margin-top:20px">
-                        <p:outputPanel id="dropArea">
-                            <h:outputText value="!!!Arrastra Aquí!!!" rendered="#{empty supplyCalculatorView.selectedProductions}" style="font-size:24px;" />
-                            <p:dataTable id="selectedProductionTable" var="selectedP" value="#{supplyCalculatorView.selectedProductions}" rendered="#{not empty supplyCalculatorView.selectedProductions}">
-
-                                <p:column headerText="Codigo">
-                                    <h:outputText value="#{selectedP.production.idProduction}" />
-                                </p:column>
-                                <p:column headerText="Nombre">
-                                    <h:outputText value="#{selectedP.production.name}" />
-                                </p:column>
-                                <p:column headerText="Tipo de Producto">
-                                    <h:outputText value="#{selectedP.production.productId.idProduct} #{selectedP.production.productId.name}" />
-                                </p:column>
-                                <p:column headerText="Costo Inicial">
-                                    <h:outputText value="Q. #{selectedP.production.initCost}" />
-                                </p:column>
-                                <p:column headerText="Estado">
-                                    <h:outputText value="#{selectedP.production.state}" />
-                                </p:column>
-
-                                <p:column headerText="Fecha de Creacion">
-                                    <h:outputText value="#{selectedP.production.startDate}" >
-                                        <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
-                                    </h:outputText>
-                                </p:column>
-                                <p:column headerText="Fecha de Finalizacion">
-                                    <h:outputText value="#{selectedP.production.endDate}" >
-                                        <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
-                                    </h:outputText>
-                                </p:column>
-
-                                <p:column headerText="Diseño">
-                                    <h:outputText value="#{productions.designId.idDesign} #{productions.designId.designData.name}" />
-                                </p:column>
-
-                                <p:column style="width:65px" headerText="Lotes">
-                                    <p:spinner id="minMax" value="#{selectedP.batch}" min="1"/>
-                                </p:column>
-
-                            </p:dataTable>
-                        </p:outputPanel>
-                    </p:fieldset>
-
-                    <p:droppable for="selectedProductionArea" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="productionTable" onDrop="handleDrop">
-                        <p:ajax listener="#{supplyCalculatorView.onProductionDrop}" update="dropArea productionTable" />
-                    </p:droppable>
+                    <div class="form-group col-sm-4">
+                        <p:outputLabel for="idProduction" value="Codigo:" />
+                        <p:spinner id="idProduction" styleClass="form-control"
+                                   min="0" value="#{supplyCalculatorView.id}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <p:outputLabel for="name" value="Nombre:" />
+                        <p:inputText id="name"
+                                     styleClass="form-control"
+                                     pt:placeholder="Nombre Usuario"
+                                     value="#{supplyCalculatorView.productionName}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <p:outputLabel for="product" value="Producto:" />
+                        <p:selectOneMenu id="product"  value="#{supplyCalculatorView.product}" 
+                                         converter="productConverter" >
+                            <f:selectItems value="#{supplyCalculatorView.products}" var="product"
+                                           itemValue="#{product}" itemLabel="#{product.name}"/>
+                        </p:selectOneMenu>
+                    </div>
                 </div>
 
-                <p:commandLink styleClass="btn btn-primary" oncomplete="PF('necessarySup').show();"
-                               update=":#{p:component('necessarySup')}"
-                               actionListener="#{supplyCalculatorView.productionCost()}">
-                    <span class="glyphicon glyphicon-search"></span> Calcular
-                </p:commandLink>
-            </h:form>
+                <div class="row">
+                    <div class="btn-group pull-right">
+                        <p:commandLink styleClass="btn btn-primary" update=":usersTable"
+                                       actionListener="#{supplyCalculatorView.searchProduction()}">
+                            <span class="glyphicon glyphicon-search"></span> Buscar
+                        </p:commandLink>
+                    </div>
+                </div>
+            </fieldset>
+        </h:form>
+        <div class="row">
+            <p:dataTable id="usersTable" var="productionL" value="#{supplyCalculatorView.productionList}"
+                         reflow="true">
+                <p:column headerText="Codigo">
+                    <h:outputText value="#{productionL.production.idProduction}" />
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{productionL.production.name}" />
+                </p:column>
+                <p:column headerText="Producto">
+                    <h:outputText value="#{productionL.production.productId.name}" />
+                </p:column>
+                <p:column headerText="Grupo">
+                    <h:outputText value="#{productionL.production.groupId.name}" />
+                </p:column>
+                <p:column headerText="Información" styleClass="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Información">
+                        <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('infoAbout').show();"
+                                       update=":#{p:component('infoAbout')}">
+                            <f:setPropertyActionListener value="#{productionL}" target="#{supplyCalculatorView.selectedProduction}"/>
+                            <span class="glyphicon glyphicon-file"></span>
+                        </p:commandLink>
+                    </p>
+                </p:column>
+                <p:column headerText="Reset Contrasena" rendered="#{p:ifAnyGranted(constants.adminDocente())}" styleClass="text-center">
+                    <p:spinner id="units" min="1" value="#{productionL.units}"/>
+                    <p data-placement="top" data-toggle="tooltip" title="Calcular">
+                        <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('calculate').show();"
+                                       update=":#{p:component('calculate')}" 
+                                       actionListener="#{supplyCalculatorView.calculateCost()}">
+                            <f:setPropertyActionListener value="#{productionL}" target="#{supplyCalculatorView.selectedProduction}"/>
+                            <span class="glyphicon glyphicon-check"></span>
+                        </p:commandLink>
+                    </p>
+                </p:column>
+            </p:dataTable>
 
-            <p:dialog header="Insumos Necesarios" id="necessarySup" widgetVar="necessarySup"
+            <!-- Informacion del Insumo -->
+            <p:dialog header="#{supplyCalculatorView.selectedProduction.production.idProduction}" id="infoAbout" widgetVar="infoAbout"
                       fitViewport="true" modal="true" closeOnEscape="true">
-                <p:ajax event="close" listener="#{supplyCalculatorView.cleanSelectedProductionAndProductionList()}" update="@this" />
+                <p:ajax event="close" listener="#{supplyCalculatorView.cleanCriteria()}" update="@this" />
                 <h:form>
                     <div class="modal-body">
-
-                        <p:dataTable var="finalProd" value="#{supplyCalculatorView.finalProductions}">
-                            <f:facet name="header">
-                                Insumos Necesarios
-                            </f:facet>
-
-                            <p:columnGroup type="header">
-                                <p:row>
-                                    <p:column rowspan="2" headerText="Insumo" />
-                                    <p:column colspan="2" headerText="Informacion" />
-                                </p:row>
-                                <p:row>
-                                    <p:column headerText="Nombre" />
-                                    <p:column headerText="Cantidad" />
-                                </p:row>
-                            </p:columnGroup>
-
-                            <p:subTable var="supplyns" value="#{finalProd.supplies}">
-                                <f:facet name="header">
-                                    <h:outputText value="#{finalProd.production.infoAbout}" />
-                                </f:facet>
-                                <p:column>
-                                    <h:outputText value="#{supplyns.supply.code}" />
-                                </p:column>
-                                <p:column>
-                                    <h:outputText value="#{supplyns.supply.name}" />
-                                </p:column>
-                                <p:column>
-                                    <h:outputText value="#{supplyns.quantity}" />
-                                </p:column>
-                                <p:columnGroup type="footer">
-                                    <p:row>
-                                        <p:column footerText="Totals: " style="text-align:right"/>
-                                        <p:column footerText="#{finalProd.cost}" />
-                                        <p:column footerText="#{finalProd.cost}" />
-                                    </p:row>
-                                </p:columnGroup>
-                            </p:subTable>
-                        </p:dataTable>
-                        <!--
-                                                <p:repeat value="#{supplyCalculatorView.finalProductions}" var="fProduction" id="nsView">
-                                                    <p:outputLabel value="#{fProduction.production.infoAbout}" styleClass="col-md-4 control-label"/>
-                        
-                                                    <p:dataTable  value="#{fProduction.supplies}" var="supplyNS" >
-                                                        <p:column headerText="Codigo">
-                                                            <h:outputText value="#{supplyNS.supply.code}" />
-                                                        </p:column>
-                                                        <p:column headerText="Nombre">
-                                                            <h:outputText value="#{supplyNS.supply.name}" />
-                                                        </p:column>
-                                                        <p:column headerText="Cantidad">
-                                                            <h:outputText value="#{supplyNS.quantity}" />
-                                                        </p:column>
-                                                        <p:column headerText="Descripcion">
-                                                            <h:outputText value="#{supplyNS.supply.description}" />
-                                                        </p:column>
-                                                    </p:dataTable>
-                        
-                                                </p:repeat>
-                        -->
+                        <fieldset>
+                            <div class="row form-group">
+                                <p:outputLabel value="Codigo:" styleClass="col-md-4 control-label"/>
+                                <div class="col-md-8">
+                                    <h:outputText value="#{supplyCalculatorView.selectedProduction.production.idProduction}"/>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <p:outputLabel value="Nombre:" styleClass="col-md-4 control-label"/>
+                                <div class="col-md-8">
+                                    <h:outputText value="#{supplyCalculatorView.selectedProduction.production.name}"/>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <p:outputLabel value="Fecha de Inicio:" styleClass="col-md-4 control-label"/>
+                                <div class="col-md-8">
+                                    <h:outputText value="#{supplyCalculatorView.selectedProduction.production.startDate}"/>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <p:outputLabel value="Fecha de Finalización:" styleClass="col-md-4 control-label"/>
+                                <div class="col-md-8">
+                                    <h:outputText value="#{supplyCalculatorView.selectedProduction.production.endDate}"/>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <p:outputLabel value="Calificación:" styleClass="col-md-4 control-label"/>
+                                <div class="col-md-8">
+                                    <h:outputText value="#{supplyCalculatorView.selectedProduction.production.qualification}"/>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <p:outputLabel value="Cantidad:" styleClass="col-md-4 control-label"/>
+                                <div class="col-md-8">
+                                    <h:outputText value="#{supplyCalculatorView.selectedProduction.production.quantity}"/>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <p:outputLabel value="Costo Inicial:" styleClass="col-md-4 control-label"/>
+                                <div class="col-md-8">
+                                    <h:outputText value="#{supplyCalculatorView.selectedProduction.production.initCost}"/>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <p:outputLabel value="Costo final:" styleClass="col-md-4 control-label"/>
+                                <div class="col-md-8">
+                                    <h:outputText value="#{supplyCalculatorView.selectedProduction.production.finalCost}"/>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <p:outputLabel value="Costo por #{supplyCalculatorView.selectedProduction.production.designId.idDesign}:" styleClass="col-md-4 control-label"/>
+                                <div class="col-md-8">
+                                    <h:outputText value="#{supplyCalculatorView.selectedProduction.production.designId.designData.name}"/>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <p:outputLabel value="Costo por #{supplyCalculatorView.selectedProduction.production.postDesign.idDesign}:" styleClass="col-md-4 control-label"/>
+                                <div class="col-md-8">
+                                    <h:outputText value="#{supplyCalculatorView.selectedProduction.production.postDesign.designData.name}"/>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <p:outputLabel value="Costo por #{supplyCalculatorView.selectedProduction.production.groupId.idGroup}:" styleClass="col-md-4 control-label"/>
+                                <div class="col-md-8">
+                                    <h:outputText value="#{supplyCalculatorView.selectedProduction.production.groupId.name}"/>
+                                </div>
+                            </div>
                     </div>
-
+                    <div class="row form-group">
+                        <p:outputLabel value="Costo por #{supplyCalculatorView.selectedProduction.production.productId.idProduct}:" styleClass="col-md-4 control-label"/>
+                        <div class="col-md-8">
+                            <h:outputText value="#{supplyCalculatorView.selectedProduction.production.productId.name}"/>
+                        </div>
+                    </div>
+                    </fieldset>
+                    </div>
                 </h:form>
             </p:dialog>
 
-        </ui:define>
+            <p:dialog header="#{supplyCalculatorView.selectedProduction.production.idProduction}" id="calculate" widgetVar="calculate"
+                      fitViewport="true" modal="true" closeOnEscape="true">
+                <p:ajax event="close" listener="#{supplyCalculatorView.cleanSearch()}" update="@this" />
+                <h:form>
+                    <p:dataTable id="supplyQuantityTable" var="supplyQ" value="#{supplyCalculatorView.suplyQuantity}"
+                                 reflow="true">
+                        <p:column headerText="Codigo">
+                            <h:outputText value="#{supplyQ.supply.code}" />
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{supplyQ.supply.name}" />
+                        </p:column>
+                        <p:column headerText="Disponible">
+                            <h:outputText value="#{supplyQ.supply.quantity}" />
+                        </p:column>
+                        <p:column headerText="Necesario">
+                            <h:outputText value="#{supplyQ.quantity}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:dialog>
+        </div>
+    </ui:define>
 
-    </ui:composition>
-</html>
+</ui:composition>

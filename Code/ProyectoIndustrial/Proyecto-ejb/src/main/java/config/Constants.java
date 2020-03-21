@@ -8,7 +8,7 @@ public class Constants {
     public static final String DOCENTE = "Docente";
     public static final String ESTUDIANTE = "Estudiante";
     public static final String ADMINISTRADOR = "Administrador";
-    public static final String MAIN_PAGE = "/templates/template-one.xhtml";    
+    public static final String MAIN_PAGE = "/principal.xhtml";    
     
 
 }

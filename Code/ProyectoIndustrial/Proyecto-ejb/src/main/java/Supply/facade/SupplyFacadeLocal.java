@@ -58,16 +58,6 @@ public interface SupplyFacadeLocal {
     public List<Supply> searchSupplies(Integer codeSupply, String internalCode, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply);
 
     /**
-     * Set the Quantity to cero and save a who do the change
-     *
-     * @param supplyToChange
-     * @param user
-     * @param noteModify
-     * @return
-     */
-    public Supply modifyByTheft(Supply supplyToChange, User user, String noteModify);
-
-    /**
      * This option allow to modify the quantity available, and save the identity
      * of the modifier user
      *
@@ -78,16 +68,12 @@ public interface SupplyFacadeLocal {
      * @return
      * @throws Supply.exception.MandatoryAttributeSupplyException
      */
-    public Supply modifyByMissing(Supply supplyToChange, Double newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException;
+    public Supply modifyQuantity(Supply supplyToChange, Double newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException;
 
     /**
      * This option allow to modify simple attributes
      *
      * @param supply
-     * @param newName
-     * @param newExpirationDate
-     * @param newCost
-     * @param newDescription
      * @return
      */
     public Supply modifySupply(Supply supply) throws UserException;

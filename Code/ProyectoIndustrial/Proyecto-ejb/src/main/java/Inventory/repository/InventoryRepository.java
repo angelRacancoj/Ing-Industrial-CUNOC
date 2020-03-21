@@ -1,18 +1,15 @@
 package Inventory.repository;
 
+import Design.Design;
+import Inventory.objects.ProductionUnits;
 import Inventory.objects.SupplyQuantity;
-import Inventory.objects.productionCost;
+import Production.ExtraCost;
 import Production.NecessarySupply;
+import Production.Product;
 import Production.Production;
-import Production.Stage;
-import Production.Step;
 import Production.repository.ProductionRepository;
-import Supply.Supply;
-import Supply.repository.AvailabilityFilter;
-import Supply.repository.ExpirationDateFilter;
-import Supply.repository.SupplyRepository;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -26,59 +23,61 @@ import javax.ejb.Stateless;
 @LocalBean
 public class InventoryRepository {
 
-    private SupplyRepository supplyRepository;
     private ProductionRepository productionRepository;
-
-    @EJB
-    public void setSupplyRepository(SupplyRepository supplyRepository) {
-        this.supplyRepository = supplyRepository;
-    }
 
     @EJB
     public void setProductionRepository(ProductionRepository productionRepository) {
         this.productionRepository = productionRepository;
     }
 
-    public List<productionCost> getBestProductsBaseOnAvailableMaterial() {
-        List<Supply> availableSupplies = supplyRepository.getSupply(null, null, null, AvailabilityFilter.AVAILABLE, ExpirationDateFilter.NOT_EXPIRED);
-        List<Production> productions = productionRepository.AllProductions();
-        List<productionCost> result = new ArrayList<>();
+    /**
+     * TODO needs a function that get the best options
+     *
+     * @return
+     */
+    public List<Production> getBestProductsBaseOnAvailableMaterial() {
+        return null;
+    }
 
-        if (!availableSupplies.isEmpty() && !productions.isEmpty()) {
-            for (Production prod : productions) {
-                List<Supply> supplies = new ArrayList<>();
-                for (NecessarySupply necessarySupplie : getNecessarySupplies(prod)) {
-                    supplies.add(necessarySupplie.getSupplyCode());
-                }
-                if ((!supplies.isEmpty()) && availableSupplies.containsAll(supplies)) {
-                    result.add(new productionCost(prod, 0));
-                }
-            }
+    public double costByPruductionAndQuantityWithExtraCost(ProductionUnits productionUnits) {
+        double cost = costByPruductionAndQuantityWithoutExtraCost(productionUnits);
+        for (ExtraCost extraCost : productionUnits.getProduction().getExtraCostList()) {
+            cost += extraCost.getCost();
         }
-        return result;
+        return cost;
     }
 
-    public List<productionCost> costByPruductionAndBatch(List<productionCost> selectedProduction) {
-//        for (productionCost selectedProd : selectedProduction) {
-//            List<SupplyQuantity> supplies = new LinkedList<>();
-//            for (NecessarySupply necessarySupplie : getNecessarySupplies(selectedProd.getProduction())) {
-//                supplies.add(new SupplyQuantity(necessarySupplie.getSupplyCode(), (necessarySupplie.getQuantity() * selectedProd.getBatch())));
-//            }
-//            selectedProd.setSupplies(supplies);
-//            selectedProd.setCost((selectedProd.getProduction().getPriceLot() * selectedProd.getBatch()));
-//        }
-//        return selectedProduction;
-        return null;
+    public double costByPruductionAndQuantityWithoutExtraCost(ProductionUnits productionUnits) {
+        double cost = 0;
+        for (SupplyQuantity necessarySupply : getNecessarySupplies(productionUnits)) {
+            cost += (necessarySupply.getQuantity() * necessarySupply.getSupply().getCost());
+        }
+        return cost;
     }
 
-    public List<NecessarySupply> getNecessarySupplies(Production production) {
-//        List<NecessarySupply> result = new LinkedList<>();
-//        for (Stage stageList : production.getStageList()) {
-//            for (Step stepList : stageList.getStepList()) {
-//                result.addAll(stepList.getNecessarySupplyList());
-//            }
-//        }
-//        return result;
-        return null;
+    public List<SupplyQuantity> getNecessarySupplies(ProductionUnits productionUnits) {
+        Production product = productionRepository.findByIdProduction(productionUnits.getProduction().getIdProduction()).get();
+        if (product.getPostDesign() != null) {
+            return necesarySupplyByQuantity(product.getPostDesign(), productionUnits.getUnits());
+        } else {
+            return necesarySupplyByQuantity(product.getDesignId(), productionUnits.getUnits());
+        }
+    }
+
+    private List<SupplyQuantity> necesarySupplyByQuantity(Design design, int quantity) {
+        ArrayList<SupplyQuantity> necesarySupplies = new ArrayList<>();
+        for (NecessarySupply necessaryS : design.getNecessarySupplyList()) {
+            necesarySupplies.add(new SupplyQuantity(necessaryS.getSupplyCode(), necessaryS.getQuantity() * quantity));
+        }
+        return necesarySupplies;
+    }
+
+    public List<ProductionUnits> ProductionWithUnitsPlaces(Integer id, String nameProduction, Product product) {
+        List<Production> productions = productionRepository.findProduction(id, nameProduction, product);
+        List<ProductionUnits> productionUnits = new VirtualFlow.ArrayLinkedList<>();
+        for (Production production : productions) {
+            productionUnits.add(new ProductionUnits(production, 1));
+        }
+        return productionUnits;
     }
 }

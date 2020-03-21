@@ -1,6 +1,5 @@
 package Production.facade;
 
-
 import Production.Product;
 import Production.Production;
 import Production.Step;
@@ -21,37 +20,35 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class ProductionFacade implements ProductionFacadeLocal {
-    private ProductionService productionService ;
+
+    private ProductionService productionService;
     private ProductionRepository productionRepository;
     private ProductRepository productRepository;
     private StepService stepService;
     private StepRepository stepRepository;
 
-    
     @EJB
     public void setStepService(StepService stepService) {
         this.stepService = stepService;
     }
+
     @EJB
     public void setStepRepository(StepRepository stepRepository) {
         this.stepRepository = stepRepository;
     }
 
-    
-    
     @EJB
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-    
-    
+
     @EJB
     public void setProductionService(ProductionService service) {
         productionService = service;
     }
 
     @EJB
-    public void setProductionRepository(ProductionRepository  productionRepository) {
+    public void setProductionRepository(ProductionRepository productionRepository) {
         this.productionRepository = productionRepository;
     }
 
@@ -86,12 +83,15 @@ public class ProductionFacade implements ProductionFacadeLocal {
     public Optional<Production> getProductionById(Integer id) {
         return productionRepository.findByIdProduction(id);
     }
-    
-    public List<Product> getProduct(){
-        Optional<List<Product>> lista = productRepository.getAll();      
+
+    public List<Product> getProduct() {
+        Optional<List<Product>> lista = productRepository.getAll();
         return lista.get();
     }
-    
-    
-    
+
+    @Override
+    public Optional<Product> getProductById(Integer id) {
+        return productRepository.getProductById(id);
+    }
+
 }

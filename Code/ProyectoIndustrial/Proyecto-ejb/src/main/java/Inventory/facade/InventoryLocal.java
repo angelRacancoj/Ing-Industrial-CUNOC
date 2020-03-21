@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Inventory.facade;
 
-import Inventory.objects.productionCost;
+import Inventory.objects.ProductionUnits;
+import Inventory.objects.SupplyQuantity;
+import Production.Product;
 import Production.Production;
-import Supply.Supply;
-import Supply.repository.AvailabilityFilter;
-import Supply.repository.ExpirationDateFilter;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -21,26 +15,11 @@ import javax.ejb.Local;
 public interface InventoryLocal {
 
     /**
-     *
-     * Get all supplies in Data Base, is available to use filter for searching
-     * based in the parameters, to unable a filter send a NULL
-     *
-     * To get all supply send all parameters with NULL
-     *
-     * @param codeSupply
-     * @param nameSupply
-     * @param availabilitySupply
-     * @param expirationDateSupply
-     * @return
-     */
-    public List<Supply> getSupply(Integer codeSupply, String internalCode, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply);
-
-    /**
      * Calculate the best Production to produce base on material available
      *
      * @return
      */
-    public List<productionCost> getBestProductsBaseOnAvailableMaterial();
+    public List<Production> getBestProductsBaseOnAvailableMaterial();
 
     /**
      * Base on available money calculate the best products to produce base on
@@ -57,11 +36,43 @@ public interface InventoryLocal {
      * Get the cost base on selected Production (selectedProductions) and
      * Quantity of batches
      *
-     * TODO
-     * Add quantity to NecessarySupply object to do the correct calculates
+     * TODO Add quantity to NecessarySupply object to do the correct calculates
      *
-     * @param selectedProduction
+     * @param productionUnits
      * @return
      */
-    public List<productionCost> costByPruductionAndBatch(List<productionCost> selectedProduction);
+    public List<SupplyQuantity> getNecessarySupplies(ProductionUnits productionUnits);
+
+    /**
+     * Return the cost of the production, base of the order units, without extra
+     * costs.
+     *
+     * @param productionUnits
+     * @return
+     */
+    public double costByPruductionAndQuantityWithoutExtraCost(ProductionUnits productionUnits);
+
+    /**
+     * Return the cost of the production, base of the order units, include all
+     * extra costs.If there is no extra cost, just return the cost to produce the units
+ required.
+     *
+     *
+     * @param productionUnits
+     * @return
+     */
+    public double costByPruductionAndQuantityWithExtraCost(ProductionUnits productionUnits);
+
+    /**
+     * Return all products with the units variable as int, to set the quantity
+     * of units required by the user
+     *
+     * This method enable to do search by different filters
+     *
+     * @param id
+     * @param nameProduction
+     * @param product
+     * @return
+     */
+    public List<ProductionUnits> ProductionWithUnitsPlaces(Integer id, String nameProduction, Product product);
 }

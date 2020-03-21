@@ -43,54 +43,27 @@ public class SupplyServices {
         if (newSupply.getExpirationDate() == null) {
             throw new MandatoryAttributeSupplyException("Atributo Fecha de Expiración Obligatorio");
         }
-        if (newSupply.getCost() == 0.0){
+        if (newSupply.getCost() == 0.0) {
             throw new MandatoryAttributeSupplyException("Atributo Costo Obligatorio");
         }
-        if (newSupply.getQuantity() == 0.0){
+        if (newSupply.getQuantity() == 0.0) {
             throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
         }
-        if (newSupply.getMeasure() == null){
+        if (newSupply.getMeasure() == null) {
             throw new MandatoryAttributeSupplyException("Atributo Medida Obligatorio");
         }
         newSupply.setDateOfAdmission(LocalDate.now());
-        newSupply.setAvailability(true);
         entityManager.persist(newSupply);
         return newSupply;
     }
 
-    public Supply modifyByMissing(Supply supplyToChange, Double newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException {
+    public Supply modifyQuantity(Supply supplyToChange, Double newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException {
         if (newQuantity == null) {
             throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
         } else {
             supplyToChange.setQuantity(newQuantity);
-            saveModificationHistory(supplyToChange, user, ModificationType.POR_FALTANTE, newQuantity, noteModify);
+            saveModificationHistory(supplyToChange, user, ModificationType.CANTIDAD, newQuantity, noteModify);
         }
-        return supplyToChange;
-    }
-
-    public Supply modifyByTheft(Supply supplyToChange, User user, String noteModify) {
-        supplyToChange = deactivateSupplySimple(supplyToChange);
-        saveModificationHistory(supplyToChange, user, ModificationType.POR_ROBO, 0.0, noteModify);
-        return supplyToChange;
-    }
-
-    public Supply deactiveSupply(Supply supplyToChange) {
-        supplyToChange = deactivateSupplySimple(supplyToChange);
-        return supplyToChange;
-    }
-
-    private Supply deactivateSupplySimple(Supply supplyToChange) {
-        supplyToChange.setQuantity(0.0);
-        supplyToChange.setAvailability(false);
-        return supplyToChange;
-    }
-
-    public Supply activateSupply(Supply supplyToChange, Double newQuantity) throws MandatoryAttributeSupplyException {
-        if (newQuantity == null) {
-            throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
-        }
-        supplyToChange.setAvailability(true);
-        supplyToChange.setQuantity(newQuantity);
         return supplyToChange;
     }
 
@@ -98,7 +71,9 @@ public class SupplyServices {
         if (supply == null) {
             throw new UserException("Supply is null");
         }
+
         Supply updateSupply = entityManager.find(Supply.class, supply.getCode());
+
         if (supply.getName() != null) {
             updateSupply.setName(supply.getName());
         }
@@ -117,5 +92,24 @@ public class SupplyServices {
     private void saveModificationHistory(Supply supply, User user, ModificationType typeModification, Double newQuantity, String note) {
         ModifySupply newModifySupply = new ModifySupply(user, supply, typeModification, newQuantity, LocalDate.now(), note);
         modifySupplyService.createModifySupply(newModifySupply);
+    }
+
+    /**
+     * to use this function needs the supply to modify and quantity to reduce
+     * that must be sent in toReduce
+     *
+     * toReduce is not the new quantity to set
+     *
+     * @param supply
+     * @param toReduce
+     * @return
+     * @throws UserException
+     */
+    public Supply reduceSupplyQuantity(Supply supply, double toReduce) throws UserException {
+        if (supply.getQuantity() >= toReduce) {
+            supply.setQuantity(supply.getQuantity() - toReduce);
+            return modifySupply(supply);
+        }
+        throw new UserException("Cantidad insuficiente en el insumo " + supply.getInternalCode());
     }
 }

@@ -1,16 +1,18 @@
 package gt.udu.usac.cunoc.ingenieria.inventory.view;
 
 import Inventory.facade.InventoryLocal;
-import Inventory.objects.productionCost;
-import Production.Production;
+import Inventory.objects.ProductionUnits;
+import Inventory.objects.SupplyQuantity;
+import Production.Product;
 import Production.facade.ProductionFacadeLocal;
+import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import org.primefaces.event.DragDropEvent;
 
 /**
  *
@@ -19,91 +21,134 @@ import org.primefaces.event.DragDropEvent;
 @Named
 @ViewScoped
 public class supplyCalculatorView implements Serializable {
-
+    
     @EJB
     private InventoryLocal inventoryLocal;
-
+    
     @EJB
     private ProductionFacadeLocal productionFacadeLocal;
 
-    List<Production> productionList;
-    List<productionCost> selectedProductions = new LinkedList<>();
-    List<productionCost> finalProductions;
-    Production selectedProduction;
+    //Search utilities
+    List<ProductionUnits> productionList = new LinkedList<>();
+    List<Product> products = new LinkedList<>();
+    Integer id;
+    String productionName;
+    Product product;
 
-    public void onProductionDrop(DragDropEvent ddEvent) {
-        Production prod = ((Production) ddEvent.getData());
-
-        selectedProductions.add(new productionCost(prod, 1));
-        productionList.remove(prod);
+    //calculate cost
+    List<SupplyQuantity> suplyQuantity = new LinkedList<>();
+    double costWithoutExtraCost;
+    double costWithExtraCost;
+    ProductionUnits selectedProduction;
+    
+    @PostConstruct
+    public void init() {
+        getAllProducts();
+    }
+    
+    public void searchProduction() {
+        setProductionList(inventoryLocal.ProductionWithUnitsPlaces(id, productionName, product));
+        if (getProductionList().isEmpty()) {
+            MessageUtils.addSuccessMessage("Sin resultados en la busqueda");
+        }
+    }
+    
+    private void getAllProducts() {
+        products.addAll(productionFacadeLocal.getProduct());
+    }
+    
+    public void calculateCost() {
+        if (selectedProduction == null) {
+            MessageUtils.addWarningMessage("Debe seleccionar una produccion");
+        } else {
+            setSuplyQuantity(inventoryLocal.getNecessarySupplies(selectedProduction));
+            setCostWithoutExtraCost(inventoryLocal.costByPruductionAndQuantityWithoutExtraCost(selectedProduction));
+            setCostWithExtraCost(inventoryLocal.costByPruductionAndQuantityWithExtraCost(selectedProduction));
+        }
+    }
+    
+    public void cleanSearch() {
+        setCostWithExtraCost(0);
+        setCostWithoutExtraCost(0);
+        setSuplyQuantity(null);
+    }
+    
+    public void cleanCriteria() {
+        id = null;
+        productionName = null;
+        product = null;
+    }
+    
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void productionCost() {
-        setFinalProductions(inventoryLocal.costByPruductionAndBatch(selectedProductions));
-        System.out.println("Final productions: "+finalProductions.size());
+    public Integer getId() {
+        return id;
+    }
+    
+    public void setProductionName(String productionName) {
+        this.productionName = productionName;
     }
 
-    public Production getSelectedProduction() {
-        return selectedProduction;
+    public String getProductionName() {
+        return productionName;
     }
 
-    public void setSelectedProduction(Production selectedProduction) {
+    public Product getProduct() {
+        return product;
+    }
+    
+    
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+    
+    public void setSelectedProduction(ProductionUnits selectedProduction) {
         this.selectedProduction = selectedProduction;
     }
-
-    public List<Production> getProductionList() {
-        return productionList;
-    }
-
-    public void setProductionList(List<Production> productionList) {
+    
+    public void setProductionList(List<ProductionUnits> productionList) {
         this.productionList = productionList;
     }
-
-    public List<productionCost> getSelectedProductions() {
-        return selectedProductions;
+    
+    public List<ProductionUnits> getProductionList() {
+        return productionList;
     }
-
-    public void setSelectedProductions(List<productionCost> selectedProductions) {
-        this.selectedProductions = selectedProductions;
+    
+    public List<Product> getProducts() {
+        return products;
     }
-
-    public InventoryLocal getInventoryLocal() {
-        return inventoryLocal;
+    
+    public ProductionUnits getSelectedProduction() {
+        if (selectedProduction == null) {
+            selectedProduction = new ProductionUnits();
+        }
+        return selectedProduction;
     }
-
-    public void setInventoryLocal(InventoryLocal inventoryLocal) {
-        this.inventoryLocal = inventoryLocal;
+    
+    public List<SupplyQuantity> getSuplyQuantity() {
+        return suplyQuantity;
     }
-
-    public ProductionFacadeLocal getProductionFacadeLocal() {
-        return productionFacadeLocal;
+    
+    public void setSuplyQuantity(List<SupplyQuantity> suplyQuantity) {
+        this.suplyQuantity = suplyQuantity;
     }
-
-    public void setProductionFacadeLocal(ProductionFacadeLocal productionFacadeLocal) {
-        this.productionFacadeLocal = productionFacadeLocal;
+    
+    public double getCostWithoutExtraCost() {
+        return costWithoutExtraCost;
     }
-
-    public List<productionCost> getFinalProductions() {
-        return finalProductions;
+    
+    public void setCostWithoutExtraCost(double costWithoutExtraCost) {
+        this.costWithoutExtraCost = costWithoutExtraCost;
     }
-
-    public void setFinalProductions(List<productionCost> finalProductions) {
-        this.finalProductions = finalProductions;
+    
+    public double getCostWithExtraCost() {
+        return costWithExtraCost;
     }
-
-    /**
-     * When search the list set empty
-     */
-    public void searchProduction() {
-        setProductionList(productionFacadeLocal.AllProductions());
+    
+    public void setCostWithExtraCost(double costWithExtraCost) {
+        this.costWithExtraCost = costWithExtraCost;
     }
-
-    public Production getPoductionById(Integer id) {
-        return productionFacadeLocal.getProductionById(id).get();
-    }
-
-    public void cleanSelectedProductionAndProductionList() {
-        setSelectedProductions(null);
-        productionList.clear();
-    }
+    
 }

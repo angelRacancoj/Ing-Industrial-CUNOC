@@ -61,8 +61,11 @@
                     <p:outputLabel for="quantity" value="Cantidad:" styleClass="col-md-4 control-label"/>
                     <div class="col-md-8">
                         <p:spinner id="quantity" styleClass="form-control" pt:placeholder="Cantidad del Insumo"
-                                       pt:required="true" min="0" required="true"
-                                       value="#{registerSupplyView.newSupply.quantity}"/>  
+                                   pt:required="true" min="0" required="true"
+                                   value="#{registerSupplyView.newSupply.quantity}"
+                                   stepFactor="0.01">
+                            <f:convertNumber minFractionDigits="5" maxFractionDigits="6"/>
+                        </p:spinner>  
                     </div>
                 </div>
                 <div class="row form-group">
@@ -79,8 +82,10 @@
                 <div class="row form-group">
                     <p:outputLabel for="cost" value="Costo por unidad de medida:" styleClass="col-md-4 control-label"/>
                     <div class="col-md-8">
-                        <p:spinner id="cost" styleClass="form-control" pt:placeholder="Costo del Insumo" required="true"
-                                       pt:required="true"  min="0" value="#{registerSupplyView.newSupply.cost}"/>        
+                        <p:spinner id="cost" styleClass="form-control" pt:placeholder="Costo del Insumo" required="true" prefix="Q "
+                                   pt:required="true"  min="0" stepFactor="0.01" value="#{registerSupplyView.newSupply.cost}">
+                            <f:convertNumber maxFractionDigits="5"/>
+                        </p:spinner>         
                     </div>
                 </div>
 

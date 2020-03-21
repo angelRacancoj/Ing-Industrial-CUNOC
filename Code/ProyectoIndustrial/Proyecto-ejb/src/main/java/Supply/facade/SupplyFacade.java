@@ -74,33 +74,22 @@ public class SupplyFacade implements SupplyFacadeLocal {
         return supplyRepository.getSupply(codeSupply, nameSupply, internalCode, availabilitySupply, expirationDateSupply);
     }
 
+    @Override
     public List<Supply> getSupplyAvailable() {
-        List<Supply> list = new ArrayList<>();
-        list = supplyRepository.getSupply(null, null, null, AvailabilityFilter.AVAILABLE, null);
-        return list;
+        return supplyRepository.getSupply(null, null, null, AvailabilityFilter.AVAILABLE, null);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Supply modifyByTheft(Supply supplyToChange, User user, String noteModify) {
-        return supplyService.modifyByTheft(supplyToChange, user, noteModify);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Supply modifyByMissing(Supply supplyToChange, Double newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException {
-        return supplyService.modifyByMissing(supplyToChange, newQuantity, user, noteModify);
+    public Supply modifyQuantity(Supply supplyToChange, Double newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException {
+        return supplyService.modifyQuantity(supplyToChange, newQuantity, user, noteModify);
     }
 
     @Override
     public Supply modifySupply(Supply supply) throws UserException {
         return supplyService.modifySupply(supply);
     }
-
-
 
 }

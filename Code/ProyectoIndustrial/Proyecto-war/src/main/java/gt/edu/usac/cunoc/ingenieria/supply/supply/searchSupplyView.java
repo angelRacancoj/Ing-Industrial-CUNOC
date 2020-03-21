@@ -58,7 +58,7 @@ public class searchSupplyView implements Serializable {
     public void saveChangesByMissing(final String modalIdToClose) {
         try {
             if (selectedSupply != null && !userFacade.getAuthenticatedUser().isEmpty() && (userFacade.getAuthenticatedUser().size() == 1)) {
-                supplyFacadeLocal.modifyByMissing(selectedSupply, quantity, userFacade.getAuthenticatedUser().get(0), note);
+                supplyFacadeLocal.modifyQuantity(selectedSupply, quantity, userFacade.getAuthenticatedUser().get(0), note);
             }
             cleanActualSupply();
             PrimeFaces.current().executeScript("PF('" + modalIdToClose + ").hide()");

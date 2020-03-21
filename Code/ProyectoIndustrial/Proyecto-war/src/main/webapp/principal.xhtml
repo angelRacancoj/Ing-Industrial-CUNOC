@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="templates/template-one.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <ui:define name="title">
+        Menu Principal
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="supplyCalculator">
+            <fieldset>
+                <legend>Usuarios</legend>
+                <div class="row">
+                    <div class="btn-group">
+                        <p:link outcome="users" styleClass="btn btn-primary">
+                            <span class="glyphicon glyphicon-search"></span> Buscar
+                        </p:link>
+                    </div>
+                    <div class="btn-group">
+                        <p:link outcome="users" styleClass="btn btn-primary">
+                            <span class="glyphicon glyphicon-search"></span> Buscar
+                        </p:link>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Usuarios</legend>
+                <div class="row">
+                    <div class="btn-group pull-right">
+                        <p:link outcome="users" >
+                            <span class="glyphicon glyphicon-search"></span> Buscar
+                        </p:link>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group pull-right">
+                        <p:link outcome="users" >
+                            <span class="glyphicon glyphicon-search"></span> Buscar
+                        </p:link>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-group pull-right">
+                        <p:link outcome="users" >
+                            <span class="glyphicon glyphicon-search"></span> Buscar
+                        </p:link>
+                    </div>
+                </div>
+            </fieldset>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

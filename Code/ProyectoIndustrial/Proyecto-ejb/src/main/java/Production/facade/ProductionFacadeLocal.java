@@ -22,10 +22,16 @@ import javax.ejb.Local;
  */
 @Local
 public interface ProductionFacadeLocal {
-    
-    public void createProduction(Production production)throws MandatoryAttributeProductionException;
-    public void editProduction(Production production)throws MandatoryAttributeProductionException;
+
+    public void createProduction(Production production) throws MandatoryAttributeProductionException;
+
+    public void editProduction(Production production) throws MandatoryAttributeProductionException;
+
     public List<Product> getProduct();
+
+    public Optional<Product> getProductById(Integer id);
+
     public List<Production> AllProductions();
+
     public Optional<Production> getProductionById(Integer id);
 }
