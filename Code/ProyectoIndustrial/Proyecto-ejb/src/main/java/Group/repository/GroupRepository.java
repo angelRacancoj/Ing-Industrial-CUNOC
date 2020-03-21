@@ -21,7 +21,7 @@ import javax.persistence.TypedQuery;
 public class GroupRepository{
     
     public static final String FIND_BY_ID = "SELECT g FROM Group g WHERE g.idGroup = :id";
-    public static final String GET_ALL = "SELECT g FROM Group g";
+    public static final String GET_ALL = "SELECT g FROM GroupIndustrial g";
     
     
     private EntityManager entityManager;

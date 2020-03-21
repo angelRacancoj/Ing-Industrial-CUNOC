@@ -67,6 +67,7 @@ public class Supply implements Serializable {
         this.code = code;
         this.internalCode = internalCode;
         this.name = name;
+
         this.expirationDate = expirationDate;
         this.dateOfAdmission = dateOfAdmission;
         this.cost = cost;

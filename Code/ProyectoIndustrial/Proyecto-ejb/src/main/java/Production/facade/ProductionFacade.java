@@ -4,11 +4,14 @@ import Production.Product;
 import Production.Production;
 import Production.Step;
 import Production.exceptions.MandatoryAttributeProductionException;
+import Production.repository.DesignRepository;
 import Production.repository.ProductRepository;
 import Production.repository.ProductionRepository;
 import Production.repository.StepRepository;
+import Production.service.DesignService;
 import Production.service.ProductionService;
 import Production.service.StepService;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.EJB;
@@ -26,6 +29,9 @@ public class ProductionFacade implements ProductionFacadeLocal {
     private ProductRepository productRepository;
     private StepService stepService;
     private StepRepository stepRepository;
+    private DesignRepository designRepository;
+    
+    private DesignService designService;
 
     @EJB
     public void setStepService(StepService stepService) {
@@ -51,7 +57,19 @@ public class ProductionFacade implements ProductionFacadeLocal {
     public void setProductionRepository(ProductionRepository productionRepository) {
         this.productionRepository = productionRepository;
     }
+    
+    @EJB
+    public void setDesignService(DesignService designService){
+        this.designService = designService;
+    }
 
+    @EJB
+    public void setDesignRepository(DesignRepository designRepository) {
+        this.designRepository = designRepository;
+    }
+
+    
+    
     /**
      * {@inheritDoc}
      */

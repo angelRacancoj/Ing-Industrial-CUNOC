@@ -10,11 +10,14 @@ import Group.GroupIndustrial;
 import Group.GroupUser;
 import java.util.List;
 import java.util.Optional;
+import javax.ejb.Local;
 
 /**
  *
  * @author angelrg
  */
+
+@Local
 public interface GroupFacadelocal {
 
     /**

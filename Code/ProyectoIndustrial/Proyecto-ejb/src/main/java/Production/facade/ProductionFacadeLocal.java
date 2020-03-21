@@ -5,6 +5,8 @@
  */
 package Production.facade;
 
+import Design.Design;
+import Design.DesignData;
 import Production.Product;
 import Production.NecessarySupply;
 import Production.Production;
@@ -29,9 +31,14 @@ public interface ProductionFacadeLocal {
 
     public List<Product> getProduct();
 
+
     public Optional<Product> getProductById(Integer id);
 
     public List<Production> AllProductions();
 
     public Optional<Production> getProductionById(Integer id);
+
+    public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys);
+
+    public List<Design> AllDesigns();
 }
