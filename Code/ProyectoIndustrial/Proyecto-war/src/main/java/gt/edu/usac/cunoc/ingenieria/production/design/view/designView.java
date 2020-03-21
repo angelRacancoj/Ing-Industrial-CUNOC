@@ -81,29 +81,18 @@ public class designView implements Serializable {
 
     public void createDesign() {
         try {
-            if(!necessarySupplys.isEmpty()){
-            if (file != null) {
-                designDataCreate.setPicture(file.getContents());
-            }
-            productionFacadeLocal.createDesign(designCreate, designDataCreate, necessarySupplys);
-            MessageUtils.addSuccessMessage(DESIGN_CREATED);
-            }else{
+            if (!necessarySupplys.isEmpty()) {
+                if (file != null) {
+                    designDataCreate.setPicture(file.getContents());
+                }
+                productionFacadeLocal.createDesign(designCreate, designDataCreate, necessarySupplys);
+                MessageUtils.addSuccessMessage(DESIGN_CREATED);
+            } else {
                 MessageUtils.addErrorMessage(ERROR_NECESSARY_SUPPLYS);
             }
         } catch (Exception e) {
             MessageUtils.addErrorMessage(e.getMessage());
         }
-    }
-
-    private int qty;
-
-    public void setQty(int qty) {
-        System.out.println("set value " + qty);
-        this.qty = qty;
-    }
-
-    public int getQty() {
-        return qty;
     }
 
     public void addSupplyCreate(Supply supply) {

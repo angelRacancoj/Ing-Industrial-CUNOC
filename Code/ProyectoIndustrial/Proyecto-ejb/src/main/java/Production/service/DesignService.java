@@ -9,6 +9,7 @@ import Design.Design;
 import Design.DesignData;
 import Production.NecessarySupply;
 import static config.Constants.PERSISTENCE_UNIT_NAME;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -30,15 +31,21 @@ public class DesignService {
     }
 
     public Design createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys){
-        //entityManager.merge(design.getProductIdProduct());
+       
+         design.setDesignData(designData);
         
-        //entityManager.merge(designData);
-        //entityManager.merge(necessarySupplys);
-        
-        design.setDesignData(designData);
         design.setNecessarySupplyList(necessarySupplys);
         
         entityManager.persist(design);
+        
+        List<Design> list = new ArrayList<>();
+        list.add(design);
+        designData.setDesignList(list);
+        entityManager.persist(designData);
+        
+        
+        
+       
         return design;
     }
     

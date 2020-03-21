@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -42,9 +43,11 @@ public class Design implements Serializable {
     private List<Production> productionList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "designId")
     private List<NecessarySupply> necessarySupplyList;
+    
     @JoinColumn(name = "design_data", referencedColumnName = "iddesign_data")
     @ManyToOne(cascade = CascadeType.ALL)
     private DesignData designData;
+   
     @JoinColumn(name = "product_id_product", referencedColumnName = "id_product")
     @ManyToOne
     private Product productIdProduct;
