@@ -37,35 +37,35 @@ public class ProductionRepositoryTest {
         return  entityManager;
     }
     
-    @Test
-    public void FindByIdProductionTest() throws Exception {
-        // Arrange
-        Production production = new Production();
-        EntityManager entityManager= getmanager(QUERY_FIND_BY_ID, productionId, production, false);
-        
-        productionRepository.setEntityManager(entityManager);
-
-        // Act
-        Optional<Production> result = productionRepository.findByIdProduction(productionId);
-        // Assert
-        Assert.assertEquals(result.get(), production);
-        
-    }
-    
-    @Test
-    public void FindByIdProductionNoResultExceptionTest() throws Exception {
-        // Arrange
-
-        Production production = new Production();
-        EntityManager entityManager= getmanager(QUERY_FIND_BY_ID, productionId, production, true);
-        productionRepository.setEntityManager(entityManager);
-
-        // Act
-        Optional<Production> result = productionRepository.findByIdProduction(productionId);
-        // Assert
-        Assert.assertFalse(result.isPresent(),"Expected optinal empty");
-        
-    }
+//    @Test
+//    public void FindByIdProductionTest() throws Exception {
+//        // Arrange
+//        Production production = new Production();
+//        EntityManager entityManager= getmanager(QUERY_FIND_BY_ID, productionId, production, false);
+//        
+//        productionRepository.setEntityManager(entityManager);
+//
+//        // Act
+//        Optional<Production> result = productionRepository.findByIdProduction(productionId);
+//        // Assert
+//        Assert.assertEquals(result.get(), production);
+//        
+//    }
+//    
+//    @Test
+//    public void FindByIdProductionNoResultExceptionTest() throws Exception {
+//        // Arrange
+//
+//        Production production = new Production();
+//        EntityManager entityManager= getmanager(QUERY_FIND_BY_ID, productionId, production, true);
+//        productionRepository.setEntityManager(entityManager);
+//
+//        // Act
+//        Optional<Production> result = productionRepository.findByIdProduction(productionId);
+//        // Assert
+//        Assert.assertFalse(result.isPresent(),"Expected optinal empty");
+//        
+//    }
     
     @Test
     public void AllProductionsTest() throws Exception {

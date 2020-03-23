@@ -13,34 +13,28 @@ DROP SCHEMA IF EXISTS `produccion_industrial` ;
 -- Schema produccion_industrial
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `produccion_industrial` ;
-USE `produccion_industrial`;
+USE `produccion_industrial` ;
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`product`
+-- Table `produccion_industrial`.`career`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`product` ;
-
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`product` (
-  `id_product` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  `description` TINYTEXT NOT NULL,
-  PRIMARY KEY (`id_product`))
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`career` (
+  `id_career` INT NOT NULL AUTO_INCREMENT,
+  `name_career` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_career`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`group`
+-- Table `produccion_industrial`.`product`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`group` ;
-
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`group` (
-  `id_group` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`product` (
+  `id_product` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `information` MEDIUMTEXT NULL DEFAULT NULL,
-  `section` VARCHAR(2) NULL DEFAULT NULL,
-  PRIMARY KEY (`id_group`))
+  `description` TINYTEXT NOT NULL,
+  PRIMARY KEY (`id_product`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -48,8 +42,6 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `produccion_industrial`.`design_data`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`design_data` ;
-
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`design_data` (
   `iddesign_data` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -62,8 +54,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `produccion_industrial`.`design`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`design` ;
-
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`design` (
   `id_design` INT NOT NULL AUTO_INCREMENT,
   `design_data` INT NULL DEFAULT NULL,
@@ -73,22 +63,29 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`design` (
   INDEX `fk_design_product1_idx` (`product_id_product` ASC),
   CONSTRAINT `fk_design_design_data1`
     FOREIGN KEY (`design_data`)
-    REFERENCES `produccion_industrial`.`design_data` (`iddesign_data`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `produccion_industrial`.`design_data` (`iddesign_data`),
   CONSTRAINT `fk_design_product1`
     FOREIGN KEY (`product_id_product`)
-    REFERENCES `produccion_industrial`.`product` (`id_product`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `produccion_industrial`.`product` (`id_product`))
 ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `produccion_industrial`.`group`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`group` (
+  `id_group` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `information` MEDIUMTEXT NULL DEFAULT NULL,
+  `section` VARCHAR(2) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_group`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `produccion_industrial`.`production`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`production` ;
-
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`production` (
   `id_production` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NOT NULL,
@@ -102,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`production` (
   `product_id` INT NULL,
   `group_id` INT NOT NULL,
   `design_id` INT NOT NULL,
-  `post_design` INT NOT NULL,
+  `post_design` INT NULL,
   PRIMARY KEY (`id_production`),
   INDEX `fk_LINEA_DE_PRODUCCION_PRODUCTO1_idx` (`product_id` ASC),
   INDEX `fk_production_group1_idx` (`group_id` ASC),
@@ -125,29 +122,8 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`extra_cost`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`extra_cost` ;
-
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`extra_cost` (
-  `id_extra_cost` INT NOT NULL AUTO_INCREMENT,
-  `description` TINYTEXT NOT NULL,
-  `cost` DOUBLE NOT NULL,
-  `id_production` INT NOT NULL,
-  PRIMARY KEY (`id_extra_cost`),
-  INDEX `fk_extra_cost_production_idx` (`id_production` ASC),
-  CONSTRAINT `fk_extra_cost_production`
-    FOREIGN KEY (`id_production`)
-    REFERENCES `produccion_industrial`.`production` (`id_production`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
--- -----------------------------------------------------
 -- Table `produccion_industrial`.`stage`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`stage` ;
-
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`stage` (
   `id_stage` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -165,8 +141,6 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `produccion_industrial`.`step`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`step` ;
-
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`step` (
   `id_step` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -184,8 +158,6 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `produccion_industrial`.`commentary`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`commentary` ;
-
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`commentary` (
   `id_commentary` INT NOT NULL AUTO_INCREMENT,
   `commentary` TINYTEXT NOT NULL,
@@ -200,87 +172,24 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `produccion_industrial`.`measure`
+-- Table `produccion_industrial`.`extra_cost`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`measure` ;
-
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`measure` (
-  `id_measure` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(60) NOT NULL,
-  PRIMARY KEY (`id_measure`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `produccion_industrial`.`supply`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`supply` ;
-
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`supply` (
-  `code` INT NOT NULL AUTO_INCREMENT,
-  `internal_code` VARCHAR(45) NOT NULL,
-  `name` VARCHAR(60) NOT NULL,
-  `is_expired` TINYINT(1) NOT NULL,
-  `expiration_date` DATE NULL,
-  `date_of_admission` DATE NOT NULL,
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`extra_cost` (
+  `id_extra_cost` INT NOT NULL AUTO_INCREMENT,
+  `description` TINYTEXT NOT NULL,
   `cost` DOUBLE NOT NULL,
-  `quantity` DOUBLE NOT NULL,
-  `availability` TINYINT(1) NOT NULL,
-  `description` TINYTEXT NULL DEFAULT NULL,
-  `id_measure` INT NOT NULL,
-  PRIMARY KEY (`code`),
-  INDEX `fk_SUPPLY_MEASURE1_idx` (`id_measure` ASC),
-  CONSTRAINT `fk_SUPPLY_MEASURE1`
-    FOREIGN KEY (`id_measure`)
-    REFERENCES `produccion_industrial`.`measure` (`id_measure`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `produccion_industrial`.`necessary_supply`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`necessary_supply` ;
-
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`necessary_supply` (
-  `id_necessary_supply` INT NOT NULL AUTO_INCREMENT,
-  `quantity` DOUBLE NOT NULL,
-  `supply_code` INT NOT NULL,
-  `design_id` INT NOT NULL,
-  PRIMARY KEY (`id_necessary_supply`),
-  INDEX `fk_INSUMOS_NECESARIOS_INSUMO1_idx` (`supply_code` ASC),
-  INDEX `fk_necessary_supply_design1_idx` (`design_id` ASC),
-  CONSTRAINT `fk_INSUMOS_NECESARIOS_INSUMO1`
-    FOREIGN KEY (`supply_code`)
-    REFERENCES `produccion_industrial`.`supply` (`code`),
-  CONSTRAINT `fk_necessary_supply_design1`
-    FOREIGN KEY (`design_id`)
-    REFERENCES `produccion_industrial`.`design` (`id_design`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `produccion_industrial`.`career`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`career` ;
-
-CREATE TABLE IF NOT EXISTS `produccion_industrial`.`career` (
-  `id_career` INT NOT NULL AUTO_INCREMENT,
-  `name_career` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_career`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+  `id_production` INT NOT NULL,
+  PRIMARY KEY (`id_extra_cost`),
+  INDEX `fk_extra_cost_production_idx` (`id_production` ASC),
+  CONSTRAINT `fk_extra_cost_production`
+    FOREIGN KEY (`id_production`)
+    REFERENCES `produccion_industrial`.`production` (`id_production`))
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `produccion_industrial`.`rol_user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`rol_user` ;
-
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`rol_user` (
   `id_rol` INT NOT NULL,
   `name_rol` VARCHAR(45) NOT NULL,
@@ -292,8 +201,6 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `produccion_industrial`.`user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`user` ;
-
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`user` (
   `carnet` INT NOT NULL,
   `name` VARCHAR(60) NOT NULL,
@@ -319,8 +226,6 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `produccion_industrial`.`group_user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`group_user` ;
-
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`group_user` (
   `id_gruop_user` INT NOT NULL AUTO_INCREMENT,
   `admission_date` DATE NOT NULL,
@@ -329,6 +234,9 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`group_user` (
   PRIMARY KEY (`id_gruop_user`),
   INDEX `fk_GRUPO_USUARIO_GRUPO1_idx` (`group_id` ASC),
   INDEX `fk_group_user_user1_idx` (`user_carnet` ASC),
+  CONSTRAINT `fk_group_user_user1`
+    FOREIGN KEY (`user_carnet`)
+    REFERENCES `produccion_industrial`.`user` (`carnet`),
   CONSTRAINT `fk_GRUPO_USUARIO_GRUPO1`
     FOREIGN KEY (`group_id`)
     REFERENCES `produccion_industrial`.`group` (`id_group`))
@@ -337,16 +245,50 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `produccion_industrial`.`measure`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`measure` (
+  `id_measure` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(60) NOT NULL,
+  PRIMARY KEY (`id_measure`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 9
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `produccion_industrial`.`supply`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`supply` (
+  `code` INT NOT NULL AUTO_INCREMENT,
+  `internal_code` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(60) NOT NULL,
+  `expiration_date` DATE NULL,
+  `date_of_admission` DATE NOT NULL,
+  `cost` DOUBLE NOT NULL,
+  `quantity` DOUBLE NOT NULL,
+  `availability` TINYINT(1) NOT NULL,
+  `description` TINYTEXT NULL DEFAULT NULL,
+  `id_measure` INT NOT NULL,
+  PRIMARY KEY (`code`),
+  INDEX `fk_SUPPLY_MEASURE1_idx` (`id_measure` ASC),
+  CONSTRAINT `fk_SUPPLY_MEASURE1`
+    FOREIGN KEY (`id_measure`)
+    REFERENCES `produccion_industrial`.`measure` (`id_measure`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 17
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `produccion_industrial`.`modify_supply`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `produccion_industrial`.`modify_supply` ;
-
 CREATE TABLE IF NOT EXISTS `produccion_industrial`.`modify_supply` (
   `id_modify_supply` INT NOT NULL AUTO_INCREMENT,
   `carnet_user` INT NOT NULL,
   `supply_code` INT NOT NULL,
-  `modify_type` ENUM('POR_FALTANTE', 'POR_ROBO', 'ATRIBUTOS') NOT NULL,
-  `quantity` DOUBLE NOT NULL,
+  `modify_type` ENUM('CANTIDAD', 'ATRIBUTOS', 'CONSUMIDO') NOT NULL,
+  `cuantity` INT NOT NULL,
   `date` DATE NOT NULL,
   `note` MEDIUMTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id_modify_supply`),
@@ -358,6 +300,31 @@ CREATE TABLE IF NOT EXISTS `produccion_industrial`.`modify_supply` (
   CONSTRAINT `fk_modify_supply_user1`
     FOREIGN KEY (`carnet_user`)
     REFERENCES `produccion_industrial`.`user` (`carnet`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `produccion_industrial`.`necessary_supply`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `produccion_industrial`.`necessary_supply` (
+  `id_necessary_supply` INT NOT NULL AUTO_INCREMENT,
+  `quantity` DOUBLE NOT NULL,
+  `supply_code` INT NOT NULL,
+  `design_id` INT NOT NULL,
+  PRIMARY KEY (`id_necessary_supply`),
+  INDEX `fk_necessary_supply_design1_idx` (`design_id` ASC),
+  INDEX `fk_necessary_supply_supply1_idx` (`supply_code` ASC),
+  CONSTRAINT `fk_necessary_supply_design1`
+    FOREIGN KEY (`design_id`)
+    REFERENCES `produccion_industrial`.`design` (`id_design`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `fk_necessary_supply_supply1`
+    FOREIGN KEY (`supply_code`)
+    REFERENCES `produccion_industrial`.`supply` (`code`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

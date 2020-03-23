@@ -1,4 +1,3 @@
-
 package gt.edu.usac.cunoc.ingenieria.supply.supply;
 
 import Supply.Measure;
@@ -7,6 +6,7 @@ import Supply.exception.MandatoryAttributeSupplyException;
 import Supply.facade.SupplyFacadeLocal;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -15,18 +15,18 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-public class registerSupplyView implements Serializable{
-    
+public class registerSupplyView implements Serializable {
+
     private static final String SUPPLY_CREATED = "Insumo Creado";
-    
+
     @EJB
     private SupplyFacadeLocal supplyFacade;
-    
+
     private Supply newSupply;
     private List<Measure> measures;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         getAllMeasure();
     }
 
@@ -39,29 +39,36 @@ public class registerSupplyView implements Serializable{
     }
 
     public Supply getNewSupply() {
+        if (newSupply == null) {
+            return new Supply();
+        }
         return newSupply;
     }
 
     public void setNewSupply(Supply newSupply) {
         this.newSupply = newSupply;
     }
-        
-    private void getAllMeasure(){
+
+    private void getAllMeasure() {
         measures = supplyFacade.getAllMeasures();
         newSupply = new Supply();
     }
-    
-    public Measure searchMeasure(Measure measure) throws MandatoryAttributeSupplyException{
-        return supplyFacade.getMeasure(measure).get(0);
+
+    public String todayDate() {
+        return LocalDate.now().toString();
     }
-    
-    public void save(){
+
+    public void save() {
         try {
             supplyFacade.createSupply(this.newSupply);
             MessageUtils.addSuccessMessage(SUPPLY_CREATED);
-            newSupply = new Supply();
+            cleanSupply();
         } catch (MandatoryAttributeSupplyException ex) {
             MessageUtils.addErrorMessage(ex.getMessage());
         }
+    }
+    
+    private void cleanSupply(){
+        newSupply = null;
     }
 }

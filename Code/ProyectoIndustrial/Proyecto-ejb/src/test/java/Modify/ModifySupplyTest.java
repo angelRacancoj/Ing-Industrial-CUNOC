@@ -55,20 +55,6 @@ public class ModifySupplyTest {
     }
 
     @Test
-    public void testGetAndSetModificationTypeUser() throws Exception {
-        //Arrange
-        ModifySupply modifySupply = new ModifySupply();
-        ModificationType testModType = ModificationType.POR_ROBO;
-
-        //Act
-        modifySupply.setModifyType(testModType);
-        ModificationType result = modifySupply.getModifyType();
-
-        //Assert
-        Assert.assertEquals(result, testModType);
-    }
-
-    @Test
     public void testGetAndSetQuantity() throws Exception {
         //Arrange
         ModifySupply modifySupply = new ModifySupply();

@@ -35,6 +35,11 @@
     <security-constraint>
         <display-name>Principal</display-name>
         <web-resource-collection>
+            <web-resource-name>template</web-resource-name>
+            <description/>
+            <url-pattern>/templates/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
             <web-resource-name>inventory</web-resource-name>
             <description/>
             <url-pattern>/inventory/*</url-pattern>
@@ -53,26 +58,49 @@
     
     <security-constraint>
         <display-name>CommonSecured</display-name>
+        
         <web-resource-collection>
             <web-resource-name>inventory</web-resource-name>
             <description/>
             <url-pattern>/inventory/SupplyCalculator.xhtml</url-pattern>
         </web-resource-collection>
+        
         <web-resource-collection>
             <web-resource-name>production</web-resource-name>
             <description/>
             <url-pattern>/production/*</url-pattern>
         </web-resource-collection>
+        
         <web-resource-collection>
             <web-resource-name>supply</web-resource-name>
             <description/>
             <url-pattern>/supplies/*</url-pattern>
         </web-resource-collection>
+        
+        <web-resource-collection>
+            <web-resource-name>principal</web-resource-name>
+            <description/>
+            <url-pattern>/principal.xhtml</url-pattern>
+        </web-resource-collection>
+        
         <web-resource-collection>
             <web-resource-name>user</web-resource-name>
             <description/>
             <url-pattern>/user/users.xhtml</url-pattern>
         </web-resource-collection>
+        
+        <web-resource-collection>
+            <web-resource-name>design</web-resource-name>
+            <description/>
+            <url-pattern>/design/*</url-pattern>
+        </web-resource-collection>
+        
+        <web-resource-collection>
+            <web-resource-name>groups</web-resource-name>
+            <description/>
+            <url-pattern>/group/*</url-pattern>
+        </web-resource-collection>
+        
         <auth-constraint>
             <description/>
             <role-name>Administrador</role-name>

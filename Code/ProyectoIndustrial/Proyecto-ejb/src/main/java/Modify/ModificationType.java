@@ -7,16 +7,13 @@ import java.io.Serializable;
  * @author angelrg
  */
 public enum ModificationType implements Serializable {
-    POR_FALTANTE,
-    POR_ROBO,
+    CANTIDAD,
     ATRIBUTOS;
     
     public String dropDownName(){
         switch(this){
-            case POR_FALTANTE:
+            case CANTIDAD:
                 return "Por Faltante";
-            case POR_ROBO:
-                return "Por Robo";
             default:
                 return "Por Atributos";
         }

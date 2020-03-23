@@ -31,6 +31,9 @@ public interface ProductionFacadeLocal {
 
     public List<Product> getProduct();
 
+
+    public Optional<Product> getProductById(Integer id);
+
     public List<Production> AllProductions();
 
     public Optional<Production> getProductionById(Integer id);

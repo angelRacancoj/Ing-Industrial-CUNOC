@@ -1,5 +1,6 @@
 package Production.repository;
 
+import Production.Product;
 import Production.Production;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +10,11 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 import static config.Constants.*;
+import java.util.ArrayList;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -39,17 +45,20 @@ public class ProductionRepository {
      * @return Production
      */
     public Optional<Production> findByIdProduction(int idProduction) {
-
-        TypedQuery<Production> typedQuery = entityManager.createQuery(QUERY_FIND_BY_ID, Production.class)
-                .setParameter(1, idProduction);
-
-        try {
-            return Optional.of(typedQuery.getSingleResult());
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-
+        return Optional.of(entityManager.find(Production.class, idProduction));
     }
+//    public Optional<Production> findByIdProduction(int idProduction) {
+//
+//        TypedQuery<Production> typedQuery = entityManager.createQuery(QUERY_FIND_BY_ID, Production.class)
+//                .setParameter(1, idProduction);
+//
+//        try {
+//            return Optional.of(typedQuery.getSingleResult());
+//        } catch (Exception e) {
+//            return Optional.empty();
+//        }
+//
+//    }
 
     public List<Production> AllProductions() {
 
@@ -65,6 +74,32 @@ public class ProductionRepository {
 
         return typedQuery.getResultList();
 
+    }
+
+    /**
+     * To get all results just set all with null
+     *
+     * @param idProduction
+     * @param name
+     * @return
+     */
+    public List<Production> findProduction(Integer idProduction, String name) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Production> criteriaQuery = criteriaBuilder.createQuery(Production.class);
+        Root<Production> production = criteriaQuery.from(Production.class);
+        ArrayList<Predicate> predicates = new ArrayList<>();
+
+        if (idProduction != null) {
+            predicates.add(criteriaBuilder.like(production.get("idProduction"), "%" + idProduction + "%"));
+        }
+
+        if (name != null) {
+            predicates.add(criteriaBuilder.like(production.get("name"), "%" + name + "%"));
+        }
+
+        criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
+        TypedQuery<Production> query = entityManager.createQuery(criteriaQuery);
+        return query.getResultList();
     }
 
 }

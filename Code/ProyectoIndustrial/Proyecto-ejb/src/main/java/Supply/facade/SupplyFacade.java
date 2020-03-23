@@ -17,6 +17,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import Supply.repository.AvailabilityFilter;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Stateless
 @LocalBean
@@ -53,8 +54,8 @@ public class SupplyFacade implements SupplyFacadeLocal {
      * {@inheritDoc}
      */
     @Override
-    public List<Measure> getMeasure(Measure measure) throws MandatoryAttributeSupplyException {
-        return measureRepository.getMeasure(measure);
+    public Optional<Measure> getMeasureById(Integer id) {
+        return measureRepository.getMeasureById(id);
     }
 
     /**
@@ -69,33 +70,21 @@ public class SupplyFacade implements SupplyFacadeLocal {
      * {@inheritDoc}
      */
     @Override
-    public List<Supply> searchSupplies(Integer codeSupply, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply) {
-        return supplyRepository.getSupply(codeSupply, nameSupply, availabilitySupply, expirationDateSupply);
-    }
-    
-    
-    @Override
-    public List<Supply> getSupplyAvailable(){
-        List<Supply> list =new ArrayList<>();
-        list = supplyRepository.getSupply(null, null,AvailabilityFilter.AVAILABLE ,null);
-        return list;
+    public List<Supply> searchSupplies(Integer codeSupply, String internalCode, String nameSupply, AvailabilityFilter availabilitySupply, ExpirationDateFilter expirationDateSupply) {
+        return supplyRepository.getSupply(codeSupply, nameSupply, internalCode, availabilitySupply, expirationDateSupply);
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public Supply modifyByTheft(Supply supplyToChange, User user, String noteModify) {
-        return supplyService.modifyByTheft(supplyToChange, user, noteModify);
+    public List<Supply> getSupplyAvailable() {
+        return supplyRepository.getSupply(null, null, null, AvailabilityFilter.AVAILABLE, null);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Supply modifyByMissing(Supply supplyToChange, Double newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException {
-        return supplyService.modifyByMissing(supplyToChange, newQuantity, user, noteModify);
+    public Supply modifyQuantity(Supply supplyToChange, Double newQuantity, User user, String noteModify) throws MandatoryAttributeSupplyException {
+        return supplyService.modifyQuantity(supplyToChange, newQuantity, user, noteModify);
     }
 
     @Override

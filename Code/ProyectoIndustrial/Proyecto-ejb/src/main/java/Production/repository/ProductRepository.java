@@ -1,6 +1,5 @@
 package Production.repository;
 
-
 import Production.Product;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -25,17 +24,28 @@ public class ProductRepository {
     public static final String FIND_BY_NAME = "SELECT g FROM product g WHERE g.name = :name";
     public static final String GET_ALL = "SELECT g FROM Product g";
     
-    
     private EntityManager entityManager;
     
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
-
+    
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
+//    public Optional<Product> getProductById(Integer id){
+//        TypedQuery<Product> typedQuery = entityManager.createQuery(FIND_BY_ID,Product.class).setParameter("id", id);
+//        try {
+//            return Optional.of(typedQuery.getSingleResult());
+//        } catch (NoResultException e) {
+//            return Optional.empty();
+//        }
+//    }
+    public Optional<Product> getProductById(Integer id) {
+        return Optional.of(entityManager.find(Product.class, id));
+    }
     
-    public Optional<Product> getProductById(Integer id){
-        TypedQuery<Product> typedQuery = entityManager.createQuery(FIND_BY_ID,Product.class).setParameter("id", id);
+    public Optional<Product> getProductByName(String name) {
+        TypedQuery<Product> typedQuery = entityManager.createQuery(FIND_BY_NAME, Product.class).setParameter("name", name);
         try {
             return Optional.of(typedQuery.getSingleResult());
         } catch (NoResultException e) {
@@ -43,18 +53,8 @@ public class ProductRepository {
         }
     }
     
-    public Optional<Product> getProductByName(String name){
-        TypedQuery<Product> typedQuery = entityManager.createQuery(FIND_BY_NAME,Product.class).setParameter("name", name);
-        try {
-            return Optional.of(typedQuery.getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
-    }
-    
-    
-    public Optional<List<Product>> getAll(){
-        TypedQuery<Product> typedQuery = entityManager.createQuery(GET_ALL,Product.class);
+    public Optional<List<Product>> getAll() {
+        TypedQuery<Product> typedQuery = entityManager.createQuery(GET_ALL, Product.class);
         try {
             return Optional.of(typedQuery.getResultList());
         } catch (NoResultException e) {
@@ -62,4 +62,3 @@ public class ProductRepository {
         }
     }
 }
-
