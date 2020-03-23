@@ -95,11 +95,7 @@ public class LoginView implements Serializable {
         User currentUser = userFacade.getAuthenticatedUser().get(0);
         switch (currentUser.getRolUser().getName()) {
             case ADMINISTRADOR:
-                externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
-                break;
             case ESTUDIANTE:
-                externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
-                break;
             case DOCENTE:
                 externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
                 break;

@@ -1,6 +1,5 @@
 package Production.facade;
 
-
 import Design.Design;
 import Design.DesignData;
 import Production.NecessarySupply;
@@ -27,45 +26,43 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class ProductionFacade implements ProductionFacadeLocal {
-    private ProductionService productionService ;
+
+    private ProductionService productionService;
     private ProductionRepository productionRepository;
     private ProductRepository productRepository;
     private StepService stepService;
     private StepRepository stepRepository;
     private DesignRepository designRepository;
-    
+
     private DesignService designService;
 
-    
     @EJB
     public void setStepService(StepService stepService) {
         this.stepService = stepService;
     }
+
     @EJB
     public void setStepRepository(StepRepository stepRepository) {
         this.stepRepository = stepRepository;
     }
 
-    
-    
     @EJB
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-    
-    
+
     @EJB
     public void setProductionService(ProductionService service) {
         productionService = service;
     }
 
     @EJB
-    public void setProductionRepository(ProductionRepository  productionRepository) {
+    public void setProductionRepository(ProductionRepository productionRepository) {
         this.productionRepository = productionRepository;
     }
-    
+
     @EJB
-    public void setDesignService(DesignService designService){
+    public void setDesignService(DesignService designService) {
         this.designService = designService;
     }
 
@@ -74,8 +71,6 @@ public class ProductionFacade implements ProductionFacadeLocal {
         this.designRepository = designRepository;
     }
 
-    
-    
     /**
      * {@inheritDoc}
      */
@@ -107,25 +102,25 @@ public class ProductionFacade implements ProductionFacadeLocal {
     public Optional<Production> getProductionById(Integer id) {
         return productionRepository.findByIdProduction(id);
     }
-    
-    @Override
-    public List<Product> getProduct(){
-        Optional<List<Product>> lista = productRepository.getAll();      
+
+    public List<Product> getProduct() {
+        Optional<List<Product>> lista = productRepository.getAll();
         return lista.get();
     }
-    
+
     @Override
-    public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys){
-        designService.createDesign(design, designData, necessarySupplys);
+    public Optional<Product> getProductById(Integer id) {
+        return productRepository.getProductById(id);
     }
-    
+
+    @Override
+    public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     @Override
     public List<Design> AllDesigns() {
-        List<Design> list = new ArrayList<>();
-        list  = designRepository.AllDesigns();
-        return list;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
+
 }
