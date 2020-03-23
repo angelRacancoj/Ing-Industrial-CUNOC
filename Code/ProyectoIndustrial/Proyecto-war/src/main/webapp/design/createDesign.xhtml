@@ -18,16 +18,23 @@
                         <h:panelGrid columns="2" >
 
 
-                            <h:column/>
-                            <p:fileUpload id="image" value="#{fileUploadView.file}" mode="advanced" skinSimple="true"
-                                          label="Seleccione una imagen" uploadLabel="Subir imagen" cancelLabel="Cancelar"/>
+                            <p:outputLabel for="txtName" value="Imagen:"/>
+                            <p:fileUpload id="writtenRequest" fileUploadListener="#{designView.handleImage}"
+
+                                          styleClass="in-dialog"
+                                          skinSimple="true" auto="true" allowTypes="/(\.|\/)(jpg|png|jpeg|gif|pdf)$/"
+                                          update="@parent"
+                                          label="Seleccionar"
+                                          invalidFileMessage="Solo se puede cargar archivos jpg, png, jpeg,gif,pdf"/>
+
+
 
 
                             <p:outputLabel for="txtName" value="Nombre:"/>
                             <p:inputText id="txtName" value="#{designView.designDataCreate.name}"  required="true"  styleClass="form-control"/>
 
                             <p:outputLabel  value="Producto:" />
-                           
+
 
 
                             <p:selectOneMenu id="productSelectOneMenu"  value="#{designView.designCreate.productIdProduct}" converter="productConverter">

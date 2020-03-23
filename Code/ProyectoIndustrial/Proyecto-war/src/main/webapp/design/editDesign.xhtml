@@ -15,9 +15,9 @@
                 <h:form id="editDesignForm"> 
 
                     <p:fieldset id="designDataField" legend="Escoga el diseño que desea editar">
-                        <p:dataTable id="editDesignTable" var="design" value="#{designView.listDesignEdit}" emptyMessage="No hay diseños disponibles">
+                        <p:dataTable id="editDesignTable" var="design" value="#{designEditView.listDesignEdit}" emptyMessage="No hay diseños disponibles">
 
-                            <p:column headerText="Codigo" filterBy="#{design.designData.iddesignData}" filterMatchMode="contains" style="width: 10%" >
+                            <p:column headerText="Codigo" filterBy="#{design.idDesign}" filterMatchMode="contains" style="width: 10%" >
                                 <h:outputText value="#{design.designData.iddesignData}" />
                             </p:column>
 
@@ -33,7 +33,7 @@
                                 <p:commandLink styleClass="btn btn-success" style="width: 100%;"
                                                update=":#{p:component('editDesignForm')},:#{p:component('editDesignTable')}, :#{p:component('formDialogEdit')}"
                                                onclick="PF('wdialogEdit').show();"
-                                               actionListener="#{designView.selectDesignEdit(design)}" process="@this">
+                                               actionListener="#{designEditView.selectDesignEdit(design)}" process="@this">
                                     <span class="glyphicon glyphicon-edit"></span> Editar Diseño
 
                                 </p:commandLink>
@@ -49,35 +49,6 @@
 
 
 
-
-
-                <p:dialog header="Detalles Insumo" widgetVar="detailsSupply" resizable="false" draggable="false"
-                          showEffect="fade" hideEffect="fade" modal="true">
-
-                    <p:outputPanel id="display">
-                        <h:panelGrid columns="2" cellpadding="4" rendered="#{not empty designView.selectedSupply}">
-                            <f:facet name="header">
-                                <p:graphicImage name="demo/images/car/#{designView.selectedSupply.code}.gif"/>
-                            </f:facet>
-
-                            <h:outputText value="Id:" />
-                            <h:outputText value="#{designView.selectedSupply.code}" style="font-weight:bold"/>
-
-                            <h:outputText value="Costo:" />
-                            <h:outputText value="#{designView.selectedSupply.cost}" style="font-weight:bold"/>
-
-                            <h:outputText value="Fecha Adimision:" />
-                            <h:outputText value="#{designView.selectedSupply.dateOfAdmission}" style="font-weight:bold"/>
-
-                            <h:outputText value="Expiracion:" />
-                            <h:outputText value="#{designView.selectedSupply.expirationDate}" style="font-weight:bold"/>
-
-
-                        </h:panelGrid>
-                    </p:outputPanel>
-                </p:dialog>
-
-
                 <p:dialog header="Editar diseño" widgetVar="wdialogEdit" resizable="false" draggable="false"
                           showEffect="fade" hideEffect="fade" modal="true">
                     <h:form id="formDialogEdit">
@@ -87,27 +58,29 @@
 
 
                                 <h:column/>
-                                <p:fileUpload id="image" value="#{designView.designSelectedEdit.designData.picture}" mode="advanced" skinSimple="true"
+                                <p:fileUpload id="image" value="#{designEditView.designSelectedEdit.designData.picture}" mode="advanced" skinSimple="true"
                                               label="Seleccione una imagen" uploadLabel="Subir imagen" cancelLabel="Cancelar"/>
 
 
 
                                 <p:outputLabel for="txtName" value="Nombre:"/>
-                                <p:inputText id="txtName" value="#{designView.designSelectedEdit.designData.name}"  required="true"  styleClass="form-control"/>
+                                <p:inputText id="txtName" value="#{designEditView.designSelectedEdit.designData.name}"  required="true"  styleClass="form-control"/>
 
 
 
                                 <p:outputLabel  value="Descripcion:"/>
-                                <p:inputTextarea value="#{designView.designSelectedEdit.designData.description}" rows="6" cols="33" styleClass="form-control"  />
+                                <p:inputTextarea value="#{designEditView.designSelectedEdit.designData.description}" rows="6" cols="33" styleClass="form-control"  />
 
                             </h:panelGrid>
                         </p:fieldset>
+                        
                         <p:commandLink styleClass="btn btn-success"  style="width: 60%;"
                                        update="@form, :#{p:component('growl')}"
                                        actionListener="#{groupView.editGroup()}"  >
-                            <span class="glyphicon glyphicon-plus-sign"></span> Crear Diseño
+                            <span class="glyphicon glyphicon-plus-sign"></span> Editar Diseño
 
                         </p:commandLink>
+                        
                     </h:form>
 
                 </p:dialog>

@@ -1,6 +1,6 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template image, choose Tools | Templates
  * and open the template in the editor.
  */
 package gt.edu.usac.cunoc.ingenieria.production.design.view;
@@ -13,16 +13,24 @@ import Production.facade.ProductionFacadeLocal;
 import Supply.Supply;
 import Supply.facade.SupplyFacadeLocal;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletResponse;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -40,16 +48,18 @@ public class designView implements Serializable {
     private List<Supply> suppliesSelected;
     private List<NecessarySupply> necessarySupplys;
 
-    private List<Design> listDesignEdit;
+    
 
     //producto seleccionado y lisado de productos para el comboBox
     private List<Product> products;
     private Product productSelect;
 
+    private UploadedFile image;
+    private StreamedContent imageStream;
+    String nameImage = "";
+
     private Supply selectedSupply;
-    private UploadedFile file;
     private Design designCreate;
-    private Design designSelectedEdit;
     private DesignData designDataCreate;
 
     @EJB
@@ -64,26 +74,24 @@ public class designView implements Serializable {
         productSelect = new Product();
 
         designCreate = new Design();
-        designSelectedEdit = new Design();
+        
         designDataCreate = new DesignData();
 
         supplies = supplyFacade.getSupplyAvailable();
-        listDesignEdit = productionFacadeLocal.AllDesigns();
+        
 
         suppliesSelected = new ArrayList<>();
         necessarySupplys = new ArrayList<>();
 
     }
 
-    public void selectDesignEdit(Design design) {
-        designSelectedEdit = design;
-    }
+    
 
     public void createDesign() {
         try {
             if (!necessarySupplys.isEmpty()) {
-                if (file != null) {
-                    designDataCreate.setPicture(file.getContents());
+                if (image != null) {
+                    designDataCreate.setPicture(image.getContents());
                 }
                 productionFacadeLocal.createDesign(designCreate, designDataCreate, necessarySupplys);
                 MessageUtils.addSuccessMessage(DESIGN_CREATED);
@@ -114,8 +122,31 @@ public class designView implements Serializable {
     }
 
     public void upload() {
-        if (file != null) {
-            FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded.");
+        if (image != null) {
+            FacesMessage message = new FacesMessage("Successful", image.getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
+    public void handleImage(FileUploadEvent event) {
+        image = event.getFile();
+        nameImage = event.getFile().getFileName();
+    }
+
+    public void view() {
+
+        try {
+            if (designDataCreate.getPicture() != null) {
+                byte[] arreglo = designDataCreate.getPicture();
+
+                HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                response.getOutputStream().write(arreglo);
+                response.getOutputStream().close();
+
+                FacesContext.getCurrentInstance().responseComplete();
+            }
+        } catch (IOException ex) {
+            FacesMessage message = new FacesMessage("Error");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
@@ -144,12 +175,12 @@ public class designView implements Serializable {
         this.selectedSupply = selectedSupply;
     }
 
-    public UploadedFile getFile() {
-        return file;
+    public UploadedFile getImage() {
+        return image;
     }
 
-    public void setFile(UploadedFile file) {
-        this.file = file;
+    public void setImage(UploadedFile image) {
+        this.image = image;
     }
 
     public List<NecessarySupply> getNecessarySupplys() {
@@ -176,22 +207,7 @@ public class designView implements Serializable {
         this.designDataCreate = designDataCreate;
     }
 
-    public List<Design> getListDesignEdit() {
-        return listDesignEdit;
-    }
-
-    public void setListDesignEdit(List<Design> listDesignEdit) {
-        this.listDesignEdit = listDesignEdit;
-    }
-
-    public Design getDesignSelectedEdit() {
-        return designSelectedEdit;
-    }
-
-    public void setDesignSelectedEdit(Design designSelectedEdit) {
-        this.designSelectedEdit = designSelectedEdit;
-    }
-
+   
     public List<Product> getProducts() {
         return products;
     }
@@ -206,6 +222,22 @@ public class designView implements Serializable {
 
     public void setProductSelect(Product productSelect) {
         this.productSelect = productSelect;
+    }
+
+    public StreamedContent getImageStream() {
+        return imageStream;
+    }
+
+    public void setImageStream(StreamedContent imageStream) {
+        this.imageStream = imageStream;
+    }
+
+    public String getNameImage() {
+        return nameImage;
+    }
+
+    public void setNameImage(String nameImage) {
+        this.nameImage = nameImage;
     }
 
 }
