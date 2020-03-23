@@ -3,13 +3,10 @@ package gt.udu.usac.cunoc.ingenieria.inventory.view;
 import Inventory.facade.InventoryLocal;
 import Inventory.objects.ProductionUnits;
 import Inventory.objects.SupplyQuantity;
-import Production.Product;
-import Production.facade.ProductionFacadeLocal;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -24,16 +21,11 @@ public class supplyCalculatorView implements Serializable {
     
     @EJB
     private InventoryLocal inventoryLocal;
-    
-    @EJB
-    private ProductionFacadeLocal productionFacadeLocal;
 
     //Search utilities
     List<ProductionUnits> productionList = new LinkedList<>();
-    List<Product> products = new LinkedList<>();
     Integer id;
     String productionName;
-    Product product;
 
     //calculate cost
     List<SupplyQuantity> suplyQuantity = new LinkedList<>();
@@ -41,29 +33,24 @@ public class supplyCalculatorView implements Serializable {
     double costWithExtraCost;
     ProductionUnits selectedProduction;
     
-    @PostConstruct
-    public void init() {
-        getAllProducts();
-    }
-    
     public void searchProduction() {
-        setProductionList(inventoryLocal.ProductionWithUnitsPlaces(id, productionName, product));
+        setProductionList(inventoryLocal.ProductionWithUnitsPlaces(id, productionName));
         if (getProductionList().isEmpty()) {
             MessageUtils.addSuccessMessage("Sin resultados en la busqueda");
         }
-    }
-    
-    private void getAllProducts() {
-        products.addAll(productionFacadeLocal.getProduct());
     }
     
     public void calculateCost() {
         if (selectedProduction == null) {
             MessageUtils.addWarningMessage("Debe seleccionar una produccion");
         } else {
-            setSuplyQuantity(inventoryLocal.getNecessarySupplies(selectedProduction));
-            setCostWithoutExtraCost(inventoryLocal.costByPruductionAndQuantityWithoutExtraCost(selectedProduction));
-            setCostWithExtraCost(inventoryLocal.costByPruductionAndQuantityWithExtraCost(selectedProduction));
+            if (!inventoryLocal.getNecessarySupplies(selectedProduction).isEmpty()) {
+                setSuplyQuantity(inventoryLocal.getNecessarySupplies(selectedProduction));
+                setCostWithoutExtraCost(inventoryLocal.costByPruductionAndQuantityWithoutExtraCost(selectedProduction));
+                setCostWithExtraCost(inventoryLocal.costByPruductionAndQuantityWithExtraCost(selectedProduction));
+            } else {
+                MessageUtils.addWarningMessage("No hay resultados de la busqueda");
+            }
         }
     }
     
@@ -76,13 +63,12 @@ public class supplyCalculatorView implements Serializable {
     public void cleanCriteria() {
         id = null;
         productionName = null;
-        product = null;
     }
     
     public void setId(Integer id) {
         this.id = id;
     }
-
+    
     public Integer getId() {
         return id;
     }
@@ -90,18 +76,9 @@ public class supplyCalculatorView implements Serializable {
     public void setProductionName(String productionName) {
         this.productionName = productionName;
     }
-
+    
     public String getProductionName() {
         return productionName;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-    
-    
-    public void setProduct(Product product) {
-        this.product = product;
     }
     
     public void setSelectedProduction(ProductionUnits selectedProduction) {
@@ -109,15 +86,12 @@ public class supplyCalculatorView implements Serializable {
     }
     
     public void setProductionList(List<ProductionUnits> productionList) {
+        this.productionList.clear();
         this.productionList = productionList;
     }
     
     public List<ProductionUnits> getProductionList() {
         return productionList;
-    }
-    
-    public List<Product> getProducts() {
-        return products;
     }
     
     public ProductionUnits getSelectedProduction() {

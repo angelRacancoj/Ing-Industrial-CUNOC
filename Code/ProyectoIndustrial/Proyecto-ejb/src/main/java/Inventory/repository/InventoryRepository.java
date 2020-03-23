@@ -5,10 +5,8 @@ import Inventory.objects.ProductionUnits;
 import Inventory.objects.SupplyQuantity;
 import Production.ExtraCost;
 import Production.NecessarySupply;
-import Production.Product;
 import Production.Production;
 import Production.repository.ProductionRepository;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -41,6 +39,7 @@ public class InventoryRepository {
 
     public double costByPruductionAndQuantityWithExtraCost(ProductionUnits productionUnits) {
         double cost = costByPruductionAndQuantityWithoutExtraCost(productionUnits);
+
         for (ExtraCost extraCost : productionUnits.getProduction().getExtraCostList()) {
             cost += extraCost.getCost();
         }
@@ -65,16 +64,18 @@ public class InventoryRepository {
     }
 
     private List<SupplyQuantity> necesarySupplyByQuantity(Design design, int quantity) {
+        System.out.println("Diseño: " + design.getIdDesign() + ", Unidades: " + quantity);
         ArrayList<SupplyQuantity> necesarySupplies = new ArrayList<>();
         for (NecessarySupply necessaryS : design.getNecessarySupplyList()) {
-            necesarySupplies.add(new SupplyQuantity(necessaryS.getSupplyCode(), necessaryS.getQuantity() * quantity));
+            necesarySupplies.add(new SupplyQuantity(necessaryS.getSupplyCode(), (necessaryS.getQuantity() * quantity)));
+            System.out.println("Insumo: " + necessaryS.getSupplyCode().getInternalCode() + ", Cantidad: " + (necessaryS.getQuantity() * quantity));
         }
         return necesarySupplies;
     }
 
-    public List<ProductionUnits> ProductionWithUnitsPlaces(Integer id, String nameProduction, Product product) {
-        List<Production> productions = productionRepository.findProduction(id, nameProduction, product);
-        List<ProductionUnits> productionUnits = new VirtualFlow.ArrayLinkedList<>();
+    public List<ProductionUnits> ProductionWithUnitsPlaces(Integer id, String nameProduction) {
+        List<Production> productions = productionRepository.findProduction(id, nameProduction);
+        List<ProductionUnits> productionUnits = new ArrayList<>();
         for (Production production : productions) {
             productionUnits.add(new ProductionUnits(production, 1));
         }

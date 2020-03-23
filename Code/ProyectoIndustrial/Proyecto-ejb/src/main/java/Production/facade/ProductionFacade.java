@@ -1,5 +1,8 @@
 package Production.facade;
 
+import Design.Design;
+import Design.DesignData;
+import Production.NecessarySupply;
 import Production.Product;
 import Production.Production;
 import Production.Step;
@@ -30,7 +33,7 @@ public class ProductionFacade implements ProductionFacadeLocal {
     private StepService stepService;
     private StepRepository stepRepository;
     private DesignRepository designRepository;
-    
+
     private DesignService designService;
 
     @EJB
@@ -57,9 +60,9 @@ public class ProductionFacade implements ProductionFacadeLocal {
     public void setProductionRepository(ProductionRepository productionRepository) {
         this.productionRepository = productionRepository;
     }
-    
+
     @EJB
-    public void setDesignService(DesignService designService){
+    public void setDesignService(DesignService designService) {
         this.designService = designService;
     }
 
@@ -68,8 +71,6 @@ public class ProductionFacade implements ProductionFacadeLocal {
         this.designRepository = designRepository;
     }
 
-    
-    
     /**
      * {@inheritDoc}
      */
@@ -110,6 +111,16 @@ public class ProductionFacade implements ProductionFacadeLocal {
     @Override
     public Optional<Product> getProductById(Integer id) {
         return productRepository.getProductById(id);
+    }
+
+    @Override
+    public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Design> AllDesigns() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

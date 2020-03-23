@@ -74,5 +74,5 @@ public interface InventoryLocal {
      * @param product
      * @return
      */
-    public List<ProductionUnits> ProductionWithUnitsPlaces(Integer id, String nameProduction, Product product);
+    public List<ProductionUnits> ProductionWithUnitsPlaces(Integer id, String nameProduction);
 }

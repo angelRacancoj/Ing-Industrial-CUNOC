@@ -13,47 +13,36 @@
         Menu Principal
     </ui:define>
 
+    <ui:define name="head">
+        Menu Principal
+    </ui:define>
+
     <ui:define name="content">
-        <h:form id="supplyCalculator">
-            <fieldset>
-                <legend>Usuarios</legend>
-                <div class="row">
-                    <div class="btn-group">
-                        <p:link outcome="users" styleClass="btn btn-primary">
-                            <span class="glyphicon glyphicon-search"></span> Buscar
-                        </p:link>
-                    </div>
-                    <div class="btn-group">
-                        <p:link outcome="users" styleClass="btn btn-primary">
-                            <span class="glyphicon glyphicon-search"></span> Buscar
-                        </p:link>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Usuarios</legend>
-                <div class="row">
-                    <div class="btn-group pull-right">
-                        <p:link outcome="users" >
-                            <span class="glyphicon glyphicon-search"></span> Buscar
-                        </p:link>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="btn-group pull-right">
-                        <p:link outcome="users" >
-                            <span class="glyphicon glyphicon-search"></span> Buscar
-                        </p:link>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="btn-group pull-right">
-                        <p:link outcome="users" >
-                            <span class="glyphicon glyphicon-search"></span> Buscar
-                        </p:link>
-                    </div>
-                </div>
-            </fieldset>
+        <h:form>
+            <legend>Menu Principal</legend>
+            <p:growl>
+                <p:autoUpdate />
+            </p:growl>
+
+            <p:panelMenu style="width:300px">
+                <p:submenu label="Usuarios">
+                    <p:menuitem value=" Buscar" class="glyphicon glyphicon-search" outcome="users"/>
+                    <p:menuitem value=" Nuevo" class="glyphicon glyphicon-plus" outcome="create-users" rendered="#{p:ifAnyGranted(constants.adminDocente())}"/>
+                </p:submenu>
+                <p:submenu label="Grupos">
+                    <p:menuitem value=" Buscar" class="glyphicon glyphicon-search" outcome="groups"/>
+                    <p:menuitem value=" Crear" class="glyphicon glyphicon-plus" outcome="create-group"/>
+                </p:submenu>
+                <p:submenu label="Insumos">
+                    <p:menuitem value=" Buscar" class="glyphicon glyphicon-search" outcome="supplies"/>
+                    <p:menuitem value=" Nuevo" class="glyphicon glyphicon-plus" outcome="newSupply"/>
+                    <p:menuitem value=" Calcular Insumos" class="glyphicon glyphicon-bitcoin" outcome="calcSupply"/>
+                </p:submenu>
+                <p:submenu label="Diseños">
+                    <p:menuitem value=" Buscar" class="glyphicon glyphicon-search" outcome="designs"/>
+                    <p:menuitem value=" Nuevo" class="glyphicon glyphicon-plus" outcome="createDesign"/>
+                </p:submenu>
+            </p:panelMenu>
         </h:form>
     </ui:define>
 

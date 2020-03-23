@@ -68,8 +68,8 @@ public class Inventory implements InventoryLocal {
      * {@inheritDoc}
      */
     @Override
-    public List<ProductionUnits> ProductionWithUnitsPlaces(Integer id, String nameProduction, Product product) {
-        return inventoryRepository.ProductionWithUnitsPlaces(id, nameProduction, product);
+    public List<ProductionUnits> ProductionWithUnitsPlaces(Integer id, String nameProduction) {
+        return inventoryRepository.ProductionWithUnitsPlaces(id, nameProduction);
     }
 
 }

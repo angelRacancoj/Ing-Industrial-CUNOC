@@ -45,17 +45,20 @@ public class ProductionRepository {
      * @return Production
      */
     public Optional<Production> findByIdProduction(int idProduction) {
-
-        TypedQuery<Production> typedQuery = entityManager.createQuery(QUERY_FIND_BY_ID, Production.class)
-                .setParameter(1, idProduction);
-
-        try {
-            return Optional.of(typedQuery.getSingleResult());
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-
+        return Optional.of(entityManager.find(Production.class, idProduction));
     }
+//    public Optional<Production> findByIdProduction(int idProduction) {
+//
+//        TypedQuery<Production> typedQuery = entityManager.createQuery(QUERY_FIND_BY_ID, Production.class)
+//                .setParameter(1, idProduction);
+//
+//        try {
+//            return Optional.of(typedQuery.getSingleResult());
+//        } catch (Exception e) {
+//            return Optional.empty();
+//        }
+//
+//    }
 
     public List<Production> AllProductions() {
 
@@ -78,10 +81,9 @@ public class ProductionRepository {
      *
      * @param idProduction
      * @param name
-     * @param product
      * @return
      */
-    public List<Production> findProduction(Integer idProduction, String name, Product product) {
+    public List<Production> findProduction(Integer idProduction, String name) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Production> criteriaQuery = criteriaBuilder.createQuery(Production.class);
         Root<Production> production = criteriaQuery.from(Production.class);
@@ -93,10 +95,6 @@ public class ProductionRepository {
 
         if (name != null) {
             predicates.add(criteriaBuilder.like(production.get("name"), "%" + name + "%"));
-        }
-
-        if (product != null) {
-            predicates.add(criteriaBuilder.like(production.get("productId"), "%" + product.getIdProduct() + "%"));
         }
 
         criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
