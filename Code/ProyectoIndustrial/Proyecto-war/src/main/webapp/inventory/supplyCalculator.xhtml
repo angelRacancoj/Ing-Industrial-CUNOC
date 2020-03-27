@@ -33,7 +33,7 @@
                 </div>
                 <div class="row">
                     <div class="btn-group pull-right">
-                        <p:commandLink styleClass="btn btn-primary" update=":usersTable"
+                        <p:commandLink styleClass="btn btn-primary" update=":#{p:component('usersTable')}"
                                        actionListener="#{supplyCalculatorView.searchProduction()}">
                             <span class="glyphicon glyphicon-search"></span> Buscar
                         </p:commandLink>
@@ -42,42 +42,45 @@
             </fieldset>
         </h:form>
         <div class="row">
-            <p:dataTable id="usersTable" var="productionL" value="#{supplyCalculatorView.productionList}"
-                         reflow="true">
-                <p:column headerText="Codigo">
-                    <h:outputText value="#{productionL.production.idProduction}" />
-                </p:column>
-                <p:column headerText="Nombre">
-                    <h:outputText value="#{productionL.production.name}" />
-                </p:column>
-                <p:column headerText="Producto">
-                    <h:outputText value="#{productionL.production.productId.name}" />
-                </p:column>
-                <p:column headerText="Grupo">
-                    <h:outputText value="#{productionL.production.groupId.name}" />
-                </p:column>
-                <p:column headerText="Información" styleClass="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Información">
-                        <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('infoAbout').show();"
-                                       update=":#{p:component('infoAbout')}">
-                            <f:setPropertyActionListener value="#{productionL}" target="#{supplyCalculatorView.selectedProduction}"/>
-                            <span class="glyphicon glyphicon-file"></span>
-                        </p:commandLink>
-                    </p>
-                </p:column>
-                <p:column headerText="Unidades" rendered="#{p:ifAnyGranted(constants.adminDocente())}" styleClass="text-center">
-                    <p:spinner min="1" value="#{productionL.units}" styleClass="form-control"/>
-                </p:column>
-                <p:column headerText="Calcular Insumos" rendered="#{p:ifAnyGranted(constants.adminDocente())}" styleClass="text-center">
-                    <p data-placement="right" data-toggle="tooltip" title="Calcular">
-                        <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('calculate').show();" 
-                                       update=":#{p:component('calculate')}">
-                            <f:setPropertyActionListener value="#{productionL}" target="#{supplyCalculatorView.selectedProduction}"/>
-                            <span class="glyphicon glyphicon-check"></span>
-                        </p:commandLink>
-                    </p>
-                </p:column>
-            </p:dataTable>
+            <h:form>
+                <p:dataTable id="usersTable" var="productionL" value="#{supplyCalculatorView.productionList}"
+                             reflow="true">
+                    <p:column headerText="Codigo">
+                        <h:outputText value="#{productionL.production.idProduction}" />
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{productionL.production.name}" />
+                    </p:column>
+                    <p:column headerText="Producto">
+                        <h:outputText value="#{productionL.production.productId.name}" />
+                    </p:column>
+                    <p:column headerText="Grupo">
+                        <h:outputText value="#{productionL.production.groupId.name}" />
+                    </p:column>
+                    <p:column headerText="Información" styleClass="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Información">
+                            <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('infoAbout').show();"
+                                           update=":#{p:component('infoAbout')}">
+                                <f:setPropertyActionListener value="#{productionL}" target="#{supplyCalculatorView.selectedProduction}"/>
+                                <span class="glyphicon glyphicon-file"></span>
+                            </p:commandLink>
+                        </p>
+                    </p:column>
+                    <p:column headerText="Unidades" rendered="#{p:ifAnyGranted(constants.adminDocente())}" styleClass="text-center">
+                        <p:spinner min="1" value="#{productionL.units}" styleClass="form-control">
+                            <f:convertNumber integerOnly="true"/>
+                        </p:spinner>
+                    </p:column>
+                    <p:column headerText="Calcular Insumos" rendered="#{p:ifAnyGranted(constants.adminDocente())}" styleClass="text-center">
+                        <p data-placement="right" data-toggle="tooltip" title="Calcular">
+                            <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('calculate').show();" 
+                                           update=":#{p:component('calculate')}" actionListener="#{supplyCalculatorView.calculateCost(productionL)}" >
+                                <span class="glyphicon glyphicon-check"></span>
+                            </p:commandLink>
+                        </p>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
 
             <!-- Informacion del Insumo -->
             <p:dialog header="#{supplyCalculatorView.selectedProduction.production.idProduction}" id="infoAbout" widgetVar="infoAbout"
@@ -166,7 +169,6 @@
             <p:dialog header="#{supplyCalculatorView.selectedProduction.production.idProduction} - #{supplyCalculatorView.selectedProduction.production.name}" id="calculate" widgetVar="calculate"
                       fitViewport="true" modal="true" closeOnEscape="true">
                 <p:ajax event="close" listener="#{supplyCalculatorView.cleanSearch()}" update="@this" />
-                <p:ajax event="open" listener="#{supplyCalculatorView.calculateCost()}" update=":#{p:component('supplyQuantityTable')}"/>
                 <h:form>
                     <p:dataTable id="supplyQuantityTable" var="supplyQ" value="#{supplyCalculatorView.suplyQuantity}"
                                  reflow="true">
