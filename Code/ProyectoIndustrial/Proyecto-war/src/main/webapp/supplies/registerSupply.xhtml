@@ -58,14 +58,15 @@
                 </div>
 
                 <div class="row form-group">
-                    <p:outputLabel for="quantity" value="Cantidad:" styleClass="col-md-4 control-label"/>
+                    <p:outputLabel for="quantity por medida" value="Cantidad:" styleClass="col-md-4 control-label"/>
                     <div class="col-md-8">
-                        <p:spinner id="quantity" styleClass="form-control" pt:placeholder="Cantidad del Insumo"
+                        <p:spinner id="quantity" styleClass="form-control" pt:placeholder="Ej: 0.1"
                                    pt:required="true" min="0" required="true"
                                    value="#{registerSupplyView.newSupply.quantity}"
                                    stepFactor="0.01">
                             <f:convertNumber minFractionDigits="5" maxFractionDigits="6"/>
                         </p:spinner>  
+                        <h:outputLabel value="Ej: Cada mililitro de pintura cuesta 0.1"/>
                     </div>
                 </div>
                 <div class="row form-group">

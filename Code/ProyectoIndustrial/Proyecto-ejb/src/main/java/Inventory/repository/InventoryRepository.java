@@ -1,12 +1,11 @@
 package Inventory.repository;
 
 import Design.Design;
-import Inventory.objects.ProductionUnits;
+import Inventory.objects.DesignUnits;
 import Inventory.objects.SupplyQuantity;
-import Production.ExtraCost;
 import Production.NecessarySupply;
 import Production.Production;
-import Production.repository.ProductionRepository;
+import Production.repository.DesignRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -21,11 +20,11 @@ import javax.ejb.Stateless;
 @LocalBean
 public class InventoryRepository {
 
-    private ProductionRepository productionRepository;
+    private DesignRepository designRepository;
 
     @EJB
-    public void setProductionRepository(ProductionRepository productionRepository) {
-        this.productionRepository = productionRepository;
+    public void setDesignRepository(DesignRepository designRepository) {
+        this.designRepository = designRepository;
     }
 
     /**
@@ -37,48 +36,61 @@ public class InventoryRepository {
         return null;
     }
 
-    public double costByPruductionAndQuantityWithExtraCost(ProductionUnits productionUnits) {
-        double cost = costByPruductionAndQuantityWithoutExtraCost(productionUnits);
-
-        for (ExtraCost extraCost : productionUnits.getProduction().getExtraCostList()) {
-            cost += extraCost.getCost();
-        }
-        return cost;
+    /**
+     * Return the cost of produce the Design units
+     *
+     * @param designUnits
+     * @return
+     */
+    public double totalCost(DesignUnits designUnits) {
+        return unitCost(designUnits) * designUnits.getUnits();
     }
 
-    public double costByPruductionAndQuantityWithoutExtraCost(ProductionUnits productionUnits) {
+    /**
+     * Return the cost of produce a Design
+     *
+     * @param designUnits
+     * @return
+     */
+    public double unitCost(DesignUnits designUnits) {
+        Design design = designRepository.findDesignByID(designUnits.getDesign().getIdDesign()).get();
         double cost = 0;
-        for (SupplyQuantity necessarySupply : getNecessarySupplies(productionUnits)) {
-            cost += (necessarySupply.getQuantity() * necessarySupply.getSupply().getCost());
+        for (NecessarySupply necessarySupply : design.getNecessarySupplyList()) {
+            cost += (necessarySupply.getSupplyCode().getCost() * necessarySupply.getQuantity());
         }
         return cost;
     }
 
-    public List<SupplyQuantity> getNecessarySupplies(ProductionUnits productionUnits) {
-        Production product = productionRepository.findByIdProduction(productionUnits.getProduction().getIdProduction()).get();
-        if (product.getPostDesign() != null) {
-            return necesarySupplyByQuantity(product.getPostDesign(), productionUnits.getUnits());
-        } else {
-            return necesarySupplyByQuantity(product.getDesignId(), productionUnits.getUnits());
-        }
-    }
-
-    private List<SupplyQuantity> necesarySupplyByQuantity(Design design, int quantity) {
-        System.out.println("Diseño: " + design.getIdDesign() + ", Unidades: " + quantity);
+    /**
+     * Return the necessary supplies to produce the units of a Design
+     *
+     * @param designUnits
+     * @return
+     */
+    public List<SupplyQuantity> getNecessarySupplies(DesignUnits designUnits) {
+        Design design = designRepository.findDesignByID(designUnits.getDesign().getIdDesign()).get();
         ArrayList<SupplyQuantity> necesarySupplies = new ArrayList<>();
+
         for (NecessarySupply necessaryS : design.getNecessarySupplyList()) {
-            necesarySupplies.add(new SupplyQuantity(necessaryS.getSupplyCode(), (necessaryS.getQuantity() * quantity)));
-            System.out.println("Insumo: " + necessaryS.getSupplyCode().getInternalCode() + ", Cantidad: " + (necessaryS.getQuantity() * quantity));
+            necesarySupplies.add(new SupplyQuantity(necessaryS.getSupplyCode(), (necessaryS.getQuantity() * designUnits.getUnits())));
         }
+
         return necesarySupplies;
     }
 
-    public List<ProductionUnits> ProductionWithUnitsPlaces(Integer id, String nameProduction) {
-        List<Production> productions = productionRepository.findProduction(id, nameProduction);
-        List<ProductionUnits> productionUnits = new ArrayList<>();
-        for (Production production : productions) {
-            productionUnits.add(new ProductionUnits(production, 1));
+    /**
+     * Return all Designs and an Integer number to manage the quantity
+     *
+     * @param id
+     * @param nameProduction
+     * @return
+     */
+    public List<DesignUnits> DesignWithUnitsPlaces(Integer id, String nameProduction) {
+        List<Design> designs = designRepository.getDesign(id, nameProduction);
+        List<DesignUnits> designUnits = new ArrayList<>();
+        for (Design design : designs) {
+            designUnits.add(new DesignUnits(design, 1));
         }
-        return productionUnits;
+        return designUnits;
     }
 }

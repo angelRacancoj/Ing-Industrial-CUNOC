@@ -57,16 +57,17 @@
                             <li>
                                 <p:link value="Producción"/>
                             </li>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li jsf:rendered="#{not empty request.userPrincipal}">
-                                    <p class="navbar-text">logueado como <span>#{p:remoteUser()}</span>, 
-                                        <h:commandLink styleClass="navbar-link"
-                                                       action="#{logoutView.logout()}"
-                                                       value="Salir"/>
-                                    </p>
-                                </li>
-                            </ul>
-
+                            <h:form>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li jsf:rendered="#{not empty request.userPrincipal}">
+                                        <p class="navbar-text">logueado como <span>#{p:remoteUser()}</span>, 
+                                            <h:commandLink styleClass="navbar-link"
+                                                           action="#{logoutView.logout()}"
+                                                           value="Salir"/>
+                                        </p>
+                                    </li>
+                                </ul>
+                            </h:form>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
