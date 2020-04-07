@@ -1,7 +1,7 @@
 package gt.udu.usac.cunoc.ingenieria.inventory.view;
 
 import Inventory.facade.InventoryLocal;
-import Inventory.objects.ProductionUnits;
+import Inventory.objects.DesignUnits;
 import Inventory.objects.SupplyQuantity;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.Serializable;
@@ -18,111 +18,114 @@ import javax.inject.Named;
 @Named
 @ViewScoped
 public class supplyCalculatorView implements Serializable {
-    
+
     @EJB
     private InventoryLocal inventoryLocal;
 
     //Search utilities
-    List<ProductionUnits> productionList = new LinkedList<>();
+    List<DesignUnits> designList = new LinkedList<>();
     Integer id;
-    String productionName;
+    String designName;
 
     //calculate cost
     List<SupplyQuantity> suplyQuantity = new LinkedList<>();
-    double costWithoutExtraCost;
-    double costWithExtraCost;
-    ProductionUnits selectedProduction;
-    
-    public void searchProduction() {
-        setProductionList(inventoryLocal.ProductionWithUnitsPlaces(id, productionName));
-        if (getProductionList().isEmpty()) {
+    double unitCost;
+    double totalCost;
+    DesignUnits selectedDesign;
+
+    public void searchDesign() {
+        setDesignList(inventoryLocal.DesignWithUnitsPlaces(id, designName));
+        if (getDesignList().isEmpty()) {
             MessageUtils.addSuccessMessage("Sin resultados en la busqueda");
         }
     }
-    
-    public void calculateCost() {
-        if (selectedProduction == null) {
+
+    public void calculateCost(DesignUnits designUnits) {
+        selectedDesign = designUnits;
+        System.out.println("Unidades Front: " + designUnits.getUnits());
+        if (selectedDesign == null) {
             MessageUtils.addWarningMessage("Debe seleccionar una produccion");
         } else {
-            if (!inventoryLocal.getNecessarySupplies(selectedProduction).isEmpty()) {
-                setSuplyQuantity(inventoryLocal.getNecessarySupplies(selectedProduction));
-                setCostWithoutExtraCost(inventoryLocal.costByPruductionAndQuantityWithoutExtraCost(selectedProduction));
-                setCostWithExtraCost(inventoryLocal.costByPruductionAndQuantityWithExtraCost(selectedProduction));
+            if (!inventoryLocal.getNecessarySupplies(selectedDesign).isEmpty()) {
+                setSuplyQuantity(inventoryLocal.getNecessarySupplies(selectedDesign));
+                System.out.println("Entro");
+                setTotalCost(inventoryLocal.totalCost(designUnits));
+                setUnitCost(inventoryLocal.unitCost(designUnits));
             } else {
                 MessageUtils.addWarningMessage("No hay resultados de la busqueda");
             }
         }
     }
-    
+
     public void cleanSearch() {
-        setCostWithExtraCost(0);
-        setCostWithoutExtraCost(0);
+        setTotalCost(0);
+        setUnitCost(0);
         setSuplyQuantity(null);
     }
-    
+
     public void cleanCriteria() {
         id = null;
-        productionName = null;
+        designName = null;
     }
-    
+
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public Integer getId() {
         return id;
     }
-    
-    public void setProductionName(String productionName) {
-        this.productionName = productionName;
+
+    public void setDesignName(String productionName) {
+        this.designName = productionName;
     }
-    
-    public String getProductionName() {
-        return productionName;
+
+    public String getDesignName() {
+        return designName;
     }
-    
-    public void setSelectedProduction(ProductionUnits selectedProduction) {
-        this.selectedProduction = selectedProduction;
+
+    public void setSelectedDesign(DesignUnits selectedProduction) {
+        this.selectedDesign = selectedProduction;
     }
-    
-    public void setProductionList(List<ProductionUnits> productionList) {
-        this.productionList.clear();
-        this.productionList = productionList;
+
+    public void setDesignList(List<DesignUnits> productionList) {
+        this.designList.clear();
+        this.designList = productionList;
     }
-    
-    public List<ProductionUnits> getProductionList() {
-        return productionList;
+
+    public List<DesignUnits> getDesignList() {
+        return designList;
     }
-    
-    public ProductionUnits getSelectedProduction() {
-        if (selectedProduction == null) {
-            selectedProduction = new ProductionUnits();
+
+    public DesignUnits getSelectedDesign() {
+        if (selectedDesign == null) {
+            selectedDesign = new DesignUnits();
         }
-        return selectedProduction;
+        return selectedDesign;
     }
-    
+
     public List<SupplyQuantity> getSuplyQuantity() {
         return suplyQuantity;
     }
-    
+
     public void setSuplyQuantity(List<SupplyQuantity> suplyQuantity) {
         this.suplyQuantity = suplyQuantity;
     }
-    
-    public double getCostWithoutExtraCost() {
-        return costWithoutExtraCost;
+
+    public double getUnitCost() {
+        return unitCost;
     }
-    
-    public void setCostWithoutExtraCost(double costWithoutExtraCost) {
-        this.costWithoutExtraCost = costWithoutExtraCost;
+
+    public void setUnitCost(double unitCost) {
+        this.unitCost = unitCost;
     }
-    
-    public double getCostWithExtraCost() {
-        return costWithExtraCost;
+
+    public double getTotalCost() {
+        return totalCost;
     }
-    
-    public void setCostWithExtraCost(double costWithExtraCost) {
-        this.costWithExtraCost = costWithExtraCost;
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
-    
+
 }

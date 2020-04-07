@@ -5,32 +5,32 @@
  */
 package Inventory.objects;
 
-import Production.Production;
+import Design.Design;
 import java.io.Serializable;
 
 /**
  *
  * @author angelrg
  */
-public class ProductionUnits implements Serializable {
+public class DesignUnits implements Serializable {
 
-    Production production;
+    Design design;
     int units;
 
-    public ProductionUnits() {
+    public DesignUnits() {
     }
 
-    public ProductionUnits(Production production, int units) {
-        this.production = production;
+    public DesignUnits(Design design, int units) {
+        this.design = design;
         this.units = units;
     }
 
-    public Production getProduction() {
-        return production;
+    public Design getDesign() {
+        return design;
     }
 
-    public void setProduction(Production production) {
-        this.production = production;
+    public void setDesign(Design design) {
+        this.design = design;
     }
 
     public int getUnits() {
