@@ -17,6 +17,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlTransient;
 import java.time.LocalDate;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 /**
  *
@@ -28,6 +30,7 @@ import java.time.LocalDate;
 public class Production implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_production")
     private Integer idProduction;
@@ -55,7 +58,7 @@ public class Production implements Serializable {
     @ManyToOne(optional = false)
     private Design designId;
     @JoinColumn(name = "post_design", referencedColumnName = "id_design")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private Design postDesign;
     @JoinColumn(name = "group_id", referencedColumnName = "id_group")
     @ManyToOne(optional = false)

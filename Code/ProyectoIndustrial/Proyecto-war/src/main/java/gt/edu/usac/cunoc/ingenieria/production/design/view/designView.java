@@ -12,6 +12,7 @@ import Production.Product;
 import Production.facade.ProductionFacadeLocal;
 import Supply.Supply;
 import Supply.facade.SupplyFacadeLocal;
+import static config.Constants.MAIN_PAGE;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -24,8 +25,10 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 import org.primefaces.event.FileUploadEvent;
@@ -43,12 +46,11 @@ public class designView implements Serializable {
 
     private static final String DESIGN_CREATED = "Diseño Creado Correctamente";
     private static final String ERROR_NECESSARY_SUPPLYS = "No hay insumos";
+    private static final String ERROR_PICTURE = "No Se selecciono ninguna imagen";
 
     private List<Supply> supplies;
     private List<Supply> suppliesSelected;
     private List<NecessarySupply> necessarySupplys;
-
-    
 
     //producto seleccionado y lisado de productos para el comboBox
     private List<Product> products;
@@ -67,6 +69,9 @@ public class designView implements Serializable {
     @EJB
     private ProductionFacadeLocal productionFacadeLocal;
 
+    @Inject
+    private ExternalContext externalContext;
+
     @PostConstruct
     public void init() {
         //Productos del Combobox
@@ -74,27 +79,29 @@ public class designView implements Serializable {
         productSelect = new Product();
 
         designCreate = new Design();
-        
+
         designDataCreate = new DesignData();
 
         supplies = supplyFacade.getSupplyAvailable();
-        
 
         suppliesSelected = new ArrayList<>();
         necessarySupplys = new ArrayList<>();
 
     }
 
-    
-
     public void createDesign() {
         try {
             if (!necessarySupplys.isEmpty()) {
                 if (image != null) {
+                    //getContents Devuelve el arreglo de bytes
                     designDataCreate.setPicture(image.getContents());
+                    productionFacadeLocal.createDesign(designCreate, designDataCreate, necessarySupplys);
+                    MessageUtils.addSuccessMessage(DESIGN_CREATED);
+                    externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
+                } else {
+                    MessageUtils.addErrorMessage(ERROR_PICTURE);
                 }
-                productionFacadeLocal.createDesign(designCreate, designDataCreate, necessarySupplys);
-                MessageUtils.addSuccessMessage(DESIGN_CREATED);
+
             } else {
                 MessageUtils.addErrorMessage(ERROR_NECESSARY_SUPPLYS);
             }
@@ -207,7 +214,6 @@ public class designView implements Serializable {
         this.designDataCreate = designDataCreate;
     }
 
-   
     public List<Product> getProducts() {
         return products;
     }

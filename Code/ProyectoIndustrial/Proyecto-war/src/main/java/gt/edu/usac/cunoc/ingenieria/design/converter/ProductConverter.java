@@ -28,7 +28,7 @@ public class ProductConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String idProduct) {
         try {
-            Product product = productionFacadeLocal.getProductById(Integer.parseInt(idProduct));
+            Product product = productionFacadeLocal.getProductById(Integer.parseInt(idProduct)).get();
             return product;
         } catch (Exception e) {
             e.printStackTrace();

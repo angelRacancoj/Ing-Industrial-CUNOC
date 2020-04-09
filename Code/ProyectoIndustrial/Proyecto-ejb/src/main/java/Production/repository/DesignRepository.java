@@ -21,18 +21,19 @@ import javax.persistence.TypedQuery;
 @Stateless
 @LocalBean
 public class DesignRepository {
-    private EntityManager entityManager;
+
     public static final String QUERY_ALL_DESIGNS = "SELECT d FROM Design d";
-    
-     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
+    private EntityManager entityManager;
+
+    @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
-    
+
     /**
-     * 
-     * 
-     * @return Lista con todos los diseños en la base de datos 
+     *
+     *
+     * @return Lista con todos los diseños en la base de datos
      */
     public List<Design> AllDesigns() {
 
@@ -40,6 +41,5 @@ public class DesignRepository {
         return typedQuery.getResultList();
 
     }
-    
-    
+
 }

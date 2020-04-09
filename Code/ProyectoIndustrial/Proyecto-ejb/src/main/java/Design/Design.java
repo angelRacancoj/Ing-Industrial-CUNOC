@@ -24,10 +24,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author angelrg
- */
 @Entity
 @Table(name = "design")
 public class Design implements Serializable {

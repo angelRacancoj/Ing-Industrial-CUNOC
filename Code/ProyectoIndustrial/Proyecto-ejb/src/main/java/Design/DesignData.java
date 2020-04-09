@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -27,6 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class DesignData implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "iddesign_data")
     private Integer iddesignData;
@@ -42,6 +45,10 @@ public class DesignData implements Serializable {
     //
     @OneToMany( mappedBy = "designData")
     private List<Design> designList;
+    
+//    
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productionId")
+//    private List<Stage> stageList;
     
     public DesignData() {
     }

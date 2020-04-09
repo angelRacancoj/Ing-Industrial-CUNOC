@@ -7,6 +7,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,6 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Step implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_step")
     private Integer idStep;
@@ -32,11 +35,15 @@ public class Step implements Serializable {
     @Basic(optional = false)
     @Column(name = "description")
     private String description;
+    
     @JoinColumn(name = "stage_id", referencedColumnName = "id_stage")
     @ManyToOne(optional = false)
     private Stage stageId;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStep")
     private List<Commentary> commentaryList;
+    
+    
 
     public Step() {
     }

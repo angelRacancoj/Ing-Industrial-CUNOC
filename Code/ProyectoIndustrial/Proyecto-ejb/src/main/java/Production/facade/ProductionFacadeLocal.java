@@ -32,7 +32,6 @@ public interface ProductionFacadeLocal {
     public List<Product> getProduct();
 
 
-    public Optional<Product> getProductById(Integer id);
 
     public List<Production> AllProductions();
 
@@ -42,5 +41,8 @@ public interface ProductionFacadeLocal {
 
     public List<Design> AllDesigns();
     
-     public Product getProductById(int id);
+    public Optional<Product> getProductById(Integer id);
+
+    public Design editDesign(Design design) throws MandatoryAttributeProductionException;
+    
 }

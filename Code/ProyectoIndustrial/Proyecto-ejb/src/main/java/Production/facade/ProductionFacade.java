@@ -99,28 +99,36 @@ public class ProductionFacade implements ProductionFacadeLocal {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Production> getProductionById(Integer id) {
-        return productionRepository.findByIdProduction(id);
-    }
-
     public List<Product> getProduct() {
         Optional<List<Product>> lista = productRepository.getAll();
         return lista.get();
     }
 
     @Override
-    public Optional<Product> getProductById(Integer id) {
-        return productRepository.getProductById(id);
-    }
-
-    @Override
     public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        designService.createDesign(design, designData, necessarySupplys);
+    }
+    
+    @Override
+    public Design editDesign(Design design) throws MandatoryAttributeProductionException{
+        return designService.editDesign(design);
     }
 
     @Override
     public List<Design> AllDesigns() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Design> list = new ArrayList<>();
+        list = designRepository.AllDesigns();
+        return list;
+    }
+
+    @Override
+    public Optional<Production> getProductionById(Integer id) {
+        return productionRepository.findByIdProduction(id);
+    }
+
+    @Override
+    public Optional<Product> getProductById(Integer id) {
+        return productRepository.getProductById(id);
     }
 
 }

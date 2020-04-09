@@ -24,16 +24,25 @@
                             <p:column headerText="Nombre" filterBy="#{design.designData.name}" filterMatchMode="contains" style="width: 30%" >
                                 <h:outputText value="#{design.designData.name}" />
                             </p:column>
+                            
+                             <p:column headerText="Producto">
+                                 <h:outputText value="#{design.productIdProduct.name}" />
+                            </p:column>
 
                             <p:column headerText="Descripcion">
                                 <h:outputText value="#{design.designData.description}" />
                             </p:column>
 
+                            <p:column>
+                                <p:graphicImage id="image" value="#{designEditView.convertFichier(design.designData.picture)}"  width="50%" height="50%" stream="false" />
+                            </p:column>
+
                             <p:column headerText="Editar" style="width: 10%;">
                                 <p:commandLink styleClass="btn btn-success" style="width: 100%;"
-                                               update=":#{p:component('editDesignForm')},:#{p:component('editDesignTable')}, :#{p:component('formDialogEdit')}"
+                                               actionListener="#{designEditView.selectDesignEdit(design)}" process="@this"
+                                               update=":#{p:component('editDesignForm')},:#{p:component('availableSupply')}, :#{p:component('formDialogEdit')}"
                                                onclick="PF('wdialogEdit').show();"
-                                               actionListener="#{designEditView.selectDesignEdit(design)}" process="@this">
+                                               >
                                     <span class="glyphicon glyphicon-edit"></span> Editar Diseño
 
                                 </p:commandLink>
@@ -49,19 +58,29 @@
 
 
 
-                <p:dialog header="Editar diseño" widgetVar="wdialogEdit" resizable="false" draggable="false"
-                          showEffect="fade" hideEffect="fade" modal="true">
+                <p:dialog id="dialogEdit" header="Editar diseño" widgetVar="wdialogEdit" resizable="false" draggable="false"
+                          showEffect="explode" hideEffect="fade" modal="true" fitViewport="true">
                     <h:form id="formDialogEdit">
                         <p:fieldset id="designDataField" legend="Datos del diseño">
 
                             <h:panelGrid columns="2" >
 
 
+
+                                <p:outputLabel for="txtName" value="Imagen:"/>
+                                <p:fileUpload id="writtenRequest" fileUploadListener="#{designEditView.handleImage}"
+
+                                              styleClass="in-dialog"
+                                              skinSimple="true" auto="true" allowTypes="/(\.|\/)(jpg|png|jpeg|gif|pdf)$/"
+                                              update="@parent , :#{p:component('image')}"
+                                              label="Seleccionar"
+                                              invalidFileMessage="Solo se puede cargar archivos jpg, png, jpeg,gif,pdf"
+                                              />
+
+
                                 <h:column/>
-                                <p:fileUpload id="image" value="#{designEditView.designSelectedEdit.designData.picture}" mode="advanced" skinSimple="true"
-                                              label="Seleccione una imagen" uploadLabel="Subir imagen" cancelLabel="Cancelar"/>
 
-
+                                <p:graphicImage id="image" value="#{designEditView.imageSelect}"  width="50%" height="50%" stream="false" />
 
                                 <p:outputLabel for="txtName" value="Nombre:"/>
                                 <p:inputText id="txtName" value="#{designEditView.designSelectedEdit.designData.name}"  required="true"  styleClass="form-control"/>
@@ -73,14 +92,119 @@
 
                             </h:panelGrid>
                         </p:fieldset>
-                        
+
+
+                        <p:fieldset id="selectedSupply" legend="Insumos Seleccionados" style="margin-top:20px">
+
+                            <p:dataTable id="selectedSupplyTable" var="supplyNe" value="#{designEditView.suppliesSelected}" emptyMessage="No ha seleccionado ningun insumo">
+
+
+
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{supplyNe.supplyCode.name}" />
+                                </p:column>
+
+                                <p:column headerText="Costo">
+                                    <h:outputText value="#{supplyNe.supplyCode.cost}" />
+                                </p:column>
+
+
+                                <p:column headerText="Cantidad Disponible">
+                                    <h:outputText value="#{supplyNe.supplyCode.quantity}" />
+                                </p:column>
+
+                                <p:column headerText="Medida">
+                                    <h:outputText value="#{supplyNe.supplyCode.measure.name}" />
+                                </p:column>
+
+
+                                <p:column headerText="Cantidad a usar">
+                                    <p:spinner id="basic" value="#{supplyNe.quantity}" stepFactor="0.001">
+                                        <f:convertNumber maxFractionDigits="5"/>
+                                    </p:spinner>
+                                    <h:outputText value="#{supplyNe.supplyCode.measure.name}" />
+                                </p:column>
+
+
+                                <p:column headerText="Eliminar" style="width: 6%">
+                                    <p:commandLink actionListener="#{designEditView.removeSupplyEdit(supplyNe)}"
+                                                   update=":#{p:component('availableSupply')}, :#{p:component('selectedSupplyTable')} "
+                                                   styleClass="btn btn-danger" style="width: 100%;"
+                                                   process="@this">
+                                        <span class="glyphicon glyphicon-remove"></span> 
+
+                                    </p:commandLink>
+                                </p:column>
+
+
+                            </p:dataTable>
+
+                        </p:fieldset>
+
+
                         <p:commandLink styleClass="btn btn-success"  style="width: 60%;"
-                                       update="@form, :#{p:component('growl')}"
-                                       actionListener="#{groupView.editGroup()}"  >
+                                       update="@form, :#{p:component('growl')},:#{p:component('editDesignTable')},:#{p:component('editDesignForm')}"
+                                       actionListener="#{designEditView.editDesign()}"  
+                                       onclick="PF('wdialogEdit').hide(); "
+                                       >
                             <span class="glyphicon glyphicon-plus-sign"></span> Editar Diseño
 
                         </p:commandLink>
-                        
+
+                        <p:fieldset id="availableSupplyField" legend="Insumos Disponibles">
+                            <p:dataTable id="availableSupply" var="supply" value="#{designEditView.supplies}" emptyMessage="No hay insumos disponibles">
+
+
+
+                                <p:column headerText="Codigo" filterBy="#{supply.internalCode}" filterMatchMode="contains" >
+                                    <h:outputText value="#{supply.internalCode}" />
+                                </p:column>
+
+                                <p:column headerText="Nombre" filterBy="#{supply.name}" filterMatchMode="contains">
+                                    <h:outputText value="#{supply.name}" />
+                                </p:column>
+
+                                <p:column headerText="Costo">
+                                    <h:outputText value="#{supply.cost}" />
+                                </p:column>
+
+
+
+                                <p:column headerText="Cantidad">
+                                    <h:outputText value="#{supply.quantity}" />
+                                </p:column>
+
+                                <p:column headerText="medida">
+                                    <h:outputText value="#{supply.measure.name}" />
+                                </p:column>
+
+                                <p:column headerText="Fecha de admision">
+                                    <h:outputText value="#{supply.dateOfAdmission}" />
+                                </p:column>
+                                <p:column headerText="Fecha Expiracion">
+                                    <h:outputText value="#{supply.expirationDate}" />
+                                </p:column>
+
+
+                                <p:column headerText="Descripcion">
+                                    <h:outputText value="#{supply.description}" />
+                                </p:column>
+
+
+                                <p:column headerText="Agregar" style="width: 6%">
+                                    <p:commandLink actionListener="#{designEditView.addSupplyEdit(supply)}"
+                                                   update=":#{p:component('availableSupply')}, :#{p:component('selectedSupplyTable')} "
+                                                   styleClass="btn btn-primary"  
+                                                   process="@this">
+                                        <span class="glyphicon glyphicon-plus"></span> 
+
+                                    </p:commandLink>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:fieldset>
+
+
                     </h:form>
 
                 </p:dialog>
