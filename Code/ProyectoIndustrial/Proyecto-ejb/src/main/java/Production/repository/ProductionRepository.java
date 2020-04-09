@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 import static config.Constants.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -98,6 +99,39 @@ public class ProductionRepository {
         }
 
         criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
+        TypedQuery<Production> query = entityManager.createQuery(criteriaQuery);
+        return query.getResultList();
+    }
+
+    /**
+     * Return the best one porduction base on the products list, selected by the
+     * best score.
+     *
+     * @param products
+     * @return
+     */
+    public List<Production> getBestProductions(List<Product> products) {
+        List<Production> productions = new LinkedList<>();
+        for (Product product : products) {
+            List<Production> result = getBestProductionByProductDesc(product);
+            if (!result.isEmpty()) {
+                productions.add(result.get(0));
+            }
+        }
+        return productions;
+    }
+
+    private List<Production> getBestProductionByProductDesc(Product product) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Production> criteriaQuery = criteriaBuilder.createQuery(Production.class);
+        Root<Production> production = criteriaQuery.from(Production.class);
+
+        ArrayList<Predicate> predicates = new ArrayList<>();
+        predicates.add(criteriaBuilder.equal(production.get("productId")
+                .get("idProduct"), product.getIdProduct()));
+
+        criteriaQuery.where(predicates.stream().toArray(Predicate[]::new))
+                .orderBy(criteriaBuilder.desc(production.get("qualification")));
         TypedQuery<Production> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList();
     }

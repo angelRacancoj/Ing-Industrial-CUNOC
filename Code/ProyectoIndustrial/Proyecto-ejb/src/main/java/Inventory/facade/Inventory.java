@@ -1,13 +1,13 @@
 package Inventory.facade;
 
+import Inventory.objects.DesignUnits;
 import Inventory.objects.ProductionUnits;
 import Inventory.objects.SupplyQuantity;
 import Inventory.repository.InventoryRepository;
-import Production.NecessarySupply;
-import Production.Product;
 import Production.Production;
 import javax.ejb.Stateless;
 import java.util.List;
+import java.util.Optional;
 import javax.ejb.EJB;
 
 /**
@@ -16,9 +16,9 @@ import javax.ejb.EJB;
  */
 @Stateless
 public class Inventory implements InventoryLocal {
-
+    
     private InventoryRepository inventoryRepository;
-
+    
     @EJB
     public void setInventoryRepository(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
@@ -28,23 +28,7 @@ public class Inventory implements InventoryLocal {
      * {@inheritDoc}
      */
     @Override
-    public List<Production> calculateProductOnMaxCost(Double maxCost) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Production> getBestProductsBaseOnAvailableMaterial() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<SupplyQuantity> getNecessarySupplies(ProductionUnits productionUnits) {
+    public List<SupplyQuantity> getNecessarySupplies(DesignUnits productionUnits) {
         return inventoryRepository.getNecessarySupplies(productionUnits);
     }
 
@@ -52,24 +36,52 @@ public class Inventory implements InventoryLocal {
      * {@inheritDoc}
      */
     @Override
-    public double costByPruductionAndQuantityWithoutExtraCost(ProductionUnits productionUnits) {
-        return inventoryRepository.costByPruductionAndQuantityWithoutExtraCost(productionUnits);
+    public double unitCost(DesignUnits designUnits) {
+        return inventoryRepository.unitCost(designUnits);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public double costByPruductionAndQuantityWithExtraCost(ProductionUnits productionUnits) {
-        return inventoryRepository.costByPruductionAndQuantityWithExtraCost(productionUnits);
+    public double totalCost(DesignUnits designUnits) {
+        return inventoryRepository.totalCost(designUnits);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<ProductionUnits> ProductionWithUnitsPlaces(Integer id, String nameProduction) {
-        return inventoryRepository.ProductionWithUnitsPlaces(id, nameProduction);
+    public List<DesignUnits> DesignWithUnitsPlaces(Integer id, String nameProduction) {
+        return inventoryRepository.DesignWithUnitsPlaces(id, nameProduction);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ProductionUnits> getBestProductsBaseOnAvailableMaterial() {
+        return inventoryRepository.getBestProductsBaseOnAvailableMaterial();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int maxUnitsByAvailableSupplies(Production production) {
+        return inventoryRepository.maxUnitsByAvailableSupplies(production);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public DesignUnits returnDesignUnit(ProductionUnits productionUnit) {
+        if (productionUnit.getProduction().getPostDesign() != null) {
+            return (new DesignUnits(productionUnit.getProduction().getPostDesign(), productionUnit.getUnits()));
+        } else {
+            return (new DesignUnits(productionUnit.getProduction().getDesignId(), productionUnit.getUnits()));
+        }
+    }
+    
 }

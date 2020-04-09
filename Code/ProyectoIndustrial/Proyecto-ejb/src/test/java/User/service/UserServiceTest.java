@@ -69,6 +69,14 @@ public class UserServiceTest {
         User user = new User(carnet, name, email, phone, pass, state, rolUser, career);
         UserService userService = new UserService();
         userService.setEntityManager(entityManager);
+        userService.setPbkdf2PasswordHash(pbkdf2PasswordHash);
+        Map<String, String> map = new HashMap<>();
+        map.put("Pbkdf2PasswordHash.Iterations", "3072");
+        map.put("Pbkdf2PasswordHash.Algorithm", "PBKDF2WithHmacSHA256");
+        map.put("Pbkdf2PasswordHash.SaltSizeBytes", "64");
+        Mockito.doNothing().when(pbkdf2PasswordHash).initialize(map);
+        char passwordInput[] = user.getPassword().toCharArray();
+        Mockito.when(pbkdf2PasswordHash.generate(passwordInput)).thenReturn(pass);
         Mockito.when(entityManager.find(User.class, user.getCarnet())).thenReturn(user);
         User result = null;
         try {

@@ -1,13 +1,17 @@
 package Inventory.repository;
 
 import Design.Design;
+import Inventory.objects.DesignUnits;
 import Inventory.objects.ProductionUnits;
 import Inventory.objects.SupplyQuantity;
-import Production.ExtraCost;
 import Production.NecessarySupply;
+import Production.Product;
 import Production.Production;
+import Production.repository.DesignRepository;
+import Production.repository.ProductRepository;
 import Production.repository.ProductionRepository;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -21,64 +25,134 @@ import javax.ejb.Stateless;
 @LocalBean
 public class InventoryRepository {
 
+    private DesignRepository designRepository;
     private ProductionRepository productionRepository;
+    private ProductRepository productRepository;
+
+    @EJB
+    public void setDesignRepository(DesignRepository designRepository) {
+        this.designRepository = designRepository;
+    }
 
     @EJB
     public void setProductionRepository(ProductionRepository productionRepository) {
         this.productionRepository = productionRepository;
     }
 
+    @EJB
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
     /**
-     * TODO needs a function that get the best options
+     * This method return the best Productions base on the best score by Product
+     *
+     * use their Necessary Supplies, what is the max units to produce with the
+     * available supplies
      *
      * @return
      */
-    public List<Production> getBestProductsBaseOnAvailableMaterial() {
-        return null;
+    public List<ProductionUnits> getBestProductsBaseOnAvailableMaterial() {
+        List<Product> products = productRepository.getAll().get();
+        List<Production> productions = productionRepository.getBestProductions(products);
+
+        List<ProductionUnits> result = new LinkedList<>();
+
+        productions.forEach((production) -> {
+            result.add(new ProductionUnits(production, maxUnitsByAvailableSupplies(production)));
+        });
+
+        return result;
     }
 
-    public double costByPruductionAndQuantityWithExtraCost(ProductionUnits productionUnits) {
-        double cost = costByPruductionAndQuantityWithoutExtraCost(productionUnits);
-
-        for (ExtraCost extraCost : productionUnits.getProduction().getExtraCostList()) {
-            cost += extraCost.getCost();
-        }
-        return cost;
+    /**
+     * Return the cost of produce the Design units
+     *
+     * @param designUnits
+     * @return
+     */
+    public double totalCost(DesignUnits designUnits) {
+        return unitCost(designUnits) * designUnits.getUnits();
     }
 
-    public double costByPruductionAndQuantityWithoutExtraCost(ProductionUnits productionUnits) {
+    /**
+     * Return the cost of produce a Design
+     *
+     * @param designUnits
+     * @return
+     */
+    public double unitCost(DesignUnits designUnits) {
+        Design design = designRepository.findDesignByID(designUnits.getDesign().getIdDesign()).get();
         double cost = 0;
-        for (SupplyQuantity necessarySupply : getNecessarySupplies(productionUnits)) {
-            cost += (necessarySupply.getQuantity() * necessarySupply.getSupply().getCost());
+        for (NecessarySupply necessarySupply : design.getNecessarySupplyList()) {
+            cost += (necessarySupply.getSupplyCode().getCost() * necessarySupply.getQuantity());
         }
         return cost;
     }
 
-    public List<SupplyQuantity> getNecessarySupplies(ProductionUnits productionUnits) {
-        Production product = productionRepository.findByIdProduction(productionUnits.getProduction().getIdProduction()).get();
-        if (product.getPostDesign() != null) {
-            return necesarySupplyByQuantity(product.getPostDesign(), productionUnits.getUnits());
-        } else {
-            return necesarySupplyByQuantity(product.getDesignId(), productionUnits.getUnits());
-        }
-    }
-
-    private List<SupplyQuantity> necesarySupplyByQuantity(Design design, int quantity) {
-        System.out.println("Diseño: " + design.getIdDesign() + ", Unidades: " + quantity);
+    /**
+     * Return the necessary supplies to produce the units of a Design
+     *
+     * @param designUnits
+     * @return
+     */
+    public List<SupplyQuantity> getNecessarySupplies(DesignUnits designUnits) {
+        Design design = designRepository.findDesignByID(designUnits.getDesign().getIdDesign()).get();
         ArrayList<SupplyQuantity> necesarySupplies = new ArrayList<>();
+
         for (NecessarySupply necessaryS : design.getNecessarySupplyList()) {
-            necesarySupplies.add(new SupplyQuantity(necessaryS.getSupplyCode(), (necessaryS.getQuantity() * quantity)));
-            System.out.println("Insumo: " + necessaryS.getSupplyCode().getInternalCode() + ", Cantidad: " + (necessaryS.getQuantity() * quantity));
+            necesarySupplies.add(new SupplyQuantity(necessaryS.getSupplyCode(), (necessaryS.getQuantity() * designUnits.getUnits())));
         }
+
         return necesarySupplies;
     }
 
-    public List<ProductionUnits> ProductionWithUnitsPlaces(Integer id, String nameProduction) {
-        List<Production> productions = productionRepository.findProduction(id, nameProduction);
-        List<ProductionUnits> productionUnits = new ArrayList<>();
-        for (Production production : productions) {
-            productionUnits.add(new ProductionUnits(production, 1));
+    /**
+     * Return all Designs and an Integer number to manage the quantity
+     *
+     * @param id
+     * @param nameProduction
+     * @return
+     */
+    public List<DesignUnits> DesignWithUnitsPlaces(Integer id, String nameProduction) {
+        List<Design> designs = designRepository.getDesign(id, nameProduction);
+        List<DesignUnits> designUnits = new ArrayList<>();
+        for (Design design : designs) {
+            designUnits.add(new DesignUnits(design, 1));
         }
-        return productionUnits;
+        return designUnits;
+    }
+
+    /**
+     * Base on the Production return the max possible units to produce, base on
+     * the Necessary Supplies and the available Supplies
+     *
+     * If doesn't exist a Post Design use the initial Design to do the
+     * calculation
+     *
+     * @param production
+     * @return
+     */
+    public int maxUnitsByAvailableSupplies(Production production) {
+        if (production.getPostDesign() == null) {
+            return maxUnitsByDesign(production.getDesignId());
+        } else {
+            return maxUnitsByDesign(production.getPostDesign());
+        }
+    }
+
+    private int maxUnitsByDesign(Design design) {
+        if (!design.getNecessarySupplyList().isEmpty()) {
+            int units = (int) (design.getNecessarySupplyList().get(0).getSupplyCode().getQuantity() / design.getNecessarySupplyList().get(0).getQuantity());
+            for (NecessarySupply necessarySupply : design.getNecessarySupplyList()) {
+                int intAux = (int) (necessarySupply.getSupplyCode().getQuantity() / necessarySupply.getQuantity());
+                if (intAux < units) {
+                    units = intAux;
+                }
+            }
+            return units;
+        } else {
+            return 0;
+        }
     }
 }
