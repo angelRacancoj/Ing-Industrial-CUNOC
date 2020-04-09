@@ -1,8 +1,11 @@
 package Inventory.facade;
 
 import Inventory.objects.DesignUnits;
+import Inventory.objects.ProductionUnits;
 import Inventory.objects.SupplyQuantity;
+import Production.Production;
 import java.util.List;
+import java.util.Optional;
 import javax.ejb.Local;
 
 /**
@@ -11,6 +14,28 @@ import javax.ejb.Local;
  */
 @Local
 public interface InventoryLocal {
+
+    /**
+     * Base on the Production return the max possible units to produce, base on
+     * the Necessary Supplies and the available Supplies
+     *
+     * If doesn't exist a Post Design use the initial Design to do the
+     * calculation
+     *
+     * @param production
+     * @return
+     */
+    public int maxUnitsByAvailableSupplies(Production production);
+
+    /**
+     * This method return the best Productions base on the best score by Product
+     *
+     * use their Necessary Supplies, what is the max units to produce with the
+     * available supplies
+     *
+     * @return
+     */
+    public List<ProductionUnits> getBestProductsBaseOnAvailableMaterial();
 
     /**
      * Get the cost base on selected Design and Quantity of units to produce
@@ -47,4 +72,14 @@ public interface InventoryLocal {
      * @return
      */
     public List<DesignUnits> DesignWithUnitsPlaces(Integer id, String nameProduction);
+
+    /**
+     * Return a DesignUnits with the design
+     * 
+     * verify if exist a Post Design, ether return the design
+     *
+     * @param productionUnit
+     * @return
+     */
+    public DesignUnits returnDesignUnit(ProductionUnits productionUnit) ;
 }
