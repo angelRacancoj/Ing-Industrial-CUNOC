@@ -42,9 +42,8 @@ public class supplyCalculatorView implements Serializable {
 
     public void calculateCost(DesignUnits designUnits) {
         selectedDesign = designUnits;
-        System.out.println("Unidades Front: " + designUnits.getUnits());
         if (selectedDesign == null) {
-            MessageUtils.addWarningMessage("Debe seleccionar una produccion");
+            MessageUtils.addWarningMessage("Debe seleccionar una diseño");
         } else {
             if (!inventoryLocal.getNecessarySupplies(selectedDesign).isEmpty()) {
                 setSuplyQuantity(inventoryLocal.getNecessarySupplies(selectedDesign));
@@ -52,7 +51,7 @@ public class supplyCalculatorView implements Serializable {
                 setTotalCost(inventoryLocal.totalCost(designUnits));
                 setUnitCost(inventoryLocal.unitCost(designUnits));
             } else {
-                MessageUtils.addWarningMessage("No hay resultados de la busqueda");
+                MessageUtils.addWarningMessage("No requiere Insumos");
             }
         }
     }
