@@ -29,9 +29,8 @@ import javax.persistence.criteria.Root;
 @Stateless
 @LocalBean
 public class DesignRepository {
-
-    private EntityManager entityManager;
     public static final String QUERY_ALL_DESIGNS = "SELECT d FROM Design d";
+    private EntityManager entityManager;
 
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     public void setEntityManager(EntityManager entityManager) {
@@ -49,6 +48,7 @@ public class DesignRepository {
         return typedQuery.getResultList();
 
     }
+
 
     /**
      * Realiza una busqueda basado unicamente en el codigo del diseño

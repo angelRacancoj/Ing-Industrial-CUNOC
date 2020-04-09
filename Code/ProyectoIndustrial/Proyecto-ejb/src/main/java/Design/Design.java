@@ -20,13 +20,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author angelrg
- */
 @Entity
 @Table(name = "design")
 public class Design implements Serializable {
@@ -42,9 +39,11 @@ public class Design implements Serializable {
     private List<Production> productionList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "designId")
     private List<NecessarySupply> necessarySupplyList;
+    
     @JoinColumn(name = "design_data", referencedColumnName = "iddesign_data")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private DesignData designData;
+   
     @JoinColumn(name = "product_id_product", referencedColumnName = "id_product")
     @ManyToOne
     private Product productIdProduct;
@@ -106,4 +105,30 @@ public class Design implements Serializable {
     public void setProductIdProduct(Product productIdProduct) {
         this.productIdProduct = productIdProduct;
     }
+    
+      @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idDesign != null ? idDesign.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Design)) {
+            return false;
+        }
+        Design other = (Design) object;
+        if ((this.idDesign == null && other.idDesign != null) || (this.idDesign != null && !this.idDesign.equals(other.idDesign))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entidades.Design[ idDesign=" + idDesign + " ]";
+    }
+    
 }

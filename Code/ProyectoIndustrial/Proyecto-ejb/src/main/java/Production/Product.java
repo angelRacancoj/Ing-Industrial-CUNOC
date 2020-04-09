@@ -33,7 +33,7 @@ public class Product implements Serializable {
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
     private List<Production> productionList;
-    @OneToMany(mappedBy = "productIdProduct")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productIdProduct")
     private List<Design> designList;
 
     @Override

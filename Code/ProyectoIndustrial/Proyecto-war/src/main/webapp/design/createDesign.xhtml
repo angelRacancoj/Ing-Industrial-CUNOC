@@ -18,16 +18,30 @@
                         <h:panelGrid columns="2" >
 
 
-                            <h:column/>
-                            <p:fileUpload id="image" value="#{fileUploadView.file}" mode="advanced" skinSimple="true"
-                                          label="Seleccione una imagen" uploadLabel="Subir imagen" cancelLabel="Cancelar"/>
+                            <p:outputLabel for="txtName" value="Imagen:"/>
+                            <p:fileUpload id="writtenRequest" fileUploadListener="#{designView.handleImage}"
+
+                                          styleClass="in-dialog"
+                                          skinSimple="true" auto="true" allowTypes="/(\.|\/)(jpg|png|jpeg|gif|pdf)$/"
+                                          update="@parent"
+                                          label="Seleccionar"
+                                          invalidFileMessage="Solo se puede cargar archivos jpg, png, jpeg,gif,pdf"/>
+
 
 
 
                             <p:outputLabel for="txtName" value="Nombre:"/>
                             <p:inputText id="txtName" value="#{designView.designDataCreate.name}"  required="true"  styleClass="form-control"/>
 
+                            <p:outputLabel  value="Producto:" />
 
+
+
+                            <p:selectOneMenu id="productSelectOneMenu"  value="#{designView.designCreate.productIdProduct}" converter="productConverter">
+                                <f:selectItems value="#{designView.products}" var="product"
+                                               itemValue="#{product}"
+                                               itemLabel="#{product.name}"/>
+                            </p:selectOneMenu>
 
                             <p:outputLabel  value="Descripcion:"/>
                             <p:inputTextarea value="#{designView.designDataCreate.description}" rows="6" cols="33" styleClass="form-control"  />
@@ -35,13 +49,13 @@
                         </h:panelGrid>
                     </p:fieldset>
 
-                   
+
 
                     <p:fieldset id="selectedSupply" legend="Insumos Seleccionados" style="margin-top:20px">
 
                         <p:dataTable id="selectedSupplyTable" var="supplyNe" value="#{designView.necessarySupplys}" emptyMessage="No ha seleccionado ningun insumo">
 
-                          
+
 
                             <p:column headerText="Nombre">
                                 <h:outputText value="#{supplyNe.supplyCode.name}" />
@@ -62,7 +76,9 @@
 
 
                             <p:column headerText="Cantidad a usar">
-                                <p:spinner id="basic" value="#{supplyNe.quantity}" />
+                                <p:spinner id="basic" value="#{supplyNe.quantity}" stepFactor="0.001">
+                                    <f:convertNumber maxFractionDigits="5"/>
+                                </p:spinner>
                                 <h:outputText value="#{supplyNe.supplyCode.measure.name}" />
                             </p:column>
 
@@ -86,10 +102,10 @@
                         </p:dataTable>
 
                     </p:fieldset>
-                    
-                     <p:commandLink styleClass="btn btn-success"  style="width: 60%;"
+
+                    <p:commandLink styleClass="btn btn-success"  style="width: 60%;"
                                    update="@form, :#{p:component('growl')}"
-                                   actionListener="#{groupView.editGroup()}"  >
+                                   actionListener="#{designView.createDesign()}"  >
                         <span class="glyphicon glyphicon-plus-sign"></span> Crear Diseño
 
                     </p:commandLink>

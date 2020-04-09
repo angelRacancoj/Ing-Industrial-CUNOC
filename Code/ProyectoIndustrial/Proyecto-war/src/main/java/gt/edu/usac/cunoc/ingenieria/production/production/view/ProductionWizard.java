@@ -169,6 +169,7 @@ public class ProductionWizard implements Serializable {
     public Production getProduction() {
         if (production == null) {
             Product product = new Product(null, "nombreProduct", "desc");
+            production = new Production();
             //production = new Production(null, "", true, 1 , LocalDate.now());
             production.setProductId(product);
         }

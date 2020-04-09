@@ -332,3 +332,9 @@ DEFAULT CHARACTER SET = utf8;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO `rol_user` (`id_rol`, `name_rol`) VALUES ('1', 'Estudiante');
+INSERT INTO `rol_user` (`id_rol`, `name_rol`) VALUES ('2', 'Catedratico');
+INSERT INTO `rol_user` (`id_rol`, `name_rol`) VALUES ('3', 'Administrador'); 
+
+INSERT INTO `measure` (`id_measure`, `name`) VALUES ('1', 'mililitros'), ('2', 'milimetros'), ('3', 'milimetros cuadrados'), ('4', 'gramos');

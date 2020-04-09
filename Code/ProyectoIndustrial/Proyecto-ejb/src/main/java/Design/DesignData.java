@@ -8,9 +8,13 @@ package Design;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -25,6 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class DesignData implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "iddesign_data")
     private Integer iddesignData;
@@ -36,9 +41,15 @@ public class DesignData implements Serializable {
     @Lob
     @Column(name = "picture")
     private byte[] picture;
-    @OneToMany(mappedBy = "designData")
+    
+    //
+    @OneToMany( mappedBy = "designData")
     private List<Design> designList;
-
+    
+//    
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productionId")
+//    private List<Stage> stageList;
+    
     public DesignData() {
     }
 
@@ -92,4 +103,29 @@ public class DesignData implements Serializable {
         this.designList = designList;
     }
 
+      @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (iddesignData != null ? iddesignData.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof DesignData)) {
+            return false;
+        }
+        DesignData other = (DesignData) object;
+        if ((this.iddesignData == null && other.iddesignData != null) || (this.iddesignData != null && !this.iddesignData.equals(other.iddesignData))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entidades.DesignData[ iddesignData=" + iddesignData + " ]";
+    }
+    
 }
