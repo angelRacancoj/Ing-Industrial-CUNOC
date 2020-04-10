@@ -23,11 +23,11 @@ public class ProductRepository {
     public static final String FIND_BY_ID = "SELECT g FROM Product g WHERE g.idProduct = :id";
     public static final String FIND_BY_NAME = "SELECT g FROM product g WHERE g.name = :name";
     public static final String GET_ALL = "SELECT g FROM Product g";
-    
+
     private EntityManager entityManager;
-    
+
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
-    
+
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
@@ -43,7 +43,7 @@ public class ProductRepository {
     public Optional<Product> getProductById(Integer id) {
         return Optional.of(entityManager.find(Product.class, id));
     }
-    
+
     public Optional<Product> getProductByName(String name) {
         TypedQuery<Product> typedQuery = entityManager.createQuery(FIND_BY_NAME, Product.class).setParameter("name", name);
         try {
@@ -52,7 +52,25 @@ public class ProductRepository {
             return Optional.empty();
         }
     }
-    
+
+    public List<Product> findProduct(Integer id, String name) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<Product> product = criteriaQuery.from(Product.class);
+        ArrayList<Predicate> predicates = new ArrayList<>();
+
+        if (id != null) {
+            predicates.add(criteriaBuilder.equal(product.get("idProduct"), id));
+        }
+        if (name != null) {
+            predicates.add(criteriaBuilder.like(product.get("name"), "%" + name + "%"));
+        }
+
+        criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
+        TypedQuery<Product> query = entityManager.createQuery(criteriaQuery);
+        return query.getResultList();
+    }
+
     public Optional<List<Product>> getAll() {
         TypedQuery<Product> typedQuery = entityManager.createQuery(GET_ALL, Product.class);
         try {
