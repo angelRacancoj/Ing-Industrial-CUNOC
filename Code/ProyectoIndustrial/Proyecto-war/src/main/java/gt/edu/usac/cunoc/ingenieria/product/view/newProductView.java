@@ -26,7 +26,7 @@ public class newProductView implements Serializable {
         try {
             productFacade.createProduct(product);
             cleanProduct();
-            MessageUtils.addSuccessMessage("Se ha creado el usuario");
+            MessageUtils.addSuccessMessage("Producto agregado");
         } catch (MandatoryAttributeProductionException e) {
             MessageUtils.addErrorMessage(e.getMessage());
         }

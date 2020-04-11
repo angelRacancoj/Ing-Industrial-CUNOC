@@ -45,11 +45,8 @@ public interface ProductFacadeLocal {
      * update a product
      *
      * @param product
-     * @param name
-     * @param descripcion
      * @return
-     * @throws MandatoryAttributeProductionException
      */
-    public Product updateProduct(Product product, String name, String descripcion) throws MandatoryAttributeProductionException;
+    public Product updateProduct(Product product);
 
 }

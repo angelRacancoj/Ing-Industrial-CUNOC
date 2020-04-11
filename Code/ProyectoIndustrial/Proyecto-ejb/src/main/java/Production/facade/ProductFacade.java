@@ -57,8 +57,8 @@ public class ProductFacade implements ProductFacadeLocal {
      * {@inheritDoc}
      */
     @Override
-    public Product updateProduct(Product product, String name, String descripcion) throws MandatoryAttributeProductionException {
-        return productService.updateProduct(product, name, descripcion);
+    public Product updateProduct(Product product) {
+        return productService.updateProduct(product);
     }
 
 }

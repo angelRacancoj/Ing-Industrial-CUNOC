@@ -16,12 +16,15 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+/**
+ *
+ * @author charly
+ * @refactor angelrg
+ */
 @Stateless
 @LocalBean
 public class ProductRepository {
 
-    public static final String FIND_BY_ID = "SELECT g FROM Product g WHERE g.idProduct = :id";
-    public static final String FIND_BY_NAME = "SELECT g FROM product g WHERE g.name = :name";
     public static final String GET_ALL = "SELECT g FROM Product g";
 
     private EntityManager entityManager;
@@ -32,25 +35,8 @@ public class ProductRepository {
         this.entityManager = entityManager;
     }
 
-//    public Optional<Product> getProductById(Integer id){
-//        TypedQuery<Product> typedQuery = entityManager.createQuery(FIND_BY_ID,Product.class).setParameter("id", id);
-//        try {
-//            return Optional.of(typedQuery.getSingleResult());
-//        } catch (NoResultException e) {
-//            return Optional.empty();
-//        }
-//    }
     public Optional<Product> getProductById(Integer id) {
         return Optional.of(entityManager.find(Product.class, id));
-    }
-
-    public Optional<Product> getProductByName(String name) {
-        TypedQuery<Product> typedQuery = entityManager.createQuery(FIND_BY_NAME, Product.class).setParameter("name", name);
-        try {
-            return Optional.of(typedQuery.getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
     }
 
     public List<Product> findProduct(Integer id, String name) {
