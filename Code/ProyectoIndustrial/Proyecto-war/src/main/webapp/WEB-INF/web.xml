@@ -39,15 +39,16 @@
             <description/>
             <url-pattern>/templates/*</url-pattern>
         </web-resource-collection>
-        <web-resource-collection>
-            <web-resource-name>inventory</web-resource-name>
-            <description/>
-            <url-pattern>/inventory/*</url-pattern>
-        </web-resource-collection>
+        
         <web-resource-collection>
             <web-resource-name>user</web-resource-name>
             <description/>
             <url-pattern>/user/createUser.xhtml</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>product</web-resource-name>
+            <description/>
+            <url-pattern>/product/createProduct.xhtml</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
@@ -62,7 +63,7 @@
         <web-resource-collection>
             <web-resource-name>inventory</web-resource-name>
             <description/>
-            <url-pattern>/inventory/SupplyCalculator.xhtml</url-pattern>
+            <url-pattern>/inventory/*</url-pattern>
         </web-resource-collection>
         
         <web-resource-collection>
@@ -87,6 +88,12 @@
             <web-resource-name>user</web-resource-name>
             <description/>
             <url-pattern>/user/users.xhtml</url-pattern>
+        </web-resource-collection>
+        
+        <web-resource-collection>
+            <web-resource-name>products</web-resource-name>
+            <description/>
+            <url-pattern>/product/searchProduct.xhtml</url-pattern>
         </web-resource-collection>
         
         <web-resource-collection>
