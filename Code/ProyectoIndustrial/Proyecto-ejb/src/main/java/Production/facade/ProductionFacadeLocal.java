@@ -44,5 +44,7 @@ public interface ProductionFacadeLocal {
     public Optional<Product> getProductById(Integer id);
 
     public Design editDesign(Design design) throws MandatoryAttributeProductionException;
+
+    public void updateCommentayOfSteps(Production production);
     
 }

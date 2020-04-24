@@ -18,7 +18,9 @@ import Production.repository.DesignRepository;
 import User.exception.UserException;
 import static config.Constants.MAIN_PAGE;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.FlowEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -41,7 +45,7 @@ import org.primefaces.event.FlowEvent;
 @ViewScoped
 public class productionCreateView implements Serializable {
 
-    //TODO: ALTER TABLE `production` CHANGE `post_design` `post_design` INT(11) NULL; 
+   
 //     <p:button  href="#" onclick="#{productionCreateView.createProduction()}" 
 //                                       styleClass="btn btn-success"
 //                                       value="Crear Produccion" 
@@ -167,6 +171,17 @@ public class productionCreateView implements Serializable {
         step = null;
     }
 
+    public StreamedContent convertFichier(byte[] bytes) {
+
+        InputStream is = new ByteArrayInputStream(bytes);
+        System.out.println("size file : " + bytes.length);
+        StreamedContent image = new DefaultStreamedContent(is);
+        System.out.println("dans le convertisseur : " + image.getContentType());
+        return image;
+
+    }
+    
+    //------------- get and set -------------------------------------------------
     public Production getProduction() {
         return production;
     }

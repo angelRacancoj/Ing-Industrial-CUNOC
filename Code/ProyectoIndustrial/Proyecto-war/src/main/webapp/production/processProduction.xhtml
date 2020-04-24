@@ -1,0 +1,302 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/template-one.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formPrincipal">
+
+                    <p:commandLink 
+                        onclick="PF('wdialogSelectProduction').show();"
+                        styleClass="btn btn-primary" style="width: 100%;"
+                        process="@this">
+                        Seleccionar Produccion <span class="glyphicon glyphicon-hand-right"></span> 
+                    </p:commandLink>
+
+                    <p:tabView dynamic="true" cache="true" effect="fold">
+                        <p:tab title="#{productionProcessView.preProcess.name}">
+                            
+                            <p:accordionPanel multiple="true">
+                                <ui:repeat value="#{productionProcessView.preProcess.stepList}" var="step">
+                                    <p:tab title="#{step.name}">
+                                        <h:outputText value="#{step.description}" />
+
+                                    </p:tab>
+                                </ui:repeat>
+                            </p:accordionPanel>
+                            
+
+                            <p:dataView var="step" value="#{productionProcessView.preProcess.stepList}"
+                                        gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+                                <p:dataViewGridItem>
+                                    <p:panel header="#{step.name}" style="text-align:center">
+                                        <h:panelGrid columns="1" style="width:100%">
+                                            <h:outputText value="#{step.description}" />
+                                            <p:commandLink
+                                                actionListener="#{productionProcessView.selectStep(step)}"
+                                                onclick="PF('wdialogCommentary').show();"
+                                                styleClass="btn btn-primary" style="width: 100%;"
+                                                process="@this">
+                                                Comentarios <span class="glyphicon glyphicon-comment"></span> 
+                                            </p:commandLink>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:dataViewGridItem>
+
+                                <p:dataViewListItem>
+                                    <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
+
+                                        <p:outputPanel>
+                                            <h:panelGrid columns="2" cellpadding="5">
+                                                <h:outputText value="Nombre:" />
+                                                <h:outputText value="#{step.name}" style="font-weight: bold"/>
+
+                                                <h:outputText value="Descripcion:" />
+                                                <h:outputText value="#{step.description}" style="font-weight: bold"/>
+                                            </h:panelGrid>
+                                            <p:commandLink 
+                                                actionListener="#{productionProcessView.selectStep(step)}"
+                                                onclick="PF('wdialogCommentary').show();"
+                                                styleClass="btn btn-primary" style="width: 20%;"
+                                                process="@this">
+                                                Comentarios <span class="glyphicon glyphicon-comment"></span> 
+                                            </p:commandLink>
+                                        </p:outputPanel>
+                                    </h:panelGrid>
+                                </p:dataViewListItem>
+                            </p:dataView>
+                        </p:tab>
+                        <p:tab title="#{productionProcessView.process.name}">
+                            <p:dataView var="step" value="#{productionProcessView.process.stepList}"
+                                        gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+                                <p:dataViewGridItem>
+                                    <p:panel header="#{step.name}" style="text-align:center">
+                                        <h:panelGrid columns="1" style="width:100%">
+                                            <h:outputText value="#{step.description}" />
+                                            <p:commandLink 
+                                                actionListener="#{productionProcessView.selectStep(step)}"
+                                                onclick="PF('wdialogCommentary').show();"
+                                                styleClass="btn btn-primary" style="width: 100%;"
+                                                process="@this">
+                                                Comentarios <span class="glyphicon glyphicon-comment"></span> 
+                                            </p:commandLink>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:dataViewGridItem>
+
+                                <p:dataViewListItem>
+                                    <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
+
+                                        <p:outputPanel>
+                                            <h:panelGrid columns="2" cellpadding="5">
+                                                <h:outputText value="Nombre:" />
+                                                <h:outputText value="#{step.name}" style="font-weight: bold"/>
+
+                                                <h:outputText value="Descripcion:" />
+                                                <h:outputText value="#{step.description}" style="font-weight: bold"/>
+                                            </h:panelGrid>
+                                            <p:commandLink 
+                                                actionListener="#{productionProcessView.selectStep(step)}"
+                                                onclick="PF('wdialogCommentary').show();"
+                                                styleClass="btn btn-primary" style="width: 20%;"
+                                                process="@this">
+                                                Comentarios <span class="glyphicon glyphicon-comment"></span> 
+                                            </p:commandLink>
+                                        </p:outputPanel>
+
+
+                                    </h:panelGrid>
+                                </p:dataViewListItem>
+                            </p:dataView>
+                        </p:tab>
+                        <p:tab title="#{productionProcessView.postProcess.name}">
+                            <p:dataView var="step" value="#{productionProcessView.postProcess.stepList}"
+                                        gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+                                <p:dataViewGridItem>
+                                    <p:panel header="#{step.name}" style="text-align:center">
+                                        <h:panelGrid columns="1" style="width:100%">
+                                            <h:outputText value="#{step.description}" />
+                                            <p:commandLink 
+                                                actionListener="#{productionProcessView.selectStep(step)}"
+                                                onclick="PF('wdialogCommentary').show();"
+                                                styleClass="btn btn-primary" style="width: 100%;"
+                                                process="@this">
+                                                Comentarios <span class="glyphicon glyphicon-comment"></span> 
+                                            </p:commandLink>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:dataViewGridItem>
+
+                                <p:dataViewListItem>
+                                    <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
+
+                                        <p:outputPanel>
+                                            <h:panelGrid columns="2" cellpadding="5">
+                                                <h:outputText value="Nombre:" />
+                                                <h:outputText value="#{step.name}" style="font-weight: bold"/>
+
+                                                <h:outputText value="Descripcion:" />
+                                                <h:outputText value="#{step.description}" style="font-weight: bold"/>
+                                            </h:panelGrid>
+                                            <p:commandLink 
+                                                actionListener="#{productionProcessView.selectStep(step)}"
+                                                onclick="PF('wdialogCommentary').show();"
+                                                styleClass="btn btn-primary" style="width: 20%;"
+                                                process="@this">
+                                                Comentarios <span class="glyphicon glyphicon-comment"></span> 
+                                            </p:commandLink>
+                                        </p:outputPanel>
+
+
+                                    </h:panelGrid>
+                                </p:dataViewListItem>
+                            </p:dataView>
+                        </p:tab>
+
+                    </p:tabView>
+
+                    
+                    <p:commandLink 
+                        actionListener="#{productionProcessView.saveProgress()}"
+                        styleClass="btn btn-warning" style="width: 20%;"
+                        process="@this">
+                        Guardar Avances <span class="glyphicon glyphicon-floppy-disk"></span> 
+                    </p:commandLink>
+                    <p:commandLink 
+                        actionListener="#{productionProcessView.exitPage()}"
+                        styleClass="btn btn-danger" style="width: 20%;"
+                        process="@this">
+                        Salir <span class="glyphicon glyphicon-remove"></span> 
+                    </p:commandLink>
+                    <p:commandLink 
+                        onclick="PF('wdialogSelectProduction').show();"
+                        styleClass="btn btn-info" style="width: 20%;"
+                        process="@this">
+                        Finalizar Produccion <span class="glyphicon glyphicon-saved"></span> 
+                    </p:commandLink>
+                    
+
+                </h:form>
+                <p:dialog id="dialogSelectProduction" header="Seleccionar la Produccion" widgetVar="wdialogSelectProduction" 
+                          modal="true" resizable="false" closeOnEscape="true" draggable="false" showEffect="explode" fitViewport="true">
+                    <h:form id="formSelectProduction">
+                        <p:panel header="Seleccine la Produccion">
+
+                            <div class="form-group">
+
+
+
+                                <p:fieldset id="designField" legend="Producciones Disponibles">
+                                    <p:dataTable id="productionTable"  var="production" value="#{productionProcessView.productions}" emptyMessage="No hay producciones disponibles">
+                                        <p:column headerText="Nombre" filterBy="#{production.name}" filterMatchMode="contains" >
+                                            <h:outputText  value="#{production.name}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Nombre de diseño" filterBy="#{production.designId.designData.name}" filterMatchMode="contains" >
+                                            <h:outputText value="#{production.designId.designData.name}" />
+                                        </p:column>
+
+                                        <p:column headerText="Producto">
+                                            <h:outputText value="#{production.designId.productIdProduct.name}" />
+                                        </p:column>
+
+                                        <p:column headerText="Descripcion">
+                                            <h:outputText value="#{design.designData.description}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Imagen">
+                                            <p:graphicImage id="image" value="#{productionProcessView.convertFichier(production.designId.designData.picture)}"  
+                                                            width="100" height="100" stream="false" />
+                                        </p:column>
+
+                                        <p:column headerText="Seleccionar" style="width: 6%">
+                                            <p:commandLink actionListener="#{productionProcessView.selectProduction(production)}"
+
+                                                           update="@form, :#{p:component('growl')},:#{p:component('formPrincipal')}"
+                                                           styleClass="btn btn-success"  
+                                                           process="@this"
+                                                           onclick="PF('wdialogSelectProduction').hide();"
+                                                           >
+                                                <span class="glyphicon glyphicon-hand-left"></span> 
+
+                                            </p:commandLink>
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </p:fieldset>
+
+                            </div>
+                        </p:panel>
+
+                    </h:form>
+                </p:dialog>
+                <p:dialog id="dialogCommentary" header="Comentarios" widgetVar="wdialogCommentary" 
+                          modal="true" resizable="false" closeOnEscape="true" draggable="false" showEffect="explode" fitViewport="true">
+                    <h:form id="formCommentary">
+                        <p:panel header="Comentarios">
+                            <div class="form-group">
+                                <p:fieldset id="designField" legend="Comentarios de este paso">
+                                    <p:dataTable id="commentaryTable"  var="commentary" value="#{productionProcessView.stepSlect.commentaryList}" emptyMessage="No hay producciones disponibles">
+                                        <p:column headerText="Comentario: " >
+                                            <h:outputText  value="#{productionProcessView.commentary.commentary}"/>
+                                        </p:column> 
+                                        <p:column>
+                                            <p:commandLink 
+                                                update="@form, :#{p:component('growl')},:#{p:component('commentaryTable')}"
+                                                styleClass="btn btn-danger"  
+                                                process="@this"
+                                                actionListener="#{productionProcessView.deleteCommentary(commentary)}"
+                                                >
+                                                <span class="glyphicon glyphicon-trash"></span> 
+                                            </p:commandLink>
+                                        </p:column>
+                                    </p:dataTable>
+                                    <p:commandLink 
+                                        update="@form, :#{p:component('growl')},:#{p:component('commentaryTable')}"
+                                        styleClass="btn btn-success"  
+                                        process="@this"
+                                        onclick="PF('wdialogAddCommentary').show();"
+                                        >
+                                        Agreagar comentario  <span class="glyphicon glyphicon-plus"></span> 
+                                    </p:commandLink>
+                                </p:fieldset>
+                            </div>
+                        </p:panel>
+                    </h:form>
+                </p:dialog>
+                <p:dialog id="dialogAddCommentary" header="Comentario" widgetVar="wdialogAddCommentary" 
+                          modal="true" resizable="false" closeOnEscape="true" draggable="false" showEffect="explode" fitViewport="true">
+                    <h:form id="formAddCommentary">
+                        <p:panel header="Nuevo Comentario">
+                            <div class="form-group">
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel  value="Comentario:"/>
+                                    <p:inputTextarea rows="6" cols="33" value="#{productionProcessView.commentary.commentary}"/>
+                                    <p:commandLink actionListener="#{productionProcessView.addCommentary()}"
+                                                   update="@form, :#{p:component('growl')},:#{p:component('commentaryTable')}"
+                                                   styleClass="btn btn-success"  
+                                                   process="@this"
+                                                   onclick="PF('wdialogAddCommentary').hide();"
+                                                   >
+                                        Agreagar comentario  <span class="glyphicon glyphicon-plus"></span> 
+                                    </p:commandLink>
+                                </h:panelGrid>
+                            </div>
+                        </p:panel>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

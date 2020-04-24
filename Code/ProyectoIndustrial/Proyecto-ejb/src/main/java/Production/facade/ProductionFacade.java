@@ -80,6 +80,15 @@ public class ProductionFacade implements ProductionFacadeLocal {
     }
 
     /**
+     * 
+     * @param production 
+     */
+    @Override
+     public void updateCommentayOfSteps(Production production){
+         productionService.updateCommentayOfSteps(production);
+     }
+    
+    /**
      * {@inheritDoc}
      */
     @Override

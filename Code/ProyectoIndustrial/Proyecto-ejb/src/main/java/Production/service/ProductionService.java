@@ -34,11 +34,22 @@ public class ProductionService {
         if (production.getStartDate() == null) {
             throw new MandatoryAttributeProductionException("Fecha de creacion nula");
         }
-        
+        for (int i = 0; i < production.getStageList().size(); i++) {
+            entityManager.persist( production.getStageList().get(i));
+        }
 
         entityManager.persist(production);
         return production;
     }
+    
+    public void updateCommentayOfSteps(Production production){
+        for (int i = 0; i < production.getStageList().size(); i++) {
+            for (int j = 0; j < production.getStageList().get(i).getStepList().size(); j++) {
+                entityManager.merge(production.getStageList().get(i).getStepList().get(j));
+            }
+        }
+    }
+    
     
      public Production edit(Production Production) throws MandatoryAttributeProductionException {
          
