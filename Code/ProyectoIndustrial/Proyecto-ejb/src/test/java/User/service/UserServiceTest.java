@@ -58,6 +58,7 @@ public class UserServiceTest {
     
     @Test
     public void updateUserTest() {
+        
         Integer carnet = 201630873;
         String name = "fulanito";
         String email = "fulanito@mail.com";
@@ -67,8 +68,10 @@ public class UserServiceTest {
         RolUser rolUser = new RolUser("Estudiante");
         Career career = new Career("Sistemas");
         User user = new User(carnet, name, email, phone, pass, state, rolUser, career);
+        
         UserService userService = new UserService();
         userService.setEntityManager(entityManager);
+        
         userService.setPbkdf2PasswordHash(pbkdf2PasswordHash);
         Map<String, String> map = new HashMap<>();
         map.put("Pbkdf2PasswordHash.Iterations", "3072");
@@ -76,6 +79,7 @@ public class UserServiceTest {
         map.put("Pbkdf2PasswordHash.SaltSizeBytes", "64");
         Mockito.doNothing().when(pbkdf2PasswordHash).initialize(map);
         char passwordInput[] = user.getPassword().toCharArray();
+        
         Mockito.when(pbkdf2PasswordHash.generate(passwordInput)).thenReturn(pass);
         Mockito.when(entityManager.find(User.class, user.getCarnet())).thenReturn(user);
         User result = null;

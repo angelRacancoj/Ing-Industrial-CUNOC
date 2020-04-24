@@ -5,6 +5,7 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd">
 
     <navigation-rule>
+        <!-- Principal pages-->
         <navigation-case>
             <from-outcome>principal</from-outcome>
             <to-view-id>/principal.xhtml</to-view-id>
@@ -21,6 +22,7 @@
             <redirect/>
         </navigation-case>
         
+        <!--User and group pages-->
         <navigation-case>
             <from-outcome>users</from-outcome>
             <to-view-id>/user/users.xhtml</to-view-id>
@@ -41,7 +43,35 @@
             <to-view-id>/group/createGroup.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        
+        <!--Manage Production-->
+        <navigation-case>
+            <from-outcome>createProduction</from-outcome>
+            <to-view-id>/production/createProduction.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>dataTable</from-outcome>
+            <to-view-id>/production/dataTable.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>manageSupplies</from-outcome>
+            <to-view-id>/production/manageSupplies.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>production</from-outcome>
+            <to-view-id>/production/production.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>stage</from-outcome>
+            <to-view-id>/production/stage.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
 
+        <!--Manage Designs-->
         <navigation-case>
             <from-outcome>designs</from-outcome>
             <to-view-id>/design/editDesign.xhtml</to-view-id>
@@ -53,6 +83,19 @@
             <redirect/>
         </navigation-case>
         
+        <!--Manage Product-->
+        <navigation-case>
+            <from-outcome>createProduct</from-outcome>
+            <to-view-id>/product/createProduct.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>products</from-outcome>
+            <to-view-id>/product/searchProduct.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
+        <!--Manage Supply-->
         <navigation-case>
             <from-outcome>supplies</from-outcome>
             <to-view-id>/supplies/searchSupply.xhtml</to-view-id>
@@ -63,9 +106,16 @@
             <to-view-id>/supplies/registerSupply.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        
+        <!--Calculators-->
         <navigation-case>
             <from-outcome>calcSupply</from-outcome>
             <to-view-id>/inventory/supplyCalculator.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>calcProduction</from-outcome>
+            <to-view-id>/inventory/bestProductionCalculator.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
