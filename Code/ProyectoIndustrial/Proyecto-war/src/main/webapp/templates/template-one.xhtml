@@ -60,7 +60,10 @@
                             <h:form>
                                 <ul class="nav navbar-nav navbar-right">
                                     <li jsf:rendered="#{not empty request.userPrincipal}">
-                                        <p class="navbar-text">logueado como <span>#{p:remoteUser()}</span>, 
+                                        <p class="navbar-text">logueado como 
+                                            <h:commandLink styleClass="navbar-link"
+                                                           action="userProfile"
+                                                           value="#{p:remoteUser()}"/>,
                                             <h:commandLink styleClass="navbar-link"
                                                            action="#{logoutView.logout()}"
                                                            value="Salir"/>

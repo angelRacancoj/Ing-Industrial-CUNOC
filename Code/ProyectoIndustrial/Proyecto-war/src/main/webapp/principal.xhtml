@@ -27,6 +27,7 @@
             <p:panelMenu style="width:300px">
                 <p:submenu label="Usuarios">
                     <p:menuitem value=" Buscar" class="glyphicon glyphicon-search" outcome="users"/>
+                    <p:menuitem value=" Perfil" class="glyphicon glyphicon-user" outcome="userProfile"/>
                     <p:menuitem value=" Nuevo" class="glyphicon glyphicon-plus" outcome="create-users" rendered="#{p:ifAnyGranted(constants.adminDocente())}"/>
                 </p:submenu>
                 <p:submenu label="Grupos">

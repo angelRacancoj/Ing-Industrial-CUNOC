@@ -37,6 +37,10 @@ public class UserRepository {
         }
     }
 
+    public Optional<User> getUserByID(Integer carnet) {
+        return Optional.of(entityManager.find(User.class, carnet));
+    }
+
     public List<User> getUser(User user) throws UserException {
         if (user == null) {
             throw new UserException("User is null");

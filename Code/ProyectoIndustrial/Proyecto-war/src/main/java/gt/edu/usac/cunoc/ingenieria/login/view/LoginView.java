@@ -24,6 +24,7 @@ import javax.security.enterprise.credential.Password;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -46,7 +47,9 @@ public class LoginView implements Serializable {
     private FacesContext facesContext;
 
     private String carnet;
+    private String carnetReset;
     private String password;
+    private String email;
 
     public String getUserCarnet() {
         return carnet;
@@ -56,12 +59,28 @@ public class LoginView implements Serializable {
         this.carnet = userName;
     }
 
+    public String getCarnetReset() {
+        return carnetReset;
+    }
+
+    public void setCarnetReset(String userID) {
+        this.carnetReset = userID;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(final String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
     }
 
     public void login() throws IOException, UserException {
@@ -101,6 +120,26 @@ public class LoginView implements Serializable {
                 break;
             default:
         }
+    }
+
+    public void resetPassword(final String modalIdToClose) {
+        try {
+            userFacade.resetPassword(Integer.parseInt(carnetReset.replaceAll(" ", "")), email);
+            MessageUtils.addSuccessMessage("Exito, verifique su correo");
+            clean();
+            PrimeFaces.current().executeScript("PF('" + modalIdToClose + "').hide()");
+        } catch (UserException e) {
+            MessageUtils.addErrorMessage(e.getMessage());
+        } catch (NumberFormatException e) {
+            MessageUtils.addErrorMessage("Usuario incorrecto");
+        }
+    }
+
+    public void clean() {
+        carnet = "";
+        password = "";
+        email = "";
+        setCarnetReset("");
     }
 
 }
