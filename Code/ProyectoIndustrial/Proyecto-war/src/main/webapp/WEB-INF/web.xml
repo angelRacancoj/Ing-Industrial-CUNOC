@@ -88,6 +88,7 @@
             <web-resource-name>user</web-resource-name>
             <description/>
             <url-pattern>/user/users.xhtml</url-pattern>
+            <url-pattern>/user/userProfile.xhtml</url-pattern>
         </web-resource-collection>
         
         <web-resource-collection>

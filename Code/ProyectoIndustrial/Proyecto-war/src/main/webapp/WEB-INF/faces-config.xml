@@ -29,6 +29,11 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
+            <from-outcome>userProfile</from-outcome>
+            <to-view-id>/user/userProfile.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>create-users</from-outcome>
             <to-view-id>/user/createUser.xhtml</to-view-id>
             <redirect/>
