@@ -1,7 +1,6 @@
 package Supply.facade;
 
 import Supply.Measure;
-import Supply.repository.AvailabilityFilter;
 import Supply.repository.ExpirationDateFilter;
 import Supply.repository.MeasureRepository;
 import Supply.repository.SupplyRepository;
@@ -11,12 +10,10 @@ import Supply.exception.MandatoryAttributeSupplyException;
 import Supply.service.SupplyServices;
 import User.User;
 import User.exception.UserException;
-import java.time.LocalDate;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import Supply.repository.AvailabilityFilter;
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Stateless

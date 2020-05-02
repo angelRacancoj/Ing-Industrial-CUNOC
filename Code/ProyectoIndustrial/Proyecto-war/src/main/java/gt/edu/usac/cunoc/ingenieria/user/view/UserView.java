@@ -6,12 +6,10 @@ import User.User;
 import static config.Constants.ADMINISTRADOR;
 import static config.Constants.ESTUDIANTE;
 import static config.Constants.DOCENTE;
-import static config.Constants.MAIN_PAGE;
 import User.exception.UserException;
 import User.facade.UserFacadeLocal;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -142,10 +140,14 @@ public class UserView implements Serializable {
         clearCurrentUser();
     }
 
-    public void resetPassword(final String modalIdToClose) throws UserException, NoSuchAlgorithmException {
+    public void resetPassword(final String modalIdToClose) {
         if (currentUser.getCarnet() != null) {
-            userFacade.resetPassword(currentUser);
-            MessageUtils.addSuccessMessage("Se actualizo el usuario");
+            try {
+                userFacade.resetPassword(currentUser);
+                MessageUtils.addSuccessMessage("Se actualizo el usuario");
+            } catch (UserException e) {
+                MessageUtils.addErrorMessage(e.getMessage());
+            }
         }
         clearCurrentUser();
         PrimeFaces.current().executeScript("PF('" + modalIdToClose + "').hide()");
