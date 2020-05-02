@@ -97,7 +97,7 @@ public class productionCreateView implements Serializable {
         stepsProduction = new ArrayList<>();
         stepsPostProduction = new ArrayList<>();
 
-        production = new Production(null, null, LocalDate.now(), true);
+        production = new Production(null, null, LocalDate.now(), false);
 
         stagePreProduction.setStepList(stepsPreProduction);
         stageProduction.setStepList(stepsProduction);
@@ -131,6 +131,7 @@ public class productionCreateView implements Serializable {
                     productionFacadeLocal.createProduction(production);
                     MessageUtils.addSuccessMessage(CREATE_PRODUCTION);
                     System.out.println("production create");
+                    externalContext.getFlash().setKeepMessages(true);
                     externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
                 } catch (MandatoryAttributeProductionException | IOException ex) {
                     Logger.getLogger(productionCreateView.class.getName()).log(Level.SEVERE, null, ex);
