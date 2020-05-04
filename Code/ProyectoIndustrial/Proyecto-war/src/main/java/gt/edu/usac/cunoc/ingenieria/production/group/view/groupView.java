@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package gt.edu.usac.cunoc.ingenieria.production.group.view;
+
 /**
  * TODO: Ver y Scrol
  */
@@ -18,6 +19,7 @@ import Production.facade.ProductionFacadeLocal;
 import User.User;
 import User.exception.UserException;
 import User.facade.UserFacadeLocal;
+import static config.Constants.MAIN_PAGE;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -28,7 +30,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
@@ -53,6 +57,9 @@ public class groupView implements Serializable {
 
     @EJB
     private UserFacadeLocal userFacadeLocal;
+    
+    @Inject
+    private ExternalContext externalContext;
 
     @PostConstruct
     public void init() {
@@ -88,6 +95,8 @@ public class groupView implements Serializable {
             //groupIndustrial.setIdGroup(null);
             groupFacadelocal.createGroup(groupIndustrial, groupList);
             MessageUtils.addSuccessMessage(GROUP_CREATED);
+            externalContext.getFlash().setKeepMessages(true);
+            externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
         } catch (Exception e) {
             MessageUtils.addErrorMessage(e.getMessage());
         }

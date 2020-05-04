@@ -194,17 +194,17 @@
                         process="@this">
                         Finalizar Produccion <span class="glyphicon glyphicon-saved"></span> 
                     </p:commandLink>
-
+                    <h:outputText value="Nota: Si debe guardar los cambios antes de salir de esta ventana." />
 
                 </h:form>
                 <p:dialog id="dialogFinalProduction" header="Finalizar la produccion" widgetVar="wdialogFinalProduction" 
                           modal="true" resizable="false" closeOnEscape="true" draggable="false" showEffect="explode" fitViewport="true">
                     <h:form id="formFinalProduction">
                         <p:wizard flowListener="#{productionProcessView.onFlowProcess}" nextLabel="Siguiente" backLabel="Atras">
-                            <p:tab id="postDesign" title="Datos Reales del diseño">
-                                <p:panel header="Confirme si estos son los insumos que utilizo para una unidad de la produccion. Esto se descontara del inventario">
+                            <p:tab id="postDesign" title="Datos de la produccion">
+                                <p:panel header="Ingrese la cantidad de material total que le llevo en toda la produccion">
 
-                                    <p:fieldset id="selectedSupply" legend="Agrege las cantidades reales que uso de cada insumo para una unidad" style="margin-top:20px">
+                                    <p:fieldset id="selectedSupply" legend="Todo el material que ingrese sera descontado del inventario del sistema" style="margin-top:20px">
 
                                         <p:dataTable id="supplyTable" var="supplyNe" value="#{productionProcessView.postDesign.necessarySupplyList}" emptyMessage="No ha seleccionado ningun insumo">
                                             <p:column headerText="Nombre">
@@ -280,6 +280,37 @@
 
                                 </p:panel>
                             </p:tab>
+                            <p:tab id="confirm" title="Confirmacion">
+                                <p:panel header="Datos de la Produccion">
+                                    <h:panelGrid columns="2" >
+                                        <h:outputText value="Produccion: " />
+                                        <h:outputText value="#{productionProcessView.productionSelect.name}"/>
+
+                                        <h:outputText value="Diseño: " />
+                                        <h:outputText value="#{productionProcessView.productionSelect.designId.designData.name}"/>
+
+                                        <h:outputText value="Fecha de Finalizacion: " />
+                                        <p:calendar id="calendarConfirmation"  mode="inline" />
+
+
+                                    </h:panelGrid>
+
+                                    <p:commandLink 
+                                        actionListener="#{productionProcessView.endProduction()}"
+                                        update="@form, :#{p:component('growl')}"
+                                        styleClass="btn btn-success"  
+                                        process="@this"
+
+                                        >
+                                        Finalizar Produccion <span class="glyphicon glyphicon-plus"></span> 
+
+                                    </p:commandLink>
+                                    <h:outputText value="Esta produccion ya estara lista para ser calificada" />
+
+
+                                </p:panel>
+                            </p:tab>
+
                         </p:wizard>
                     </h:form>
                 </p:dialog>
@@ -339,35 +370,31 @@
                 <p:dialog id="dialogCommentary" header="Comentarios" widgetVar="wdialogCommentary" 
                           modal="true" resizable="false" closeOnEscape="true" draggable="false" showEffect="explode" fitViewport="true">
                     <h:form id="formCommentary">
-                        <p:panel header="Comentarios">
-                            <div class="form-group">
-                                <p:fieldset id="designField" legend="Comentarios de este paso">
-                                    <p:dataTable id="commentaryTable"  var="commentary" value="#{productionProcessView.stepSlect.commentaryList}" emptyMessage="No hay producciones disponibles">
-                                        <p:column headerText="Comentario: " >
-                                            <h:outputText  value="#{commentary.commentary}"/>
-                                        </p:column> 
-                                        <p:column>
-                                            <p:commandLink 
-                                                update="@form, :#{p:component('growl')},:#{p:component('commentaryTable')}"
-                                                styleClass="btn btn-danger"  
-                                                process="@this"
-                                                actionListener="#{productionProcessView.deleteCommentary(commentary)}"
-                                                >
-                                                <span class="glyphicon glyphicon-trash"></span> 
-                                            </p:commandLink>
-                                        </p:column>
-                                    </p:dataTable>
-                                    <p:commandLink 
-                                        update="@form, :#{p:component('growl')},:#{p:component('commentaryTable')}"
-                                        styleClass="btn btn-success"  
-                                        process="@this"
-                                        onclick="PF('wdialogAddCommentary').show();"
-                                        >
-                                        Agreagar comentario  <span class="glyphicon glyphicon-plus"></span> 
-                                    </p:commandLink>
-                                </p:fieldset>
-                            </div>
-                        </p:panel>
+
+                        <p:dataTable id="commentaryTable"  var="commentary" value="#{productionProcessView.stepSlect.commentaryList}" emptyMessage="No hay producciones disponibles">
+                            <p:column headerText="Comentario: " >
+                                <h:outputText  value="#{commentary.commentary}"/>
+                            </p:column> 
+                            <p:column>
+                                <p:commandLink 
+                                    update="@form, :#{p:component('growl')},:#{p:component('commentaryTable')}"
+                                    styleClass="btn btn-danger"  
+                                    process="@this"
+                                    actionListener="#{productionProcessView.deleteCommentary(commentary)}"
+                                    >
+                                    <span class="glyphicon glyphicon-trash"></span> 
+                                </p:commandLink>
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandLink 
+                            update="@form, :#{p:component('growl')},:#{p:component('commentaryTable')}"
+                            styleClass="btn btn-success"  
+                            process="@this"
+                            onclick="PF('wdialogAddCommentary').show();"
+                            >
+                            Agreagar comentario  <span class="glyphicon glyphicon-plus"></span> 
+                        </p:commandLink>
+
                     </h:form>
                 </p:dialog>
                 <p:dialog id="dialogAddCommentary" header="Comentario" widgetVar="wdialogAddCommentary" 
@@ -394,7 +421,7 @@
                 <p:dialog id="dialogAddExtra" header="Gasto Extra" widgetVar="wdialogAddExtra" 
                           modal="true" resizable="false" closeOnEscape="true" draggable="false" showEffect="explode" fitViewport="true">
                     <h:form id="formAddExtra">
-                        <p:panel header="Nuevo Gasto Extra">
+                        <p:panel header="Nuevo gasto extra">
                             <div class="form-group">
                                 <h:panelGrid columns="2">
                                     <p:outputLabel  value="Descripcion:"/>

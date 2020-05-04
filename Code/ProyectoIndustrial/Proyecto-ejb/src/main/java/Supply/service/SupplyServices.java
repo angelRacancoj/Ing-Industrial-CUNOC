@@ -61,9 +61,11 @@ public class SupplyServices {
         if (newQuantity == null) {
             throw new MandatoryAttributeSupplyException("Atributo Cantidad Obligatorio");
         } else {
-            supplyToChange.setQuantity(newQuantity);
+            
+            supplyToChange.setQuantity(supplyToChange.getQuantity()-newQuantity);
             saveModificationHistory(supplyToChange, user, ModificationType.CANTIDAD, newQuantity, noteModify);
         }
+        entityManager.merge(supplyToChange);
         return supplyToChange;
     }
 

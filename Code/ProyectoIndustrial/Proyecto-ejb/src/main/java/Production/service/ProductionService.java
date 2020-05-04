@@ -1,13 +1,16 @@
-
 package Production.service;
 
+import Design.Design;
+import Production.ExtraCost;
 import Production.Production;
 import Production.exceptions.MandatoryAttributeProductionException;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import  static config.Constants.*;
+import static config.Constants.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,54 +20,122 @@ import  static config.Constants.*;
 @LocalBean
 public class ProductionService {
 
-    
     private EntityManager entityManager;
-    
+
     @PersistenceContext(name = PERSISTENCE_UNIT_NAME)
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
+    /**
+     *
+     * @param production
+     *
+     * @return
+     *
+     * @throws MandatoryAttributeProductionException
+     */
     public Production create(Production production) throws MandatoryAttributeProductionException {
 
         if (production.getName() == null) {
             throw new MandatoryAttributeProductionException("Nombre nulo");
         }
-        
+
         if (production.getStartDate() == null) {
             throw new MandatoryAttributeProductionException("Fecha de creacion nula");
         }
         for (int i = 0; i < production.getStageList().size(); i++) {
-            entityManager.persist( production.getStageList().get(i));
+            entityManager.persist(production.getStageList().get(i));
         }
 
         entityManager.persist(production);
         return production;
     }
-    
-    public void updateCommentayOfSteps(Production production){
+
+    /**
+     *
+     * @param production
+     */
+    public void updateCommentayOfSteps(Production production) {
         for (int i = 0; i < production.getStageList().size(); i++) {
             for (int j = 0; j < production.getStageList().get(i).getStepList().size(); j++) {
                 entityManager.merge(production.getStageList().get(i).getStepList().get(j));
             }
         }
     }
+
+    /**
+     *
+     * @param listExtraCost
+     * @param production
+     *
+     * @throws MandatoryAttributeProductionException
+     */
+    public void updateExtraCost(List<ExtraCost> listExtraCost, Production production) throws MandatoryAttributeProductionException {
+        if (production == null) {
+            throw new MandatoryAttributeProductionException("Produccion no seleccionada");
+        }
+        production.setExtraCostList(listExtraCost);
+        for (int i = 0; i < listExtraCost.size(); i++) {
+            listExtraCost.get(i).setIdProduction(production);
+        }
+        
+        entityManager.merge(production);
+
+    }
     
+    /**
+     * 
+     * @param postDesign
+     * @param production
+     * @throws MandatoryAttributeProductionException 
+     */
+    public void addPostDedign(Design postDesign, Production production) throws MandatoryAttributeProductionException{
+        if (production == null) {
+            throw new MandatoryAttributeProductionException("Produccion no seleccionada");
+        }
+        if (postDesign == null) {
+            throw new MandatoryAttributeProductionException("Produccion no seleccionada");
+        }
+        
+        
+//        List<Production> lista = new ArrayList<Production>();
+//        lista.add(production);
+//                
+//        postDesign.setProductionList1(lista);
+        
+        for (int i = 0; i < production.getExtraCostList().size(); i++) {
+            production.getExtraCostList().get(i).setIdProduction(production);
+        }
+        
+        
+        entityManager.persist(postDesign);
+        production.setPostDesign(postDesign);
+        entityManager.merge(production);
+        
+    }
     
-     public Production edit(Production Production) throws MandatoryAttributeProductionException {
-         
-         
+
+    /**
+     *
+     * @param Production
+     *
+     * @return
+     *
+     * @throws MandatoryAttributeProductionException
+     */
+    public Production edit(Production Production) throws MandatoryAttributeProductionException {
+
         if (Production.getName() == null) {
             throw new MandatoryAttributeProductionException("Nombre nulo");
         }
-        
+
         if (Production.getStartDate() == null) {
             throw new MandatoryAttributeProductionException("Fecha de creacion nula");
         }
-        
-        
+
         entityManager.merge(Production);
-        
+
         return Production;
     }
 

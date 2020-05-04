@@ -2,6 +2,7 @@ package Production.facade;
 
 import Design.Design;
 import Design.DesignData;
+import Production.ExtraCost;
 import Production.NecessarySupply;
 import Production.Product;
 import Production.Production;
@@ -80,14 +81,14 @@ public class ProductionFacade implements ProductionFacadeLocal {
     }
 
     /**
-     * 
-     * @param production 
+     *
+     * @param production
      */
     @Override
-     public void updateCommentayOfSteps(Production production){
-         productionService.updateCommentayOfSteps(production);
-     }
-    
+    public void updateCommentayOfSteps(Production production) {
+        productionService.updateCommentayOfSteps(production);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -117,9 +118,9 @@ public class ProductionFacade implements ProductionFacadeLocal {
     public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys) {
         designService.createDesign(design, designData, necessarySupplys);
     }
-    
+
     @Override
-    public Design editDesign(Design design) throws MandatoryAttributeProductionException{
+    public Design editDesign(Design design) throws MandatoryAttributeProductionException {
         return designService.editDesign(design);
     }
 
@@ -138,6 +139,34 @@ public class ProductionFacade implements ProductionFacadeLocal {
     @Override
     public Optional<Product> getProductById(Integer id) {
         return productRepository.getProductById(id);
+    }
+
+    @Override
+    public void updateExtraCost(List<ExtraCost> listExtraCost, Production production) throws MandatoryAttributeProductionException {
+        productionService.updateExtraCost(listExtraCost, production);
+    }
+
+    @Override
+    public void addPostDedign(Design postDesign, Production production) throws MandatoryAttributeProductionException {
+        productionService.addPostDedign(postDesign, production);
+    }
+
+    @Override
+    public double initCost(Production production) {
+
+        return productionRepository.initCost(production);
+    }
+
+    @Override
+    public double finalCost(Production production) {
+
+        return productionRepository.finalCost(production);
+    }
+
+    @Override
+    public double totalExtraCost(Production production) {
+
+        return productionRepository.totalExtraCost(production);
     }
 
 }

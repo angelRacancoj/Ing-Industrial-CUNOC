@@ -8,16 +8,23 @@ package gt.edu.usac.cunoc.ingenieria.production.production.view;
 import Design.Design;
 import Production.Commentary;
 import Production.ExtraCost;
+import Production.NecessarySupply;
 import Production.Production;
 import Production.Stage;
 import Production.Step;
+import Production.exceptions.MandatoryAttributeProductionException;
 import Production.facade.ProductionFacadeLocal;
+import Supply.exception.MandatoryAttributeSupplyException;
+import Supply.facade.SupplyFacadeLocal;
+import User.exception.UserException;
+import User.facade.UserFacadeLocal;
 import static config.Constants.MAIN_PAGE;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,6 +38,7 @@ import javax.inject.Named;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.primefaces.util.BeanUtils;
 
 /**
  *
@@ -41,6 +49,8 @@ import org.primefaces.model.StreamedContent;
 public class productionProcessView implements Serializable {
 
     private static final String ERROR_INSUFFICIENT_SUPPLIES = "No hay insumos suficientese para esta produccion (guarde su proceso y agregue mas insumos)";
+    private static final String ERROR_USER = "Error con el usuario";
+    private static final String EXIT_PAGE = "Usted ha salido del proceso";
     private static final String ERROR_EMPY_COMMENTARY = "El comentario no puede estar vacio";
     private static final String ERROR_EMPY_EXTRA_COST = "La descripcion del gasto puede estar vacia";
     private static final String ERROR_NULL_PRODUCTION = "No se ha seleccionado ninguna produccion";
@@ -48,9 +58,17 @@ public class productionProcessView implements Serializable {
     private static final String CREATE_COMMENTARY = "El comentario se agrego";
     private static final String CREATE_EXTRA_COST = "El gasto extra se agrego";
     private static final String SAVE_PROCESS = "Proceso Guardado";
+    private static final String END_PRODUCTION = "La produccion se ha finalizado. Tus cambios se han guardado y esetan listos para ser calificados :)";
 
     @EJB
     private ProductionFacadeLocal productionFacadeLocal;
+
+    @EJB
+    private SupplyFacadeLocal supplyFacadeLocal;
+
+    @EJB
+    private UserFacadeLocal userFacadeLocal;
+
     @Inject
     private ExternalContext externalContext;
 
@@ -90,9 +108,6 @@ public class productionProcessView implements Serializable {
 
     }
 
-    /**
-     *
-     */
     public void endProduction() {
         if (productionSelect != null) {
 
@@ -105,7 +120,41 @@ public class productionProcessView implements Serializable {
 
             if (hayInsumosSuficientesParaDescontar) {
                 for (int i = 0; i < postDesign.getNecessarySupplyList().size(); i++) {
-                    
+                    try {
+                        supplyFacadeLocal.modifyQuantity(postDesign.getNecessarySupplyList().get(i).getSupplyCode(),
+                                postDesign.getNecessarySupplyList().get(i).getQuantity(), userFacadeLocal.getAuthenticatedUser().get(0),
+                                "Por motivo de  finalizacion de la produccion: " + productionSelect.getName() + " con el diseño: "
+                                + productionSelect.getDesignId().getDesignData().getName() + ". Total de unidades:  " + productionSelect.getQuantity().toString());
+
+                        //cambio de banderas state y agregar la fecha de finalizacion
+                        productionSelect.setState(true);
+                        productionSelect.setEndDate(LocalDate.now());
+                        
+                        productionSelect.setFinalCost(productionFacadeLocal.finalCost(productionSelect));
+
+                        //para guardar los comentarios
+                        productionSelect.setStageList(stages);
+                        //productionFacadeLocal.updateCommentayOfSteps(productionSelect);
+
+                        productionFacadeLocal.addPostDedign(postDesign, productionSelect);
+                        //productionFacadeLocal.updateExtraCost(listExtraCost, productionSelect);
+                        MessageUtils.addSuccessMessage(END_PRODUCTION);
+                        externalContext.getFlash().setKeepMessages(true);
+                        externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
+
+                    } catch (MandatoryAttributeSupplyException ex) {
+                        //Logger.getLogger(productionProcessView.class.getName()).log(Level.SEVERE, null, ex);
+                        MessageUtils.addErrorMessage(ERROR_INSUFFICIENT_SUPPLIES);
+                    } catch (UserException ex) {
+                        MessageUtils.addErrorMessage(ERROR_USER);
+                        //Logger.getLogger(productionProcessView.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (MandatoryAttributeProductionException ex) {
+                        MessageUtils.addErrorMessage(ex.getMessage());
+                        //Logger.getLogger(productionProcessView.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        MessageUtils.addErrorMessage(ex.getMessage());
+                        //Logger.getLogger(productionProcessView.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             } else {
                 //error
@@ -126,7 +175,21 @@ public class productionProcessView implements Serializable {
         this.productionSelect = production;
 
         if (productionSelect.getPostDesign() == null) {
-            postDesign = productionSelect.getDesignId();
+            postDesign = new Design();
+            List<NecessarySupply> necessarySupplyListPostDesign = new ArrayList<>();
+
+            for (int i = 0; i < productionSelect.getDesignId().getNecessarySupplyList().size(); i++) {
+                NecessarySupply necessarySupply = new NecessarySupply(null, productionSelect.getDesignId().getNecessarySupplyList().get(i).getQuantity());
+                necessarySupply.setSupplyCode(productionSelect.getDesignId().getNecessarySupplyList().get(i).getSupplyCode());
+                necessarySupply.setDesignId(postDesign);
+                necessarySupplyListPostDesign.add(necessarySupply);
+            }
+
+            //postDesign =  productionSelect.getDesignId();
+            postDesign.setNecessarySupplyList(necessarySupplyListPostDesign);
+
+        } else {
+            postDesign = production.getPostDesign();
         }
 
         if (productionSelect.getExtraCostList() != null) {
@@ -136,16 +199,16 @@ public class productionProcessView implements Serializable {
         listExtraCost = productionSelect.getExtraCostList();
 
         for (int i = 0; i < production.getStageList().size(); i++) {
-            if (production.getStageList().get(i).getName().equals("Pre-Produccion")) {
+            if (production.getStageList().get(i).getName().equals("Pre-Proceso")) {
                 preProcess = production.getStageList().get(i);
                 //stepsPreProcess = preProcess.getStepList();
                 stages.add(preProcess);
             }
-            if (production.getStageList().get(i).getName().equals("Produccion")) {
+            if (production.getStageList().get(i).getName().equals("Proceso")) {
                 process = production.getStageList().get(i);
                 stages.add(process);
             }
-            if (production.getStageList().get(i).getName().equals("Post-Produccion")) {
+            if (production.getStageList().get(i).getName().equals("Post-Proceso")) {
                 postProcess = production.getStageList().get(i);
                 stages.add(postProcess);
             }
@@ -153,6 +216,12 @@ public class productionProcessView implements Serializable {
 
     }
 
+    /**
+     *
+     * @param bytes
+     *
+     * @return
+     */
     public StreamedContent convertFichier(byte[] bytes) {
 
         InputStream is = new ByteArrayInputStream(bytes);
@@ -163,6 +232,10 @@ public class productionProcessView implements Serializable {
 
     }
 
+    /**
+     *
+     * @param step
+     */
     public void selectStep(Step step) {
         this.setStepSlect(step);
     }
@@ -182,6 +255,9 @@ public class productionProcessView implements Serializable {
 
     }
 
+    /**
+     *
+     */
     public void addExtraCost() {
 
         if (!newExtraCost.getDescription().isEmpty() && newExtraCost.getCost() != 0) {
@@ -195,16 +271,29 @@ public class productionProcessView implements Serializable {
 
     }
 
+    /**
+     *
+     * @param commentary
+     */
     public void deleteCommentary(Commentary commentary) {
         stepSlect.getCommentaryList().remove(commentary);
     }
 
+    /**
+     *
+     * @param extra
+     */
     public void deleteExtraCost(ExtraCost extra) {
         listExtraCost.remove(extra);
     }
 
+    /**
+     *
+     */
     public void exitPage() {
         try {
+            MessageUtils.addSuccessMessage(EXIT_PAGE);
+            externalContext.getFlash().setKeepMessages(true);
             externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
         } catch (IOException ex) {
             Logger.getLogger(productionProcessView.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,6 +313,7 @@ public class productionProcessView implements Serializable {
                     productionSelect.setStageList(stages);
                     productionFacadeLocal.updateCommentayOfSteps(productionSelect);
                     MessageUtils.addSuccessMessage(SAVE_PROCESS);
+                    externalContext.getFlash().setKeepMessages(true);
                     externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
                 } catch (IOException ex) {
                     //Logger.getLogger(productionProcessView.class.getName()).log(Level.SEVERE, null, ex);
@@ -236,6 +326,14 @@ public class productionProcessView implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param event
+     *
+     * @return
+     *
+     * Para el boton siguiente del wizard de finalizacion de una produccion
+     */
     public String onFlowProcess(FlowEvent event) {
 
         return event.getNewStep();
