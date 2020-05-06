@@ -333,8 +333,53 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
+
+--
+-- Volcado de datos para la tabla career
+--
+
+INSERT INTO career (id_career, name_career) VALUES
+(1, 'Ingenieria en Ciencias y Sistemas'),
+(2, 'Ingenieria Industrial'),
+(3, 'Ingenieria Mecanica'),
+(4, 'Ingenieria Civil'),
+(5, 'Ingenieria Mecanica Industrial');
+
+
+
+--
+-- Volcado de datos para la tabla rol_user
+--
 INSERT INTO `rol_user` (`id_rol`, `name_rol`) VALUES ('1', 'Estudiante');
-INSERT INTO `rol_user` (`id_rol`, `name_rol`) VALUES ('2', 'Catedratico');
+INSERT INTO `rol_user` (`id_rol`, `name_rol`) VALUES ('2', 'Docente');
 INSERT INTO `rol_user` (`id_rol`, `name_rol`) VALUES ('3', 'Administrador'); 
 
+--
+-- Volcado de datos para la tabla `user`
+--
+
+INSERT INTO `user` (carnet, `name`, email, phone, `password`, state, id_rol, id_career) VALUES
+(1, 'admin', 'admin@cunoc.edu.gt', 12345678, 'PBKDF2WithHmacSHA256:3072:b4iXBXxi5t0hCgR8hp0tq32Nk0heMA7hphPuK0BWyIDuMwgZbDVtplgbEuwKI1xXIV39GoGcvDEGI9Tl3Hzllw==:1bLDMjf/8Kx7pL4KlcvJ9uDVqNyG3ejvBIgw2sIBBow=', 1, 3, 1);
+
 INSERT INTO `measure` (`id_measure`, `name`) VALUES ('1', 'mililitros'), ('2', 'milimetros'), ('3', 'milimetros cuadrados'), ('4', 'gramos');
+
+
+
+--
+-- Volcado de datos para la tabla supply
+--
+
+INSERT INTO supply (`code`, internal_code, `name`, expiration_date, date_of_admission, cost, quantity, availability, description, id_measure) VALUES
+(1, 'afds', 'Pintura Amarilla', '2020-05-14', '2020-03-03', 15.6, 13.2, 1, 'jdgjdgh', 1),
+(2, 'dsfa56', 'Pintura Roja', '2019-12-10', '2020-03-05', 19.5, 45, 1, 'fsdadasf', 1),
+(3, 'dhg46', 'Maisena', '2020-06-12', '2020-03-19', 15.2, 12, 1, 'fsda', 4),
+(4, 'sdaf', 'Otro insumo', '2020-08-13', '2020-03-04', 14.2, 16.4, 0, 'gfds', 3);
+
+--
+-- Volcado de datos para la tabla product
+--
+
+INSERT INTO product (id_product, `name`, description) VALUES
+(1, 'Playeras', 'playeras descripcion'),
+(3, 'Tazas', 'tazas coleccionables'),
+(2, 'LLaveros', '');

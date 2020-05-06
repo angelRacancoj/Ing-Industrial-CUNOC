@@ -97,6 +97,7 @@ public class designView implements Serializable {
                     designDataCreate.setPicture(image.getContents());
                     productionFacadeLocal.createDesign(designCreate, designDataCreate, necessarySupplys);
                     MessageUtils.addSuccessMessage(DESIGN_CREATED);
+                    externalContext.getFlash().setKeepMessages(true);
                     externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
                 } else {
                     MessageUtils.addErrorMessage(ERROR_PICTURE);

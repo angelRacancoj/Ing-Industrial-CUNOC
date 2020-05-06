@@ -13,8 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
-
 /**
  *
  * @author angelrg
@@ -94,7 +92,7 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    @XmlTransient
+    
     public List<Production> getProductionList() {
         return productionList;
     }
@@ -103,7 +101,6 @@ public class Product implements Serializable {
         this.productionList = productionList;
     }
 
-    @XmlTransient
     public List<Design> getDesignList() {
         return designList;
     }

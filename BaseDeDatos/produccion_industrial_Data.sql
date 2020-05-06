@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: produccion_industrial
 --
-
+USE produccion_industrial;
 --
 -- Volcado de datos para la tabla career
 --
@@ -88,41 +88,13 @@ INSERT INTO product (id_product, `name`, description) VALUES
 -- Volcado de datos para la tabla design
 --
 
-INSERT INTO design (id_design, design_data, product_id_product) VALUES
-(1, 8, 1),
-(2, 9, 1),
-(3, 10, 1),
-(4, 11, 2),
-(5, 12, 2),
-(6, 13, 1),
-(7, 14, 1),
-(8, NULL, 1),
-(9, NULL, 1),
-(10, NULL, 1),
-(11, NULL, 1),
-(12, NULL, 1),
-(13, NULL, 1),
-(14, NULL, 1);
+
 
 --
 -- Volcado de datos para la tabla design_data
 --
 
-INSERT INTO design_data (iddesign_data, `name`, description, picture) VALUES
-(8, 'ffdfdfd', 'fdfdfd', NULL),
-(9, 'ffdfdfd', 'fdfdfd', NULL),
-(10, 'Sin imagen', 'diseño sin image', NULL),
-(11, 'sin imagen', 'diseño sin imagen', NULL),
-(12, 'Sin imagen', 'diseño sin imagen', NULL),
-(13, 'PUBG-01', 'Diseño de pubg', NULL),
-(14, 'Design', 'dfas', NULL),
-(15, 'Prueba ', 'dfas', NULL),
-(16, 'hj', 'hj', NULL),
-(17, 'fd', 'df', NULL),
-(18, 'dddddddd', 'ddddddd', NULL),
-(19, 'dddddddd', 'ddddddd', NULL),
-(20, 'ds', 'dsa', NULL),
-(21, 's', 'sa', NULL);
+
 
 --
 -- Volcado de datos para la tabla `group`
@@ -149,26 +121,10 @@ INSERT INTO group_user (id_gruop_user, admission_date, group_id, user_carnet) VA
 -- Volcado de datos para la tabla necessary_supply
 --
 
-INSERT INTO necessary_supply (id_necessary_supply, quantity, supply_code, design_id) VALUES
-(1, 0.1, 1, 1),
-(2, 0.1, 1, 2),
-(3, 0.1, 1, 3),
-(4, 0.132, 1, 4),
-(5, 0.136, 2, 5),
-(6, 40, 3, 6),
-(7, 0.1, 1, 7),
-(8, 0.1, 1, 8),
-(9, 0.1, 1, 9),
-(10, 0.1, 1, 10),
-(11, 0.1, 1, 11),
-(12, 0.1, 1, 12),
-(13, 0.1, 1, 13),
-(14, 0.1, 1, 14);
 
-INSERT INTO `produccion_industrial`.`production` (`name`, `start_date`, `end_date`, `state`, `qualification`, `quantity`, `init_cost`, `final_cost`, `product_id`, `group_id`, `design_id`, `post_design`) VALUES
-('Playeras Chileras', '2020/1/1', '2020/5/5', '1', '90', '1', '10', '11', '1', '2', '1', '2'),
-('Playeras COMPDES', '2020/1/1', null, '1', null, '1', '10', null, '1', '1', '3', null);
-
+--
+-- Volcado de datos para la tabla produccion
+--
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

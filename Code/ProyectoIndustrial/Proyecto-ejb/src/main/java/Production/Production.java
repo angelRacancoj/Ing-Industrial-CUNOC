@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlTransient;
 import java.time.LocalDate;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -189,7 +188,7 @@ public class Production implements Serializable {
         this.productId = productId;
     }
 
-    @XmlTransient
+    
     public List<Stage> getStageList() {
         return stageList;
     }
@@ -198,7 +197,7 @@ public class Production implements Serializable {
         this.stageList = stageList;
     }
 
-    @XmlTransient
+    
     public List<ExtraCost> getExtraCostList() {
         return extraCostList;
     }
@@ -216,7 +215,7 @@ public class Production implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+       
         if (!(object instanceof Production)) {
             return false;
         }

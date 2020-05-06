@@ -21,22 +21,22 @@ public class ProductionServiceTest {
         
         Product product = new Product();
         
-        @Test
-        public void CreateProductionTest() throws MandatoryAttributeProductionException{
-            //Arrange
-            Production production = new Production(null, "name", localDate, true);
-            productionService.setEntityManager(entityManager);
-            
-            Mockito.doNothing().when(entityManager).persist(production);
-            
-            
-            production.setProductId(product);
-            //Act
-            Production result = productionService.create(production);
-            //Assert
-            Assert.assertEquals(result, production);
-            
-        }
+//        @Test
+//        public void CreateProductionTest() throws MandatoryAttributeProductionException{
+//            //Arrange
+//            Production production = new Production(null, "name", localDate, true);
+//            productionService.setEntityManager(entityManager);
+//            
+//            Mockito.doNothing().when(entityManager).persist(production);
+//            
+//            
+//            production.setProductId(product);
+//            //Act
+//            Production result = productionService.create(production);
+//            //Assert
+//            Assert.assertEquals(result, production);
+//            
+//        }
         
         @Test(expectedExceptions = MandatoryAttributeProductionException.class,
                 expectedExceptionsMessageRegExp = "Nombre nulo")

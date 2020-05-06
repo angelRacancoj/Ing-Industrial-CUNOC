@@ -135,5 +135,42 @@ public class ProductionRepository {
         TypedQuery<Production> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList();
     }
+    
+    
+    public double initCost(Production production){
+        double total = 0;
+        for (int  i = 0;  i < production.getDesignId().getNecessarySupplyList().size();  i++) {
+            total = total + 
+                    (production.getQuantity()* 
+                    production.getDesignId().getNecessarySupplyList().get(i).getQuantity() * 
+                    production.getDesignId().getNecessarySupplyList().get(i).getSupplyCode().getCost());
+            
+        }
+        
+        return total;
+    }
+    
+    public double finalCost(Production production){
+        double total = 0;
+        for (int  i = 0;  i < production.getPostDesign().getNecessarySupplyList().size();  i++) {
+            total = total + 
+                    ( production.getDesignId().getNecessarySupplyList().get(i).getQuantity() * 
+                    production.getDesignId().getNecessarySupplyList().get(i).getSupplyCode().getCost());
+            
+        }
+        
+        return total;
+    }
 
+    public double totalExtraCost(Production production){
+        double total = 0;
+        for (int  i = 0;  i < production.getExtraCostList().size();  i++) {
+            total = total + production.getExtraCostList().get(i).getCost();
+            
+        }
+        
+        return total;
+    }
+    
+    
 }

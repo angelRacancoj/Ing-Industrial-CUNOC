@@ -28,7 +28,7 @@ public class ModifySupply implements Serializable {
     private Integer idModifySupply;
     @Column(name = "modify_type")
     private String modifyType;
-    @Column(name = "quantity")
+    @Column(name = "cuantity")
     private double quantity;
     @Column(name = "date")
     private LocalDate date;
