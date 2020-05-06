@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="row form-group">
-                    <p:outputLabel for="quantity por medida" value="Cantidad:" styleClass="col-md-4 control-label"/>
+                    <p:outputLabel for="quantity" value="Cantidad total:" styleClass="col-md-4 control-label"/>
                     <div class="col-md-8">
                         <p:spinner id="quantity" styleClass="form-control" pt:placeholder="Ej: 0.1"
                                    pt:required="true" min="0" required="true"
@@ -66,7 +66,6 @@
                                    stepFactor="0.01">
                             <f:convertNumber minFractionDigits="5" maxFractionDigits="6"/>
                         </p:spinner>  
-                        <h:outputLabel value="Ej: Cada mililitro de pintura cuesta 0.1"/>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -76,6 +75,7 @@
                             <f:selectItems value="#{registerSupplyView.measures}" var="measure"
                                            itemValue="#{measure}"
                                            itemLabel="#{measure.name}"/>
+                            
                         </p:selectOneMenu>
                     </div>
                 </div>
@@ -86,7 +86,8 @@
                         <p:spinner id="cost" styleClass="form-control" pt:placeholder="Costo del Insumo" required="true" prefix="Q "
                                    pt:required="true"  min="0" stepFactor="0.01" value="#{registerSupplyView.newSupply.cost}">
                             <f:convertNumber maxFractionDigits="5"/>
-                        </p:spinner>         
+                        </p:spinner>
+                        <h:outputLabel id="example" value="Ej: Cada mililitro de pintura cuesta Q 0.1"/>         
                     </div>
                 </div>
 

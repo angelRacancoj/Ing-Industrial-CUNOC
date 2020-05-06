@@ -14,6 +14,8 @@ import Production.repository.StepRepository;
 import Production.service.DesignService;
 import Production.service.ProductionService;
 import Production.service.StepService;
+import User.exception.UserException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -108,9 +110,9 @@ public class ProductionFacade implements ProductionFacadeLocal {
     public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys) {
         designService.createDesign(design, designData, necessarySupplys);
     }
-    
+
     @Override
-    public Design editDesign(Design design) throws MandatoryAttributeProductionException{
+    public Design editDesign(Design design) throws MandatoryAttributeProductionException {
         return designService.editDesign(design);
     }
 
@@ -129,6 +131,22 @@ public class ProductionFacade implements ProductionFacadeLocal {
     @Override
     public Optional<Product> getProductById(Integer id) {
         return productRepository.getProductById(id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Production> findProduction(Integer idProduction, String name, LocalDate startDate, LocalDate endDate, boolean editable) {
+        return productionRepository.findProduction(idProduction, name, startDate, endDate, editable);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Production updateProduction(Production production) throws UserException {
+        return productionService.updateProduction(production);
     }
 
 }

@@ -10,6 +10,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 import static config.Constants.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -80,22 +81,40 @@ public class ProductionRepository {
     /**
      * To get all results just set all with null
      *
+     * startDate and endDate use to filter the startDate attribute of Production
+     *
      * @param idProduction
      * @param name
+     * @param startDate
+     * @param endDate
+     * @param editable
      * @return
      */
-    public List<Production> findProduction(Integer idProduction, String name) {
+    public List<Production> findProduction(Integer idProduction, String name, LocalDate startDate, LocalDate endDate, boolean editable) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Production> criteriaQuery = criteriaBuilder.createQuery(Production.class);
         Root<Production> production = criteriaQuery.from(Production.class);
         ArrayList<Predicate> predicates = new ArrayList<>();
 
         if (idProduction != null) {
-            predicates.add(criteriaBuilder.like(production.get("idProduction"), "%" + idProduction + "%"));
+            predicates.add(criteriaBuilder.equal(production.get("idProduction"), idProduction));
         }
 
         if (name != null) {
             predicates.add(criteriaBuilder.like(production.get("name"), "%" + name + "%"));
+        }
+
+        if (startDate != null) {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(production.get("startDate"), startDate));
+        }
+
+        if (endDate != null) {
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(production.get("startDate"), endDate));
+        }
+
+        if (editable) {
+            predicates.add(criteriaBuilder.isEmpty(production.get("endDate")));
+            predicates.add(criteriaBuilder.isFalse(production.get("state")));
         }
 
         criteriaQuery.where(predicates.stream().toArray(Predicate[]::new));
@@ -104,7 +123,7 @@ public class ProductionRepository {
     }
 
     /**
-     * Return the best one porduction base on the products list, selected by the
+     * Return the best one production base on the products list, selected by the
      * best score.
      *
      * @param products
