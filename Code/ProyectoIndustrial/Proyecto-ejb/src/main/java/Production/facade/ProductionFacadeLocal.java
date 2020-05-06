@@ -7,6 +7,7 @@ package Production.facade;
 
 import Design.Design;
 import Design.DesignData;
+import Production.ExtraCost;
 import Production.Product;
 import Production.NecessarySupply;
 import Production.Production;
@@ -69,4 +70,17 @@ public interface ProductionFacadeLocal {
      * @throws UserException
      */
     public Production updateProduction(Production production) throws UserException;
+
+    public void updateCommentayOfSteps(Production production);
+
+    public void updateExtraCost(List<ExtraCost> listExtraCost, Production production) throws MandatoryAttributeProductionException;
+
+    public void addPostDedign(Design postDesign, Production production) throws MandatoryAttributeProductionException;
+
+    public double initCost(Production production);
+
+    public double finalCost(Production production);
+
+    public double totalExtraCost(Production production);
+    
 }

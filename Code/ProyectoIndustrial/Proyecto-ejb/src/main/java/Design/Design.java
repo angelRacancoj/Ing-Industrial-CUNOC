@@ -22,7 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
+
 
 @Entity
 @Table(name = "design")
@@ -63,7 +63,7 @@ public class Design implements Serializable {
         this.idDesign = idDesign;
     }
 
-    @XmlTransient
+    
     public List<Production> getProductionList() {
         return productionList;
     }
@@ -72,7 +72,6 @@ public class Design implements Serializable {
         this.productionList = productionList;
     }
 
-    @XmlTransient
     public List<Production> getProductionList1() {
         return productionList1;
     }
@@ -81,7 +80,6 @@ public class Design implements Serializable {
         this.productionList1 = productionList1;
     }
 
-    @XmlTransient
     public List<NecessarySupply> getNecessarySupplyList() {
         return necessarySupplyList;
     }

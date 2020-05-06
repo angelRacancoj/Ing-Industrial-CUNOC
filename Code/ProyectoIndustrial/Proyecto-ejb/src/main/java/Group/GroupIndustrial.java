@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -86,7 +85,7 @@ public class GroupIndustrial implements Serializable {
         this.section = section;
     }
 
-    @XmlTransient
+    
     public List<Production> getProductionList() {
         return productionList;
     }
@@ -95,7 +94,7 @@ public class GroupIndustrial implements Serializable {
         this.productionList = productionList;
     }
 
-    @XmlTransient
+    
     public List<GroupUser> getGroupUserList() {
         return groupUserList;
     }

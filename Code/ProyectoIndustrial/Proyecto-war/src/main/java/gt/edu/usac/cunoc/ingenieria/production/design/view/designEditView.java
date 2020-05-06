@@ -11,6 +11,7 @@ import Production.exceptions.MandatoryAttributeProductionException;
 import Production.facade.ProductionFacadeLocal;
 import Supply.Supply;
 import Supply.facade.SupplyFacadeLocal;
+import static config.Constants.MAIN_PAGE;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -25,8 +26,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
 import javax.faces.view.ViewScoped;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.ByteArrayContent;
@@ -48,6 +51,8 @@ public class designEditView implements Serializable {
     private SupplyFacadeLocal supplyFacade;
     @EJB
     private ProductionFacadeLocal productionFacadeLocal;
+    @Inject
+    private ExternalContext externalContext;
 
     private Design designSelectedEdit;
     private List<Design> listDesignEdit;
@@ -77,10 +82,14 @@ public class designEditView implements Serializable {
             productionFacadeLocal.editDesign(designSelectedEdit);
             MessageUtils.addSuccessMessage(DESIGN_EDIT);
             listDesignEdit = productionFacadeLocal.AllDesigns();
+            externalContext.getFlash().setKeepMessages(true);
+            externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
         } catch (MandatoryAttributeProductionException ex) {
             MessageUtils.addErrorMessage(ex.getMessage());
             listDesignEdit = productionFacadeLocal.AllDesigns();
             //Logger.getLogger(designEditView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(designEditView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

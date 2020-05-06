@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -85,7 +84,7 @@ public class Stage implements Serializable {
         this.productionId = productionId;
     }
 
-    @XmlTransient
+    
     public List<Step> getStepList() {
         return stepList;
     }

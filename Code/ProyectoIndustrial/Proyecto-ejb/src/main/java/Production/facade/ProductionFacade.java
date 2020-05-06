@@ -2,6 +2,7 @@ package Production.facade;
 
 import Design.Design;
 import Design.DesignData;
+import Production.ExtraCost;
 import Production.NecessarySupply;
 import Production.Product;
 import Production.Production;
@@ -82,6 +83,15 @@ public class ProductionFacade implements ProductionFacadeLocal {
     }
 
     /**
+     *
+     * @param production
+     */
+    @Override
+    public void updateCommentayOfSteps(Production production) {
+        productionService.updateCommentayOfSteps(production);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -147,6 +157,34 @@ public class ProductionFacade implements ProductionFacadeLocal {
     @Override
     public Production updateProduction(Production production) throws UserException {
         return productionService.updateProduction(production);
+    }
+
+    @Override
+    public void updateExtraCost(List<ExtraCost> listExtraCost, Production production) throws MandatoryAttributeProductionException {
+        productionService.updateExtraCost(listExtraCost, production);
+    }
+
+    @Override
+    public void addPostDedign(Design postDesign, Production production) throws MandatoryAttributeProductionException {
+        productionService.addPostDedign(postDesign, production);
+    }
+
+    @Override
+    public double initCost(Production production) {
+
+        return productionRepository.initCost(production);
+    }
+
+    @Override
+    public double finalCost(Production production) {
+
+        return productionRepository.finalCost(production);
+    }
+
+    @Override
+    public double totalExtraCost(Production production) {
+
+        return productionRepository.totalExtraCost(production);
     }
 
 }

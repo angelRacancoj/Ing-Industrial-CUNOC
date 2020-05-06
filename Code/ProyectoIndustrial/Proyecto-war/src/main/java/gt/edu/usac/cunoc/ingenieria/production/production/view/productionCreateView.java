@@ -18,7 +18,9 @@ import Production.repository.DesignRepository;
 import User.exception.UserException;
 import static config.Constants.MAIN_PAGE;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.FlowEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -41,7 +45,7 @@ import org.primefaces.event.FlowEvent;
 @ViewScoped
 public class productionCreateView implements Serializable {
 
-    //TODO: ALTER TABLE `production` CHANGE `post_design` `post_design` INT(11) NULL; 
+   
 //     <p:button  href="#" onclick="#{productionCreateView.createProduction()}" 
 //                                       styleClass="btn btn-success"
 //                                       value="Crear Produccion" 
@@ -85,15 +89,15 @@ public class productionCreateView implements Serializable {
     @PostConstruct
     public void init() {
 
-        stagePreProduction = new Stage(null, "Pre-Produccion", "La descripcion no puede ser nula");
-        stageProduction = new Stage(null, "Produccion", "La descripcion no puede ser nula");
-        stagePostProduction = new Stage(null, "Post-Produccion", "La descripcion no puede ser nula");
+        stagePreProduction = new Stage(null, "Pre-Proceso", "La descripcion no puede ser nula");
+        stageProduction = new Stage(null, "Proceso", "La descripcion no puede ser nula");
+        stagePostProduction = new Stage(null, "Post-Proceso", "La descripcion no puede ser nula");
 
         stepsPreProduction = new ArrayList<>();
         stepsProduction = new ArrayList<>();
         stepsPostProduction = new ArrayList<>();
 
-        production = new Production(null, null, LocalDate.now(), true);
+        production = new Production(null, null, LocalDate.now(), false);
 
         stagePreProduction.setStepList(stepsPreProduction);
         stageProduction.setStepList(stepsProduction);
@@ -120,13 +124,18 @@ public class productionCreateView implements Serializable {
 
     }
 
+    /**
+     * 
+     */
     public void createProduction() {
         if (production.getDesignId() != null) {
             if (production.getGroupId() != null) {
                 try {
+                    production.setInitCost(productionFacadeLocal.initCost(production));
                     productionFacadeLocal.createProduction(production);
                     MessageUtils.addSuccessMessage(CREATE_PRODUCTION);
                     System.out.println("production create");
+                    externalContext.getFlash().setKeepMessages(true);
                     externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
                 } catch (MandatoryAttributeProductionException | IOException ex) {
                     Logger.getLogger(productionCreateView.class.getName()).log(Level.SEVERE, null, ex);
@@ -139,11 +148,19 @@ public class productionCreateView implements Serializable {
         }
     }
 
+    /**
+     * 
+     * @param design 
+     */
     public void addDesign(Design design) {
         production.setDesignId(design);
         MessageUtils.addSuccessMessage(DESIGN_SELECTED);
     }
 
+    /**
+     * 
+     * @param group 
+     */
     public void addGroup(GroupIndustrial group) {
         production.setGroupId(group);
         MessageUtils.addSuccessMessage(GROUP_SELECTED);
@@ -167,6 +184,22 @@ public class productionCreateView implements Serializable {
         step = null;
     }
 
+    /**
+     * 
+     * @param bytes
+     * @return 
+     */
+    public StreamedContent convertFichier(byte[] bytes) {
+
+        InputStream is = new ByteArrayInputStream(bytes);
+        System.out.println("size file : " + bytes.length);
+        StreamedContent image = new DefaultStreamedContent(is);
+        System.out.println("dans le convertisseur : " + image.getContentType());
+        return image;
+
+    }
+    
+    //------------- get and set -------------------------------------------------
     public Production getProduction() {
         return production;
     }

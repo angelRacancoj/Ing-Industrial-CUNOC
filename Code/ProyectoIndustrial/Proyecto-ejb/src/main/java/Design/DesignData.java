@@ -18,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -94,7 +93,6 @@ public class DesignData implements Serializable {
         this.picture = picture;
     }
 
-    @XmlTransient
     public List<Design> getDesignList() {
         return designList;
     }
@@ -112,7 +110,6 @@ public class DesignData implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof DesignData)) {
             return false;
         }

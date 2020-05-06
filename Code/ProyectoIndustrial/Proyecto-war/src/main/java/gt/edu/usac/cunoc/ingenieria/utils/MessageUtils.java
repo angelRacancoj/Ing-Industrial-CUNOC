@@ -56,14 +56,12 @@ public class MessageUtils {
         return ResourceBundle.getBundle(PATH_LABELS_BUNDLE, locale).getString(key);
     }
 
-    private static void addMessage(final String msg,
-                                   final FacesMessage.Severity severity) {
+    private static void addMessage(final String msg,final FacesMessage.Severity severity) {
         FacesMessage facesMsg = new FacesMessage(severity, msg, msg);
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);
     }
 
-    private static void addLocalizedMessage(final String key,
-                                            final FacesMessage.Severity severity) {
+    private static void addLocalizedMessage(final String key,  final FacesMessage.Severity severity) {
         final String message = getLocalizedMessage(key);
         addMessage(message, severity);
     }
