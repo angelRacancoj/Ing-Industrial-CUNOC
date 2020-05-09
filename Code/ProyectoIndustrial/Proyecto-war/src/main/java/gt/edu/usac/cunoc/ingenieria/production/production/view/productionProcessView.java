@@ -44,6 +44,12 @@ import org.primefaces.util.BeanUtils;
  *
  * @author daniel
  */
+/**
+ * TODO: filtrar la lista
+ * TODO: bug de insert en diseños, necessary supply, extra cost y commentarios;
+ * <p>
+ * TODO: bug para crear insumos
+ */
 @Named
 @ViewScoped
 public class productionProcessView implements Serializable {
@@ -119,6 +125,7 @@ public class productionProcessView implements Serializable {
             }
 
             if (hayInsumosSuficientesParaDescontar) {
+
                 for (int i = 0; i < postDesign.getNecessarySupplyList().size(); i++) {
                     try {
                         supplyFacadeLocal.modifyQuantity(postDesign.getNecessarySupplyList().get(i).getSupplyCode(),
@@ -127,35 +134,36 @@ public class productionProcessView implements Serializable {
                                 + productionSelect.getDesignId().getDesignData().getName() + ". Total de unidades:  " + productionSelect.getQuantity().toString());
 
                         //cambio de banderas state y agregar la fecha de finalizacion
-                        productionSelect.setState(true);
-                        productionSelect.setEndDate(LocalDate.now());
-                        
-                        productionSelect.setFinalCost(productionFacadeLocal.finalCost(productionSelect));
-
-                        //para guardar los comentarios
-                        productionSelect.setStageList(stages);
-                        //productionFacadeLocal.updateCommentayOfSteps(productionSelect);
-
-                        productionFacadeLocal.addPostDedign(postDesign, productionSelect);
-                        //productionFacadeLocal.updateExtraCost(listExtraCost, productionSelect);
-                        MessageUtils.addSuccessMessage(END_PRODUCTION);
-                        externalContext.getFlash().setKeepMessages(true);
-                        externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
-
                     } catch (MandatoryAttributeSupplyException ex) {
                         //Logger.getLogger(productionProcessView.class.getName()).log(Level.SEVERE, null, ex);
                         MessageUtils.addErrorMessage(ERROR_INSUFFICIENT_SUPPLIES);
                     } catch (UserException ex) {
                         MessageUtils.addErrorMessage(ERROR_USER);
                         //Logger.getLogger(productionProcessView.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (MandatoryAttributeProductionException ex) {
-                        MessageUtils.addErrorMessage(ex.getMessage());
-                        //Logger.getLogger(productionProcessView.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IOException ex) {
-                        MessageUtils.addErrorMessage(ex.getMessage());
-                        //Logger.getLogger(productionProcessView.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+
+                try {
+                    productionSelect.setState(true);
+                    productionSelect.setEndDate(LocalDate.now());
+
+                    productionSelect.setFinalCost(productionFacadeLocal.finalCost(productionSelect));
+
+                    //para guardar los comentarios
+                    productionSelect.setStageList(stages);
+                    //productionFacadeLocal.updateCommentayOfSteps(productionSelect);
+
+                    productionFacadeLocal.addPostDedign(postDesign, productionSelect);
+                    //productionFacadeLocal.updateExtraCost(listExtraCost, productionSelect);
+                    MessageUtils.addSuccessMessage(END_PRODUCTION);
+                    externalContext.getFlash().setKeepMessages(true);
+                    externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
+                } catch (MandatoryAttributeProductionException ex) {
+                    Logger.getLogger(productionProcessView.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(productionProcessView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
             } else {
                 //error
                 MessageUtils.addErrorMessage(ERROR_INSUFFICIENT_SUPPLIES);
@@ -187,6 +195,7 @@ public class productionProcessView implements Serializable {
 
             //postDesign =  productionSelect.getDesignId();
             postDesign.setNecessarySupplyList(necessarySupplyListPostDesign);
+            productionSelect.setPostDesign(postDesign);
 
         } else {
             postDesign = production.getPostDesign();

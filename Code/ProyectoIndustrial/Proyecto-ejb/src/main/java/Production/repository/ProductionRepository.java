@@ -43,6 +43,7 @@ public class ProductionRepository {
      * vacio
      *
      * @param idProduction
+     *
      * @return Production
      */
     public Optional<Production> findByIdProduction(int idProduction) {
@@ -82,6 +83,7 @@ public class ProductionRepository {
      *
      * @param idProduction
      * @param name
+     *
      * @return
      */
     public List<Production> findProduction(Integer idProduction, String name) {
@@ -108,6 +110,7 @@ public class ProductionRepository {
      * best score.
      *
      * @param products
+     *
      * @return
      */
     public List<Production> getBestProductions(List<Product> products) {
@@ -135,42 +138,45 @@ public class ProductionRepository {
         TypedQuery<Production> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList();
     }
-    
-    
-    public double initCost(Production production){
+
+    public double initCost(Production production) {
         double total = 0;
-        for (int  i = 0;  i < production.getDesignId().getNecessarySupplyList().size();  i++) {
-            total = total + 
-                    (production.getQuantity()* 
-                    production.getDesignId().getNecessarySupplyList().get(i).getQuantity() * 
-                    production.getDesignId().getNecessarySupplyList().get(i).getSupplyCode().getCost());
-            
+        if (production != null) {
+            for (int i = 0; i < production.getDesignId().getNecessarySupplyList().size(); i++) {
+                total = total
+                        + (production.getQuantity()
+                        * production.getDesignId().getNecessarySupplyList().get(i).getQuantity()
+                        * production.getDesignId().getNecessarySupplyList().get(i).getSupplyCode().getCost());
+
+            }
         }
-        
-        return total;
-    }
-    
-    public double finalCost(Production production){
-        double total = 0;
-        for (int  i = 0;  i < production.getPostDesign().getNecessarySupplyList().size();  i++) {
-            total = total + 
-                    ( production.getDesignId().getNecessarySupplyList().get(i).getQuantity() * 
-                    production.getDesignId().getNecessarySupplyList().get(i).getSupplyCode().getCost());
-            
-        }
-        
         return total;
     }
 
-    public double totalExtraCost(Production production){
+    public double finalCost(Production production) {
         double total = 0;
-        for (int  i = 0;  i < production.getExtraCostList().size();  i++) {
-            total = total + production.getExtraCostList().get(i).getCost();
-            
+        if (production != null) {
+
+            for (int i = 0; i < production.getPostDesign().getNecessarySupplyList().size(); i++) {
+                total = total
+                        + (production.getPostDesign().getNecessarySupplyList().get(i).getQuantity()
+                        * production.getPostDesign().getNecessarySupplyList().get(i).getSupplyCode().getCost());
+
+            }
         }
-        
         return total;
     }
-    
-    
+
+    public double totalExtraCost(Production production) {
+
+        double total = 0;
+        if (production != null) {
+            for (int i = 0; i < production.getExtraCostList().size(); i++) {
+                total = total + production.getExtraCostList().get(i).getCost();
+
+            }
+        }
+        return total;
+    }
+
 }

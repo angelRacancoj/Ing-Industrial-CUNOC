@@ -33,10 +33,10 @@ public class Design implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_design")
     private Integer idDesign;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "designId")
-    private List<Production> productionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postDesign")
-    private List<Production> productionList1;
+    
+   
+    
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "designId")
     private List<NecessarySupply> necessarySupplyList;
     
@@ -64,21 +64,7 @@ public class Design implements Serializable {
     }
 
     
-    public List<Production> getProductionList() {
-        return productionList;
-    }
-
-    public void setProductionList(List<Production> productionList) {
-        this.productionList = productionList;
-    }
-
-    public List<Production> getProductionList1() {
-        return productionList1;
-    }
-
-    public void setProductionList1(List<Production> productionList1) {
-        this.productionList1 = productionList1;
-    }
+    
 
     public List<NecessarySupply> getNecessarySupplyList() {
         return necessarySupplyList;
