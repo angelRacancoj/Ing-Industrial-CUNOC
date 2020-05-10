@@ -57,7 +57,7 @@ public class Production implements Serializable {
     @ManyToOne(optional = false)
     private Design designId;
     @JoinColumn(name = "post_design", referencedColumnName = "id_design")
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     private Design postDesign;
     @JoinColumn(name = "group_id", referencedColumnName = "id_group")
     @ManyToOne(optional = false)
