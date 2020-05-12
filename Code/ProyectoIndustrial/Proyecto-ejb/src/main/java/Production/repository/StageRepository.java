@@ -39,7 +39,7 @@ public class StageRepository {
         TypedQuery<Stage> typedQuery = entityManager.createQuery(QUERY_FIND_BY_ID, Stage.class)
                 .setParameter(1, idStage);
         try {
-            return Optional.of(typedQuery.getSingleResult());
+            return Optional.ofNullable(typedQuery.getSingleResult());
         } catch (Exception e) {
             return Optional.empty();
         }

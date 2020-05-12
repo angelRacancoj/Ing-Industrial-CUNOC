@@ -113,7 +113,7 @@ public class ProductionRepository {
         }
 
         if (editable) {
-            predicates.add(criteriaBuilder.isEmpty(production.get("endDate")));
+            predicates.add(criteriaBuilder.isNull(production.get("endDate")));
             predicates.add(criteriaBuilder.isFalse(production.get("state")));
         }
 

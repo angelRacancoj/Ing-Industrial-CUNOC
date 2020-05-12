@@ -63,7 +63,7 @@ public class RolUserRepository {
         if (idRolUser < 0) {
             throw new UserException("rolUser is null");
         }
-        return Optional.of(entityManager.find(RolUser.class, idRolUser));
+        return Optional.ofNullable(entityManager.find(RolUser.class, idRolUser));
     }
 
     public Optional<RolUser> findByIdRolUser(int idRolUser) {
@@ -71,7 +71,7 @@ public class RolUserRepository {
         TypedQuery<RolUser> typedQuery = entityManager.createQuery(QUERY_FIND_BY_ID, RolUser.class)
                 .setParameter("idRolUserParameter", idRolUser);
         try {
-            return Optional.of(typedQuery.getSingleResult());
+            return Optional.ofNullable(typedQuery.getSingleResult());
         } catch (Exception e) {
             return Optional.empty();
         }

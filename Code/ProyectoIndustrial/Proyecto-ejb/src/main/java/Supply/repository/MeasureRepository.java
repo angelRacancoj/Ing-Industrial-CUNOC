@@ -47,7 +47,7 @@ public class MeasureRepository {
     }
 
     public Optional<Measure> getMeasureById(Integer id) {
-        return Optional.of(entityManager.find(Measure.class, id));
+        return Optional.ofNullable(entityManager.find(Measure.class, id));
     }
 
     public List<Measure> getAllMeasures() {

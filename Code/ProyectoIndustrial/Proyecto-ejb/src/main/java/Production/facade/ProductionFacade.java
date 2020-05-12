@@ -133,6 +133,14 @@ public class ProductionFacade implements ProductionFacadeLocal {
         return list;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Design> findDesignByID(Integer idDesign) {
+        return designRepository.findDesignByID(idDesign);
+    }
+
     @Override
     public Optional<Production> getProductionById(Integer id) {
         return productionRepository.findByIdProduction(id);

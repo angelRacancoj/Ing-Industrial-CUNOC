@@ -57,7 +57,7 @@ public class DesignRepository {
      * @return
      */
     public Optional<Design> findDesignByID(Integer idDesign) {
-        return Optional.of(entityManager.find(Design.class, idDesign));
+        return Optional.ofNullable(entityManager.find(Design.class, idDesign));
     }
 
     /**

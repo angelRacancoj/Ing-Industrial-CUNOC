@@ -3,6 +3,7 @@ package Group;
 import java.io.Serializable;
 import java.util.List;
 import Production.Production;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -85,7 +86,6 @@ public class GroupIndustrial implements Serializable {
         this.section = section;
     }
 
-    
     public List<Production> getProductionList() {
         return productionList;
     }
@@ -94,13 +94,31 @@ public class GroupIndustrial implements Serializable {
         this.productionList = productionList;
     }
 
-    
     public List<GroupUser> getGroupUserList() {
         return groupUserList;
     }
 
     public void setGroupUserList(List<GroupUser> groupUserList) {
         this.groupUserList = groupUserList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof GroupIndustrial)) {
+            return false;
+        }
+
+        GroupIndustrial groupI = (GroupIndustrial) o;
+        return Objects.equals(getIdGroup(), groupI.getIdGroup());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdGroup());
     }
 
 }

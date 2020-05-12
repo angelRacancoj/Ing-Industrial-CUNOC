@@ -36,7 +36,7 @@ public class ProductRepository {
     }
 
     public Optional<Product> getProductById(Integer id) {
-        return Optional.of(entityManager.find(Product.class, id));
+        return Optional.ofNullable(entityManager.find(Product.class, id));
     }
 
     public List<Product> findProduct(Integer id, String name) {
@@ -60,7 +60,7 @@ public class ProductRepository {
     public Optional<List<Product>> getAll() {
         TypedQuery<Product> typedQuery = entityManager.createQuery(GET_ALL, Product.class);
         try {
-            return Optional.of(typedQuery.getResultList());
+            return Optional.ofNullable(typedQuery.getResultList());
         } catch (NoResultException e) {
             return Optional.empty();
         }

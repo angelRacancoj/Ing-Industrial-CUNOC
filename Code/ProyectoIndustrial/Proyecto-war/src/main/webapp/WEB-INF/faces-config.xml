@@ -56,23 +56,18 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
-            <from-outcome>dataTable</from-outcome>
-            <to-view-id>/production/dataTable.xhtml</to-view-id>
+            <from-outcome>processProduction</from-outcome>
+            <to-view-id>/production/processProduction.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
-            <from-outcome>manageSupplies</from-outcome>
-            <to-view-id>/production/manageSupplies.xhtml</to-view-id>
+            <from-outcome>qualificationProduction</from-outcome>
+            <to-view-id>/production/qualificationProduction.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
-            <from-outcome>production</from-outcome>
-            <to-view-id>/production/production.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>stage</from-outcome>
-            <to-view-id>/production/stage.xhtml</to-view-id>
+            <from-outcome>searchProduction</from-outcome>
+            <to-view-id>/production/searchProduction.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
 

@@ -40,6 +40,14 @@ public interface ProductionFacadeLocal {
 
     public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys);
 
+    /**
+     * Realiza una busqueda basado unicamente en el codigo del diseño
+     *
+     * @param idDesign
+     * @return
+     */
+    public Optional<Design> findDesignByID(Integer idDesign);
+
     public List<Design> AllDesigns();
 
     public Optional<Product> getProductById(Integer id);
@@ -82,5 +90,5 @@ public interface ProductionFacadeLocal {
     public double finalCost(Production production);
 
     public double totalExtraCost(Production production);
-    
+
 }

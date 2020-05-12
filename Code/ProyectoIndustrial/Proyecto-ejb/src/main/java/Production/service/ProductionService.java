@@ -4,16 +4,12 @@ import Design.Design;
 import Production.ExtraCost;
 import Production.Production;
 import Production.exceptions.MandatoryAttributeProductionException;
-import Production.repository.ProductionRepository;
 import User.exception.UserException;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import static config.Constants.*;
-import java.util.Optional;
-import javax.ejb.EJB;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
