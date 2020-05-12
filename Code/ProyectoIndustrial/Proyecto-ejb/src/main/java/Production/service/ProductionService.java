@@ -107,9 +107,7 @@ public class ProductionService {
         for (int i = 0; i < production.getExtraCostList().size(); i++) {
             production.getExtraCostList().get(i).setIdProduction(production);
         }
-        
-        
-        entityManager.persist(postDesign);
+
         production.setPostDesign(postDesign);
         entityManager.merge(production);
         
