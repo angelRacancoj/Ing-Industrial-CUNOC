@@ -44,7 +44,7 @@
 
                                     <p:column headerText="Revisar" style="width: 6%">
                                         <p:commandLink actionListener="#{productionQualificationView.selectProduction(production)}"
-                                                       update="@form, :#{p:component('growl')},:#{p:component('supplyTable')} ,:#{p:component('extraTable')},
+                                                       update=" :#{p:component('growl')},:#{p:component('supplyTable')} ,:#{p:component('extraTable')},
                                                        :#{p:component('totalExtraCost')} ,:#{p:component('totalProduction')},:#{p:component('costSupply')}"
                                                        styleClass="btn btn-success"  
                                                        process="@this"
@@ -63,7 +63,7 @@
                                     
                                     <p:column headerText="Asignar Calificacion" style="width: 6%">
                                         <p:commandLink actionListener="#{productionQualificationView.qualify(production)}"
-                                                       update="@form, :#{p:component('growl')},:#{p:component('productionTable')}"
+                                                       update="@form, :#{p:component('growl')}"
                                                        styleClass="btn btn-success"  
                                                        process="@this"
                                                        

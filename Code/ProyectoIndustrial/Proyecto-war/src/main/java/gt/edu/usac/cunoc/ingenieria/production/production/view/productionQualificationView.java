@@ -41,14 +41,22 @@ public class productionQualificationView implements Serializable {
     private ProductionFacadeLocal productionFacadeLocal;
 
     private List<Production> productions;
+    private List<Production> productionsFilter;
     private Production productionSelect;
     //private double totalProduction;
 
     @PostConstruct
     public void init() {
         productions = new ArrayList<>();
-        productions = productionFacadeLocal.AllProductions();
+        productionsFilter = new ArrayList<>();
+        productionsFilter = productionFacadeLocal.AllProductions();
 //        totalProduction = 0;
+
+        for (int i = 0; i < productionsFilter.size(); i++) {
+            if(productionsFilter.get(i).getEndDate() != null && productionsFilter.get(i).getState() == true){
+                productions.add(productionsFilter.get(i));
+            }
+        }
     }
 
     public void selectProduction(Production production) {
