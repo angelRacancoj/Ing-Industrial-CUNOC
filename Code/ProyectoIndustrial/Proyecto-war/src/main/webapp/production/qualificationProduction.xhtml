@@ -63,9 +63,8 @@
                                     
                                     <p:column headerText="Asignar Calificacion" style="width: 6%">
                                         <p:commandLink actionListener="#{productionQualificationView.qualify(production)}"
-                                                       update="@form, :#{p:component('growl')}"
+                                                       update=" :#{p:component('growl')}"
                                                        styleClass="btn btn-success"  
-                                                       process="@this"
                                                        
                                                        >
                                             Asignar Calificacion<span class="glyphicon glyphicon-eye-close"></span> 
