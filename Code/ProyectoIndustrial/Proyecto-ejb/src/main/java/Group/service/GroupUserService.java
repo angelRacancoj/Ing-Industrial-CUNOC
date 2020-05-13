@@ -53,7 +53,7 @@ public class GroupUserService{
         try {
            
             entityManager.remove(entityManager.merge(groupUser));
-            return Optional.of(groupUser);
+            return Optional.ofNullable(groupUser);
         } catch (TransactionRequiredException e) {
             return Optional.empty();
         }

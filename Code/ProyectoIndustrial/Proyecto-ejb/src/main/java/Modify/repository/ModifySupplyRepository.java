@@ -33,7 +33,7 @@ public class ModifySupplyRepository{
     }
     
     public Optional<ModifySupply> getById(Integer id){
-        return Optional.of(entityManager.find(ModifySupply.class, id));
+        return Optional.ofNullable(entityManager.find(ModifySupply.class, id));
     }
     
     public List<ModifySupply> getModificationByUser(Integer idUser){

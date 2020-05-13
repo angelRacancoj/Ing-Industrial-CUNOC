@@ -35,6 +35,11 @@
                 </div>
                 <div class="row">
                     <div class="btn-group pull-right">
+                        <p:commandLink styleClass="btn btn-danger"
+                                       update=":#{p:component('publicationsSearch')}"
+                                       action="#{userView.cleanCriteria()}" title="limpiar">
+                            &nbsp;<span class="glyphicon glyphicon-repeat"></span>&nbsp;
+                        </p:commandLink>
                         <p:commandLink styleClass="btn btn-primary" update=":usersTable"
                                        actionListener="#{userView.searchUsers()}">
                             <span class="glyphicon glyphicon-search"></span> Buscar

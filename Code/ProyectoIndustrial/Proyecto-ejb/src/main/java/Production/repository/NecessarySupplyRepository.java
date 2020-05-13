@@ -31,7 +31,7 @@ public class NecessarySupplyRepository {
     public Optional<NecessarySupply> getNecessarySupplyById(Integer id) {
         TypedQuery<NecessarySupply> typedQuery = entityManager.createQuery(FIND_BY_ID, NecessarySupply.class).setParameter("id", id);
         try {
-            return Optional.of(typedQuery.getSingleResult());
+            return Optional.ofNullable(typedQuery.getSingleResult());
         } catch (NoResultException e) {
             return Optional.empty();
         }
@@ -40,7 +40,7 @@ public class NecessarySupplyRepository {
     public Optional<NecessarySupply> getNecessarySupplyByStep(Integer stepId) {
         TypedQuery<NecessarySupply> typedQuery = entityManager.createQuery(FIND_BY_STEP, NecessarySupply.class).setParameter("step", stepId);
         try {
-            return Optional.of(typedQuery.getSingleResult());
+            return Optional.ofNullable(typedQuery.getSingleResult());
         } catch (NoResultException e) {
             return Optional.empty();
         }
@@ -49,7 +49,7 @@ public class NecessarySupplyRepository {
     public Optional<NecessarySupply> getNecessarySupplyBySupply(Integer supplyCode) {
         TypedQuery<NecessarySupply> typedQuery = entityManager.createQuery(FIND_BY_SUPPLY, NecessarySupply.class).setParameter("supply", supplyCode);
         try {
-            return Optional.of(typedQuery.getSingleResult());
+            return Optional.ofNullable(typedQuery.getSingleResult());
         } catch (NoResultException e) {
             return Optional.empty();
         }
@@ -58,7 +58,7 @@ public class NecessarySupplyRepository {
     public Optional<List<NecessarySupply>> getAll() {
         TypedQuery<NecessarySupply> typedQuery = entityManager.createQuery(GET_ALL, NecessarySupply.class);
         try {
-            return Optional.of(typedQuery.getResultList());
+            return Optional.ofNullable(typedQuery.getResultList());
         } catch (NoResultException e) {
             return Optional.empty();
         }

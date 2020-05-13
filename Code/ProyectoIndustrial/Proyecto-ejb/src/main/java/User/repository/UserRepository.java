@@ -31,14 +31,14 @@ public class UserRepository {
         TypedQuery<User> typeQuerry = entityManager.createQuery("SELECT u FROM user u WHERE u.carnet = :carnet", User.class);
         typeQuerry.setParameter("carnet", carnet);
         try {
-            return Optional.of(typeQuerry.getSingleResult());
+            return Optional.ofNullable(typeQuerry.getSingleResult());
         } catch (Exception e) {
             return Optional.empty();
         }
     }
 
     public Optional<User> getUserByID(Integer carnet) {
-        return Optional.of(entityManager.find(User.class, carnet));
+        return Optional.ofNullable(entityManager.find(User.class, carnet));
     }
 
     public List<User> getUser(User user) throws UserException {

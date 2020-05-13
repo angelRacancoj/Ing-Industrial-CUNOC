@@ -6,13 +6,11 @@
 package Group.repository;
 
 import Group.GroupIndustrial;
-import static Group.repository.GroupRepository.FIND_BY_ID;
 import static Group.repository.GroupRepository.GET_ALL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import org.mockito.Mockito;
 import org.testng.Assert;
@@ -28,16 +26,11 @@ public class GroupRepositoryTest {
     public void findByIdWithResult() {
         // Arrange
         int groupId = 1;
-        EntityManager entityManager = Mockito.mock(EntityManager.class);
-        TypedQuery<GroupIndustrial> typeQuery = Mockito.mock(TypedQuery.class);
-        Mockito.when(entityManager.createQuery(FIND_BY_ID, GroupIndustrial.class)
-        ).thenReturn(typeQuery);
-        Mockito.when(
-                typeQuery.setParameter("id", groupId)
-        ).thenReturn(typeQuery);
-
         GroupIndustrial group = new GroupIndustrial();
-        Mockito.when(typeQuery.getSingleResult()).thenReturn(group);
+        
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        Mockito.when(entityManager.find(GroupIndustrial.class, groupId)
+        ).thenReturn(group);
 
         GroupRepository groupRepository = new GroupRepository();
         groupRepository.setEntityManager(entityManager);
@@ -54,14 +47,8 @@ public class GroupRepositoryTest {
         // Arrange
         int groupId = 1;
         EntityManager entityManager = Mockito.mock(EntityManager.class);
-        TypedQuery<GroupIndustrial> typeQuery = Mockito.mock(TypedQuery.class);
-        Mockito.when(entityManager.createQuery(FIND_BY_ID, GroupIndustrial.class)
-        ).thenReturn(typeQuery);
-        Mockito.when(
-                typeQuery.setParameter("id", groupId)
-        ).thenReturn(typeQuery);
-        
-        Mockito.when(typeQuery.getSingleResult()).thenThrow(new NoResultException());
+        Mockito.when(entityManager.find(GroupIndustrial.class, groupId)
+        ).thenReturn(null);
 
         GroupRepository groupRepository = new GroupRepository();
         groupRepository.setEntityManager(entityManager);

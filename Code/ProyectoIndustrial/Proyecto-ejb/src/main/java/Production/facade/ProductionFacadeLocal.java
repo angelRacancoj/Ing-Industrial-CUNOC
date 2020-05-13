@@ -14,6 +14,8 @@ import Production.Production;
 import Production.Stage;
 import Production.Step;
 import Production.exceptions.MandatoryAttributeProductionException;
+import User.exception.UserException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.List;
 import java.util.Optional;
@@ -32,19 +34,50 @@ public interface ProductionFacadeLocal {
 
     public List<Product> getProduct();
 
-
-
     public List<Production> AllProductions();
 
     public Optional<Production> getProductionById(Integer id);
 
     public void createDesign(Design design, DesignData designData, List<NecessarySupply> necessarySupplys);
 
+    /**
+     * Realiza una busqueda basado unicamente en el codigo del diseño
+     *
+     * @param idDesign
+     * @return
+     */
+    public Optional<Design> findDesignByID(Integer idDesign);
+
     public List<Design> AllDesigns();
-    
+
     public Optional<Product> getProductById(Integer id);
 
     public Design editDesign(Design design) throws MandatoryAttributeProductionException;
+
+    /**
+     * To get all results just set all with null
+     *
+     * startDate and endDate use to filter the startDate attribute of Production
+     *
+     * editable, return just the productions available to edit
+     *
+     * @param idProduction
+     * @param name
+     * @param startDate
+     * @param endDate
+     * @param editable
+     * @return
+     */
+    public List<Production> findProduction(Integer idProduction, String name, LocalDate startDate, LocalDate endDate, boolean editable);
+
+    /**
+     * Can update Name, Quantity, the Design and Group
+     *
+     * @param production
+     * @return
+     * @throws UserException
+     */
+    public Production updateProduction(Production production) throws UserException;
 
     public void updateCommentayOfSteps(Production production);
 
@@ -57,5 +90,5 @@ public interface ProductionFacadeLocal {
     public double finalCost(Production production);
 
     public double totalExtraCost(Production production);
-    
+
 }

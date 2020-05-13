@@ -35,7 +35,7 @@ public class GroupUserRepository {
     }
 
     public Optional<GroupUser> findGroupUserById(Integer id) {
-        return Optional.of(entityManager.find(GroupUser.class, id));
+        return Optional.ofNullable(entityManager.find(GroupUser.class, id));
     }
 
     public List<User> findUsersByGroup(Integer groupId) {
