@@ -55,13 +55,13 @@
                                         </p:commandLink>
                                     </p:column>
 
-                                    <p:column headerText="Calificacion">
+                                    <p:column headerText="Calificacion" rendered="#{p:ifAnyGranted(constants.adminDocente())}">
                                         <p:spinner id="basicDialog" value="#{production.qualification}" stepFactor="0.001">
                                             <f:convertNumber maxFractionDigits="5"/>
                                         </p:spinner>
                                     </p:column>
                                     
-                                    <p:column headerText="Asignar Calificacion" style="width: 6%">
+                                    <p:column headerText="Asignar Calificacion" style="width: 6%" rendered="#{p:ifAnyGranted(constants.adminDocente())}">
                                         <p:commandLink actionListener="#{productionQualificationView.qualify(production)}"
                                                        update=" :#{p:component('growl')}"
                                                        styleClass="btn btn-success"  
