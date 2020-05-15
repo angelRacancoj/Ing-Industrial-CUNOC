@@ -74,10 +74,13 @@
                     <h:outputText value="#{productionL.name}" />
                 </p:column>
                 <p:column headerText="Producto">
-                    <h:outputText value="#{productionL.productId.name}" />
+                    <h:outputText value="#{productionL.designId.productIdProduct.name}" />
                 </p:column>
                 <p:column headerText="Grupo">
                     <h:outputText value="#{productionL.groupId.name}" />
+                </p:column>
+                <p:column headerText="Fecha de Inicio">
+                    <h:outputText value="#{productionL.startDate}" />
                 </p:column>
                 <p:column headerText="Información" styleClass="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Información">
@@ -88,18 +91,26 @@
                         </p:commandLink>
                     </p>
                 </p:column>
-                <p:column headerText="Editar" rendered="#{p:ifAnyGranted(constants.estudiante())}" styleClass="text-center">
-                    <p data-placement="right" data-toggle="tooltip" title="Editar">
+                <p:column headerText="Editar Informacion" rendered="#{p:ifAnyGranted(constants.estudiante())}" styleClass="text-center">
+                    <p data-placement="right" data-toggle="tooltip" title="Editar Información">
                         <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('dlgEdit').show();" 
-                                       update=":#{p:component('dlgEdit')}">
+                                       update=":#{p:component('dlgEdit')}" rendered="#{productionL.isEditable()}">
                             <f:setPropertyActionListener value="#{productionL}" target="#{searchProduction.selectedProduction}"/>
                             <span class="glyphicon glyphicon-check"></span>
                         </p:commandLink>
                     </p>
                 </p:column>
+                <p:column headerText="Pasos" rendered="#{p:ifAnyGranted(constants.estudiante())}" styleClass="text-center">
+                    <p data-placement="right" data-toggle="tooltip" title="Pasos">
+                        <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('editSteps').show();"
+                                       update=":#{p:component('editSteps')}" actionListener="#{searchProduction.selectedProductionFrontEnd(productionL)}">
+                            <span class="glyphicon glyphicon-file"></span>
+                        </p:commandLink>
+                    </p>
+                </p:column>
             </p:dataTable>
 
-            <!-- Informacion del Insumo -->
+            <!-- All the information of the Production -->
             <p:dialog header="#{searchProduction.selectedProduction.idProduction} - #{searchProduction.selectedProduction.name}" 
                       id="infoAbout" widgetVar="infoAbout" fitViewport="true" modal="true" closeOnEscape="true">
                 <p:ajax event="close" listener="#{searchProduction.cleanSelectedProduction()}" update="@this" />
@@ -183,6 +194,7 @@
                 </h:form>
             </p:dialog>
 
+            <!-- Edit general information of the production -->
             <p:dialog header="#{searchProduction.selectedProduction.idProduction} - #{searchProduction.selectedProduction.name}" 
                       id="dlgEdit" widgetVar="dlgEdit" fitViewport="true" modal="true" closeOnEscape="true">
                 <p:ajax event="close" listener="#{searchProduction.cleanSelectedProduction()}" update="@this" />
@@ -248,6 +260,54 @@
                                        actionListener="#{searchProduction.saveChanges('dlgEdit')}">
                             <span class="glyphicon glyphicon-ok-sign"></span> Guardar
                         </p:commandLink>
+                    </div>
+                </h:form>
+            </p:dialog>
+
+            <!-- Edit the production steps -->
+            <p:dialog header="Editar #{searchProduction.selectedProduction.idProduction} - #{searchProduction.selectedProduction.name}" 
+                      id="editSteps" widgetVar="editSteps" fitViewport="true" modal="true" closeOnEscape="true">
+                <p:ajax event="close" listener="#{searchProduction.cleanSelectedProduction()}" update="@this" />
+                <h:form>
+                    <div class="modal-body">
+                        <fieldset>
+                            <p:tabView dynamic="true">
+                                <p:tab title="Etapa - #{searchProduction.preProcess.name}">
+                                    <p:dataTable var="stepS" value="#{searchProduction.preProcess.stepList}">
+                                        <p:column headerText="Nombre">
+                                            <h:outputText value="#{stepS.name}" />
+                                        </p:column>
+
+                                        <p:column headerText="Descripcion">
+                                            <h:outputText value="#{stepS.description}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:tab>
+                                <p:tab title="Etapa - #{searchProduction.process.name}">
+                                    <p:dataTable var="stepS" value="#{searchProduction.process.stepList}">
+                                        <p:column headerText="Nombre">
+                                            <h:outputText value="#{stepS.name}" />
+                                        </p:column>
+
+                                        <p:column headerText="Descripcion">
+                                            <h:outputText value="#{stepS.description}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:tab>
+                                <p:tab title="Etapa - #{searchProduction.preProcess.name}">
+                                    <p:dataTable var="stepS" value="#{searchProduction.postProcess.stepList}">
+                                        <p:column headerText="Nombre">
+                                            <h:outputText value="#{stepS.name}" />
+                                        </p:column>
+
+                                        <p:column headerText="Descripcion">
+                                            <h:outputText value="#{stepS.description}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:tab>
+                            </p:tabView>
+
+                        </fieldset>
                     </div>
                 </h:form>
             </p:dialog>

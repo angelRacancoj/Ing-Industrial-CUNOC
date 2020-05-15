@@ -84,6 +84,15 @@ public class Production implements Serializable {
         this.state = state;
     }
 
+    /**
+     * returns true if EndDate is Null and state is false
+     *
+     * @return
+     */
+    public boolean isEditable() {
+        return ((this.getEndDate() == null) && (!getState()));
+    }
+
     public Integer getIdProduction() {
         return idProduction;
     }
@@ -188,7 +197,6 @@ public class Production implements Serializable {
         this.productId = productId;
     }
 
-    
     public List<Stage> getStageList() {
         return stageList;
     }
@@ -197,7 +205,6 @@ public class Production implements Serializable {
         this.stageList = stageList;
     }
 
-    
     public List<ExtraCost> getExtraCostList() {
         return extraCostList;
     }
@@ -205,7 +212,7 @@ public class Production implements Serializable {
     public void setExtraCostList(List<ExtraCost> extraCostList) {
         this.extraCostList = extraCostList;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -215,7 +222,7 @@ public class Production implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-       
+
         if (!(object instanceof Production)) {
             return false;
         }
@@ -230,5 +237,5 @@ public class Production implements Serializable {
     public String toString() {
         return "entidades.Production[ idProduction=" + idProduction + " ]";
     }
-    
+
 }

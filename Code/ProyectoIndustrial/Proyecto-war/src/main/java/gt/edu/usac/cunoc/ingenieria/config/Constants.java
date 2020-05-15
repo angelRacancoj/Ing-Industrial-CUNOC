@@ -30,4 +30,17 @@ public class Constants implements Serializable {
     public String adminDocente() {
         return (ADMINISTRADOR + "," + DOCENTE);
     }
+
+    public String preProceso() {
+        return ("Pre-Proceso");
+    }
+
+    public String proceso() {
+        return ("Proceso");
+    }
+
+    public String postProceso() {
+        return ("Post-Proceso");
+    }
+
 }

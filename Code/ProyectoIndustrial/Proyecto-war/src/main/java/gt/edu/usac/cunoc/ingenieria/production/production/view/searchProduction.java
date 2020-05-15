@@ -4,11 +4,15 @@ import Design.Design;
 import Group.GroupIndustrial;
 import Group.facade.GroupFacadelocal;
 import Production.Production;
+import Production.Stage;
+import Production.Step;
 import Production.facade.ProductionFacadeLocal;
 import User.exception.UserException;
+import gt.edu.usac.cunoc.ingenieria.config.Constants;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -30,6 +34,8 @@ public class searchProduction implements Serializable {
     @EJB
     private GroupFacadelocal groupFacade;
 
+    Constants constantes = new Constants();
+
     List<Production> productions;
     List<Design> designs;
     List<GroupIndustrial> groups;
@@ -43,10 +49,12 @@ public class searchProduction implements Serializable {
     LocalDate endDate;
     boolean editable = false;
 
-//    @PostConstruct
-//    public void init() {
-//        getInitData();
-//    }
+    Stage preProcess;
+    Stage process;
+    Stage postProcess;
+//    List<Stage> productionStages = new LinkedList<>();
+    Step selectedStep;
+
     /**
      * Use idProduction, name, dataRange and editable, to find the productions
      */
@@ -69,6 +77,24 @@ public class searchProduction implements Serializable {
         cleanSelectedProduction();
         PrimeFaces.current().executeScript("PF('" + modalIdToClose + "').hide()");
 
+    }
+
+    public void selectedProductionFrontEnd(Production selectedProduction) {
+        this.selectedProduction = selectedProduction;
+
+        if (selectedProduction.getStageList() != null) {
+            for (Stage stage : selectedProduction.getStageList()) {
+                if (stage.getName().equals(constantes.preProceso())) {
+                    setPreProcess(stage);
+                }
+                if (stage.getName().equals(constantes.proceso())) {
+                    setProcess(stage);
+                }
+                if (stage.getName().equals(constantes.postProceso())) {
+                    setPostProcess(stage);
+                }
+            }
+        }
     }
 
     public List<Production> getProductions() {
@@ -151,6 +177,50 @@ public class searchProduction implements Serializable {
         this.editable = editable;
     }
 
+    public Stage getPreProcess() {
+        if (preProcess == null) {
+            preProcess = new Stage();
+        }
+        return preProcess;
+    }
+
+    public void setPreProcess(Stage preProcess) {
+        this.preProcess = preProcess;
+    }
+
+    public Stage getProcess() {
+        if (process == null) {
+            process = new Stage();
+        }
+        return process;
+    }
+
+    public void setProcess(Stage process) {
+        this.process = process;
+    }
+
+    public Stage getPostProcess() {
+        if (postProcess == null) {
+            postProcess = new Stage();
+        }
+        return postProcess;
+    }
+
+    public void setPostProcess(Stage postProcess) {
+        this.postProcess = postProcess;
+    }
+
+    public Step getSelectedStep() {
+        if (selectedStep == null) {
+            selectedStep = new Step();
+        }
+        return selectedStep;
+    }
+
+    public void setSelectedStep(Step selectedStep) {
+        this.selectedStep = selectedStep;
+    }
+
     public void cleanCriteriaSearch() {
         setIdProduction(null);
         setName(null);
@@ -161,10 +231,18 @@ public class searchProduction implements Serializable {
 
     public void cleanSearchResult() {
         setProductions(null);
+        setPreProcess(null);
+        setProcess(null);
+        setPostProcess(null);
+//        productionStages.clear();
     }
 
     public void cleanSelectedProduction() {
         setSelectedProduction(null);
+    }
+
+    public void cleanStep() {
+        setSelectedStep(null);
     }
 
 }
