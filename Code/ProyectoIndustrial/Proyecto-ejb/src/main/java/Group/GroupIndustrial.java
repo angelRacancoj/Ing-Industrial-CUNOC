@@ -83,6 +83,7 @@ public class GroupIndustrial implements Serializable {
     }
 
     public void setSection(String section) {
+        section  = section.toUpperCase();
         this.section = section;
     }
 

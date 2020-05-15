@@ -50,6 +50,7 @@ import org.primefaces.util.BeanUtils;
  * <p>
  * TODO: bug para crear insumos
  */
+
 @Named
 @ViewScoped
 public class productionProcessView implements Serializable {
@@ -79,6 +80,7 @@ public class productionProcessView implements Serializable {
     private ExternalContext externalContext;
 
     private List<Production> productions;
+    private List<Production> productionsFilter;
     private Production productionSelect;
     private Design postDesign;
     private List<ExtraCost> listExtraCost;
@@ -99,11 +101,21 @@ public class productionProcessView implements Serializable {
     @PostConstruct
     public void init() {
         productions = new ArrayList<>();
+        productionsFilter = new ArrayList<>();
 
         preProcess = new Stage();
         stages = new ArrayList<>();
 
-        productions = productionFacadeLocal.AllProductions();
+        productionsFilter = productionFacadeLocal.AllProductions();
+        
+        for (int i = 0; i < productionsFilter.size(); i++) {
+            if(productionsFilter.get(i).getEndDate() == null){
+                productions.add(productionsFilter.get(i));
+            }
+               
+        }
+        
+        
         commentary = new Commentary(null, "");
 
         text = "";
