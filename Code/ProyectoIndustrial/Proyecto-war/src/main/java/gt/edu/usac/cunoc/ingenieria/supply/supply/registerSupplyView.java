@@ -4,13 +4,19 @@ import Supply.Measure;
 import Supply.Supply;
 import Supply.exception.MandatoryAttributeSupplyException;
 import Supply.facade.SupplyFacadeLocal;
+import static config.Constants.MAIN_PAGE;
 import gt.edu.usac.cunoc.ingenieria.utils.MessageUtils;
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
@@ -21,6 +27,9 @@ public class registerSupplyView implements Serializable {
 
     @EJB
     private SupplyFacadeLocal supplyFacade;
+
+    @Inject
+    private ExternalContext externalContext;
 
     private Supply newSupply;
     private List<Measure> measures;
@@ -62,13 +71,15 @@ public class registerSupplyView implements Serializable {
         try {
             supplyFacade.createSupply(this.newSupply);
             MessageUtils.addSuccessMessage(SUPPLY_CREATED);
-            cleanSupply();
+            externalContext.getFlash().setKeepMessages(true);
+            externalContext.redirect(externalContext.getRequestContextPath() + MAIN_PAGE);
         } catch (MandatoryAttributeSupplyException ex) {
             MessageUtils.addErrorMessage(ex.getMessage());
+        } catch (IOException ex) {
+            MessageUtils.addErrorMessage(ex.getMessage());
+            //Logger.getLogger(registerSupplyView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     
-    private void cleanSupply(){
-        newSupply = null;
-    }
 }
