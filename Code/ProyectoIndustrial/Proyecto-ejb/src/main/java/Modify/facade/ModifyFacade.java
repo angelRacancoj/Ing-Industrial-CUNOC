@@ -10,11 +10,13 @@ import Modify.repository.ModifySupplyRepository;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author angelrg
  */
+@Stateless
 public class ModifyFacade implements ModifyFacadeLocal {
 
     private ModifySupplyRepository modifySupplyRepository;
