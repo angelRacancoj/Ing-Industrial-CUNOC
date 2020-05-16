@@ -289,9 +289,9 @@
                                                     <f:setPropertyActionListener value="#{stepS}" target="#{searchProduction.selectedStep}"/>
                                                     <span class="glyphicon glyphicon-edit"></span>
                                                 </p:commandLink>
-                                                <p:commandLink styleClass="btn btn-warning btn-xs" 
+                                                <p:commandLink styleClass="btn btn-danger btn-xs" 
                                                                update=":#{p:component('preProcesTable')}" rendered="#{searchProduction.selectedProduction.isEditable()}"
-                                                               actionListener="#{searchProduction.deleteStep(stepS)}" >
+                                                               actionListener="#{searchProduction.deleteStep(stepS)}" process="@this">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </p:commandLink>
                                                 <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('stepComents').show();" 
@@ -327,9 +327,9 @@
                                                     <f:setPropertyActionListener value="#{stepS}" target="#{searchProduction.selectedStep}"/>
                                                     <span class="glyphicon glyphicon-edit"></span>
                                                 </p:commandLink>
-                                                <p:commandLink styleClass="btn btn-warning btn-xs" 
+                                                <p:commandLink styleClass="btn btn-danger btn-xs" 
                                                                update=":#{p:component('preProcesTable')}" rendered="#{searchProduction.selectedProduction.isEditable()}"
-                                                               actionListener="#{searchProduction.deleteStep(stepS)}" >
+                                                               actionListener="#{searchProduction.deleteStep(stepS)}" process="@this">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </p:commandLink>
                                                 <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('stepComents').show();" 
@@ -365,9 +365,9 @@
                                                     <f:setPropertyActionListener value="#{stepS}" target="#{searchProduction.selectedStep}"/>
                                                     <span class="glyphicon glyphicon-edit"></span>
                                                 </p:commandLink>
-                                                <p:commandLink styleClass="btn btn-warning btn-xs" 
+                                                <p:commandLink styleClass="btn btn-danger btn-xs" 
                                                                update=":#{p:component('preProcesTable')}" rendered="#{searchProduction.selectedProduction.isEditable()}"
-                                                               actionListener="#{searchProduction.deleteStep(stepS)}" >
+                                                               actionListener="#{searchProduction.deleteStep(stepS)}" process="@this">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </p:commandLink>
                                                 <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('stepComents').show();" 
@@ -420,7 +420,7 @@
                     <div class="modal-footer ">
                         <p:commandLink styleClass="btn btn-warning btn-lg" style="width: 100%;"
                                        update="@form,:#{p:component('preProcesTable')},:#{p:component('growl')}"
-                                       actionListener="#{searchProduction.saveChanges('stepEdit')}">
+                                       actionListener="#{searchProduction.updateStep('preProcesTable')}">
                             <span class="glyphicon glyphicon-ok-sign"></span> Guardar
                         </p:commandLink>
                     </div>

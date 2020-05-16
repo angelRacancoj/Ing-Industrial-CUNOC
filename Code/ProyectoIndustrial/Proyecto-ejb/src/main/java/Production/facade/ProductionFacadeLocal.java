@@ -11,12 +11,10 @@ import Production.ExtraCost;
 import Production.Product;
 import Production.NecessarySupply;
 import Production.Production;
-import Production.Stage;
 import Production.Step;
 import Production.exceptions.MandatoryAttributeProductionException;
 import User.exception.UserException;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Local;
@@ -27,6 +25,12 @@ import javax.ejb.Local;
  */
 @Local
 public interface ProductionFacadeLocal {
+
+    public Step edit(Step oldStep) throws UserException;
+
+    public void remove(Step step) throws UserException;
+
+    public Step createStep(Step step) throws UserException;
 
     public void createProduction(Production production) throws MandatoryAttributeProductionException;
 
@@ -87,7 +91,6 @@ public interface ProductionFacadeLocal {
      * @param production
      */
 //    public void updateSteps(Production production);
-
     public void updateExtraCost(List<ExtraCost> listExtraCost, Production production) throws MandatoryAttributeProductionException;
 
     public void addPostDedign(Design postDesign, Production production) throws MandatoryAttributeProductionException;

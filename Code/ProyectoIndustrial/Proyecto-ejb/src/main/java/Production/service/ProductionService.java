@@ -68,18 +68,6 @@ public class ProductionService {
 
     /**
      *
-     * @param production
-     */
-    public void updateSteps(Production production) {
-        for (Stage stageList : production.getStageList()) {
-            for (Step stepList : stageList.getStepList()) {
-                entityManager.merge(stepList);
-            }
-        }
-    }
-
-    /**
-     *
      * @param listExtraCost
      * @param production
      *

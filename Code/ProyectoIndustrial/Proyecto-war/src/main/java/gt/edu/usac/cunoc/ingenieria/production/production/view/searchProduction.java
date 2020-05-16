@@ -74,11 +74,7 @@ public class searchProduction implements Serializable {
         try {
             if (selectedProduction != null) {
                 productionFacade.updateProduction(selectedProduction);
-                if (modalIdToClose.equals("dlgEdit")) {
-                    MessageUtils.addSuccessMessage("Se actualizo la Producción");
-                } else {
-                    MessageUtils.addSuccessMessage("Se actualizo el paso");
-                }
+                MessageUtils.addSuccessMessage("Se actualizo la Producción");
             } else {
                 MessageUtils.addErrorMessage("Debe seleccionarse una Producción");
             }
@@ -91,12 +87,17 @@ public class searchProduction implements Serializable {
     }
 
     public void addStep(final String modalIdToClose) {
-        if (selectedProduction != null) {
-            selectedStage.getStepList().add(new Step(stepName, stepComentary, selectedStage));
-            productionFacade.updateCommentayOfSteps(selectedProduction);
-            MessageUtils.addSuccessMessage("Paso Agregado");
+        if (selectedStage != null) {
+            Step step = new Step(stepName, stepComentary, selectedStage);
+            try {
+                productionFacade.createStep(step);
+                selectedStage.getStepList().add(step);
+                MessageUtils.addSuccessMessage("Paso Agregado");
+            } catch (UserException e) {
+                MessageUtils.addErrorMessage(e.getMessage());
+            }
         } else {
-            MessageUtils.addErrorMessage("Debe seleccionarse una Producción");
+            MessageUtils.addErrorMessage("Debe seleccionarse una Etapa");
         }
         PrimeFaces.current().executeScript("PF('" + modalIdToClose + "').hide()");
 
@@ -121,13 +122,30 @@ public class searchProduction implements Serializable {
     }
 
     public void deleteStep(Step step) {
-        selectedStage.getStepList().remove(step);
-        if (selectedProduction != null) {
-            productionFacade.updateCommentayOfSteps(selectedProduction);
-            MessageUtils.addSuccessMessage("Paso eliminado");
+        if (step != null) {
+            try {
+                productionFacade.remove(step);
+                MessageUtils.addSuccessMessage("Paso eliminado");
+            } catch (UserException e) {
+                MessageUtils.addErrorMessage(e.getMessage());
+            }
         } else {
-            MessageUtils.addErrorMessage("Debe seleccionarse una Producción");
+            MessageUtils.addErrorMessage("Debe seleccionarse un Paso");
         }
+    }
+
+    public void updateStep(final String modalIdToClose) {
+        if (selectedStep != null) {
+            try {
+                productionFacade.edit(selectedStep);
+                MessageUtils.addSuccessMessage("Se ha actualizado el paso");
+            } catch (UserException e) {
+                MessageUtils.addErrorMessage(e.getMessage());
+            }
+        } else {
+            MessageUtils.addErrorMessage("Debe elegirse un Paso");
+        }
+        PrimeFaces.current().executeScript("PF('" + modalIdToClose + "').hide()");
     }
 
     public List<Production> getProductions() {
