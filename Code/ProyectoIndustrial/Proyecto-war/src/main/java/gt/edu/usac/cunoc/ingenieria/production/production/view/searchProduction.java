@@ -91,7 +91,6 @@ public class searchProduction implements Serializable {
             Step step = new Step(stepName, stepComentary, selectedStage);
             try {
                 productionFacade.createStep(step);
-                selectedStage.getStepList().add(step);
                 MessageUtils.addSuccessMessage("Paso Agregado");
             } catch (UserException e) {
                 MessageUtils.addErrorMessage(e.getMessage());
