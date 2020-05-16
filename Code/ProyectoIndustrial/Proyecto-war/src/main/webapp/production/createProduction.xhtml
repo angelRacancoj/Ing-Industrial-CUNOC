@@ -27,7 +27,7 @@
                                 <p:inputText value="#{productionCreateView.production.name}" />
 
                                 <p:outputLabel value="Unidades: " /> 
-                                <p:spinner id="basic" value="#{productionCreateView.production.quantity}" stepFactor="1">
+                                <p:spinner id="basic" value="#{productionCreateView.production.quantity}" stepFactor="1" min="0">
                                     <f:convertNumber maxFractionDigits="5"/>
                                 </p:spinner>
 

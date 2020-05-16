@@ -54,12 +54,12 @@
                     <p:column headerText="Descripcion">
                         <h:outputText value="#{designL.design.designData.description}" />
                     </p:column>
-                    <p:column headerText="Unidades" rendered="#{p:ifAnyGranted(constants.adminDocente())}" styleClass="text-center">
+                    <p:column headerText="Unidades" styleClass="text-center">
                         <p:spinner min="1" value="#{designL.units}" styleClass="form-control">
                             <f:convertNumber integerOnly="true"/>
                         </p:spinner>
                     </p:column>
-                    <p:column headerText="Calcular Insumos" rendered="#{p:ifAnyGranted(constants.adminDocente())}" styleClass="text-center">
+                    <p:column headerText="Calcular Insumos" styleClass="text-center">
                         <p data-placement="right" data-toggle="tooltip" title="Calcular">
                             <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('calculate').show();" 
                                            update=":#{p:component('calculate')}" actionListener="#{supplyCalculatorView.calculateCost(designL)}" >

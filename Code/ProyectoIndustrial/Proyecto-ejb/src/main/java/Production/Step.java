@@ -34,21 +34,25 @@ public class Step implements Serializable {
     @Basic(optional = false)
     @Column(name = "description")
     private String description;
-    
+
     @JoinColumn(name = "stage_id", referencedColumnName = "id_stage")
     @ManyToOne(optional = false)
     private Stage stageId;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idStep")
     private List<Commentary> commentaryList;
-    
-    
 
     public Step() {
     }
 
     public Step(Integer idStep) {
         this.idStep = idStep;
+    }
+
+    public Step(String name, String description, Stage stageId) {
+        this.name = name;
+        this.description = description;
+        this.stageId = stageId;
     }
 
     public Step(Integer idStep, String name, String description) {

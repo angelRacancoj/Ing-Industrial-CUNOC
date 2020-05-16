@@ -3,6 +3,8 @@ package Production.service;
 import Design.Design;
 import Production.ExtraCost;
 import Production.Production;
+import Production.Stage;
+import Production.Step;
 import Production.exceptions.MandatoryAttributeProductionException;
 import User.exception.UserException;
 import javax.ejb.LocalBean;
@@ -80,40 +82,37 @@ public class ProductionService {
         for (int i = 0; i < listExtraCost.size(); i++) {
             listExtraCost.get(i).setIdProduction(production);
         }
-        
+
         entityManager.merge(production);
 
     }
-    
+
     /**
-     * 
+     *
      * @param postDesign
      * @param production
-     * @throws MandatoryAttributeProductionException 
+     * @throws MandatoryAttributeProductionException
      */
-    public void addPostDedign(Design postDesign, Production production) throws MandatoryAttributeProductionException{
+    public void addPostDedign(Design postDesign, Production production) throws MandatoryAttributeProductionException {
         if (production == null) {
             throw new MandatoryAttributeProductionException("Produccion no seleccionada");
         }
         if (postDesign == null) {
             throw new MandatoryAttributeProductionException("Produccion no seleccionada");
         }
-        
-        
+
 //        List<Production> lista = new ArrayList<Production>();
 //        lista.add(production);
 //                
 //        postDesign.setProductionList1(lista);
-        
         for (int i = 0; i < production.getExtraCostList().size(); i++) {
             production.getExtraCostList().get(i).setIdProduction(production);
         }
 
         production.setPostDesign(postDesign);
         entityManager.merge(production);
-        
+
     }
-    
 
     /**
      *
@@ -139,7 +138,7 @@ public class ProductionService {
     }
 
     /**
-     * Can update Name, Quantity, the Design and Group
+     * Can update Name, Quantity, the Design, Group and Stage List
      *
      * @param production
      * @return

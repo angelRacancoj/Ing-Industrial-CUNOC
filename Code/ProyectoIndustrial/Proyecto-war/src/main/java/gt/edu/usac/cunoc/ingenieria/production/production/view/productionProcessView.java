@@ -45,8 +45,8 @@ import org.primefaces.util.BeanUtils;
  * @author daniel
  */
 /**
- * TODO: filtrar la lista
- * TODO: bug de insert en diseños, necessary supply, extra cost y commentarios;
+ * TODO: filtrar la lista TODO: bug de insert en diseños, necessary supply,
+ * extra cost y commentarios;
  * <p>
  * TODO: bug para crear insumos
  */
