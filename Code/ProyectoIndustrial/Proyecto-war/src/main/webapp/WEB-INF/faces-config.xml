@@ -106,6 +106,11 @@
             <to-view-id>/supplies/registerSupply.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>modifySupply</from-outcome>
+            <to-view-id>/inventory/modifySupply.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
         
         <!--Calculators-->
         <navigation-case>

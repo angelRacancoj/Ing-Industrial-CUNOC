@@ -146,7 +146,7 @@ public class ProductionRepository {
         Root<Production> production = criteriaQuery.from(Production.class);
 
         ArrayList<Predicate> predicates = new ArrayList<>();
-        predicates.add(criteriaBuilder.equal(production.get("productId")
+        predicates.add(criteriaBuilder.equal(production.get("designId.productIdProduct")
                 .get("idProduct"), product.getIdProduct()));
 
         criteriaQuery.where(predicates.stream().toArray(Predicate[]::new))

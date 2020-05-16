@@ -23,7 +23,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "design")
 public class Design implements Serializable {
@@ -33,17 +32,14 @@ public class Design implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_design")
     private Integer idDesign;
-    
-   
-    
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "designId")
     private List<NecessarySupply> necessarySupplyList;
-    
+
     @JoinColumn(name = "design_data", referencedColumnName = "iddesign_data")
     @ManyToOne(cascade = CascadeType.ALL)
     private DesignData designData;
-   
+
     @JoinColumn(name = "product_id_product", referencedColumnName = "id_product")
     @ManyToOne
     private Product productIdProduct;
@@ -62,9 +58,6 @@ public class Design implements Serializable {
     public void setIdDesign(Integer idDesign) {
         this.idDesign = idDesign;
     }
-
-    
-    
 
     public List<NecessarySupply> getNecessarySupplyList() {
         return necessarySupplyList;
@@ -89,8 +82,8 @@ public class Design implements Serializable {
     public void setProductIdProduct(Product productIdProduct) {
         this.productIdProduct = productIdProduct;
     }
-    
-      @Override
+
+    @Override
     public int hashCode() {
         int hash = 0;
         hash += (idDesign != null ? idDesign.hashCode() : 0);
@@ -114,5 +107,5 @@ public class Design implements Serializable {
     public String toString() {
         return "entidades.Design[ idDesign=" + idDesign + " ]";
     }
-    
+
 }
