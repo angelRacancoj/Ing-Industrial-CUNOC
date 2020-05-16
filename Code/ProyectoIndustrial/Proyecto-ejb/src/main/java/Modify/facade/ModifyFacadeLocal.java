@@ -8,11 +8,13 @@ package Modify.facade;
 import java.util.Optional;
 import Modify.ModifySupply;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
  *
  * @author angelrg
  */
+@Local
 public interface ModifyFacadeLocal {
 
     /**

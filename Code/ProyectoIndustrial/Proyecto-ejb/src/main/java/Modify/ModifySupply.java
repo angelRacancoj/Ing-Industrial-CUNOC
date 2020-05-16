@@ -4,6 +4,7 @@ import Supply.Supply;
 import User.User;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -114,4 +115,39 @@ public class ModifySupply implements Serializable {
         this.carnetUser = carnetUser;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.idModifySupply);
+        hash = 59 * hash + Objects.hashCode(this.modifyType);
+        hash = 59 * hash + (int) (Double.doubleToLongBits(this.quantity) ^ (Double.doubleToLongBits(this.quantity) >>> 32));
+        hash = 59 * hash + Objects.hashCode(this.date);
+        hash = 59 * hash + Objects.hashCode(this.note);
+        hash = 59 * hash + Objects.hashCode(this.supplyCode);
+        hash = 59 * hash + Objects.hashCode(this.carnetUser);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ModifySupply other = (ModifySupply) obj;
+        if (!Objects.equals(this.idModifySupply, other.idModifySupply)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
+    
+    
 }
