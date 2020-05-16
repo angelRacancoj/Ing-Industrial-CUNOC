@@ -271,7 +271,7 @@
                 <h:form>
                     <div class="modal-body">
                         <fieldset>
-                            <p:tabView dynamic="true">
+                            <p:tabView dynamic="true" id="preProcesTable">
                                 <p:tab title="Etapa - #{searchProduction.preProcess.name}">
                                     <p:dataTable var="stepS" value="#{searchProduction.preProcess.stepList}">
                                         <p:column headerText="Nombre">
@@ -281,7 +281,35 @@
                                         <p:column headerText="Descripcion">
                                             <h:outputText value="#{stepS.description}" />
                                         </p:column>
+
+                                        <p:column headerText="Opciones" rendered="#{p:ifAnyGranted(constants.estudiante())}" styleClass="text-center">
+                                            <p data-placement="right" data-toggle="tooltip" title="Editar Paso">
+                                                <p:commandLink styleClass="btn btn-warning btn-xs" oncomplete="PF('stepEdit').show();"  
+                                                               update=":#{p:component('stepEdit')}" rendered="#{searchProduction.selectedProduction.isEditable()}">
+                                                    <f:setPropertyActionListener value="#{stepS}" target="#{searchProduction.selectedStep}"/>
+                                                    <span class="glyphicon glyphicon-edit"></span>
+                                                </p:commandLink>
+                                                <p:commandLink styleClass="btn btn-warning btn-xs" 
+                                                               update=":#{p:component('preProcesTable')}" rendered="#{searchProduction.selectedProduction.isEditable()}"
+                                                               actionListener="#{searchProduction.deleteStep(stepS)}" >
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </p:commandLink>
+                                                <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('stepComents').show();" 
+                                                               update=":#{p:component('stepComents')}" rendered="#{!searchProduction.selectedProduction.isEditable()}">
+                                                    <f:setPropertyActionListener value="#{stepS}" target="#{searchProduction.selectedStep}"/>
+                                                    <span class="glyphicon glyphicon-check"></span> Comentarios
+                                                </p:commandLink>
+                                            </p>
+                                        </p:column>
                                     </p:dataTable>
+                                    <div class="modal-footer">
+                                        <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('newStep').show();" 
+                                                       update=":#{p:component('newStep')}" rendered="#{searchProduction.selectedProduction.isEditable()}">
+                                            <f:setPropertyActionListener value="#{searchProduction.preProcess}" target="#{searchProduction.selectedStage}"/>
+                                            <span class="glyphicon glyphicon-check"></span> Agregar Paso
+                                        </p:commandLink>
+                                    </div>
+
                                 </p:tab>
                                 <p:tab title="Etapa - #{searchProduction.process.name}">
                                     <p:dataTable var="stepS" value="#{searchProduction.process.stepList}">
@@ -292,9 +320,36 @@
                                         <p:column headerText="Descripcion">
                                             <h:outputText value="#{stepS.description}" />
                                         </p:column>
+                                        <p:column headerText="Opciones" rendered="#{p:ifAnyGranted(constants.estudiante())}" styleClass="text-center">
+                                            <p data-placement="right" data-toggle="tooltip" title="Editar Paso">
+                                                <p:commandLink styleClass="btn btn-warning btn-xs" oncomplete="PF('stepEdit').show();"  
+                                                               update=":#{p:component('stepEdit')}" rendered="#{searchProduction.selectedProduction.isEditable()}">
+                                                    <f:setPropertyActionListener value="#{stepS}" target="#{searchProduction.selectedStep}"/>
+                                                    <span class="glyphicon glyphicon-edit"></span>
+                                                </p:commandLink>
+                                                <p:commandLink styleClass="btn btn-warning btn-xs" 
+                                                               update=":#{p:component('preProcesTable')}" rendered="#{searchProduction.selectedProduction.isEditable()}"
+                                                               actionListener="#{searchProduction.deleteStep(stepS)}" >
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </p:commandLink>
+                                                <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('stepComents').show();" 
+                                                               update=":#{p:component('stepComents')}" rendered="#{!searchProduction.selectedProduction.isEditable()}">
+                                                    <f:setPropertyActionListener value="#{stepS}" target="#{searchProduction.selectedStep}"/>
+                                                    <span class="glyphicon glyphicon-check"></span> Comentarios
+                                                </p:commandLink>
+                                            </p>
+                                        </p:column>
                                     </p:dataTable>
+
+                                    <div class="modal-footer">
+                                        <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('newStep').show();" 
+                                                       update=":#{p:component('newStep')}" rendered="#{searchProduction.selectedProduction.isEditable()}">
+                                            <f:setPropertyActionListener value="#{searchProduction.process}" target="#{searchProduction.selectedStage}"/>
+                                            <span class="glyphicon glyphicon-check"></span> Agregar Paso
+                                        </p:commandLink>
+                                    </div>
                                 </p:tab>
-                                <p:tab title="Etapa - #{searchProduction.preProcess.name}">
+                                <p:tab title="Etapa - #{searchProduction.postProcess.name}">
                                     <p:dataTable var="stepS" value="#{searchProduction.postProcess.stepList}">
                                         <p:column headerText="Nombre">
                                             <h:outputText value="#{stepS.name}" />
@@ -303,9 +358,122 @@
                                         <p:column headerText="Descripcion">
                                             <h:outputText value="#{stepS.description}" />
                                         </p:column>
+                                        <p:column headerText="Opciones" rendered="#{p:ifAnyGranted(constants.estudiante())}" styleClass="text-center">
+                                            <p data-placement="right" data-toggle="tooltip" title="Editar Paso">
+                                                <p:commandLink styleClass="btn btn-warning btn-xs" oncomplete="PF('stepEdit').show();"  
+                                                               update=":#{p:component('stepEdit')}" rendered="#{searchProduction.selectedProduction.isEditable()}">
+                                                    <f:setPropertyActionListener value="#{stepS}" target="#{searchProduction.selectedStep}"/>
+                                                    <span class="glyphicon glyphicon-edit"></span>
+                                                </p:commandLink>
+                                                <p:commandLink styleClass="btn btn-warning btn-xs" 
+                                                               update=":#{p:component('preProcesTable')}" rendered="#{searchProduction.selectedProduction.isEditable()}"
+                                                               actionListener="#{searchProduction.deleteStep(stepS)}" >
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </p:commandLink>
+                                                <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('stepComents').show();" 
+                                                               update=":#{p:component('stepComents')}" rendered="#{!searchProduction.selectedProduction.isEditable()}">
+                                                    <f:setPropertyActionListener value="#{stepS}" target="#{searchProduction.selectedStep}"/>
+                                                    <span class="glyphicon glyphicon-check"></span> Comentarios
+                                                </p:commandLink>
+                                            </p>
+                                        </p:column>
                                     </p:dataTable>
+                                    <div class="modal-footer">
+                                        <p:commandLink styleClass="btn btn-primary btn-xs" oncomplete="PF('newStep').show();" 
+                                                       update=":#{p:component('newStep')}" rendered="#{searchProduction.selectedProduction.isEditable()}">
+                                            <f:setPropertyActionListener value="#{searchProduction.postProcess}" target="#{searchProduction.selectedStage}"/>
+                                            <span class="glyphicon glyphicon-check"></span> Agregar Paso
+                                        </p:commandLink>
+                                    </div>
                                 </p:tab>
                             </p:tabView>
+
+                        </fieldset>
+                    </div>
+                </h:form>
+            </p:dialog>
+
+            <p:dialog header="Editar Paso" id="stepEdit" widgetVar="stepEdit" fitViewport="true" modal="true" closeOnEscape="true">
+                <p:ajax event="close" listener="#{searchProduction.cleanStep()}" update="@this" />
+                <h:form>
+                    <div class="modal-body">
+                        <fieldset>
+                            <div class="row form-group">
+                                <p:outputLabel for="name" value="Nombre: " styleClass="col-md-4 control-label"/>
+                                <div class="col-md-12">
+                                    <p:inputText id="name" styleClass="form-control" pt:placeholder="Nombre"
+                                                 pt:required="true" maxlength="45" required="true"
+                                                 value="#{searchProduction.selectedStep.name}"/>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <p:outputLabel for="desc" value="Descripcion: " styleClass="col-md-4 control-label"/>
+                                <div class="col-md-12">
+                                    <p:inputTextarea id="desc" styleClass="form-control" pt:placeholder="Nombre"
+                                                     pt:required="true" maxlength="300" required="true"
+                                                     value="#{searchProduction.selectedStep.description}"/>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer ">
+                        <p:commandLink styleClass="btn btn-warning btn-lg" style="width: 100%;"
+                                       update="@form,:#{p:component('preProcesTable')},:#{p:component('growl')}"
+                                       actionListener="#{searchProduction.saveChanges('stepEdit')}">
+                            <span class="glyphicon glyphicon-ok-sign"></span> Guardar
+                        </p:commandLink>
+                    </div>
+                </h:form>
+            </p:dialog>
+
+            <p:dialog header="Nuevo Paso" id="newStep" widgetVar="newStep" fitViewport="true" modal="true" closeOnEscape="true">
+                <p:ajax event="close" listener="#{searchProduction.cleanNewStepFilds()}" update="@this" />
+                <h:form>
+                    <div class="modal-body">
+                        <fieldset>
+                            <div class="row form-group">
+                                <p:outputLabel for="name" value="Nombre: " styleClass="col-md-4 control-label"/>
+                                <div class="col-md-12">
+                                    <p:inputText id="name" styleClass="form-control" pt:placeholder="Nombre:"
+                                                 pt:required="true" maxlength="45" required="true"
+                                                 value="#{searchProduction.stepName}"/>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <p:outputLabel for="desc" value="Descripcion: " styleClass="col-md-4 control-label"/>
+                                <div class="col-md-12">
+                                    <p:inputTextarea id="desc" styleClass="form-control" pt:placeholder="Nombre"
+                                                     pt:required="true" maxlength="300" required="true"
+                                                     value="#{searchProduction.stepComentary}"/>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer ">
+                        <p:commandLink styleClass="btn btn-warning btn-lg" style="width: 100%;"
+                                       update="@form,:#{p:component('preProcesTable')},:#{p:component('growl')}"
+                                       actionListener="#{searchProduction.addStep('newStep')}">
+                            <span class="glyphicon glyphicon-ok-sign"></span> Guardar
+                        </p:commandLink>
+                    </div>
+                </h:form>
+            </p:dialog>
+
+            <p:dialog header="#{searchProduction.selectedStep.name}" id="stepComents" widgetVar="stepComents" fitViewport="true" modal="true" closeOnEscape="true">
+                <p:ajax event="close" listener="#{searchProduction.cleanStep()}" update="@this" />
+                <h:form>
+                    <div class="modal-body">
+                        <fieldset>
+                            <div class="row form-group">
+                                <p:outputLabel value="#{searchProduction.selectedStep.description}" styleClass="col-md-4 control-label"/>
+                            </div>
+                            <p:dataTable var="coments" value="#{searchProduction.selectedStep.commentaryList}">
+                                <p:column headerText="Comentario">
+                                    <h:outputText value="#{coments.commentary}" />
+                                </p:column>
+                            </p:dataTable>
 
                         </fieldset>
                     </div>

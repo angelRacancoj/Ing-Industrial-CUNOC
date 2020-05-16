@@ -81,6 +81,13 @@ public interface ProductionFacadeLocal {
 
     public void updateCommentayOfSteps(Production production);
 
+    /**
+     * Update and add al steps added to the production
+     *
+     * @param production
+     */
+//    public void updateSteps(Production production);
+
     public void updateExtraCost(List<ExtraCost> listExtraCost, Production production) throws MandatoryAttributeProductionException;
 
     public void addPostDedign(Design postDesign, Production production) throws MandatoryAttributeProductionException;

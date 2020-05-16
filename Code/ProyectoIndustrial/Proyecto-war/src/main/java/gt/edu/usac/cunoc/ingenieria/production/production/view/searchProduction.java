@@ -49,10 +49,17 @@ public class searchProduction implements Serializable {
     LocalDate endDate;
     boolean editable = false;
 
+    //Stages
     Stage preProcess;
     Stage process;
     Stage postProcess;
-//    List<Stage> productionStages = new LinkedList<>();
+
+    // Necesary to add and remove steps
+    Stage selectedStage;
+    String stepName;
+    String stepComentary;
+
+    // To show available comentaries
     Step selectedStep;
 
     /**
@@ -67,7 +74,11 @@ public class searchProduction implements Serializable {
         try {
             if (selectedProduction != null) {
                 productionFacade.updateProduction(selectedProduction);
-                MessageUtils.addSuccessMessage("Se actualizo la Producción");
+                if (modalIdToClose.equals("dlgEdit")) {
+                    MessageUtils.addSuccessMessage("Se actualizo la Producción");
+                } else {
+                    MessageUtils.addSuccessMessage("Se actualizo el paso");
+                }
             } else {
                 MessageUtils.addErrorMessage("Debe seleccionarse una Producción");
             }
@@ -75,6 +86,18 @@ public class searchProduction implements Serializable {
             MessageUtils.addErrorMessage(e.getMessage());
         }
         cleanSelectedProduction();
+        PrimeFaces.current().executeScript("PF('" + modalIdToClose + "').hide()");
+
+    }
+
+    public void addStep(final String modalIdToClose) {
+        if (selectedProduction != null) {
+            selectedStage.getStepList().add(new Step(stepName, stepComentary, selectedStage));
+            productionFacade.updateCommentayOfSteps(selectedProduction);
+            MessageUtils.addSuccessMessage("Paso Agregado");
+        } else {
+            MessageUtils.addErrorMessage("Debe seleccionarse una Producción");
+        }
         PrimeFaces.current().executeScript("PF('" + modalIdToClose + "').hide()");
 
     }
@@ -94,6 +117,16 @@ public class searchProduction implements Serializable {
                     setPostProcess(stage);
                 }
             }
+        }
+    }
+
+    public void deleteStep(Step step) {
+        selectedStage.getStepList().remove(step);
+        if (selectedProduction != null) {
+            productionFacade.updateCommentayOfSteps(selectedProduction);
+            MessageUtils.addSuccessMessage("Paso eliminado");
+        } else {
+            MessageUtils.addErrorMessage("Debe seleccionarse una Producción");
         }
     }
 
@@ -221,6 +254,33 @@ public class searchProduction implements Serializable {
         this.selectedStep = selectedStep;
     }
 
+    public Stage getSelectedStage() {
+        if (selectedStage == null) {
+            selectedStage = new Stage();
+        }
+        return selectedStage;
+    }
+
+    public void setSelectedStage(Stage selectedStage) {
+        this.selectedStage = selectedStage;
+    }
+
+    public String getStepName() {
+        return stepName;
+    }
+
+    public void setStepName(String stepName) {
+        this.stepName = stepName;
+    }
+
+    public String getStepComentary() {
+        return stepComentary;
+    }
+
+    public void setStepComentary(String stepComentary) {
+        this.stepComentary = stepComentary;
+    }
+
     public void cleanCriteriaSearch() {
         setIdProduction(null);
         setName(null);
@@ -234,7 +294,6 @@ public class searchProduction implements Serializable {
         setPreProcess(null);
         setProcess(null);
         setPostProcess(null);
-//        productionStages.clear();
     }
 
     public void cleanSelectedProduction() {
@@ -243,6 +302,11 @@ public class searchProduction implements Serializable {
 
     public void cleanStep() {
         setSelectedStep(null);
+    }
+
+    public void cleanNewStepFilds() {
+        setStepName(null);
+        setStepComentary(null);
     }
 
 }

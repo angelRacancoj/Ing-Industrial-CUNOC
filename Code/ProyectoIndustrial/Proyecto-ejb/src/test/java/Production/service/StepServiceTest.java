@@ -43,17 +43,17 @@ public class StepServiceTest {
 
     }
 
-    @Test(expectedExceptions = MandatoryAttributeProductionException.class,
-            expectedExceptionsMessageRegExp = "Descripcion nula")
-    public void MandatoryAttributeProductionExceptionUnityEdit() throws Exception {
-        //Arrange
-        Step step = new Step(null, "name", null);
-        stepService.setEntityManager(entityManager);
-        
-        //Act
-        stepService.edit(step);
-
-    }
+//    @Test(expectedExceptions = MandatoryAttributeProductionException.class,
+//            expectedExceptionsMessageRegExp = "Descripcion nula")
+//    public void MandatoryAttributeProductionExceptionUnityEdit() throws Exception {
+//        //Arrange
+//        Step step = new Step(null, "name", null);
+//        stepService.setEntityManager(entityManager);
+//        
+//        //Act
+//        stepService.edit(step);
+//
+//    }
 
     
 }
