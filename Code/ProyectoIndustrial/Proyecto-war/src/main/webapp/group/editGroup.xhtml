@@ -26,7 +26,17 @@
                                 <h:outputText value="#{group.information}" />
                             </p:column>
 
+                            
 
+                            <p:column headerText="Integrantes">
+                                <p:commandLink styleClass="btn btn-success" style="width: 100%;"
+                                               update=":#{p:component('formP')},:#{p:component('studentGroupTable')}, :#{p:component('formDialogStudents')}"
+                                               onclick="PF('wdialogStudents').show();"
+                                               actionListener="#{groupView.selection(group)}" process="@this">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+
+                                </p:commandLink>
+                            </p:column>
 
                             <p:column headerText="Editar">
                                 <p:commandLink styleClass="btn btn-success" style="width: 100%;"
@@ -107,7 +117,7 @@
 
                                     <p:outputLabel  value="Integrantes del Grupo:"/> 
                                     <p:fieldset id="groupStudentsField" legend="Estudiantes del grupo">
-                                        <p:dataTable id="studentGroupTable" value="#{groupView.groupListEdit}" var="studentGroup" emptyMessage="Grupo sin estudiantes estudiantes">
+                                        <p:dataTable id="studentGroupTable" value="#{groupView.groupListEdit}" var="studentGroup" emptyMessage="Grupo sin estudiantes ">
                                             <p:column headerText="Carne">
                                                 <h:outputText value="#{studentGroup.carnet}" />
                                             </p:column>
@@ -135,7 +145,7 @@
 
                                     <h:column/>
                                     <p:commandLink styleClass="btn btn-success" style="width: 60%;"
-                                                   update="@form, :#{p:component('growl')}"
+                                                   update="@form, :#{p:component('growl')},:#{p:component('studentGroupTable')} "
                                                    actionListener="#{groupView.editGroup()}"  >
                                         <span class="glyphicon glyphicon-plus-sign"></span> Editar Grupo
 
@@ -152,6 +162,35 @@
                     </h:form>
                 </p:dialog>
 
+
+                <p:dialog id="dialogStudents" header="Integrantes del grupo" widgetVar="wdialogStudents" 
+                          modal="true" resizable="false" closeOnEscape="true" draggable="false" showEffect="explode" fitViewport="true">
+                    <h:form id="formDialogStudents">
+                        <p:dataTable id="studentGroupTable" value="#{groupView.groupListEdit}" var="studentGroup" emptyMessage="Grupo sin estudiantes ">
+                            <p:column headerText="Carne">
+                                <h:outputText value="#{studentGroup.carnet}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre">
+                                <h:outputText  value="#{studentGroup.name}"/>
+                            </p:column>
+
+                            <p:column headerText="Carrera" >
+                                <h:outputText  value="#{studentGroup.career.name}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Telefono" >
+                                <h:outputText  value="#{studentGroup.phone}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Correo" >
+                                <h:outputText  value="#{studentGroup.email}"/>
+                            </p:column>
+
+
+                        </p:dataTable>
+                    </h:form>
+                </p:dialog>
 
             </ui:define>
 
